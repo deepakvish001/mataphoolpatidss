@@ -1,4 +1,4 @@
-import { BookOpen, Briefcase, Award, Users, CheckCircle, ArrowRight } from 'lucide-react';
+import { BookOpen, Briefcase, Award, Users, CheckCircle, ArrowRight, Scissors, ShoppingCart, Cpu, Heart, ChefHat, Tractor, Code, Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Services = () => {
@@ -36,14 +36,54 @@ const Services = () => {
   ];
 
   const trainingAreas = [
-    'Apparel Manufacturing',
-    'Organized Retail',
-    'Electronics & Hardware',
-    'Healthcare Services',
-    'Food Processing',
-    'Agriculture & Allied Services',
-    'IT & Software Development',
-    'Automotive Services'
+    {
+      name: 'Apparel Manufacturing',
+      icon: Scissors,
+      color: 'from-pink-500/20 to-purple-500/20',
+      iconBg: 'bg-pink-500/10'
+    },
+    {
+      name: 'Organized Retail',
+      icon: ShoppingCart,
+      color: 'from-blue-500/20 to-cyan-500/20',
+      iconBg: 'bg-blue-500/10'
+    },
+    {
+      name: 'Electronics & Hardware',
+      icon: Cpu,
+      color: 'from-green-500/20 to-emerald-500/20',
+      iconBg: 'bg-green-500/10'
+    },
+    {
+      name: 'Healthcare Services',
+      icon: Heart,
+      color: 'from-red-500/20 to-rose-500/20',
+      iconBg: 'bg-red-500/10'
+    },
+    {
+      name: 'Food Processing',
+      icon: ChefHat,
+      color: 'from-orange-500/20 to-amber-500/20',
+      iconBg: 'bg-orange-500/10'
+    },
+    {
+      name: 'Agriculture & Allied Services',
+      icon: Tractor,
+      color: 'from-lime-500/20 to-green-500/20',
+      iconBg: 'bg-lime-500/10'
+    },
+    {
+      name: 'IT & Software Development',
+      icon: Code,
+      color: 'from-violet-500/20 to-purple-500/20',
+      iconBg: 'bg-violet-500/10'
+    },
+    {
+      name: 'Automotive Services',
+      icon: Car,
+      color: 'from-slate-500/20 to-gray-500/20',
+      iconBg: 'bg-slate-500/10'
+    }
   ];
 
   return (
@@ -68,14 +108,14 @@ const Services = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {trainingAreas.map((area, index) => (
               <div 
-                key={area}
-                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:border-primary/30 transition-all duration-300 hover:glow-orange animate-fade-in"
+                key={area.name}
+                className={`bg-gradient-to-br ${area.color} backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:border-primary/30 transition-all duration-300 hover:scale-105 animate-fade-in`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <BookOpen className="h-6 w-6 text-primary" />
+                <div className={`w-12 h-12 ${area.iconBg} rounded-lg flex items-center justify-center mx-auto mb-3`}>
+                  <area.icon className="h-6 w-6 text-primary" />
                 </div>
-                <h4 className="font-medium text-foreground text-sm">{area}</h4>
+                <h4 className="font-medium text-foreground text-sm">{area.name}</h4>
               </div>
             ))}
           </div>

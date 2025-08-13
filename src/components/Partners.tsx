@@ -1,36 +1,91 @@
-import { Shield, Award, Handshake, Building2 } from 'lucide-react';
+import { Shield, Award, Handshake, Building2, Globe, Users, GraduationCap, BookOpen, MapPin, Briefcase, Trophy, Star, Medal, Crown } from 'lucide-react';
 
 const Partners = () => {
   const governmentPartners = [
-    'NSDC (National Skill Development Corporation)',
-    'DDUGKY (Deen Dayal Upadhyaya Grameen Kaushalya Yojana)',
-    'PMKVY (Pradhan Mantri Kaushal Vikas Yojana)',
-    'NIESBUD (National Institute for Entrepreneurship and Small Business Development)',
-    'NULM (National Urban Livelihoods Mission)',
-    'Ministry of Skill Development & Entrepreneurship'
+    {
+      name: 'NSDC (National Skill Development Corporation)',
+      icon: GraduationCap,
+      color: 'from-blue-500/20 to-indigo-500/20',
+      iconBg: 'bg-blue-500/10'
+    },
+    {
+      name: 'DDUGKY (Deen Dayal Upadhyaya Grameen Kaushalya Yojana)',
+      icon: Users,
+      color: 'from-green-500/20 to-emerald-500/20',
+      iconBg: 'bg-green-500/10'
+    },
+    {
+      name: 'PMKVY (Pradhan Mantri Kaushal Vikas Yojana)',
+      icon: BookOpen,
+      color: 'from-orange-500/20 to-amber-500/20',
+      iconBg: 'bg-orange-500/10'
+    },
+    {
+      name: 'NIESBUD (National Institute for Entrepreneurship and Small Business Development)',
+      icon: Briefcase,
+      color: 'from-purple-500/20 to-violet-500/20',
+      iconBg: 'bg-purple-500/10'
+    },
+    {
+      name: 'NULM (National Urban Livelihoods Mission)',
+      icon: MapPin,
+      color: 'from-red-500/20 to-rose-500/20',
+      iconBg: 'bg-red-500/10'
+    },
+    {
+      name: 'Ministry of Skill Development & Entrepreneurship',
+      icon: Shield,
+      color: 'from-teal-500/20 to-cyan-500/20',
+      iconBg: 'bg-teal-500/10'
+    }
   ];
 
   const privatePartners = [
-    'TCS (Tata Consultancy Services)',
-    'Infosys Limited',
-    'Wipro Technologies',
-    'HCL Technologies',
-    'Tech Mahindra',
-    'Accenture India',
-    'Amazon India',
-    'Flipkart',
-    'Reliance Industries',
-    'ITC Limited',
-    'Bharti Airtel',
-    'HDFC Bank'
+    { name: 'TCS (Tata Consultancy Services)', emoji: '💻', sector: 'IT Services' },
+    { name: 'Infosys Limited', emoji: '🌐', sector: 'Technology' },
+    { name: 'Wipro Technologies', emoji: '⚡', sector: 'IT Solutions' },
+    { name: 'HCL Technologies', emoji: '🔧', sector: 'Tech Services' },
+    { name: 'Tech Mahindra', emoji: '📱', sector: 'Digital Solutions' },
+    { name: 'Accenture India', emoji: '🎯', sector: 'Consulting' },
+    { name: 'Amazon India', emoji: '📦', sector: 'E-commerce' },
+    { name: 'Flipkart', emoji: '🛒', sector: 'Online Retail' },
+    { name: 'Reliance Industries', emoji: '🏭', sector: 'Conglomerate' },
+    { name: 'ITC Limited', emoji: '🏢', sector: 'Consumer Goods' },
+    { name: 'Bharti Airtel', emoji: '📡', sector: 'Telecommunications' },
+    { name: 'HDFC Bank', emoji: '🏦', sector: 'Banking' }
   ];
 
   const awards = [
-    'Best Skill Development Institute 2023',
-    'Excellence in Training Award',
-    'NSDC Recognition Certificate',
-    'Industry Partnership Excellence',
-    'Rural Development Impact Award'
+    {
+      name: 'Best Skill Development Institute 2023',
+      icon: Crown,
+      color: 'from-yellow-500/20 to-amber-500/20',
+      iconBg: 'bg-yellow-500/10'
+    },
+    {
+      name: 'Excellence in Training Award',
+      icon: Trophy,
+      color: 'from-blue-500/20 to-indigo-500/20',
+      iconBg: 'bg-blue-500/10'
+    },
+    {
+      name: 'NSDC Recognition Certificate',
+      icon: Medal,
+      color: 'from-green-500/20 to-emerald-500/20',
+      iconBg: 'bg-green-500/10'
+    },
+    {
+      name: 'Industry Partnership Excellence',
+      icon: Star,
+      color: 'from-purple-500/20 to-violet-500/20',
+      iconBg: 'bg-purple-500/10'
+    },
+    {
+      name: 'Rural Development Impact Award',
+      icon: Award,
+      color: 'from-red-500/20 to-rose-500/20',
+      iconBg: 'bg-red-500/10'
+    }
   ];
 
   return (
@@ -62,15 +117,15 @@ const Partners = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {governmentPartners.map((partner, index) => (
               <div 
-                key={partner}
-                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 text-center hover:border-primary/30 transition-all duration-300 hover:glow-orange animate-fade-in"
+                key={partner.name}
+                className={`bg-gradient-to-br ${partner.color} backdrop-blur-sm border border-border/50 rounded-xl p-6 text-center hover:border-primary/30 transition-all duration-300 hover:scale-105 animate-fade-in`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Building2 className="h-8 w-8 text-primary" />
+                <div className={`w-16 h-16 ${partner.iconBg} rounded-xl flex items-center justify-center mx-auto mb-4`}>
+                  <partner.icon className="h-8 w-8 text-primary" />
                 </div>
                 <h4 className="font-medium text-foreground text-sm leading-relaxed">
-                  {partner}
+                  {partner.name}
                 </h4>
               </div>
             ))}
@@ -92,18 +147,17 @@ const Partners = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {privatePartners.map((partner, index) => (
               <div 
-                key={partner}
-                className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-lg p-4 text-center hover:border-primary/30 transition-all duration-300 animate-fade-in"
+                key={partner.name}
+                className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-lg p-4 text-center hover:border-primary/30 transition-all duration-300 hover:scale-105 animate-fade-in"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <span className="text-primary font-bold text-sm">
-                    {partner.split(' ')[0].substring(0, 2)}
-                  </span>
+                  <span className="text-2xl">{partner.emoji}</span>
                 </div>
-                <h4 className="font-medium text-foreground text-xs">
-                  {partner}
+                <h4 className="font-medium text-foreground text-xs mb-1">
+                  {partner.name}
                 </h4>
+                <p className="text-xs text-muted-foreground">{partner.sector}</p>
               </div>
             ))}
           </div>
@@ -127,15 +181,15 @@ const Partners = () => {
           <div className="grid md:grid-cols-5 gap-6">
             {awards.map((award, index) => (
               <div 
-                key={award}
-                className="stats-card animate-fade-in"
+                key={award.name}
+                className={`bg-gradient-to-br ${award.color} backdrop-blur-sm border border-border/50 rounded-xl p-6 text-center hover:border-primary/30 transition-all duration-300 hover:scale-105 animate-fade-in`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Award className="h-8 w-8 text-primary" />
+                <div className={`w-16 h-16 ${award.iconBg} rounded-xl flex items-center justify-center mx-auto mb-4`}>
+                  <award.icon className="h-8 w-8 text-primary" />
                 </div>
                 <h4 className="font-medium text-foreground text-sm leading-relaxed">
-                  {award}
+                  {award.name}
                 </h4>
               </div>
             ))}
