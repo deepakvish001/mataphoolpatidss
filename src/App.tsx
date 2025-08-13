@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import RashtriyaGramSwarajAbhiyan from "./pages/RashtriyaGramSwarajAbhiyan";
 import NSQF from "./pages/NSQF";
+import AAIOE from "./pages/AAIOE";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/rashtiya-gram-swaraj-abhiyan" element={<RashtriyaGramSwarajAbhiyan />} />
           <Route path="/nsqf" element={<NSQF />} />
+          <Route path="/aaioe" element={<AAIOE />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
