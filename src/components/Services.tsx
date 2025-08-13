@@ -1,4 +1,4 @@
-import { BookOpen, Briefcase, Award, Users, CheckCircle, ArrowRight } from 'lucide-react';
+import { BookOpen, Briefcase, Award, Users, CheckCircle, ArrowRight, Shirt, ShoppingCart, Cpu, Heart, Utensils, Wheat, Code, Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Services = () => {
@@ -40,49 +40,73 @@ const Services = () => {
       name: 'Apparel Manufacturing',
       description: 'Fashion Design, Garment Technology, Pattern Making',
       duration: '6-12 months',
-      certification: 'NSDC Certified'
+      certification: 'NSDC Certified',
+      icon: Shirt,
+      color: 'text-pink-500',
+      bgColor: 'bg-pink-500/10'
     },
     {
       name: 'Organized Retail',
       description: 'Customer Service, Inventory Management, Sales Operations',
       duration: '3-6 months',
-      certification: 'Industry Recognized'
+      certification: 'Industry Recognized',
+      icon: ShoppingCart,
+      color: 'text-blue-500',
+      bgColor: 'bg-blue-500/10'
     },
     {
       name: 'Electronics & Hardware',
       description: 'PCB Assembly, Device Repair, Quality Testing',
       duration: '8-10 months',
-      certification: 'Government Approved'
+      certification: 'Government Approved',
+      icon: Cpu,
+      color: 'text-green-500',
+      bgColor: 'bg-green-500/10'
     },
     {
       name: 'Healthcare Services',
       description: 'Patient Care, Medical Equipment, Health & Safety',
       duration: '6-9 months',
-      certification: 'Health Ministry Certified'
+      certification: 'Health Ministry Certified',
+      icon: Heart,
+      color: 'text-red-500',
+      bgColor: 'bg-red-500/10'
     },
     {
       name: 'Food Processing',
       description: 'Food Safety, Quality Control, Packaging Technology',
       duration: '4-8 months',
-      certification: 'FSSAI Compliant'
+      certification: 'FSSAI Compliant',
+      icon: Utensils,
+      color: 'text-orange-500',
+      bgColor: 'bg-orange-500/10'
     },
     {
       name: 'Agriculture & Allied',
       description: 'Organic Farming, Crop Management, Dairy Technology',
       duration: '6-12 months',
-      certification: 'Agriculture Ministry Approved'
+      certification: 'Agriculture Ministry Approved',
+      icon: Wheat,
+      color: 'text-yellow-500',
+      bgColor: 'bg-yellow-500/10'
     },
     {
       name: 'IT & Software',
       description: 'Web Development, Database Management, Digital Marketing',
       duration: '8-12 months',
-      certification: 'Industry Standard'
+      certification: 'Industry Standard',
+      icon: Code,
+      color: 'text-purple-500',
+      bgColor: 'bg-purple-500/10'
     },
     {
       name: 'Automotive Services',
       description: 'Vehicle Maintenance, Auto Electronics, Service Management',
       duration: '6-10 months',
-      certification: 'Automotive Council Certified'
+      certification: 'Automotive Council Certified',
+      icon: Car,
+      color: 'text-indigo-500',
+      bgColor: 'bg-indigo-500/10'
     }
   ];
 
@@ -112,8 +136,8 @@ const Services = () => {
                 className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:border-primary/30 transition-all duration-300 hover:glow-orange animate-fade-in group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <BookOpen className="h-6 w-6 text-primary" />
+                <div className={`w-12 h-12 ${area.bgColor} rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300`}>
+                  <area.icon className={`h-6 w-6 ${area.color}`} />
                 </div>
                 <div className="text-center">
                   <h4 className="font-semibold text-foreground text-sm mb-2">{area.name}</h4>
