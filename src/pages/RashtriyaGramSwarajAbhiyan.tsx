@@ -24,7 +24,9 @@ import {
   MessageSquare,
   DollarSign,
   Computer,
-  Gavel
+  Gavel,
+  GraduationCap,
+  Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -351,174 +353,358 @@ const RashtriyaGramSwarajAbhiyan = () => {
         </div>
       </section>
 
-      {/* Objectives Section */}
-      <section className="section-padding bg-gradient-to-b from-background to-muted/5">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-3 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-8">
-              <Target className="h-5 w-5 text-primary" />
-              <span className="text-primary font-semibold">Our Mission</span>
+      {/* Enhanced Objectives Section */}
+      <section className="relative section-padding overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/3 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+              <Target className="h-6 w-6 text-primary" />
+              <span className="text-primary font-black text-lg tracking-wide">TRAINING OBJECTIVES</span>
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Training Objectives</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Comprehensive goals driving our PRI training initiatives across the nation
+            
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-8 leading-tight">
+              Our Core <span className="text-gradient bg-gradient-to-r from-primary via-orange-500 to-primary bg-clip-text text-transparent">Objectives</span>
+            </h2>
+            <p className="text-2xl text-muted-foreground max-w-4xl mx-auto font-medium">
+              Strategic goals driving our comprehensive PRI training initiatives across the nation
+            </p>
+            
+            {/* Decorative Line */}
+            <div className="flex items-center justify-center mt-8">
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full"></div>
+            </div>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-animation">
+            {objectives.map((objective, index) => (
+              <Card key={index} className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-lg shadow-xl hover:shadow-3xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2">
+                {/* Card Background Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
+                
+                <CardContent className="relative p-8 md:p-10 space-y-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                    <div className="relative w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                      <objective.icon className="h-10 w-10 text-primary group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-2xl md:text-3xl font-black text-foreground group-hover:text-primary transition-colors duration-500 leading-tight">
+                      {objective.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-lg font-medium">
+                      {objective.description}
+                    </p>
+                  </div>
+                  
+                  {/* Progress Indicator */}
+                  <div className="pt-4">
+                    <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-primary to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left"></div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Training Categories Section */}
+      <section className="section-padding bg-gradient-to-br from-muted/10 via-background to-primary/5">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-primary/10 to-orange-500/10 border border-primary/20 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <GraduationCap className="h-6 w-6 text-primary" />
+              <span className="text-primary font-black text-lg tracking-wide">TRAINING CATEGORIES</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-black text-foreground mb-8 leading-tight">
+              Comprehensive <span className="text-gradient bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">Training Programs</span>
+            </h2>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* General Orientation - Enhanced */}
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-lg shadow-2xl hover:shadow-3xl transition-all duration-700">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl"></div>
+              
+              <CardContent className="relative p-10 md:p-12 space-y-8">
+                <div className="text-center space-y-6">
+                  <div className="relative mx-auto">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-3xl blur-xl"></div>
+                    <div className="relative w-24 h-24 bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-3xl flex items-center justify-center">
+                      <BookOpen className="h-12 w-12 text-blue-500" />
+                    </div>
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-black text-foreground leading-tight">
+                    GENERAL ORIENTATION<br />
+                    <span className="text-blue-500">TRAININGS FOR ERS</span>
+                  </h3>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="relative bg-gradient-to-r from-blue-500/10 to-blue-500/5 rounded-2xl p-6 border border-blue-500/20">
+                    <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+                      Comprehensive coverage of all PRI functions across <span className="text-blue-500 font-bold">29 Constitutional Subjects</span> under Article 243(G) & 11th Schedule, integrated with LSDGs for enhanced local governance.
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-3 flex-shrink-0"></div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Interactive delivery through PPTs, group discussions, audio-visual modules, exposure visits, and case studies
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-3 flex-shrink-0"></div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Multilingual accessibility in Hindi, English, and regional languages
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Clear and engaging information delivery for maximum understanding
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Refresher Programme - Enhanced */}
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-lg shadow-2xl hover:shadow-3xl transition-all duration-700">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-green-500/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-green-500/20 to-transparent rounded-full blur-2xl"></div>
+              
+              <CardContent className="relative p-10 md:p-12 space-y-8">
+                <div className="text-center space-y-6">
+                  <div className="relative mx-auto">
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-3xl blur-xl"></div>
+                    <div className="relative w-24 h-24 bg-gradient-to-br from-green-500/20 to-green-600/10 rounded-3xl flex items-center justify-center">
+                      <ClipboardList className="h-12 w-12 text-green-500" />
+                    </div>
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-black text-foreground leading-tight">
+                    REFRESHER PROGRAMME<br />
+                    <span className="text-green-500">TRAININGS FOR ERS</span>
+                  </h3>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="relative bg-gradient-to-r from-green-500/10 to-green-500/5 rounded-2xl p-6 border border-green-500/20">
+                    <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+                      Advanced assessment and evaluation programs with <span className="text-green-500 font-bold">questionnaires, surveys, and case studies</span> to measure understanding and retention.
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-3 flex-shrink-0"></div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Comprehensive evaluation through questionnaires and surveys with expert assistance
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-3 flex-shrink-0"></div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Interactive group discussions and open-ended assessments for critical thinking
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Real-world case studies with innovative solution development
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced LSDG Section */}
+      <section className="relative section-padding overflow-hidden">
+        {/* Dynamic Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/3 to-background">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,hsl(var(--primary)/0.1),transparent_60%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_50%,hsl(var(--primary)/0.05),transparent_60%)]"></div>
+        </div>
+        
+        {/* Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-float"></div>
+          <div className="absolute top-1/3 right-10 w-16 h-16 bg-green-500/10 rounded-full blur-lg animate-float" style={{animationDelay: '3s'}}></div>
+          <div className="absolute bottom-20 left-1/3 w-24 h-24 bg-blue-500/10 rounded-full blur-xl animate-float" style={{animationDelay: '6s'}}></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-primary/10 via-green-500/10 to-blue-500/10 border border-primary/20 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+              <Globe className="h-6 w-6 text-primary" />
+              <span className="text-primary font-black text-lg tracking-wide">SUSTAINABLE DEVELOPMENT</span>
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 leading-tight">
+              Thematic <span className="text-gradient bg-gradient-to-r from-primary via-green-500 to-blue-500 bg-clip-text text-transparent">Training</span>
+            </h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-primary mb-8">
+              Localization of Sustainable Development Goals (LSDGs)
+            </h3>
+            <p className="text-2xl text-muted-foreground max-w-5xl mx-auto font-medium leading-relaxed">
+              Transforming villages through comprehensive development programs aligned with <span className="text-primary font-bold">global sustainability goals</span> and local community needs
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {objectives.map((objective, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80">
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <objective.icon className="h-8 w-8 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">{objective.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{objective.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Training Categories Section */}
-      <section className="section-padding">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">BROAD TRAINING CATEGORIES</h2>
-          </div>
-          
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* General Orientation */}
-            <Card className="card-premium">
-              <CardContent className="p-8">
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <BookOpen className="h-10 w-10 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-4">GENERAL ORIENTATION TRAININGS FOR ERS</h3>
-                </div>
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    In this category, we explain all the functions of PRIs covering 29 Subjects, mentioned under Article 243(G) & 11th Schedule of the Constitution of India by incorporating LSDGs to enhance effectiveness of local governance.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    We make sure that the information is delivered to the Elected Representatives in a clear and engaging manner through PPTs, group discussions, audio & video modules, exposure visits, role-play, case studies, debates etc.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    To ensure maximum accessibility, We deliver content in Hindi, English, or the appropriate regional/vernacular language.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Refresher Programme */}
-            <Card className="card-premium">
-              <CardContent className="p-8">
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <ClipboardList className="h-10 w-10 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-4">REFRESHER PROGRAMME TRAININGS FOR ERS</h3>
-                </div>
-                
-                <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    We prepare questionnaires and surveys to evaluate participants understanding of key concepts and functions covered in the orientation program. Trainers and coordinators will be available to assist participants in completing these assessments.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    We facilitate group discussions and ask open-ended questions on specific topics to assess participants knowledge retention and critical thinking skills.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    We also present real-world case studies related to local governance challenges and encourage participants to propose innovative solutions.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* LSDG Section */}
-      <section className="section-padding bg-gradient-to-b from-muted/5 to-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-3 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-8">
-              <Globe className="h-5 w-5 text-primary" />
-              <span className="text-primary font-semibold">Global Goals</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Thematic Training</h2>
-            <h3 className="text-2xl font-semibold text-primary mb-4">Localization of Sustainable Development Goals (LSDGs)</h3>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              Empowering villages through comprehensive development programs aligned with global sustainability goals
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {lsdgs.map((lsdg, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-500 border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <lsdg.icon className="h-8 w-8 text-primary" />
+              <Card key={index} className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-lg shadow-xl hover:shadow-3xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2">
+                {/* Card Background Animation */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
+                
+                {/* Floating Icon Background */}
+                <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
+                
+                <CardContent className="relative p-8 text-center space-y-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                    <div className="relative w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500">
+                      <lsdg.icon className="h-10 w-10 text-primary group-hover:scale-110 transition-transform duration-300" />
+                    </div>
                   </div>
-                  <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300">{lsdg.name}</h3>
+                  
+                  <h3 className="text-xl md:text-2xl font-black text-foreground group-hover:text-primary transition-colors duration-500 leading-tight">
+                    {lsdg.name}
+                  </h3>
+                  
+                  {/* Progress Indicator */}
+                  <div className="pt-2">
+                    <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-primary to-green-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left"></div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
+          
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/10 to-green-500/10 border border-primary/20 rounded-2xl px-8 py-4">
+              <Heart className="h-6 w-6 text-primary" />
+              <span className="text-lg font-bold text-foreground">Building Sustainable Communities for Tomorrow</span>
+              <Sparkles className="h-6 w-6 text-green-500" />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Specialized Trainings Section */}
-      <section className="section-padding bg-gradient-to-b from-background to-muted/5">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-3 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-8">
-              <BookOpen className="h-5 w-5 text-primary" />
-              <span className="text-primary font-semibold">Expert Training</span>
+      {/* Enhanced Specialized Trainings Section */}
+      <section className="relative section-padding overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/5 to-background">
+          <div className="absolute top-1/4 left-10 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-primary/3 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+              <Award className="h-6 w-6 text-primary" />
+              <span className="text-primary font-black text-lg tracking-wide">SPECIALIZED TRAINING</span>
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Specialized Training Programs</h2>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              Comprehensive training modules designed to build expertise in critical governance areas
+            
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-8 leading-tight">
+              Expert <span className="text-gradient bg-gradient-to-r from-primary via-orange-500 to-primary bg-clip-text text-transparent">Training Programs</span>
+            </h2>
+            <p className="text-2xl text-muted-foreground max-w-5xl mx-auto font-medium leading-relaxed">
+              Advanced training modules designed to build <span className="text-primary font-bold">specialized expertise</span> in critical governance and technology areas
             </p>
           </div>
           
-          <div className="space-y-8">
+          <div className="space-y-12">
             {specializedTrainings.map((training, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80">
-                <CardContent className="p-8 md:p-10">
-                  <div className="flex items-start space-x-8">
-                    <div className="flex-shrink-0">
-                      <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <training.icon className="h-10 w-10 text-primary" />
+              <Card key={index} className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-lg shadow-2xl hover:shadow-3xl transition-all duration-700">
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                
+                <CardContent className="relative p-8 md:p-12">
+                  <div className="flex items-start gap-10">
+                    <div className="flex-shrink-0 space-y-6">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                        <div className="relative w-24 h-24 bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                          <training.icon className="h-12 w-12 text-primary group-hover:scale-110 transition-transform duration-300" />
+                        </div>
                       </div>
-                      <div className="text-4xl font-bold text-primary text-center mt-4 opacity-60">{training.number}</div>
+                      <div className="text-center">
+                        <div className="text-5xl md:text-6xl font-black text-primary/60 group-hover:text-primary transition-colors duration-500">{training.number}</div>
+                      </div>
                     </div>
                     
-                    <div className="flex-1 space-y-6">
-                      <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">{training.title}</h3>
-                      <p className="text-lg text-muted-foreground leading-relaxed">{training.description}</p>
+                    <div className="flex-1 space-y-8">
+                      <div className="space-y-4">
+                        <h3 className="text-3xl md:text-4xl font-black text-foreground group-hover:text-primary transition-colors duration-500 leading-tight">
+                          {training.title}
+                        </h3>
+                        <p className="text-xl text-muted-foreground leading-relaxed font-medium">
+                          {training.description}
+                        </p>
+                      </div>
                       
                       {training.topics && (
-                        <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/20">
-                          <p className="text-muted-foreground font-medium">{training.topics}</p>
+                        <div className="relative bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-2xl p-8 border border-primary/20 overflow-hidden">
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)]"></div>
+                          <div className="relative">
+                            <h4 className="text-lg font-bold text-primary mb-4">Key Training Areas:</h4>
+                            <p className="text-muted-foreground font-medium leading-relaxed">{training.topics}</p>
+                          </div>
                         </div>
                       )}
                       
                       {training.issues && (
-                        <div className="space-y-4">
-                          <h4 className="font-bold text-foreground text-lg">Key Focus Areas:</h4>
-                          <div className="grid md:grid-cols-2 gap-3">
+                        <div className="space-y-6">
+                          <h4 className="text-2xl font-black text-foreground">Focus Areas & Solutions:</h4>
+                          <div className="grid md:grid-cols-2 gap-4">
                             {training.issues.map((issue, issueIndex) => (
-                              <div key={issueIndex} className="flex items-center space-x-3 p-3 bg-card/30 rounded-lg">
-                                <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                                <span className="text-muted-foreground">{issue}</span>
+                              <div key={issueIndex} className="group/item relative overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-xl opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"></div>
+                                <div className="relative flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-border hover:border-primary/30 transition-colors duration-300">
+                                  <CheckCircle className="h-6 w-6 text-primary flex-shrink-0" />
+                                  <span className="text-muted-foreground font-medium">{issue}</span>
+                                </div>
                               </div>
                             ))}
                           </div>
                         </div>
                       )}
+                      
+                      {/* Progress Bar */}
+                      <div className="pt-4">
+                        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                          <div className="h-full bg-gradient-to-r from-primary to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left"></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -528,63 +714,134 @@ const RashtriyaGramSwarajAbhiyan = () => {
         </div>
       </section>
 
-      {/* Work Plan Section */}
-      <section className="section-padding bg-gradient-to-r from-background to-primary/5">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">WORK PLAN</h2>
+      {/* Enhanced Work Plan Section */}
+      <section className="relative section-padding overflow-hidden">
+        {/* Dynamic Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary)/0.08),transparent_50%)]"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+              <ClipboardList className="h-6 w-6 text-primary" />
+              <span className="text-primary font-black text-lg tracking-wide">IMPLEMENTATION PLAN</span>
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+            </div>
+            
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-8 leading-tight">
+              Strategic <span className="text-gradient bg-gradient-to-r from-primary via-blue-500 to-primary bg-clip-text text-transparent">Work Plan</span>
+            </h2>
+            <p className="text-2xl text-muted-foreground max-w-4xl mx-auto font-medium">
+              Comprehensive implementation strategy for effective training delivery
+            </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            <Card className="card-hover">
-              <CardContent className="p-6">
-                <MapPin className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-lg font-bold text-foreground mb-2">Location</h3>
-                <p className="text-muted-foreground">Prioritize accessibility, infrastructure, and trainee convenience.</p>
+          {/* Key Areas Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-lg shadow-xl hover:shadow-3xl transition-all duration-700 transform hover:scale-105">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+              <CardContent className="relative p-8 text-center space-y-6">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-blue-500/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500/20 to-blue-500/10 rounded-3xl flex items-center justify-center mx-auto">
+                    <MapPin className="h-8 w-8 text-blue-500" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-black text-foreground group-hover:text-blue-500 transition-colors duration-300">Strategic Location</h3>
+                <p className="text-muted-foreground leading-relaxed">Prioritize accessibility, infrastructure, and trainee convenience for optimal learning environments.</p>
               </CardContent>
             </Card>
             
-            <Card className="card-hover">
-              <CardContent className="p-6">
-                <ClipboardList className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-lg font-bold text-foreground mb-2">Needs Assessment</h3>
-                <p className="text-muted-foreground">Survey PRIs to identify knowledge gaps and training needs.</p>
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-lg shadow-xl hover:shadow-3xl transition-all duration-700 transform hover:scale-105">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-green-500/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+              <CardContent className="relative p-8 text-center space-y-6">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/30 to-green-500/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative w-16 h-16 bg-gradient-to-br from-green-500/20 to-green-500/10 rounded-3xl flex items-center justify-center mx-auto">
+                    <Target className="h-8 w-8 text-green-500" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-black text-foreground group-hover:text-green-500 transition-colors duration-300">Needs Assessment</h3>
+                <p className="text-muted-foreground leading-relaxed">Comprehensive surveys to identify knowledge gaps and customize training modules for maximum impact.</p>
               </CardContent>
             </Card>
             
-            <Card className="card-hover">
-              <CardContent className="p-6">
-                <Calendar className="h-8 w-8 text-primary mb-4" />
-                <h3 className="text-lg font-bold text-foreground mb-2">Calendar</h3>
-                <p className="text-muted-foreground">Create a training calendar based on identified needs.</p>
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-lg shadow-xl hover:shadow-3xl transition-all duration-700 transform hover:scale-105">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+              <CardContent className="relative p-8 text-center space-y-6">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl flex items-center justify-center mx-auto">
+                    <Calendar className="h-8 w-8 text-primary" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors duration-300">Training Calendar</h3>
+                <p className="text-muted-foreground leading-relaxed">Structured scheduling based on identified needs and optimal timing for maximum participation.</p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Training Phases */}
-          <div className="space-y-8">
+          {/* Enhanced Training Phases */}
+          <div className="space-y-12">
             {phases.map((phase, index) => (
-              <Card key={index} className="card-premium">
-                <CardContent className="p-8">
-                  <div className="flex items-start space-x-6">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                      <span className="text-2xl font-bold text-primary">{index + 1}</span>
+              <Card key={index} className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-lg shadow-2xl hover:shadow-3xl transition-all duration-700">
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-2xl"></div>
+                
+                <CardContent className="relative p-8 md:p-12">
+                  <div className="flex items-start gap-8">
+                    <div className="flex-shrink-0">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                        <div className="relative w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                          <span className="text-3xl font-black text-primary">{index + 1}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-foreground mb-2">{phase.phase}: {phase.title}</h3>
-                      <div className="space-y-2">
+                    
+                    <div className="flex-1 space-y-6">
+                      <div className="space-y-4">
+                        <h3 className="text-3xl md:text-4xl font-black text-foreground group-hover:text-primary transition-colors duration-500 leading-tight">
+                          {phase.phase}: {phase.title}
+                        </h3>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-2 gap-4">
                         {phase.items.map((item, itemIndex) => (
-                          <div key={itemIndex} className="flex items-start space-x-3">
-                            <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-muted-foreground">{item}</span>
+                          <div key={itemIndex} className="group/item relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-xl opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"></div>
+                            <div className="relative flex items-start gap-4 p-4 bg-card/30 rounded-xl border border-border hover:border-primary/30 transition-colors duration-300">
+                              <CheckCircle className="h-6 w-6 text-primary mt-0.5 flex-shrink-0" />
+                              <span className="text-muted-foreground font-medium leading-relaxed">{item}</span>
+                            </div>
                           </div>
                         ))}
+                      </div>
+                      
+                      {/* Progress Bar */}
+                      <div className="pt-4">
+                        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                          <div className="h-full bg-gradient-to-r from-primary to-blue-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left"></div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             ))}
+          </div>
+          
+          {/* Call to Action */}
+          <div className="text-center mt-16">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-primary/10 to-blue-500/10 border border-primary/20 rounded-2xl px-8 py-4">
+              <Crown className="h-6 w-6 text-primary" />
+              <span className="text-lg font-bold text-foreground">Building Stronger Democratic Institutions</span>
+              <Target className="h-6 w-6 text-blue-500" />
+            </div>
           </div>
         </div>
       </section>
