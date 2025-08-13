@@ -1,4 +1,4 @@
-import { Award, Users, MapPin, Phone, Mail, Calendar, Target, Eye, User, Building2, GraduationCap, Trophy, Briefcase, Star, Search, CheckCircle, Sparkles, Globe, Heart } from 'lucide-react';
+import { Award, Users, MapPin, Phone, Mail, Calendar, Target, Eye, User, Building2, GraduationCap, Trophy, Briefcase, Star, Search, CheckCircle, Sparkles, Globe, Heart, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Navigation from '@/components/Navigation';
@@ -49,123 +49,165 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Enhanced Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-background via-muted/10 to-primary/10">
-        {/* Animated Background Particles */}
+      {/* Enhanced Hero Section - Matching Home Page */}
+      <section className="relative min-h-screen flex items-center hero-gradient overflow-hidden">
+        {/* Background Image with Better Overlay */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/70"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,127,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,127,0,0.05)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        </div>
+
+        {/* Animated Background Particles - Matching Home Style */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Large floating elements */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-l from-blue-500/15 to-purple-500/15 rounded-full blur-2xl" style={{ animation: 'float 6s ease-in-out infinite' }} />
-          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full blur-3xl animate-bounce" style={{ animationDuration: '3s' }} />
-          <div className="absolute top-1/6 right-1/6 w-32 h-32 bg-primary/30 rounded-full blur-xl animate-pulse" style={{ animationDuration: '2s' }} />
-          <div className="absolute bottom-1/6 left-1/6 w-48 h-48 bg-gradient-to-tr from-purple-500/20 to-pink-500/20 rounded-full blur-2xl" style={{ animation: 'float 5s ease-in-out infinite reverse' }} />
+          {/* Large floating elements - consistent with home */}
+          <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-gradient-to-r from-primary/15 to-orange-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-l from-primary/10 to-transparent rounded-full blur-3xl" />
+          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-primary/20 rounded-full blur-2xl animate-pulse" style={{ animationDuration: '3s' }} />
           
-          {/* Floating icons */}
-          <div className="absolute top-1/3 left-1/5 animate-bounce" style={{ animationDuration: '3s', animationDelay: '0.5s' }}>
-            <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-              <GraduationCap className="h-8 w-8 text-primary/60" />
-            </div>
-          </div>
-          <div className="absolute bottom-1/3 right-1/5 animate-bounce" style={{ animationDuration: '4s', animationDelay: '1s' }}>
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-              <Trophy className="h-6 w-6 text-blue-500/60" />
-            </div>
-          </div>
-          <div className="absolute top-2/3 left-1/3 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1.5s' }}>
-            <div className="w-14 h-14 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-              <Users className="h-7 w-7 text-green-500/60" />
-            </div>
-          </div>
-          
-          {/* Grid pattern overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,127,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,127,0,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+          {/* Floating corner elements */}
+          <div className="absolute top-20 right-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute bottom-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl animate-pulse"></div>
         </div>
         
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-6xl mx-auto">
-            {/* Enhanced Badge */}
-            <div className="inline-flex items-center space-x-4 bg-gradient-to-r from-primary/30 via-primary/20 to-primary/30 border border-primary/40 rounded-full px-10 py-5 mb-12 backdrop-blur-md shadow-2xl hover:glow-orange transition-all duration-500 group">
-              <div className="w-4 h-4 bg-primary rounded-full animate-pulse group-hover:scale-125 transition-transform" />
-              <Building2 className="h-7 w-7 text-primary group-hover:rotate-12 transition-transform" />
-              <span className="text-primary font-bold text-xl tracking-wide">PIONEERING EXCELLENCE SINCE 2013</span>
-              <Sparkles className="h-6 w-6 text-primary animate-pulse group-hover:rotate-12 transition-transform" />
-              <div className="w-4 h-4 bg-gradient-to-r from-primary to-orange-500 rounded-full animate-pulse group-hover:scale-125 transition-transform" />
-            </div>
-            
-            {/* Enhanced Main Title */}
-            <div className="mb-12">
-              <h1 className="text-7xl md:text-8xl lg:text-9xl font-serif font-black leading-none mb-6">
-                <span className="block text-gradient bg-gradient-to-r from-foreground via-foreground/95 to-muted-foreground bg-clip-text text-transparent animate-fade-in">
-                  MATA PHOOLPATI DEVI
-                </span>
-                <span className="block text-gradient bg-gradient-to-r from-primary via-orange-500 to-primary bg-clip-text text-transparent mt-4 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-                  SHIKSHAN SANSTHAN
-                </span>
-              </h1>
-              
-              {/* Decorative line */}
-              <div className="flex items-center justify-center space-x-4 mt-8 mb-8">
-                <div className="w-20 h-1 bg-gradient-to-r from-transparent to-primary rounded-full" />
-                <div className="w-8 h-8 bg-gradient-to-r from-primary to-orange-500 rounded-full flex items-center justify-center">
-                  <Star className="h-4 w-4 text-white" />
+        <div className="container-custom relative z-10 py-20">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Content - Matching Home Page Typography */}
+            <div className="space-y-8 animate-fade-in">
+              <div className="space-y-6">
+                {/* Badge - Consistent with Home */}
+                <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 text-sm">
+                  <Award className="h-5 w-5 text-primary" />
+                  <span className="text-primary font-semibold">Pioneering Excellence Since 2013</span>
                 </div>
-                <div className="w-20 h-1 bg-gradient-to-l from-transparent to-primary rounded-full" />
+                
+                {/* Main Title - Matching Home Style */}
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                  <span className="text-gradient">MATA PHOOLPATI DEVI</span>
+                  <br />
+                  <span className="text-foreground">SHIKSHAN SANSTHAN</span>
+                </h1>
+                
+                {/* Subtitle - Consistent Typography */}
+                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
+                  Where Students Come to <span className="text-primary font-semibold">Succeed</span>. 
+                  Empowering with <span className="text-primary font-semibold">ABILITY</span> through 
+                  comprehensive skill development and creating tomorrow's industry leaders.
+                </p>
               </div>
-            </div>
-            
-            {/* Enhanced Subtitle */}
-            <div className="max-w-5xl mx-auto mb-16">
-              <p className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium text-muted-foreground leading-tight mb-8">
-                Where Students Come to <span className="text-gradient bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent font-bold">Succeed</span>
-              </p>
-              <p className="text-xl md:text-2xl text-muted-foreground/90 leading-relaxed font-light">
-                Empowering youth with <span className="text-primary font-bold text-2xl md:text-3xl">ABILITY</span>, 
-                transforming lives through comprehensive skill development, and creating tomorrow's industry leaders across India
-              </p>
-            </div>
-            
-            {/* Enhanced CTA Section */}
-            <div className="flex flex-col lg:flex-row gap-8 justify-center items-center mb-16">
-              <Button className="group relative overflow-hidden bg-gradient-to-r from-primary to-orange-500 text-white text-xl px-12 py-6 rounded-2xl font-bold shadow-2xl hover:scale-105 transition-all duration-500 border-0">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative flex items-center space-x-3">
-                  <GraduationCap className="h-7 w-7 group-hover:rotate-12 transition-transform duration-300" />
-                  <span>Download Brochure</span>
-                  <Sparkles className="h-6 w-6 group-hover:scale-125 transition-transform duration-300" />
+
+              {/* Quick Stats - Matching Home Layout */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary">25+</div>
+                  <div className="text-sm text-muted-foreground">Years Excellence</div>
                 </div>
-              </Button>
-              
-              <Button variant="outline" className="group bg-transparent border-2 border-primary/50 text-primary hover:bg-primary/10 text-xl px-12 py-6 rounded-2xl font-bold shadow-xl hover:scale-105 transition-all duration-500 backdrop-blur-sm">
-                <div className="flex items-center space-x-3">
-                  <Phone className="h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                  <span>Contact Us Now</span>
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary">15L+</div>
+                  <div className="text-sm text-muted-foreground">Students Trained</div>
                 </div>
-              </Button>
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary">22+</div>
+                  <div className="text-sm text-muted-foreground">States Covered</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary">95%</div>
+                  <div className="text-sm text-muted-foreground">Success Rate</div>
+                </div>
+              </div>
+
+              {/* CTA Buttons - Matching Home Style */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="btn-primary group">
+                  Download Brochure
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <Button size="lg" variant="outline" className="btn-secondary group">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Contact Us Now
+                </Button>
+              </div>
+
+              {/* Trust Indicators - Consistent with Home */}
+              <div className="flex flex-wrap items-center gap-6 pt-8 border-t border-border/50">
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <CheckCircle className="h-4 w-4 text-primary" />
+                  <span>NSDC Training Partner</span>
+                </div>
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <Globe className="h-4 w-4 text-primary" />
+                  <span>Pan India Presence</span>
+                </div>
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <Trophy className="h-4 w-4 text-primary" />
+                  <span>Award Winning Institute</span>
+                </div>
+              </div>
             </div>
-            
-            {/* Achievement Highlights */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-              <div className="text-center group">
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">25+</div>
-                <div className="text-sm md:text-base text-muted-foreground font-semibold">Years Excellence</div>
-              </div>
-              <div className="text-center group">
-                <div className="text-4xl md:text-5xl font-bold text-green-500 mb-2 group-hover:scale-110 transition-transform duration-300">15L+</div>
-                <div className="text-sm md:text-base text-muted-foreground font-semibold">Students Trained</div>
-              </div>
-              <div className="text-center group">
-                <div className="text-4xl md:text-5xl font-bold text-blue-500 mb-2 group-hover:scale-110 transition-transform duration-300">22+</div>
-                <div className="text-sm md:text-base text-muted-foreground font-semibold">States Covered</div>
-              </div>
-              <div className="text-center group">
-                <div className="text-4xl md:text-5xl font-bold text-purple-500 mb-2 group-hover:scale-110 transition-transform duration-300">95%</div>
-                <div className="text-sm md:text-base text-muted-foreground font-semibold">Success Rate</div>
+
+            {/* Enhanced Visual Elements - Matching Home Design */}
+            <div className="hidden lg:block relative">
+              <div className="relative">
+                {/* Main visual card - Similar to Home */}
+                <div className="w-full h-[500px] bg-gradient-to-br from-primary/20 via-orange-500/10 to-primary/5 rounded-3xl border border-primary/30 backdrop-blur-sm overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
+                  
+                  {/* Floating achievement badges - Consistent with Home */}
+                  <div className="absolute top-6 left-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in">
+                    <div className="flex items-center space-x-3">
+                      <Building2 className="h-8 w-8 text-primary" />
+                      <div>
+                        <div className="text-sm font-bold text-foreground">Since 2013</div>
+                        <div className="text-xs text-muted-foreground">Established</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="absolute top-6 right-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.2s'}}>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">50+</div>
+                      <div className="text-xs text-muted-foreground">Training Centers</div>
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-6 left-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.4s'}}>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">600+</div>
+                      <div className="text-xs text-muted-foreground">Expert Faculty</div>
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-6 right-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.6s'}}>
+                    <div className="flex items-center space-x-2">
+                      <Heart className="h-6 w-6 text-primary" />
+                      <div>
+                        <div className="text-sm font-bold text-foreground">Our Vision</div>
+                        <div className="text-xs text-muted-foreground">10L Students/Year</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Center content - Matching Home Style */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center space-y-6">
+                      <div className="w-24 h-24 bg-gradient-to-br from-primary/30 to-orange-500/30 rounded-full flex items-center justify-center mx-auto animate-pulse">
+                        <GraduationCap className="h-12 w-12 text-primary" />
+                      </div>
+                      <div className="space-y-3">
+                        <h3 className="text-2xl font-bold text-foreground">Excellence in Education</h3>
+                        <p className="text-muted-foreground max-w-xs">Transforming Lives Through Comprehensive Skill Development</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Background glow effect - Consistent with Home */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-3xl blur-2xl opacity-50 animate-pulse"></div>
               </div>
             </div>
           </div>
         </div>
-        
-        {/* Scroll indicator */}
+
+        {/* Scroll indicator - Matching Home Style */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse" />
@@ -173,90 +215,82 @@ const About = () => {
         </div>
       </section>
 
-      {/* WHO WE ARE Section */}
+      {/* WHO WE ARE Section - Enhanced with Home Page Style */}
       <section className="section-padding bg-gradient-to-b from-background to-muted/20">
-        <div className="container mx-auto px-4">
+        <div className="container-custom">
           <div className="text-center mb-20">
+            {/* Badge - Consistent with Home */}
             <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-8">
               <Globe className="h-5 w-5 text-primary" />
               <span className="text-primary font-semibold">Our Story</span>
             </div>
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-gradient bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">WHO WE</span>
+            
+            {/* Title - Matching Home Typography */}
+            <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
+              <span className="text-gradient">WHO WE</span>
               <span className="text-primary"> ARE</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Pioneering skill development across India with innovation, dedication, and excellence
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Pioneering skill development across India with <span className="text-primary font-semibold">innovation</span>, 
+              dedication, and excellence
             </p>
           </div>
           
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Main Content with Enhanced Design */}
-            <div className="space-y-12">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-                <div className="relative card-premium hover:glow-orange transition-all duration-700 group-hover:scale-[1.02] border-primary/20">
-                  <div className="flex items-start space-x-6 mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary/30 to-primary/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                      <Star className="h-8 w-8 text-primary group-hover:rotate-12 transition-transform" />
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-serif font-bold text-foreground mb-4 group-hover:text-primary transition-colors">Our Foundation</h3>
-                      <div className="w-32 h-1.5 bg-gradient-to-r from-primary via-orange-500 to-primary rounded-full" />
+            <div className="grid lg:grid-cols-2 gap-16 items-start">
+              {/* Main Content with Enhanced Design - Matching Home Cards */}
+              <div className="space-y-12">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                  <div className="relative bg-gradient-to-br from-primary/20 via-orange-500/10 to-primary/5 rounded-3xl border border-primary/30 backdrop-blur-sm p-8 overflow-hidden hover:glow-orange transition-all duration-700 group-hover:scale-[1.02]">
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
+                    
+                    <div className="relative space-y-6">
+                      <div className="flex items-start space-x-6 mb-8">
+                        <div className="w-16 h-16 bg-gradient-to-br from-primary/30 to-primary/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                          <Star className="h-8 w-8 text-primary group-hover:rotate-12 transition-transform" />
+                        </div>
+                        <div>
+                          <h3 className="text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">Our Foundation</h3>
+                          <div className="w-32 h-1.5 bg-gradient-to-r from-primary via-orange-500 to-primary rounded-full" />
+                        </div>
+                      </div>
+                      
+                      <p className="text-xl text-muted-foreground leading-relaxed">
+                        <span className="text-primary font-bold text-2xl">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> stands as a 
+                        <span className="text-gradient bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent font-semibold"> pioneer in skill training</span>, 
+                        providing comprehensive, free, and placement-linked training across diverse sectors including apparel, retail, 
+                        electronics, healthcare, food processing, and agriculture.
+                      </p>
                     </div>
                   </div>
-                  <p className="text-xl text-muted-foreground leading-relaxed">
-                    <span className="text-primary font-bold text-2xl">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> stands as a 
-                    <span className="text-gradient bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent font-semibold"> pioneer in skill training</span>, 
-                    providing comprehensive, free, and placement-linked training across diverse sectors including apparel, retail, 
-                    electronics, healthcare, food processing, and agriculture. As a certified NSDC Training Partner with 
-                    pan-India presence, we've successfully orchestrated transformative projects like DDUGKY, PMKVY, PMKK, and beyond.
-                  </p>
                 </div>
-              </div>
 
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-green-500/5 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-                <div className="relative card-premium hover:glow-orange transition-all duration-700 group-hover:scale-[1.02] border-green-500/20">
-                  <div className="flex items-start space-x-6 mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-green-500/30 to-green-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                      <CheckCircle className="h-8 w-8 text-green-500 group-hover:rotate-12 transition-transform" />
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-serif font-bold text-foreground mb-4 group-hover:text-green-500 transition-colors">Our Impact</h3>
-                      <div className="w-32 h-1.5 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 rounded-full" />
-                    </div>
-                  </div>
-                  <p className="text-xl text-muted-foreground leading-relaxed">
-                    We've architected India's <span className="text-green-500 font-bold">largest Mega Skill Centres</span> in the most 
-                    challenging terrains—Jharkhand, J&K, Uttarakhand, and North-East States. Our strategic ecosystem includes 
-                    comprehensive partnerships ensuring <span className="text-primary font-semibold">100% job training and placement assistance</span> 
-                    for every trained candidate.
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-blue-500/5 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-                <div className="relative card-premium hover:glow-orange transition-all duration-700 group-hover:scale-[1.02] border-blue-500/20">
-                  <div className="flex items-start space-x-6 mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500/30 to-blue-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                      <Globe className="h-8 w-8 text-blue-500 group-hover:rotate-12 transition-transform" />
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-serif font-bold text-foreground mb-4 group-hover:text-blue-500 transition-colors">Our Excellence</h3>
-                      <div className="w-32 h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 rounded-full" />
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-green-500/5 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                  <div className="relative bg-gradient-to-br from-green-500/15 via-emerald-500/8 to-green-500/5 rounded-3xl border border-green-500/30 backdrop-blur-sm p-8 overflow-hidden hover:glow-orange transition-all duration-700 group-hover:scale-[1.02]">
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
+                    
+                    <div className="relative space-y-6">
+                      <div className="flex items-start space-x-6 mb-8">
+                        <div className="w-16 h-16 bg-gradient-to-br from-green-500/30 to-green-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                          <CheckCircle className="h-8 w-8 text-green-500 group-hover:rotate-12 transition-transform" />
+                        </div>
+                        <div>
+                          <h3 className="text-3xl font-bold text-foreground mb-4 group-hover:text-green-500 transition-colors">Our Impact</h3>
+                          <div className="w-32 h-1.5 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 rounded-full" />
+                        </div>
+                      </div>
+                      
+                      <p className="text-xl text-muted-foreground leading-relaxed">
+                        We've architected India's <span className="text-green-500 font-bold">largest Mega Skill Centres</span> in the most 
+                        challenging terrains—Jharkhand, J&K, Uttarakhand, and North-East States, with 
+                        <span className="text-primary font-semibold"> 100% placement assistance</span>.
+                      </p>
                     </div>
                   </div>
-                  <p className="text-xl text-muted-foreground leading-relaxed">
-                    Today, we stand among India's <span className="text-blue-500 font-bold">forefront skill training organizations</span>, 
-                    creating measurable impact across students and society. Our comprehensive approach bridges the gap between 
-                    industry requirements and skilled workforce, fostering both <span className="text-primary font-semibold">employment and entrepreneurship</span>.
-                  </p>
                 </div>
               </div>
-            </div>
 
             {/* Enhanced Stats & Highlights */}
             <div className="space-y-12">
