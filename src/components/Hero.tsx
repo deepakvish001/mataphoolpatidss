@@ -77,6 +77,24 @@ const Hero = () => {
                 <div className="text-sm text-muted-foreground font-medium">Years Excellence</div>
               </div>
             </div>
+
+            {/* Trust Indicators */}
+            <div className="pt-6">
+              <div className="grid grid-cols-1 gap-4 text-center sm:text-left">
+                <div className="flex items-center justify-center sm:justify-start space-x-2">
+                  <BookOpen className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-muted-foreground text-sm font-medium">NSDC Certified</span>
+                </div>
+                <div className="flex items-center justify-center sm:justify-start space-x-2">
+                  <Users className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-muted-foreground text-sm font-medium">Pan India Network</span>
+                </div>
+                <div className="flex items-center justify-center sm:justify-start space-x-2">
+                  <Award className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-muted-foreground text-sm font-medium">Government Approved</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Right Visual Content */}
@@ -119,23 +137,6 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Trust Indicators */}
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-full max-w-6xl px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start space-x-2">
-              <BookOpen className="h-4 w-4 text-primary flex-shrink-0" />
-              <span className="text-muted-foreground text-sm font-medium">NSDC Certified</span>
-            </div>
-            <div className="flex items-center justify-center sm:justify-start space-x-2">
-              <Users className="h-4 w-4 text-primary flex-shrink-0" />
-              <span className="text-muted-foreground text-sm font-medium">Pan India Network</span>
-            </div>
-            <div className="flex items-center justify-center sm:justify-start space-x-2">
-              <Award className="h-4 w-4 text-primary flex-shrink-0" />
-              <span className="text-muted-foreground text-sm font-medium">Government Approved</span>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
