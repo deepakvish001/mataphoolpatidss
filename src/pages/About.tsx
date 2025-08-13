@@ -1,4 +1,4 @@
-import { Award, Users, MapPin, Phone, Mail, Calendar, Target, Eye, User, Building2, GraduationCap, Trophy, Briefcase, Star } from 'lucide-react';
+import { Award, Users, MapPin, Phone, Mail, Calendar, Target, Eye, User, Building2, GraduationCap, Trophy, Briefcase, Star, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Navigation from '@/components/Navigation';
@@ -18,6 +18,31 @@ const About = () => {
     "Outstanding Placement Record Recognition",
     "Innovation in Rural Training Programs",
     "Digital Learning Excellence Award"
+  ];
+
+  const centers = [
+    { state: "HIMACHAL PRADESH", district: "KULLU", name: "PMKY MATA PHOOLPATI KULLU", address: "Kullu, Himachal Pradesh-175126" },
+    { state: "UTTAR PRADESH", district: "KUSHI NAGAR", name: "PMKY MATA PHOOLPATI KUSHI NAGAR", address: "N.H. 28 Hansraj Hospital Kushinagar 274402" },
+    { state: "PUNJAB", district: "KAPURTHALA", name: "PMKY MATA PHOOLPATI KAPURTHALA", address: "Aman Nagar, Kapurthala Punjab -144601" },
+    { state: "RAJASTHAN", district: "PALI", name: "PMKY MATA PHOOLPATI PALI", address: "DEV KUNG PALI, NAYA GAON, PALI, RAJASTHAN-306401" },
+    { state: "PUNJAB", district: "PATHANKOT", name: "PMKY MATA PHOOLPATI PATHANKOT", address: "Dhangu Road Ptk Veer Bhan 25790 Pathankot-145001" },
+    { state: "PUNJAB", district: "HOSHIARPUR", name: "PMKY MATA PHOOLPATI HOSHIARPUR", address: "Maharaja Complex Jalandher Road hoshiarpur Punjab 146001" },
+    { state: "HIMACHAL PRADESH", district: "HAMIRPUR", name: "PMKY MATA PHOOLPATI HAMIRPUR", address: "near kangara central cooperative bank doshadha opposite police line hamirpur 177001" },
+    { state: "BIHAR", district: "BANKA", name: "PMKY MATA PHOOLPATI BANKA", address: "Maha-Laxmi Tower,Dhaka Mod Banka Pin code- 813102" },
+    { state: "UTTAR PRADESH", district: "MAU", name: "PMKY MATA PHOOLPATI MAU", address: "Sahadatpura, Maunath Bhanjan(MAU) 275101" },
+    { state: "JHARKHAND", district: "KODERMA", name: "PMKY MATA PHOOLPATI KODERMA", address: "Jhumri PO Karma Dist Koderma Jharkhand 825409" },
+    { state: "ASSAM", district: "BARPETA", name: "PMKY MATA PHOOLPATI BARPETA", address: "Barpeta Raod simlaguri near Assam oil petrol Pump NH 31 Barpeta Assam 781313" },
+    { state: "BIHAR", district: "MADHEPURA", name: "PMYK MATA PHOOLPATI MADHEPURA", address: "BMPS educational building, in front of agriculture research center Jai Najrang Fuels Madhepura BIhar 852113" },
+    { state: "KERALA", district: "KOZHIKODE", name: "PMYK MATA PHOOLPATI KOZHIKODE", address: "pilathattathil avilora P.O koduvaly kerala 673572" },
+    { state: "DELHI", district: "South East", name: "PMYK MATA PHOOLPATI South East", address: "Plot No 3 Lal Kiran Bhawan Meethapur Chowk Meethapur Badarpur New Delhi 110044" },
+    { state: "ARUNACHAL PRADESH", district: "LOWER SIANG", name: "PMYK MATA PHOOLPATI LOWER SIANG", address: "Near Forest Gate Lipu Po+P.S Likabali District Lower Siang Arunachal Pradesh 791125" },
+    { state: "HIMACHAL PRADESH", district: "KINNAUR", name: "PMYK MATA PHOOLPATI KINNAUR", address: "First floor of Near HP PWD rest house, Reckong Peo, Distt: Kinnaur ,Himachal Pradesh,172107" },
+    { state: "MIZORAM", district: "CHAMPHAI", name: "PMYK MATA PHOOLPATI CHAMPHAI", address: "CHP 61 vilage vaihmun police station distruct champhai state mizoram 796321" },
+    { state: "KERALA", district: "WAYANAD", name: "PMYK MATA PHOOLPATI WAYANAD", address: "Royal Centre Near New Bus Stand Kalpetta Wayanad" },
+    { state: "KERALA", district: "KANNUR", name: "PMYK MATA PHOOLPATI KANNUR", address: "Bldg No 17/489-B & 17/489-C kannan arcade puthiyatheru kannur 670011" },
+    { state: "KERALA", district: "KASARAGOD", name: "PMYK MATA PHOOLPATI KASARAGOD", address: "Sy No R.S.No 82/1B2A 5A 5C 5B1 Of Kasaragod Village in Kasarangod Taluk Dis Kerala 560025" },
+    { state: "GUJARAT", district: "JUNAGADH", name: "PMKY MATA PHOOLPATI JUNAGADH", address: "Merry Gold-4, 4th Floor, Shop No-4 Gandhari Vadi, Joshipura, Village -Junagadh, Taluka- Junagadh, District- Junagadh, Gujarat - 362001" },
+    { state: "BIHAR", district: "KHAGARIA", name: "PMKY MATA PHOOLPATI KHAGARIA", address: "Yashoda Nagar Khagaria U Khagaria Bihar-851204" }
   ];
 
   return (
@@ -216,6 +241,89 @@ const About = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Centers Section */}
+      <section className="section-padding bg-gradient-to-r from-background to-primary/5">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-6">
+              <MapPin className="h-5 w-5 text-primary" />
+              <span className="text-primary font-semibold">Pan India Presence</span>
+            </div>
+            
+            <h2 className="text-4xl font-bold text-foreground mb-6">OUR CENTRES</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+              We encourage you to contact one of our centers today to learn more about how we can help you achieve your entrepreneurship development goals.
+            </p>
+            
+            <Button className="btn-primary">
+              <Phone className="mr-2 h-5 w-5" />
+              Contact Now
+            </Button>
+          </div>
+
+          {/* Centers Table */}
+          <div className="bg-card border rounded-2xl overflow-hidden shadow-lg">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-primary/5 border-b">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">State</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">District</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Centre Name</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Address</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {centers.map((center, index) => (
+                    <tr key={index} className="hover:bg-primary/5 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+                          <span className="font-medium text-foreground">{center.state}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground font-medium">{center.district}</td>
+                      <td className="px-6 py-4">
+                        <span className="text-primary font-semibold">{center.name}</span>
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground">{center.address}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Contact Information */}
+          <div className="mt-16 grid md:grid-cols-2 gap-8">
+            <Card className="card-premium">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Phone className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-4">Call Us</h3>
+                <div className="space-y-2">
+                  <p className="text-muted-foreground">Primary: <span className="text-primary font-semibold">0120 428 2837</span></p>
+                  <p className="text-muted-foreground">Alternate: <span className="text-primary font-semibold">0120 457 0318</span></p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="card-premium">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Mail className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-4">Email Us</h3>
+                <p className="text-muted-foreground">
+                  <span className="text-primary font-semibold">mataphoolpatideviorg@gmail.com</span>
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
