@@ -89,14 +89,19 @@ const Services = () => {
   return (
     <section id="training" className="section-padding bg-muted/10">
       <div className="container-custom">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            Our <span className="text-primary">Training Programs</span>
+        {/* Ultra Premium Section Header */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-400/10 border border-primary/30 rounded-full px-6 py-3 text-base mb-8 backdrop-blur-sm">
+            <BookOpen className="h-5 w-5 text-primary" />
+            <span className="text-primary font-bold tracking-wide">Professional Excellence</span>
+          </div>
+          <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-foreground mb-8 leading-tight">
+            Our <span className="text-gradient-enhanced bg-clip-text">Training</span><br />
+            <span className="text-primary">Programs</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Government certified training programs designed to enhance your employability 
-            and provide multiple career opportunities
+          <p className="text-2xl md:text-3xl text-muted-foreground max-w-4xl mx-auto font-light leading-relaxed">
+            <span className="text-primary font-bold">Government certified</span> training programs engineered to 
+            <span className="text-gradient font-bold"> transform careers</span> and unlock unlimited opportunities
           </p>
         </div>
 

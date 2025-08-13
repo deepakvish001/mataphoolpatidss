@@ -17,21 +17,23 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-primary" />
-                <span className="text-primary font-semibold">Since 2013</span>
+            <div className="space-y-8">
+              <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-400/10 border border-primary/30 rounded-full px-6 py-3 text-base backdrop-blur-sm">
+                <CheckCircle className="h-5 w-5 text-primary" />
+                <span className="text-primary font-bold tracking-wide">Excellence Since 2013</span>
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
               </div>
               
-              <h2 className="text-4xl font-bold text-foreground">
-                Welcome to <span className="text-primary">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight text-foreground">
+                Welcome to <br /><span className="text-gradient-enhanced bg-clip-text">MATA PHOOLPATI DEVI</span><br />
+                <span className="text-primary">SHIKSHAN SANSTHAN</span>
               </h2>
               
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is a pioneer in the field of Skill Training and has been 
-                successfully running skill development programs on PAN India basis since 2013. We have 
-                developed India's largest Mega Skill Centre in difficult and remote areas like Jharkhand, 
-                J&K, Uttarakhand, and North-East States.
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl font-light">
+                India's <span className="text-primary font-bold text-2xl">leading pioneer</span> in skill training excellence, 
+                transforming lives through <span className="text-gradient font-bold">professional education</span> since 2013. 
+                Our mega skill centers span across India's most challenging terrains including 
+                <span className="text-primary font-semibold"> Jharkhand, J&K, Uttarakhand, and North-East States</span>.
               </p>
             </div>
 

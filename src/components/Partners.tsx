@@ -91,14 +91,19 @@ const Partners = () => {
   return (
     <section id="affiliates" className="section-padding">
       <div className="container-custom">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            Our <span className="text-primary">Partnerships</span>
+        {/* Ultra Premium Section Header */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-400/10 border border-primary/30 rounded-full px-6 py-3 text-base mb-8 backdrop-blur-sm">
+            <Handshake className="h-5 w-5 text-primary" />
+            <span className="text-primary font-bold tracking-wide">Strategic Alliances</span>
+          </div>
+          <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-foreground mb-8 leading-tight">
+            Our <span className="text-gradient-enhanced bg-clip-text">Elite</span><br />
+            <span className="text-primary">Partnerships</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is proud to be affiliated with leading government bodies and 
-            private companies for comprehensive skill development and placement assistance
+          <p className="text-2xl md:text-3xl text-muted-foreground max-w-4xl mx-auto font-light leading-relaxed">
+            <span className="text-primary font-bold">Premium affiliations</span> with India's leading 
+            <span className="text-gradient font-bold"> government bodies and industry giants</span> for unmatched placement success
           </p>
         </div>
 

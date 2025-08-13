@@ -5,25 +5,24 @@ import heroImage from '@/assets/hero-image.jpg';
 const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center hero-gradient overflow-hidden">
-      {/* Enhanced Background with Multiple Layers */}
+      {/* Ultra Premium Background System */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
-          alt="JITM Skills Training Facility" 
-          className="w-full h-full object-cover opacity-15 animate-ken-burns"
+          alt="JITM Skills Training Excellence Center" 
+          className="w-full h-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/70 to-primary/5"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/80 to-primary/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60"></div>
       </div>
 
-      {/* Floating Background Elements */}
+      {/* Minimal Elegant Elements */}
       <div className="absolute inset-0 z-5 overflow-hidden">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float-slow"></div>
-        <div className="absolute bottom-32 right-32 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animate-float-slower"></div>
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-2xl animate-float"></div>
+        <div className="absolute top-20 left-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-60"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/3 rounded-full blur-3xl opacity-40"></div>
         
-        {/* Grid overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[size:40px_40px] opacity-20"></div>
+        {/* Subtle geometric overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,127,0,0.05)_1px,transparent_0)] bg-[size:60px_60px] opacity-30"></div>
       </div>
 
       <div className="container-custom relative z-10 py-20">
@@ -37,19 +36,19 @@ const Hero = () => {
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
               </div>
               
-              <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tight">
-                <span className="text-gradient-enhanced animate-gradient-x bg-clip-text">EMPOWERING</span>
+              <h1 className="text-7xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tight">
+                <span className="text-gradient-enhanced bg-clip-text">EMPOWERING</span>
                 <br />
-                <span className="text-foreground drop-shadow-sm">WITH ABILITY</span>
+                <span className="text-foreground">WITH ABILITY</span>
               </h1>
               
-              <div className="space-y-4">
-                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium">
-                  Pioneer in the field of <span className="text-gradient font-bold">Skill Training</span> with <span className="text-primary font-bold bg-primary/10 px-2 py-1 rounded-lg">13+ years of experience</span>. 
+              <div className="space-y-6">
+                <p className="text-2xl md:text-3xl lg:text-4xl text-muted-foreground leading-relaxed max-w-4xl font-light">
+                  Pioneer in <span className="text-primary font-bold">Skill Training</span> with <span className="text-primary font-bold bg-primary/10 px-3 py-1 rounded-xl">13+ years excellence</span>
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                  We have trained over <span className="text-primary font-bold text-2xl">5 lakh students</span> across India with 
-                  <span className="text-gradient font-bold"> 100% placement assistance</span>.
+                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-4xl font-light">
+                  Trained over <span className="text-primary font-black text-3xl md:text-4xl">5 lakh students</span> across India with 
+                  <span className="text-gradient font-bold text-2xl"> guaranteed placement support</span>
                 </p>
               </div>
             </div>
