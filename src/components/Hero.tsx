@@ -104,7 +104,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="absolute -bottom-8 -left-12 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 w-48">
+              <div className="absolute -bottom-4 -left-8 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 w-48">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <TrendingUp className="h-5 w-5 text-primary" />
