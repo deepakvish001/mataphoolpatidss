@@ -102,83 +102,65 @@ const EntrepreneurshipDevelopment = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Enhanced Hero Section */}
+      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Dynamic Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-primary/10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.15),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_40%,hsl(var(--primary)/0.05)_50%,transparent_60%)]"></div>
-        </div>
-        
-        {/* Entrepreneurship-themed Floating Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-green-500/10 rounded-full blur-xl animate-float"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-blue-500/10 rounded-full blur-lg animate-float" style={{animationDelay: '2s'}}></div>
-          <div className="absolute bottom-20 left-20 w-40 h-40 bg-primary/8 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
-          <div className="absolute top-60 left-1/2 w-16 h-16 bg-purple-500/10 rounded-full blur-lg animate-float" style={{animationDelay: '6s'}}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)]"></div>
         </div>
         
         <div className="relative z-10 py-24 md:py-32">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
-                {/* Enhanced Badge */}
-                <div className="inline-flex items-center gap-3 bg-card/80 backdrop-blur-lg border border-border rounded-full px-8 py-4 shadow-2xl animate-fade-in">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <Rocket className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-bold text-foreground tracking-wide">INNOVATION & GROWTH</span>
-                  <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                {/* Badge */}
+                <div className="inline-flex items-center gap-3 bg-card border border-border rounded-full px-6 py-3 shadow-sm">
+                  <Rocket className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium text-foreground">INNOVATION & GROWTH</span>
                 </div>
                 
-                {/* Enhanced Main Title */}
-                <div className="space-y-6">
-                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground animate-fade-in leading-tight tracking-tight">
+                {/* Main Title */}
+                <div className="space-y-4">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
                     ENTREPRENEURSHIP<br />
-                    <span className="text-gradient bg-gradient-to-r from-primary via-green-500 to-blue-500 bg-clip-text text-transparent animate-pulse">
+                    <span className="text-primary">
                       DEVELOPMENT
                     </span>
                   </h1>
                 </div>
                 
-                {/* Enhanced Description */}
-                <div className="space-y-6 animate-fade-in">
-                  <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
-                    Comprehensive <span className="text-green-500 font-bold">entrepreneurship ecosystem</span> with dedicated mentoring and support
+                {/* Description */}
+                <div className="space-y-4">
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                    Comprehensive <span className="text-primary font-semibold">entrepreneurship ecosystem</span> with dedicated mentoring and support
                   </p>
-                  <p className="text-lg text-muted-foreground/80 leading-relaxed">
-                    <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> has established a dedicated Mudra Facilitation cell with personal monitoring by Prof. Yogesh Kumar, Director
+                  <p className="text-base text-muted-foreground leading-relaxed">
+                    <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> has established a dedicated Mudra Facilitation cell with personal monitoring by Prof. Yogesh Kumar, Director
                   </p>
                 </div>
                 
-                {/* Enhanced CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-6 animate-fade-in">
-                  <Button size="lg" className="group relative bg-gradient-to-r from-primary to-green-500 hover:from-primary/90 hover:to-green-500/90 text-white px-12 py-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 font-bold text-lg">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary to-green-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-all duration-500"></div>
-                    <div className="relative flex items-center gap-3">
-                      <Lightbulb className="h-6 w-6" />
-                      Start Your Journey
-                      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                    </div>
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg shadow-sm font-medium">
+                    <Lightbulb className="h-5 w-5 mr-2" />
+                    Start Your Journey
+                    <ArrowRight className="h-5 w-5 ml-2" />
                   </Button>
                   
-                  <Button size="lg" variant="outline" className="group bg-card/50 border-2 border-primary/20 hover:border-primary/40 backdrop-blur-sm px-12 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-105 font-bold text-lg">
-                    <div className="flex items-center gap-3">
-                      <Phone className="h-6 w-6 text-primary" />
-                      Get Guidance
-                      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                    </div>
+                  <Button size="lg" variant="outline" className="border-border hover:bg-muted px-8 py-3 rounded-lg shadow-sm font-medium">
+                    <Phone className="h-5 w-5 mr-2 text-primary" />
+                    Get Guidance
+                    <ArrowRight className="h-5 w-5 ml-2" />
                   </Button>
                 </div>
                 
                 {/* Feature Highlights */}
-                <div className="flex items-center gap-8 text-muted-foreground/60 text-sm pt-8 animate-fade-in">
+                <div className="flex items-center gap-6 text-muted-foreground text-sm pt-8">
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <CheckCircle className="h-4 w-4 text-primary" />
                     <span>Expert Mentoring</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-500" />
+                    <CheckCircle className="h-4 w-4 text-primary" />
                     <span>Funding Support</span>
                   </div>
                   <div className="flex items-center gap-2">

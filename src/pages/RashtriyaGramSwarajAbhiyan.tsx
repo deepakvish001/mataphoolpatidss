@@ -147,111 +147,78 @@ const RashtriyaGramSwarajAbhiyan = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Enhanced Hero Section */}
+      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Dynamic Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-primary/10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.15),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_40%,hsl(var(--primary)/0.05)_50%,transparent_60%)]"></div>
-        </div>
-        
-        {/* Floating Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-xl animate-float"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-primary/5 rounded-full blur-lg animate-float" style={{animationDelay: '2s'}}></div>
-          <div className="absolute bottom-20 left-20 w-40 h-40 bg-primary/8 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)]"></div>
         </div>
         
         <div className="relative z-10 py-24 md:py-32">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto text-center space-y-12">
-              {/* Enhanced Badge */}
-              <div className="inline-flex items-center gap-3 bg-card/80 backdrop-blur-lg border border-border rounded-full px-8 py-4 shadow-2xl animate-fade-in">
-                <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-                <Crown className="h-6 w-6 text-primary" />
-                <span className="text-sm font-bold text-foreground tracking-wide">GOVERNMENT INITIATIVE</span>
-                <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+              {/* Badge */}
+              <div className="inline-flex items-center gap-3 bg-card border border-border rounded-full px-6 py-3 shadow-sm">
+                <Crown className="h-5 w-5 text-primary" />
+                <span className="text-sm font-medium text-foreground">GOVERNMENT INITIATIVE</span>
               </div>
               
-              {/* Enhanced Main Title */}
-              <div className="space-y-8">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 animate-fade-in leading-tight tracking-tight">
-                  TRAINING UNDER REVAMPED<br />
-                  <span className="text-gradient bg-gradient-to-r from-primary via-orange-500 to-primary bg-clip-text text-transparent animate-pulse">
-                    RASHTIYA GRAM SWARAJ ABHIYAN
+              {/* Main Title */}
+              <div className="space-y-6">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                  Training Under Revamped<br />
+                  <span className="text-primary">
+                    Rashtiya Gram Swaraj Abhiyan
                   </span>
                 </h1>
                 
-                {/* Enhanced Subtitle */}
+                {/* Subtitle */}
                 <div className="space-y-4">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-muted-foreground animate-fade-in">
+                  <h2 className="text-xl md:text-2xl font-medium text-muted-foreground">
                     Panchayati Raj Training by
                   </h2>
-                  <div className="text-xl md:text-2xl font-semibold text-primary bg-primary/10 rounded-2xl px-8 py-4 inline-block border border-primary/20">
+                  <div className="text-lg md:text-xl font-semibold text-foreground bg-muted rounded-lg px-6 py-3 inline-block">
                     MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
                   </div>
                 </div>
               </div>
               
-              {/* Enhanced Description */}
-              <div className="max-w-5xl mx-auto space-y-6 animate-fade-in">
-                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
-                  Empowering Elected Representatives across <span className="text-primary font-bold">29 Constitutional Subjects</span> under Article 243(G) and the 11th Schedule
+              {/* Description */}
+              <div className="max-w-4xl mx-auto space-y-4">
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                  Empowering Elected Representatives across <span className="text-primary font-semibold">29 Constitutional Subjects</span> under Article 243(G) and the 11th Schedule
                 </p>
-                <p className="text-lg text-muted-foreground/80 leading-relaxed">
+                <p className="text-base text-muted-foreground leading-relaxed">
                   Integrating Sustainable Development Goals (SDGs) to enhance local governance effectiveness and build stronger democratic institutions at the grassroots level.
                 </p>
               </div>
               
-              {/* Enhanced Stats Grid */}
-              <div className="grid md:grid-cols-3 gap-8 mb-12 animate-fade-in">
-                <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                  <div className="relative bg-card/60 backdrop-blur-lg border border-border rounded-3xl p-8 hover:bg-card/80 transition-all duration-500 transform group-hover:scale-105">
-                    <div className="text-4xl md:text-5xl font-black text-primary mb-3">465,300</div>
-                    <div className="text-sm font-bold text-muted-foreground uppercase tracking-wide">Training Man-days Completed</div>
-                    <div className="w-full h-1 bg-primary/20 rounded-full mt-4">
-                      <div className="w-4/5 h-full bg-gradient-to-r from-primary to-orange-500 rounded-full"></div>
-                    </div>
-                  </div>
+              {/* Stats Grid */}
+              <div className="grid md:grid-cols-3 gap-6 mb-12">
+                <div className="bg-card border border-border rounded-lg p-6 text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">465,300</div>
+                  <div className="text-sm font-medium text-muted-foreground">Training Man-days Completed</div>
                 </div>
                 
-                <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-green-400/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                  <div className="relative bg-card/60 backdrop-blur-lg border border-border rounded-3xl p-8 hover:bg-card/80 transition-all duration-500 transform group-hover:scale-105">
-                    <div className="text-4xl md:text-5xl font-black text-green-500 mb-3">29</div>
-                    <div className="text-sm font-bold text-muted-foreground uppercase tracking-wide">Constitutional Subjects</div>
-                    <div className="w-full h-1 bg-green-500/20 rounded-full mt-4">
-                      <div className="w-full h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full"></div>
-                    </div>
-                  </div>
+                <div className="bg-card border border-border rounded-lg p-6 text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">29</div>
+                  <div className="text-sm font-medium text-muted-foreground">Constitutional Subjects</div>
                 </div>
                 
-                <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-blue-400/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-                  <div className="relative bg-card/60 backdrop-blur-lg border border-border rounded-3xl p-8 hover:bg-card/80 transition-all duration-500 transform group-hover:scale-105">
-                    <div className="text-4xl md:text-5xl font-black text-blue-500 mb-3">6+</div>
-                    <div className="text-sm font-bold text-muted-foreground uppercase tracking-wide">States Covered</div>
-                    <div className="w-full h-1 bg-blue-500/20 rounded-full mt-4">
-                      <div className="w-3/4 h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"></div>
-                    </div>
-                  </div>
+                <div className="bg-card border border-border rounded-lg p-6 text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">6+</div>
+                  <div className="text-sm font-medium text-muted-foreground">States Covered</div>
                 </div>
               </div>
               
-              {/* Enhanced CTA Button */}
-              <div className="space-y-6 animate-fade-in">
-                <Button size="lg" className="group relative bg-gradient-to-r from-primary to-orange-500 hover:from-primary/90 hover:to-orange-500/90 text-white px-12 py-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 font-bold text-lg">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-orange-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-all duration-500"></div>
-                  <div className="relative flex items-center gap-3">
-                    <Phone className="h-6 w-6" />
-                    Contact Us Today
-                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                  </div>
+              {/* CTA Button */}
+              <div className="space-y-6">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg shadow-sm font-medium">
+                  <Phone className="h-5 w-5 mr-2" />
+                  Contact Us Today
+                  <ArrowRight className="h-5 w-5 ml-2" />
                 </Button>
                 
-                <div className="flex items-center justify-center gap-8 text-muted-foreground/60 text-sm">
+                <div className="flex items-center justify-center gap-6 text-muted-foreground text-sm">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-primary" />
                     <span>Expert Training</span>
