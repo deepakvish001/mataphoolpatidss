@@ -18,7 +18,7 @@ const Navigation = () => {
   ];
 
   const programsDropdownItems = [
-    { name: 'Rashtiya Gram Swaraj Abhiyan', href: '#rgsa' },
+    { name: 'Rashtiya Gram Swaraj Abhiyan', href: '/rashtiya-gram-swaraj-abhiyan' },
     { name: 'NSQF', href: '#nsqf' },
     { name: 'AAIOE', href: '#aaioe' },
     { name: 'Entrepreneurship', href: '#entrepreneurship' },
