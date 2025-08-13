@@ -61,15 +61,15 @@ const RashtriyaGramSwarajAbhiyan = () => {
   ];
 
   const lsdgs = [
-    { name: "POVERTY FREE VILLAGE", icon: DollarSign, color: "text-red-600", bg: "bg-red-50" },
-    { name: "HEALTHY VILLAGE", icon: Heart, color: "text-pink-600", bg: "bg-pink-50" },
-    { name: "CHILD-FRIENDLY VILLAGE", icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
-    { name: "WATER SUFFICIENT VILLAGE", icon: Droplets, color: "text-cyan-600", bg: "bg-cyan-50" },
-    { name: "CLEAN AND GREEN VILLAGE", icon: Leaf, color: "text-green-600", bg: "bg-green-50" },
-    { name: "SELF-SUFFICIENT VILLAGE", icon: Building, color: "text-purple-600", bg: "bg-purple-50" },
-    { name: "SOCIALLY SECURED VILLAGE", icon: Shield, color: "text-orange-600", bg: "bg-orange-50" },
-    { name: "VILLAGE WITH GOOD GOVERNANCE", icon: Crown, color: "text-indigo-600", bg: "bg-indigo-50" },
-    { name: "WOMEN FRIENDLY VILLAGE", icon: UserCheck, color: "text-emerald-600", bg: "bg-emerald-50" }
+    { name: "POVERTY FREE VILLAGE", icon: DollarSign },
+    { name: "HEALTHY VILLAGE", icon: Heart },
+    { name: "CHILD-FRIENDLY VILLAGE", icon: Users },
+    { name: "WATER SUFFICIENT VILLAGE", icon: Droplets },
+    { name: "CLEAN AND GREEN VILLAGE", icon: Leaf },
+    { name: "SELF-SUFFICIENT VILLAGE", icon: Building },
+    { name: "SOCIALLY SECURED VILLAGE", icon: Shield },
+    { name: "VILLAGE WITH GOOD GOVERNANCE", icon: Crown },
+    { name: "WOMEN FRIENDLY VILLAGE", icon: UserCheck }
   ];
 
   const specializedTrainings = [
@@ -79,43 +79,33 @@ const RashtriyaGramSwarajAbhiyan = () => {
       description: "Provide specialized training to representatives at the State, District, and Block levels on the following topics:",
       topics: "GeM /PFMS /FRA/ (Own Source Revenue (OSR) Strategies / MIS through various digital portals & platforms / Contract Management",
       issues: ["Rural unemployment", "Rural Financing", "Skilling", "Rural Technology", "Eco-system for MSME"],
-      icon: DollarSign,
-      color: "text-green-600",
-      bg: "bg-green-50"
+      icon: DollarSign
     },
     {
       number: "02",
       title: "IT Based Trainings:",
       description: "MIS /AI /TMP /SPATIAL Planning / Digital Literacy / E-Governance",
-      icon: Computer,
-      color: "text-blue-600",
-      bg: "bg-blue-50"
+      icon: Computer
     },
     {
       number: "03",
       title: "Governance & Legal Laws:",
       description: "Provide comprehensive knowledge and understanding of all legal laws to all representatives.",
       topics: "Women Rights / Children Rights / Scheduled Tribes & Scheduled Area / PESA related special provisions",
-      icon: Gavel,
-      color: "text-purple-600",
-      bg: "bg-purple-50"
+      icon: Gavel
     },
     {
       number: "04",
       title: "Planning & Development Strategies:",
       description: "Rural Area Development Plan Formulation and Implementation (RADPFI)",
       topics: "SHG-PRI Convergence, Carbon Neutrality",
-      icon: TrendingUp,
-      color: "text-orange-600",
-      bg: "bg-orange-50"
+      icon: TrendingUp
     },
     {
       number: "05",
       title: "Organisational Behaviour:",
       description: "Leadership, Communication, Team Building, Negotiation Skills",
-      icon: MessageSquare,
-      color: "text-indigo-600",
-      bg: "bg-indigo-50"
+      icon: MessageSquare
     }
   ];
 
@@ -156,31 +146,60 @@ const RashtriyaGramSwarajAbhiyan = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-background py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-5xl mx-auto">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-6">
-              <Crown className="h-5 w-5 text-primary" />
-              <span className="text-primary font-semibold">Government Initiative</span>
+      <section className="relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-primary/10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary)/0.08),transparent_50%)]"></div>
+        </div>
+        
+        <div className="relative py-24 md:py-32">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border rounded-full px-6 py-3 mb-8 animate-fade-in">
+                <Crown className="h-5 w-5 text-primary" />
+                <span className="text-sm font-semibold text-foreground">Government Initiative</span>
+              </div>
+              
+              {/* Main Title */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 animate-fade-in leading-tight">
+                TRAINING UNDER REVAMPED<br />
+                <span className="text-gradient">RASHTIYA GRAM SWARAJ ABHIYAN</span>
+              </h1>
+              
+              {/* Subtitle */}
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-muted-foreground mb-8 animate-fade-in">
+                Panchayati Raj Training by MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+              </h2>
+              
+              {/* Description */}
+              <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-4xl mx-auto animate-fade-in">
+                This project aims to educate Elected Representatives on the functions of Panchayati Raj Institutions (PRIs) across 29 subjects listed in Article 243(G) and the 11th Schedule of the Indian Constitution. We will integrate Sustainable Development Goals (SDGs) to enhance the effectiveness of local governance.
+              </p>
+              
+              {/* Stats Grid */}
+              <div className="grid md:grid-cols-3 gap-6 mb-10 animate-fade-in">
+                <div className="bg-card/60 backdrop-blur-sm border border-border rounded-2xl p-6 hover:bg-card/80 transition-all duration-300">
+                  <div className="text-3xl font-bold text-primary mb-2">465,300</div>
+                  <div className="text-sm text-muted-foreground">Training Man-days Completed</div>
+                </div>
+                <div className="bg-card/60 backdrop-blur-sm border border-border rounded-2xl p-6 hover:bg-card/80 transition-all duration-300">
+                  <div className="text-3xl font-bold text-primary mb-2">29</div>
+                  <div className="text-sm text-muted-foreground">Constitutional Subjects Covered</div>
+                </div>
+                <div className="bg-card/60 backdrop-blur-sm border border-border rounded-2xl p-6 hover:bg-card/80 transition-all duration-300">
+                  <div className="text-3xl font-bold text-primary mb-2">6+</div>
+                  <div className="text-sm text-muted-foreground">States Covered</div>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in">
+                <Phone className="mr-2 h-5 w-5" />
+                Contact Us Today
+              </Button>
             </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-              TRAINING UNDER REVAMPED <br />
-              <span className="text-primary">RASHTIYA GRAM SWARAJ ABHIYAN</span>
-            </h1>
-            
-            <h2 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-8">
-              Panchayati Raj Training by MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
-            </h2>
-            
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-4xl mx-auto">
-              This project aims to educate Elected Representatives on the functions of Panchayati Raj Institutions (PRIs) across 29 subjects listed in Article 243(G) and the 11th Schedule of the Indian Constitution. We will integrate Sustainable Development Goals (SDGs) to enhance the effectiveness of local governance.
-            </p>
-            
-            <Button className="btn-primary">
-              <Phone className="mr-2 h-5 w-5" />
-              Contact Us
-            </Button>
           </div>
         </div>
       </section>
@@ -314,10 +333,10 @@ const RashtriyaGramSwarajAbhiyan = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {lsdgs.map((lsdg, index) => (
-              <Card key={index} className="card-hover text-center">
+              <Card key={index} className="card-hover text-center group">
                 <CardContent className="p-6">
-                  <div className={`w-16 h-16 ${lsdg.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                    <lsdg.icon className={`h-8 w-8 ${lsdg.color}`} />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                    <lsdg.icon className="h-8 w-8 text-primary" />
                   </div>
                   <h3 className="text-lg font-bold text-foreground">{lsdg.name}</h3>
                 </CardContent>
@@ -340,8 +359,8 @@ const RashtriyaGramSwarajAbhiyan = () => {
                 <CardContent className="p-8">
                   <div className="flex items-start space-x-6">
                     <div className="flex-shrink-0">
-                      <div className={`w-16 h-16 ${training.bg} rounded-2xl flex items-center justify-center`}>
-                        <training.icon className={`h-8 w-8 ${training.color}`} />
+                      <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+                        <training.icon className="h-8 w-8 text-primary" />
                       </div>
                       <div className="text-3xl font-bold text-primary text-center mt-2">{training.number}</div>
                     </div>
