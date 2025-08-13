@@ -240,21 +240,27 @@ const RashtriyaGramSwarajAbhiyan = () => {
       </section>
 
       {/* Objectives Section */}
-      <section className="section-padding bg-gradient-to-r from-background to-primary/5">
+      <section className="section-padding bg-gradient-to-b from-background to-muted/5">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">Our Objective</h2>
-            <p className="text-xl text-muted-foreground">Objectives of our PRI Training Projects</p>
+            <div className="inline-flex items-center space-x-3 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-8">
+              <Target className="h-5 w-5 text-primary" />
+              <span className="text-primary font-semibold">Our Mission</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Training Objectives</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Comprehensive goals driving our PRI training initiatives across the nation
+            </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {objectives.map((objective, index) => (
-              <Card key={index} className="card-hover">
+              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80">
                 <CardContent className="p-8">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     <objective.icon className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4">{objective.title}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">{objective.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{objective.description}</p>
                 </CardContent>
               </Card>
@@ -323,22 +329,28 @@ const RashtriyaGramSwarajAbhiyan = () => {
       </section>
 
       {/* LSDG Section */}
-      <section className="section-padding bg-gradient-to-r from-primary/5 to-background">
+      <section className="section-padding bg-gradient-to-b from-muted/5 to-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">THEMATIC TRAINING</h2>
-            <h3 className="text-2xl font-semibold text-primary mb-4">LOCALIZATION OF SUSTAINABLE DEVELOPMENT GOALS (LSDGS)</h3>
-            <p className="text-xl text-muted-foreground">Embark on a journey of global recognition with our comprehensive suite of certifications.</p>
+            <div className="inline-flex items-center space-x-3 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-8">
+              <Globe className="h-5 w-5 text-primary" />
+              <span className="text-primary font-semibold">Global Goals</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Thematic Training</h2>
+            <h3 className="text-2xl font-semibold text-primary mb-4">Localization of Sustainable Development Goals (LSDGs)</h3>
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+              Empowering villages through comprehensive development programs aligned with global sustainability goals
+            </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {lsdgs.map((lsdg, index) => (
-              <Card key={index} className="card-hover text-center group">
-                <CardContent className="p-6">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+              <Card key={index} className="group hover:shadow-xl transition-all duration-500 border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                     <lsdg.icon className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-lg font-bold text-foreground">{lsdg.name}</h3>
+                  <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300">{lsdg.name}</h3>
                 </CardContent>
               </Card>
             ))}
@@ -347,39 +359,48 @@ const RashtriyaGramSwarajAbhiyan = () => {
       </section>
 
       {/* Specialized Trainings Section */}
-      <section className="section-padding">
+      <section className="section-padding bg-gradient-to-b from-background to-muted/5">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">SPECIALIZED TRAININGS</h2>
+            <div className="inline-flex items-center space-x-3 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-8">
+              <BookOpen className="h-5 w-5 text-primary" />
+              <span className="text-primary font-semibold">Expert Training</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Specialized Training Programs</h2>
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+              Comprehensive training modules designed to build expertise in critical governance areas
+            </p>
           </div>
           
           <div className="space-y-8">
             {specializedTrainings.map((training, index) => (
-              <Card key={index} className="card-premium">
-                <CardContent className="p-8">
-                  <div className="flex items-start space-x-6">
+              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-card/50 backdrop-blur-sm hover:bg-card/80">
+                <CardContent className="p-8 md:p-10">
+                  <div className="flex items-start space-x-8">
                     <div className="flex-shrink-0">
-                      <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
-                        <training.icon className="h-8 w-8 text-primary" />
+                      <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <training.icon className="h-10 w-10 text-primary" />
                       </div>
-                      <div className="text-3xl font-bold text-primary text-center mt-2">{training.number}</div>
+                      <div className="text-4xl font-bold text-primary text-center mt-4 opacity-60">{training.number}</div>
                     </div>
                     
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-foreground mb-4">{training.title}</h3>
-                      <p className="text-lg text-muted-foreground mb-4">{training.description}</p>
+                    <div className="flex-1 space-y-6">
+                      <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">{training.title}</h3>
+                      <p className="text-lg text-muted-foreground leading-relaxed">{training.description}</p>
                       
                       {training.topics && (
-                        <p className="text-muted-foreground mb-4">{training.topics}</p>
+                        <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/20">
+                          <p className="text-muted-foreground font-medium">{training.topics}</p>
+                        </div>
                       )}
                       
                       {training.issues && (
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-2">Issues to be tackled:</h4>
-                          <div className="grid md:grid-cols-2 gap-2">
+                        <div className="space-y-4">
+                          <h4 className="font-bold text-foreground text-lg">Key Focus Areas:</h4>
+                          <div className="grid md:grid-cols-2 gap-3">
                             {training.issues.map((issue, issueIndex) => (
-                              <div key={issueIndex} className="flex items-center space-x-2">
-                                <CheckCircle className="h-4 w-4 text-primary" />
+                              <div key={issueIndex} className="flex items-center space-x-3 p-3 bg-card/30 rounded-lg">
+                                <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                                 <span className="text-muted-foreground">{issue}</span>
                               </div>
                             ))}
