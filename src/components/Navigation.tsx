@@ -8,6 +8,7 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [showProgramsDropdown, setShowProgramsDropdown] = useState(false);
+  const [dropdownTimeoutId, setDropdownTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   const navItems = [
     { name: 'Home', href: '#home', icon: Globe },
@@ -23,6 +24,22 @@ const Navigation = () => {
     { name: 'AAIOE', href: '/aaioe' },
     { name: 'Entrepreneurship', href: '/entrepreneurship-development' },
   ];
+
+  // Handle dropdown hover with delay
+  const handleDropdownEnter = () => {
+    if (dropdownTimeoutId) {
+      clearTimeout(dropdownTimeoutId);
+      setDropdownTimeoutId(null);
+    }
+    setShowProgramsDropdown(true);
+  };
+
+  const handleDropdownLeave = () => {
+    const timeoutId = setTimeout(() => {
+      setShowProgramsDropdown(false);
+    }, 200); // 200ms delay before hiding
+    setDropdownTimeoutId(timeoutId);
+  };
 
   // Enhanced scroll effect
   useEffect(() => {
@@ -105,8 +122,8 @@ const Navigation = () => {
                     <div 
                       key={item.name}
                       className="relative"
-                      onMouseEnter={() => setShowProgramsDropdown(true)}
-                      onMouseLeave={() => setShowProgramsDropdown(false)}
+                      onMouseEnter={handleDropdownEnter}
+                      onMouseLeave={handleDropdownLeave}
                     >
                       <button
                         className={`nav-link-modern flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 magnetic-effect ${
@@ -114,6 +131,7 @@ const Navigation = () => {
                             ? 'bg-primary text-primary-foreground shadow-lg' 
                             : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
                         }`}
+                        onClick={() => setShowProgramsDropdown(!showProgramsDropdown)}
                       >
                         <Icon className="h-4 w-4" />
                         <span className="font-medium">{item.name}</span>
@@ -122,16 +140,21 @@ const Navigation = () => {
                       
                       {/* Dropdown Menu */}
                       {showProgramsDropdown && (
-                        <div className="absolute top-full left-0 mt-2 w-64 bg-background/95 backdrop-blur-xl border border-border/50 rounded-2xl shadow-xl z-50 p-2 animate-fade-in">
+                        <div 
+                          className="absolute top-full left-0 mt-2 w-64 bg-background/98 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl z-[100] p-2 animate-fade-in"
+                          onMouseEnter={handleDropdownEnter}
+                          onMouseLeave={handleDropdownLeave}
+                        >
                           {programsDropdownItems.map((dropdownItem, index) => (
                             <a
                               key={dropdownItem.name}
                               href={dropdownItem.href}
-                              className="flex items-center px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors duration-200 group"
+                              className="flex items-center px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors duration-200 group block"
                               style={{ animationDelay: `${index * 0.1}s` }}
+                              onClick={() => setShowProgramsDropdown(false)}
                             >
-                              <BookOpen className="h-4 w-4 text-primary mr-3" />
-                              <span className="font-medium text-foreground group-hover:text-primary">{dropdownItem.name}</span>
+                              <BookOpen className="h-4 w-4 text-primary mr-3 flex-shrink-0" />
+                              <span className="font-medium text-foreground group-hover:text-primary text-sm">{dropdownItem.name}</span>
                             </a>
                           ))}
                         </div>
