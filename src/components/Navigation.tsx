@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell } from 'lucide-react';
+import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -7,13 +7,21 @@ const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [showProgramsDropdown, setShowProgramsDropdown] = useState(false);
 
   const navItems = [
     { name: 'Home', href: '#home', icon: Globe },
-    { name: 'About', href: '#about', icon: Users },
-    { name: 'Programs', href: '#training', icon: BookOpen },
+    { name: 'About', href: '/about', icon: Users },
+    { name: 'Programs', href: '#training', icon: BookOpen, hasDropdown: true },
     { name: 'Partners', href: '#affiliates', icon: Award },
     { name: 'Contact', href: '#work-with-us', icon: MessageSquare },
+  ];
+
+  const programsDropdownItems = [
+    { name: 'Rashtiya Gram Swaraj Abhiyan', href: '#rgsa' },
+    { name: 'NSQF', href: '#nsqf' },
+    { name: 'AAIOE', href: '#aaioe' },
+    { name: 'Entrepreneurship', href: '#entrepreneurship' },
   ];
 
   // Enhanced scroll effect
@@ -91,6 +99,47 @@ const Navigation = () => {
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeSection === item.href.replace('#', '');
+                
+                if (item.hasDropdown) {
+                  return (
+                    <div 
+                      key={item.name}
+                      className="relative"
+                      onMouseEnter={() => setShowProgramsDropdown(true)}
+                      onMouseLeave={() => setShowProgramsDropdown(false)}
+                    >
+                      <button
+                        className={`nav-link-modern flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 magnetic-effect ${
+                          isActive 
+                            ? 'bg-primary text-primary-foreground shadow-lg' 
+                            : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+                        }`}
+                      >
+                        <Icon className="h-4 w-4" />
+                        <span className="font-medium">{item.name}</span>
+                        <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showProgramsDropdown ? 'rotate-180' : ''}`} />
+                      </button>
+                      
+                      {/* Dropdown Menu */}
+                      {showProgramsDropdown && (
+                        <div className="absolute top-full left-0 mt-2 w-64 bg-background/95 backdrop-blur-xl border border-border/50 rounded-2xl shadow-xl z-50 p-2 animate-fade-in">
+                          {programsDropdownItems.map((dropdownItem, index) => (
+                            <a
+                              key={dropdownItem.name}
+                              href={dropdownItem.href}
+                              className="flex items-center px-4 py-3 rounded-xl hover:bg-primary/10 transition-colors duration-200 group"
+                              style={{ animationDelay: `${index * 0.1}s` }}
+                            >
+                              <BookOpen className="h-4 w-4 text-primary mr-3" />
+                              <span className="font-medium text-foreground group-hover:text-primary">{dropdownItem.name}</span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+                
                 return (
                   <a
                     key={item.name}
@@ -173,6 +222,39 @@ const Navigation = () => {
               <div className="space-y-2">
                 {navItems.map((item, index) => {
                   const Icon = item.icon;
+                  
+                  if (item.hasDropdown) {
+                    return (
+                      <div key={item.name} className="space-y-2">
+                        <div
+                          className="flex items-center space-x-4 p-4 rounded-2xl bg-muted/30 border border-border/50"
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                          <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <Icon className="h-5 w-5 text-primary" />
+                          </div>
+                          <span className="text-lg font-medium text-foreground">{item.name}</span>
+                        </div>
+                        
+                        {/* Mobile Dropdown Items */}
+                        <div className="ml-6 space-y-1">
+                          {programsDropdownItems.map((dropdownItem, dropdownIndex) => (
+                            <a
+                              key={dropdownItem.name}
+                              href={dropdownItem.href}
+                              onClick={() => setIsMenuOpen(false)}
+                              className="flex items-center space-x-3 p-3 rounded-xl hover:bg-muted/50 transition-all duration-300 group"
+                              style={{ animationDelay: `${(index + dropdownIndex + 1) * 0.1}s` }}
+                            >
+                              <BookOpen className="h-4 w-4 text-primary" />
+                              <span className="text-base font-medium text-muted-foreground group-hover:text-primary transition-colors">{dropdownItem.name}</span>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+                  
                   return (
                     <a
                       key={item.name}
