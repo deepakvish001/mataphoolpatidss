@@ -313,47 +313,132 @@ const About = () => {
       </section>
 
       {/* Management Section */}
-      <section className="section-padding bg-gradient-to-r from-background to-primary/5">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">OUR MANAGEMENT</h2>
-            <p className="text-xl text-muted-foreground">Experienced leaders driving educational excellence</p>
+      <section className="section-padding relative overflow-hidden bg-gradient-to-br from-muted/5 via-background to-primary/5">
+        {/* Animated background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-muted/10" />
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-full blur-3xl" style={{ animationDuration: '4s' }} />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <User className="h-6 w-6 text-primary" />
+              <span className="text-primary font-bold text-lg">Leadership Excellence</span>
+              <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+            </div>
+            
+            <h2 className="text-6xl md:text-7xl font-serif font-bold mb-8">
+              <span className="text-gradient bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">OUR</span>
+              <span className="text-primary block">MANAGEMENT</span>
+            </h2>
+            <p className="text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              Visionary leaders driving <span className="text-primary font-semibold">educational excellence</span> and 
+              transforming the landscape of skill development across India
+            </p>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-16 max-w-7xl mx-auto">
             {/* Director Profile */}
-            <Card className="card-premium">
-              <CardContent className="p-8">
-                <div className="text-center mb-6">
-                  <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <User className="h-12 w-12 text-primary" />
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-700" />
+              <Card className="relative border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl hover:glow-orange transition-all duration-700 group-hover:scale-[1.02]">
+                <CardContent className="p-12">
+                  <div className="text-center mb-10">
+                    <div className="relative mb-8">
+                      <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto glow-orange group-hover:scale-110 transition-transform duration-500">
+                        <User className="h-16 w-16 text-white" />
+                      </div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-primary to-orange-500 rounded-full flex items-center justify-center">
+                        <Star className="h-4 w-4 text-white" />
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-3xl font-serif font-bold text-foreground mb-2 group-hover:text-blue-500 transition-colors duration-300">
+                      Prof. Yogesh Kumar
+                    </h3>
+                    <div className="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-6 py-2 mb-6">
+                      <Briefcase className="h-4 w-4 text-blue-500" />
+                      <span className="text-blue-500 font-bold text-lg">DIRECTOR & FOUNDER</span>
+                    </div>
+                    <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto" />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground">Prof. Yogesh Kumar</h3>
-                  <div className="text-primary font-semibold text-lg">DIRECTOR</div>
-                </div>
-                
-                <p className="text-muted-foreground leading-relaxed">
-                  Prof. Yogesh Kumar is Director and Founder of MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN and possesses more than 25 years of experience in skill development initiatives. Prof. Yogesh Kumar graduated from the prestigious Hindu College, University of Delhi (1981) followed by a Ph.D. in Characterization of Silicon, Department of Physics & Astrophysics, University of Delhi. He started skill initiatives from April 1989 and has successfully completed various schemes including PMKVY, PMKK, UKSDM, and many more.
-                </p>
-              </CardContent>
-            </Card>
+                  
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <GraduationCap className="h-4 w-4 text-blue-500" />
+                      </div>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        <span className="text-primary font-semibold">25+ years</span> of pioneering experience in skill development initiatives, 
+                        transforming lives across India since 1989.
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <Trophy className="h-4 w-4 text-blue-500" />
+                      </div>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        <span className="text-primary font-semibold">Ph.D. in Physics</span> from University of Delhi with expertise 
+                        in PMKVY, PMKK, UKSDM, and numerous government initiatives.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* COO Profile */}
-            <Card className="card-premium">
-              <CardContent className="p-8">
-                <div className="text-center mb-6">
-                  <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Briefcase className="h-12 w-12 text-primary" />
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-600/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-700" />
+              <Card className="relative border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl hover:glow-orange transition-all duration-700 group-hover:scale-[1.02]">
+                <CardContent className="p-12">
+                  <div className="text-center mb-10">
+                    <div className="relative mb-8">
+                      <div className="w-32 h-32 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto glow-orange group-hover:scale-110 transition-transform duration-500">
+                        <Briefcase className="h-16 w-16 text-white" />
+                      </div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-primary to-orange-500 rounded-full flex items-center justify-center">
+                        <Sparkles className="h-4 w-4 text-white" />
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-3xl font-serif font-bold text-foreground mb-2 group-hover:text-green-500 transition-colors duration-300">
+                      Mr. Manav Chauhan
+                    </h3>
+                    <div className="inline-flex items-center space-x-2 bg-green-500/10 border border-green-500/20 rounded-full px-6 py-2 mb-6">
+                      <Target className="h-4 w-4 text-green-500" />
+                      <span className="text-green-500 font-bold text-lg">CHIEF OPERATING OFFICER</span>
+                    </div>
+                    <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mx-auto" />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground">Mr. Manav Chauhan</h3>
-                  <div className="text-primary font-semibold text-lg">COO</div>
-                </div>
-                
-                <p className="text-muted-foreground leading-relaxed">
-                  Manav Chauhan is next generation entrepreneur who leads MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN as Chief Operating Officer. He has successfully rolled out various profit centre verticals and his vast experience in project development, management and implementation helped in capacity building & sustainability. He has successfully implemented various schemes including DDU-GKY, PMKK, MANAS, NULM, and PMKVY.
-                </p>
-              </CardContent>
-            </Card>
+                  
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <Building2 className="h-4 w-4 text-green-500" />
+                      </div>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        <span className="text-primary font-semibold">Next-generation entrepreneur</span> leading operational excellence 
+                        with innovative profit center verticals and strategic implementation.
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-start space-x-4">
+                      <div className="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <CheckCircle className="h-4 w-4 text-green-500" />
+                      </div>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        <span className="text-primary font-semibold">Expert implementation</span> of DDU-GKY, PMKK, MANAS, 
+                        NULM, and PMKVY schemes with proven track record.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
@@ -413,84 +498,183 @@ const About = () => {
       </section>
 
       {/* Our Centers Section */}
-      <section className="section-padding bg-gradient-to-r from-background to-primary/5">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-6">
+      <section className="section-padding relative overflow-hidden bg-gradient-to-br from-background via-muted/5 to-primary/10">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-l from-primary/10 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-r from-blue-500/10 to-transparent rounded-full blur-2xl" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-green-500/5 to-purple-500/5 rounded-full blur-3xl animate-pulse" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <Globe className="h-6 w-6 text-primary animate-pulse" />
+              <span className="text-primary font-bold text-lg">Pan India Network</span>
               <MapPin className="h-5 w-5 text-primary" />
-              <span className="text-primary font-semibold">Pan India Presence</span>
             </div>
             
-            <h2 className="text-4xl font-bold text-foreground mb-6">OUR CENTRES</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              We encourage you to contact one of our centers today to learn more about how we can help you achieve your entrepreneurship development goals.
+            <h2 className="text-6xl md:text-7xl font-serif font-bold mb-8">
+              <span className="text-gradient bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">OUR</span>
+              <span className="text-primary block">CENTRES</span>
+            </h2>
+            <p className="text-2xl text-muted-foreground max-w-4xl mx-auto mb-8 leading-relaxed">
+              Strategically located across <span className="text-primary font-bold">22+ states</span> to bring 
+              world-class skill training to every corner of India
             </p>
             
-            <Button className="btn-primary">
-              <Phone className="mr-2 h-5 w-5" />
-              Contact Now
+            <Button className="btn-primary group text-lg px-10 py-4 morphing-button">
+              <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform" />
+              Connect With Us Today
             </Button>
           </div>
 
-          {/* Centers Table */}
-          <div className="bg-card border rounded-2xl overflow-hidden shadow-lg">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-primary/5 border-b">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">State</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">District</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Centre Name</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Address</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {centers.map((center, index) => (
-                    <tr key={index} className="hover:bg-primary/5 transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center space-x-2">
-                          <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                          <span className="font-medium text-foreground">{center.state}</span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-muted-foreground font-medium">{center.district}</td>
-                      <td className="px-6 py-4">
-                        <span className="text-primary font-semibold">{center.name}</span>
-                      </td>
-                      <td className="px-6 py-4 text-muted-foreground">{center.address}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {/* Enhanced Centers Grid */}
+          <div className="mb-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 hover:glow-orange transition-all duration-300">
+                <MapPin className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+                <div className="text-3xl font-bold text-blue-500 mb-2">22+</div>
+                <div className="text-muted-foreground font-semibold">States Covered</div>
+              </div>
+              
+              <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-600/5 border border-green-500/20 hover:glow-orange transition-all duration-300">
+                <Building2 className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                <div className="text-3xl font-bold text-green-500 mb-2">50+</div>
+                <div className="text-muted-foreground font-semibold">Active Centers</div>
+              </div>
+              
+              <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 hover:glow-orange transition-all duration-300">
+                <Users className="h-12 w-12 text-purple-500 mx-auto mb-4" />
+                <div className="text-3xl font-bold text-purple-500 mb-2">1000+</div>
+                <div className="text-muted-foreground font-semibold">Daily Students</div>
+              </div>
+              
+              <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-orange-600/5 border border-primary/20 hover:glow-orange transition-all duration-300">
+                <Trophy className="h-12 w-12 text-primary mx-auto mb-4" />
+                <div className="text-3xl font-bold text-primary mb-2">95%</div>
+                <div className="text-muted-foreground font-semibold">Success Rate</div>
+              </div>
             </div>
           </div>
 
-          {/* Contact Information */}
-          <div className="mt-16 grid md:grid-cols-2 gap-8">
-            <Card className="card-premium">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Phone className="h-8 w-8 text-primary" />
+          {/* Enhanced Centers Table */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 rounded-3xl blur-xl" />
+            <div className="relative bg-gradient-to-br from-card/80 to-card/40 border border-border/50 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-xl">
+              <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border-b border-primary/20 p-6">
+                <div className="flex items-center justify-center space-x-3">
+                  <MapPin className="h-6 w-6 text-primary" />
+                  <h3 className="text-2xl font-bold text-foreground">Training Centers Across India</h3>
+                  <Sparkles className="h-5 w-5 text-primary animate-pulse" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-4">Call Us</h3>
-                <div className="space-y-2">
-                  <p className="text-muted-foreground">Primary: <span className="text-primary font-semibold">0120 428 2837</span></p>
-                  <p className="text-muted-foreground">Alternate: <span className="text-primary font-semibold">0120 457 0318</span></p>
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+              
+              <div className="overflow-x-auto max-h-96 overflow-y-auto">
+                <table className="w-full">
+                  <thead className="sticky top-0 bg-gradient-to-r from-muted/50 to-muted/30 backdrop-blur-sm border-b border-border/50">
+                    <tr>
+                      <th className="px-8 py-6 text-left text-sm font-bold text-foreground uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="h-4 w-4 text-primary" />
+                          <span>State</span>
+                        </div>
+                      </th>
+                      <th className="px-8 py-6 text-left text-sm font-bold text-foreground uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <Building2 className="h-4 w-4 text-primary" />
+                          <span>District</span>
+                        </div>
+                      </th>
+                      <th className="px-8 py-6 text-left text-sm font-bold text-foreground uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <GraduationCap className="h-4 w-4 text-primary" />
+                          <span>Centre Name</span>
+                        </div>
+                      </th>
+                      <th className="px-8 py-6 text-left text-sm font-bold text-foreground uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="h-4 w-4 text-primary" />
+                          <span>Address</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/30">
+                    {centers.map((center, index) => (
+                      <tr key={index} className="hover:bg-gradient-to-r hover:from-primary/5 hover:to-transparent transition-all duration-300 group">
+                        <td className="px-8 py-6">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-3 h-3 bg-primary rounded-full group-hover:animate-pulse" />
+                            <span className="font-bold text-foreground group-hover:text-primary transition-colors">
+                              {center.state}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6">
+                          <span className="text-muted-foreground font-semibold group-hover:text-foreground transition-colors">
+                            {center.district}
+                          </span>
+                        </td>
+                        <td className="px-8 py-6">
+                          <span className="text-primary font-bold text-sm group-hover:text-orange-500 transition-colors">
+                            {center.name}
+                          </span>
+                        </td>
+                        <td className="px-8 py-6">
+                          <span className="text-muted-foreground text-sm group-hover:text-foreground transition-colors">
+                            {center.address}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
 
-            <Card className="card-premium">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Mail className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-4">Email Us</h3>
-                <p className="text-muted-foreground">
-                  <span className="text-primary font-semibold">mataphoolpatideviorg@gmail.com</span>
-                </p>
-              </CardContent>
-            </Card>
+          {/* Enhanced Contact Section */}
+          <div className="mt-20 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+              <Card className="relative card-premium border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-transparent hover:glow-orange">
+                <CardContent className="p-10 text-center">
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-8 glow-orange group-hover:scale-110 transition-transform duration-300">
+                    <Phone className="h-10 w-10 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-serif font-bold text-foreground mb-6">Connect With Us</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-center space-x-3 bg-blue-500/10 border border-blue-500/20 rounded-lg px-4 py-3">
+                      <Phone className="h-5 w-5 text-blue-500" />
+                      <span className="text-primary font-bold text-lg">0120 428 2837</span>
+                    </div>
+                    <div className="flex items-center justify-center space-x-3 bg-blue-500/10 border border-blue-500/20 rounded-lg px-4 py-3">
+                      <Phone className="h-5 w-5 text-blue-500" />
+                      <span className="text-primary font-bold text-lg">0120 457 0318</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="group relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-600/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+              <Card className="relative card-premium border-green-500/20 bg-gradient-to-br from-green-500/5 to-transparent hover:glow-orange">
+                <CardContent className="p-10 text-center">
+                  <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-8 glow-orange group-hover:scale-110 transition-transform duration-300">
+                    <Mail className="h-10 w-10 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-serif font-bold text-foreground mb-6">Email Us</h3>
+                  <div className="flex items-center justify-center space-x-3 bg-green-500/10 border border-green-500/20 rounded-lg px-4 py-3">
+                    <Mail className="h-5 w-5 text-green-500" />
+                    <span className="text-primary font-bold text-lg break-all">
+                      mataphoolpatideviorg@gmail.com
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
