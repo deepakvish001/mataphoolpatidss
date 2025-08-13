@@ -35,10 +35,11 @@ const Footer = () => {
               <div>
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-lg">J</span>
+                    <span className="text-primary-foreground font-bold text-lg">M</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-foreground">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</h3>
+                    <h3 className="text-lg font-bold text-foreground">MATA PHOOLPATI DEVI</h3>
+                    <h3 className="text-lg font-bold text-foreground">SHIKSHAN SANSTHAN</h3>
                     <p className="text-xs text-muted-foreground">Skill Development Programs</p>
                   </div>
                 </div>
@@ -53,19 +54,19 @@ const Footer = () => {
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-muted-foreground">
-                    D-87, Vyapar Marg, Sector 2, Noida - 201301
+                    Vill- Murarpatti, Post Lalganj, Tahsil Bairiya, Dist Ballia, (U.P.) 271216
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-muted-foreground">
-                    0120 428 2837, +91 7007989716
+                    +91 7007989716, +91 9004362661
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-muted-foreground">
-                    jitmskillspvtltd@gmail.com
+                    info.mpdss@gmail.com
                   </span>
                 </div>
               </div>

@@ -10,6 +10,7 @@ import NSQF from "./pages/NSQF";
 import AAIOE from "./pages/AAIOE";
 import EntrepreneurshipDevelopment from "./pages/EntrepreneurshipDevelopment";
 import Partners from "./pages/Partners";
+import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/aaioe" element={<AAIOE />} />
           <Route path="/entrepreneurship-development" element={<EntrepreneurshipDevelopment />} />
           <Route path="/partners" element={<Partners />} />
+          <Route path="/contact" element={<ContactUs />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
