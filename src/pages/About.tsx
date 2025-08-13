@@ -49,168 +49,202 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Enhanced Hero Section - Matching Home Page */}
-      <section className="relative min-h-screen flex items-center hero-gradient overflow-hidden">
-        {/* Background Image with Better Overlay */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/70"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,127,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,127,0,0.05)_1px,transparent_1px)] bg-[size:60px_60px]" />
-        </div>
-
-        {/* Animated Background Particles - Matching Home Style */}
+      {/* Revolutionary Different Hero Section */}
+      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-muted/5 to-primary/5">
+        {/* Dynamic Geometric Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Large floating elements - consistent with home */}
-          <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-gradient-to-r from-primary/15 to-orange-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-l from-primary/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-primary/20 rounded-full blur-2xl animate-pulse" style={{ animationDuration: '3s' }} />
+          {/* Animated geometric shapes */}
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
+            <div className="absolute bottom-1/3 right-1/5 w-80 h-80 bg-gradient-to-tl from-blue-500/15 to-purple-500/15 transform rotate-45 blur-2xl" style={{ animation: 'float 8s ease-in-out infinite' }} />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-full blur-3xl animate-bounce" style={{ animationDuration: '4s' }} />
+          </div>
           
-          {/* Floating corner elements */}
-          <div className="absolute top-20 right-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute bottom-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl animate-pulse"></div>
+          {/* Diagonal overlay pattern */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-muted/10 transform -skew-y-12 origin-top-left" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-primary/3 to-transparent" />
         </div>
-        
-        <div className="container-custom relative z-10 py-20">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Content - Matching Home Page Typography */}
-            <div className="space-y-8 animate-fade-in">
-              <div className="space-y-6">
-                {/* Badge - Consistent with Home */}
-                <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 text-sm">
-                  <Award className="h-5 w-5 text-primary" />
-                  <span className="text-primary font-semibold">Pioneering Excellence Since 2013</span>
-                </div>
-                
-                {/* Main Title - Matching Home Style */}
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                  <span className="text-gradient">MATA PHOOLPATI DEVI</span>
-                  <br />
-                  <span className="text-foreground">SHIKSHAN SANSTHAN</span>
-                </h1>
-                
-                {/* Subtitle - Consistent Typography */}
-                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
-                  Where Students Come to <span className="text-primary font-semibold">Succeed</span>. 
-                  Empowering with <span className="text-primary font-semibold">ABILITY</span> through 
-                  comprehensive skill development and creating tomorrow's industry leaders.
-                </p>
-              </div>
 
-              {/* Quick Stats - Matching Home Layout */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-primary">25+</div>
-                  <div className="text-sm text-muted-foreground">Years Excellence</div>
+        {/* Split Content Layout */}
+        <div className="relative z-10 min-h-screen flex items-center">
+          <div className="container-custom">
+            <div className="grid lg:grid-cols-12 gap-8 items-center min-h-screen py-20">
+              
+              {/* Left Content Column */}
+              <div className="lg:col-span-6 space-y-12 animate-fade-in">
+                {/* Animated Timeline Badge */}
+                <div className="relative">
+                  <div className="inline-flex items-center space-x-4 bg-gradient-to-r from-primary/30 via-primary/20 to-primary/10 border border-primary/40 rounded-2xl px-8 py-6 backdrop-blur-md shadow-2xl group">
+                    <div className="relative">
+                      <div className="w-6 h-6 bg-primary rounded-full animate-pulse" />
+                      <div className="absolute inset-0 w-6 h-6 bg-primary rounded-full animate-ping opacity-30" />
+                    </div>
+                    <div className="text-center">
+                      <div className="text-primary font-bold text-2xl">EST. 2013</div>
+                      <div className="text-primary/80 text-sm font-medium">Pioneering Excellence</div>
+                    </div>
+                    <Sparkles className="h-8 w-8 text-primary animate-pulse" />
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-primary">15L+</div>
-                  <div className="text-sm text-muted-foreground">Students Trained</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-primary">22+</div>
-                  <div className="text-sm text-muted-foreground">States Covered</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-primary">95%</div>
-                  <div className="text-sm text-muted-foreground">Success Rate</div>
-                </div>
-              </div>
 
-              {/* CTA Buttons - Matching Home Style */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="btn-primary group">
-                  Download Brochure
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Button size="lg" variant="outline" className="btn-secondary group">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Contact Us Now
-                </Button>
-              </div>
+                {/* Revolutionary Title Design */}
+                <div className="space-y-8">
+                  <div className="relative">
+                    <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-none">
+                      <div className="relative inline-block">
+                        <span className="block text-gradient bg-gradient-to-r from-foreground via-foreground/90 to-muted-foreground bg-clip-text text-transparent">
+                          ABOUT
+                        </span>
+                        <div className="absolute -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-primary via-orange-500 to-primary rounded-full" />
+                      </div>
+                      <span className="block text-gradient bg-gradient-to-r from-primary via-orange-500 to-primary bg-clip-text text-transparent mt-4">
+                        MPDS
+                      </span>
+                    </h1>
+                  </div>
 
-              {/* Trust Indicators - Consistent with Home */}
-              <div className="flex flex-wrap items-center gap-6 pt-8 border-t border-border/50">
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>NSDC Training Partner</span>
+                  {/* Dynamic Subtitle */}
+                  <div className="space-y-6">
+                    <p className="text-3xl md:text-4xl font-bold text-muted-foreground leading-tight">
+                      Transforming Lives Through 
+                      <span className="text-gradient bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent block">
+                        Skill Excellence
+                      </span>
+                    </p>
+                    
+                    <p className="text-xl text-muted-foreground/90 leading-relaxed max-w-2xl">
+                      Where dreams meet <span className="text-primary font-bold">opportunity</span>, 
+                      students discover their <span className="text-primary font-bold">potential</span>, 
+                      and futures are built through world-class education.
+                    </p>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <Globe className="h-4 w-4 text-primary" />
-                  <span>Pan India Presence</span>
-                </div>
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <Trophy className="h-4 w-4 text-primary" />
-                  <span>Award Winning Institute</span>
-                </div>
-              </div>
-            </div>
 
-            {/* Enhanced Visual Elements - Matching Home Design */}
-            <div className="hidden lg:block relative">
-              <div className="relative">
-                {/* Main visual card - Similar to Home */}
-                <div className="w-full h-[500px] bg-gradient-to-br from-primary/20 via-orange-500/10 to-primary/5 rounded-3xl border border-primary/30 backdrop-blur-sm overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
+                {/* Interactive Stats Grid */}
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 border border-primary/30 p-6 hover:glow-orange transition-all duration-500 hover:scale-105">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative text-center">
+                      <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">25+</div>
+                      <div className="text-sm text-muted-foreground font-semibold">Years Excellence</div>
+                    </div>
+                  </div>
                   
-                  {/* Floating achievement badges - Consistent with Home */}
-                  <div className="absolute top-6 left-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in">
-                    <div className="flex items-center space-x-3">
-                      <Building2 className="h-8 w-8 text-primary" />
-                      <div>
-                        <div className="text-sm font-bold text-foreground">Since 2013</div>
-                        <div className="text-xs text-muted-foreground">Established</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="absolute top-6 right-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.2s'}}>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary">50+</div>
-                      <div className="text-xs text-muted-foreground">Training Centers</div>
-                    </div>
-                  </div>
-
-                  <div className="absolute bottom-6 left-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.4s'}}>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-primary">600+</div>
-                      <div className="text-xs text-muted-foreground">Expert Faculty</div>
-                    </div>
-                  </div>
-
-                  <div className="absolute bottom-6 right-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.6s'}}>
-                    <div className="flex items-center space-x-2">
-                      <Heart className="h-6 w-6 text-primary" />
-                      <div>
-                        <div className="text-sm font-bold text-foreground">Our Vision</div>
-                        <div className="text-xs text-muted-foreground">10L Students/Year</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Center content - Matching Home Style */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center space-y-6">
-                      <div className="w-24 h-24 bg-gradient-to-br from-primary/30 to-orange-500/30 rounded-full flex items-center justify-center mx-auto animate-pulse">
-                        <GraduationCap className="h-12 w-12 text-primary" />
-                      </div>
-                      <div className="space-y-3">
-                        <h3 className="text-2xl font-bold text-foreground">Excellence in Education</h3>
-                        <p className="text-muted-foreground max-w-xs">Transforming Lives Through Comprehensive Skill Development</p>
-                      </div>
+                  <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-500/15 to-green-500/5 border border-green-500/30 p-6 hover:glow-orange transition-all duration-500 hover:scale-105">
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative text-center">
+                      <div className="text-4xl font-bold text-green-500 mb-2 group-hover:scale-110 transition-transform">15L+</div>
+                      <div className="text-sm text-muted-foreground font-semibold">Lives Transformed</div>
                     </div>
                   </div>
                 </div>
-                
-                {/* Background glow effect - Consistent with Home */}
-                <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-3xl blur-2xl opacity-50 animate-pulse"></div>
+
+                {/* Enhanced CTA Section */}
+                <div className="space-y-6">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button size="lg" className="group relative overflow-hidden bg-gradient-to-r from-primary to-orange-500 text-white px-8 py-4 rounded-2xl font-bold shadow-2xl hover:scale-105 transition-all duration-500 border-0">
+                      <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="relative flex items-center space-x-3">
+                        <GraduationCap className="h-6 w-6 group-hover:rotate-12 transition-transform" />
+                        <span>Explore Our Journey</span>
+                        <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </Button>
+                    
+                    <Button size="lg" variant="outline" className="group bg-transparent border-2 border-primary/50 text-primary hover:bg-primary/10 px-8 py-4 rounded-2xl font-bold shadow-xl hover:scale-105 transition-all duration-500 backdrop-blur-sm">
+                      <div className="flex items-center space-x-3">
+                        <Phone className="h-5 w-5 group-hover:rotate-12 transition-transform" />
+                        <span>Connect Now</span>
+                      </div>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Visual Column - Completely Different Design */}
+              <div className="lg:col-span-6 relative">
+                <div className="relative h-[600px] lg:h-[700px]">
+                  
+                  {/* Main Hero Card Stack */}
+                  <div className="absolute inset-0 space-y-6">
+                    
+                    {/* Top Achievement Card */}
+                    <div className="absolute top-0 right-0 w-80 h-48 bg-gradient-to-br from-blue-500/20 via-blue-500/10 to-transparent rounded-3xl border border-blue-500/30 backdrop-blur-xl overflow-hidden group hover:scale-105 transition-all duration-500 animate-fade-in">
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent" />
+                      <div className="relative p-8 h-full flex flex-col justify-between">
+                        <div className="flex items-center justify-between">
+                          <Trophy className="h-12 w-12 text-blue-500" />
+                          <div className="text-right">
+                            <div className="text-3xl font-bold text-blue-500">22+</div>
+                            <div className="text-blue-400 text-sm">States</div>
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="text-foreground font-bold text-lg">Pan India Presence</h4>
+                          <p className="text-muted-foreground text-sm">Reaching every corner</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Center Mission Card */}
+                    <div className="absolute top-24 left-0 w-96 h-64 bg-gradient-to-br from-primary/25 via-orange-500/15 to-primary/10 rounded-3xl border border-primary/40 backdrop-blur-xl overflow-hidden group hover:scale-105 transition-all duration-500 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+                      <div className="relative p-10 h-full flex flex-col justify-center text-center">
+                        <div className="w-20 h-20 bg-gradient-to-br from-primary to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 glow-orange">
+                          <Heart className="h-10 w-10 text-white" />
+                        </div>
+                        <h4 className="text-foreground font-bold text-2xl mb-3">Our Mission</h4>
+                        <p className="text-muted-foreground leading-relaxed">
+                          Empowering <span className="text-primary font-semibold">10 lakh students</span> annually 
+                          with world-class skills
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Bottom Success Card */}
+                    <div className="absolute bottom-0 right-12 w-72 h-56 bg-gradient-to-br from-green-500/20 via-emerald-500/10 to-transparent rounded-3xl border border-green-500/30 backdrop-blur-xl overflow-hidden group hover:scale-105 transition-all duration-500 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent" />
+                      <div className="relative p-8 h-full flex flex-col justify-between">
+                        <div className="flex items-center justify-between">
+                          <Users className="h-12 w-12 text-green-500" />
+                          <div className="text-right">
+                            <div className="text-3xl font-bold text-green-500">95%</div>
+                            <div className="text-green-400 text-sm">Success</div>
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="text-foreground font-bold text-lg">Placement Rate</h4>
+                          <p className="text-muted-foreground text-sm">Industry leading results</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Floating Elements */}
+                    <div className="absolute top-1/3 right-1/4 w-16 h-16 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-2xl flex items-center justify-center animate-bounce backdrop-blur-sm" style={{ animationDuration: '3s', animationDelay: '1s' }}>
+                      <Star className="h-8 w-8 text-purple-500" />
+                    </div>
+                    
+                    <div className="absolute bottom-1/3 left-1/4 w-20 h-20 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-full flex items-center justify-center animate-pulse backdrop-blur-sm">
+                      <Award className="h-10 w-10 text-yellow-500" />
+                    </div>
+                  </div>
+
+                  {/* Background Glow Effects */}
+                  <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-r from-primary/30 to-orange-500/30 rounded-full blur-3xl opacity-60 animate-pulse" />
+                  <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl opacity-50" style={{ animation: 'float 8s ease-in-out infinite' }} />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Scroll indicator - Matching Home Style */}
+        {/* Bottom Wave Transition */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent" />
+        
+        {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse" />
+          <div className="w-8 h-12 border-2 border-primary/60 rounded-full flex justify-center backdrop-blur-sm">
+            <div className="w-1.5 h-4 bg-primary rounded-full mt-2 animate-pulse" />
           </div>
         </div>
       </section>
