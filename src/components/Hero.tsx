@@ -83,18 +83,64 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right side - Could add another visual element */}
-          <div className="hidden lg:block">
+          {/* Enhanced visual elements */}
+          <div className="hidden lg:block relative">
             <div className="relative">
-              <div className="w-full h-96 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl border border-primary/20"></div>
-              <div className="absolute inset-4 bg-card/50 backdrop-blur-sm rounded-xl border border-border/50 flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
-                    <Play className="h-8 w-8 text-primary" />
+              {/* Main visual card */}
+              <div className="w-full h-96 bg-gradient-to-br from-primary/20 via-orange-500/10 to-red-500/5 rounded-3xl border border-primary/30 backdrop-blur-sm overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
+                
+                {/* Floating achievement badges */}
+                <div className="absolute top-6 left-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in">
+                  <div className="flex items-center space-x-3">
+                    <Award className="h-8 w-8 text-primary" />
+                    <div>
+                      <div className="text-sm font-bold text-foreground">NSDC Certified</div>
+                      <div className="text-xs text-muted-foreground">Government Partner</div>
+                    </div>
                   </div>
-                  <p className="text-muted-foreground">Watch our success stories</p>
+                </div>
+
+                <div className="absolute top-6 right-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.2s'}}>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">900+</div>
+                    <div className="text-xs text-muted-foreground">Expert Faculty</div>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-6 left-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.4s'}}>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary">100%</div>
+                    <div className="text-xs text-muted-foreground">Placement Rate</div>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-6 right-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.6s'}}>
+                  <div className="flex items-center space-x-2">
+                    <Users className="h-6 w-6 text-primary" />
+                    <div>
+                      <div className="text-sm font-bold text-foreground">Pan India</div>
+                      <div className="text-xs text-muted-foreground">Presence</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Center content */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center space-y-4">
+                    <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto animate-pulse">
+                      <BookOpen className="h-10 w-10 text-primary" />
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-foreground">Excellence in Education</h3>
+                      <p className="text-muted-foreground">Transforming Lives Through Skills</p>
+                    </div>
+                  </div>
                 </div>
               </div>
+              
+              {/* Background glow effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-3xl blur-2xl opacity-50 animate-pulse"></div>
             </div>
           </div>
         </div>
