@@ -1,4 +1,8 @@
-import { Award, Users, MapPin, Phone, Mail, Calendar, Target, Eye, User, Building2, GraduationCap, Trophy, Briefcase, Star, Search } from 'lucide-react';
+import { 
+  Award, Users, MapPin, Phone, Mail, Calendar, Target, Eye, User, Building2, 
+  GraduationCap, Trophy, Briefcase, Star, Search, CheckCircle, ArrowRight,
+  Zap, Heart, Shield, Globe, Sparkles
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Navigation from '@/components/Navigation';
@@ -54,13 +58,13 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-6">
-              <Building2 className="h-5 w-5 text-primary" />
+              <Sparkles className="h-5 w-5 text-primary" />
               <span className="text-primary font-semibold">Established Since 2013</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 font-serif">
               MATA PHOOLPATI DEVI <br />
-              <span className="text-primary">SHIKSHAN SANSTHAN</span>
+              <span className="text-gradient">SHIKSHAN SANSTHAN</span>
             </h1>
             
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
@@ -68,10 +72,13 @@ const About = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="btn-primary">
+              <Button className="btn-primary group">
+                <GraduationCap className="mr-2 h-5 w-5" />
                 Download Brochure
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button variant="outline" className="btn-secondary">
+              <Button variant="outline" className="btn-secondary group">
+                <Phone className="mr-2 h-5 w-5" />
                 Contact Us
               </Button>
             </div>
@@ -83,27 +90,51 @@ const About = () => {
       <section className="section-padding">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">WHO WE ARE</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-serif">WHO WE ARE</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-600 mx-auto mb-6"></div>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">Pioneering excellence in skill development education</p>
           </div>
           
           <div className="max-w-6xl mx-auto">
-            <div className="bg-card border rounded-2xl p-8 md:p-12 shadow-lg">
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is a pioneer in the field of skill training, providing free and placement-linked training in a variety of sectors, including apparel, organized retail, electronics, healthcare, food processing, and agriculture. We are an NSDC Training Partner with a pan-India presence, and we have successfully conducted various skill training projects, including DDUGKY, DDUKK, PMKVY, PMKK, ESD&P NIESBUD, NULM Jharkhand, NULM Gujarat, NULM Haryana, and MAEF.
-              </p>
-              
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN has tie-ups with various organizations to provide job training and placement assistance to trained candidates. We have also developed India's largest Mega Skill Centre in difficult and remote areas like Jharkhand, J&K, Uttarakhand, and the North-East States.
-              </p>
-              
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                Today, MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is one of India's forefront skill training organizations. Our trainings have a measurable and notable impact on students and society at large. We help students for employment and self-employment, and our industries get trained and skilled manpower.
-              </p>
-              
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN works to empower youth to serve society socially, grow economically, and lead healthy lives. We have already trained more than <span className="text-primary font-semibold">1,00,000 students</span> in various skill sectors since we started our operations.
-              </p>
-            </div>
+            <Card className="card-premium shadow-strong">
+              <CardContent className="p-12 md:p-16">
+                <div className="space-y-8">
+                  <div className="flex items-center space-x-4 mb-8">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-600 rounded-2xl flex items-center justify-center shadow-medium">
+                      <Award className="h-8 w-8 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-foreground font-serif">Our Legacy</h3>
+                      <p className="text-primary">Excellence in Education Since 2013</p>
+                    </div>
+                  </div>
+                  
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                    <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is a pioneer in the field of skill training, providing free and placement-linked training in a variety of sectors, including apparel, organized retail, electronics, healthcare, food processing, and agriculture. We are an NSDC Training Partner with a pan-India presence, and we have successfully conducted various skill training projects, including DDUGKY, DDUKK, PMKVY, PMKK, ESD&P NIESBUD, NULM Jharkhand, NULM Gujarat, NULM Haryana, and MAEF.
+                  </p>
+                  
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                    MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN has tie-ups with various organizations to provide job training and placement assistance to trained candidates. We have also developed India's largest Mega Skill Centre in difficult and remote areas like Jharkhand, J&K, Uttarakhand, and the North-East States.
+                  </p>
+                  
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                    Today, MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is one of India's forefront skill training organizations. Our trainings have a measurable and notable impact on students and society at large. We help students for employment and self-employment, and our industries get trained and skilled manpower.
+                  </p>
+                  
+                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-2xl p-8">
+                    <div className="flex items-center space-x-4">
+                      <Heart className="h-12 w-12 text-primary" />
+                      <div>
+                        <h4 className="text-xl font-bold text-foreground mb-2">Our Impact</h4>
+                        <p className="text-muted-foreground">
+                          MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN works to empower youth to serve society socially, grow economically, and lead healthy lives. We have already trained more than <span className="text-primary font-semibold">1,00,000 students</span> in various skill sectors since we started our operations.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

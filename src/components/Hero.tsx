@@ -9,7 +9,7 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
-          alt="JITM Skills Training Facility" 
+          alt="MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN Training Facility" 
           className="w-full h-full object-cover opacity-20"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
@@ -25,7 +25,7 @@ const Hero = () => {
                 <span className="text-primary font-semibold">Government Certified Training Partner</span>
               </div>
               
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+              <h1 className="text-5xl md:text-7xl font-bold leading-tight font-serif">
                 <span className="text-gradient">EMPOWERING</span>
                 <br />
                 <span className="text-foreground">WITH ABILITY</span>
@@ -86,12 +86,12 @@ const Hero = () => {
           {/* Enhanced visual elements */}
           <div className="hidden lg:block relative">
             <div className="relative">
-              {/* Main visual card */}
-              <div className="w-full h-96 bg-gradient-to-br from-primary/20 via-orange-500/10 to-red-500/5 rounded-3xl border border-primary/30 backdrop-blur-sm overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
+              {/* Main visual card with enhanced gradients */}
+              <div className="w-full h-96 bg-gradient-to-br from-primary/10 via-primary/5 to-primary/3 rounded-3xl border border-primary/20 backdrop-blur-sm overflow-hidden shadow-strong animate-glow">
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent"></div>
                 
-                {/* Floating achievement badges */}
-                <div className="absolute top-6 left-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in">
+                {/* Enhanced floating achievement badges */}
+                <div className="absolute top-6 left-6 bg-background/90 backdrop-blur-sm rounded-2xl p-4 border border-primary/30 animate-fade-in shadow-medium">
                   <div className="flex items-center space-x-3">
                     <Award className="h-8 w-8 text-primary" />
                     <div>
@@ -101,21 +101,21 @@ const Hero = () => {
                   </div>
                 </div>
 
-                <div className="absolute top-6 right-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.2s'}}>
+                <div className="absolute top-6 right-6 bg-background/90 backdrop-blur-sm rounded-2xl p-4 border border-primary/30 animate-fade-in shadow-medium" style={{animationDelay: '0.2s'}}>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-primary">900+</div>
                     <div className="text-xs text-muted-foreground">Expert Faculty</div>
                   </div>
                 </div>
 
-                <div className="absolute bottom-6 left-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.4s'}}>
+                <div className="absolute bottom-6 left-6 bg-background/90 backdrop-blur-sm rounded-2xl p-4 border border-primary/30 animate-fade-in shadow-medium" style={{animationDelay: '0.4s'}}>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-primary">100%</div>
                     <div className="text-xs text-muted-foreground">Placement Rate</div>
                   </div>
                 </div>
 
-                <div className="absolute bottom-6 right-6 bg-background/80 backdrop-blur-sm rounded-2xl p-4 border border-primary/20 animate-fade-in" style={{animationDelay: '0.6s'}}>
+                <div className="absolute bottom-6 right-6 bg-background/90 backdrop-blur-sm rounded-2xl p-4 border border-primary/30 animate-fade-in shadow-medium" style={{animationDelay: '0.6s'}}>
                   <div className="flex items-center space-x-2">
                     <Users className="h-6 w-6 text-primary" />
                     <div>
@@ -125,30 +125,30 @@ const Hero = () => {
                   </div>
                 </div>
 
-                {/* Center content */}
+                {/* Enhanced center content */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center space-y-4">
-                    <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto animate-pulse">
+                    <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto animate-glow">
                       <BookOpen className="h-10 w-10 text-primary" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-foreground">Excellence in Education</h3>
+                      <h3 className="text-xl font-bold text-foreground font-serif">Excellence in Education</h3>
                       <p className="text-muted-foreground">Transforming Lives Through Skills</p>
                     </div>
                   </div>
                 </div>
               </div>
               
-              {/* Background glow effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-3xl blur-2xl opacity-50 animate-pulse"></div>
+              {/* Enhanced background glow effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 to-primary/20 rounded-3xl blur-2xl opacity-60 animate-glow"></div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 right-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute bottom-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl animate-pulse"></div>
+      {/* Enhanced Floating Elements */}
+      <div className="absolute top-20 right-10 w-20 h-20 bg-primary/20 rounded-full blur-xl animate-float"></div>
+      <div className="absolute bottom-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl animate-float" style={{animationDelay: '2s'}}></div>
     </section>
   );
 };
