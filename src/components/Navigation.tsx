@@ -11,10 +11,10 @@ const Navigation = () => {
   const [dropdownTimeoutId, setDropdownTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   const navItems = [
-    { name: 'Home', href: '#home', icon: Globe },
+    { name: 'Home', href: '/', icon: Globe },
     { name: 'About', href: '/about', icon: Users },
     { name: 'Programs', href: '#training', icon: BookOpen, hasDropdown: true },
-    { name: 'Partners', href: '#affiliates', icon: Award },
+    { name: 'Partners', href: '/partners', icon: Award },
     { name: 'Contact', href: '#work-with-us', icon: MessageSquare },
   ];
 
