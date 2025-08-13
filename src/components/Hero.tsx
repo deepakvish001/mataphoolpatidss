@@ -5,80 +5,91 @@ import heroImage from '@/assets/hero-image.jpg';
 const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center bg-background overflow-hidden">
-      {/* Premium Background System */}
+      {/* Ultra Premium Background System */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
           alt="JITM Skills Training Excellence Center" 
-          className="w-full h-full object-cover opacity-12"
+          className="w-full h-full object-cover opacity-15 scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background/98 via-background/80 to-background/95"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/92 to-background/85"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/75 to-background/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/3 to-transparent"></div>
       </div>
 
-      {/* Sophisticated Accent Elements */}
+      {/* Advanced Accent Elements */}
       <div className="absolute inset-0 z-5 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-primary/12 to-primary/4 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/3 left-1/5 w-80 h-80 bg-gradient-to-tl from-primary/8 to-transparent rounded-full blur-2xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120vh] h-[120vh] bg-gradient-radial from-primary/2 via-transparent to-transparent rounded-full"></div>
+        <div className="absolute top-1/4 right-1/4 w-[30rem] h-[30rem] bg-gradient-to-br from-primary/15 via-primary/8 to-primary/3 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 left-1/5 w-96 h-96 bg-gradient-to-tl from-primary/10 via-primary/5 to-transparent rounded-full blur-2xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[150vh] h-[150vh] bg-gradient-radial from-primary/3 via-transparent to-transparent rounded-full"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,127,0,0.03)_0%,transparent_50%)]"></div>
       </div>
 
       <div className="container-custom relative z-10 py-32">
         <div className="max-w-7xl mx-auto text-center">
           {/* Content */}
           <div className="space-y-16">
-            <div className="space-y-12">
-              <div className="inline-flex items-center space-x-4 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/5 border border-primary/30 rounded-full px-10 py-5 text-lg backdrop-blur-sm shadow-xl">
-                <Award className="h-7 w-7 text-primary" />
-                <span className="text-primary font-bold tracking-wide">Government Certified Training Partner</span>
-                <div className="w-4 h-4 bg-primary rounded-full animate-pulse"></div>
+            <div className="space-y-16">
+              <div className="relative inline-flex items-center space-x-5 bg-gradient-to-r from-primary/25 via-primary/15 to-primary/8 border-2 border-primary/40 rounded-full px-12 py-6 text-xl backdrop-blur-md shadow-2xl">
+                <Award className="h-8 w-8 text-primary animate-pulse" />
+                <span className="text-primary font-black tracking-wide">Government Certified Training Partner</span>
+                <div className="w-5 h-5 bg-primary rounded-full animate-ping"></div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/10 to-transparent animate-pulse"></div>
               </div>
               
-              <h1 className="text-8xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-black leading-[0.8] tracking-tighter">
-                <span className="text-gradient-enhanced bg-clip-text block">EMPOWERING</span>
-                <span className="text-foreground block mt-6">WITH ABILITY</span>
+              <h1 className="text-9xl md:text-[10rem] lg:text-[14rem] xl:text-[16rem] 2xl:text-[18rem] font-black leading-[0.75] tracking-tighter">
+                <span className="text-gradient-enhanced bg-clip-text block drop-shadow-2xl">EMPOWERING</span>
+                <span className="text-foreground block mt-8 drop-shadow-xl">WITH ABILITY</span>
               </h1>
               
-              <div className="space-y-10 max-w-6xl mx-auto">
-                <p className="text-4xl md:text-5xl lg:text-6xl text-muted-foreground leading-relaxed font-extralight">
-                  Pioneer in <span className="text-primary font-bold">Skill Training</span> with 
-                  <span className="text-primary font-bold bg-primary/15 px-6 py-3 rounded-3xl ml-3 border border-primary/25">13+ years excellence</span>
+              <div className="space-y-12 max-w-7xl mx-auto">
+                <p className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-muted-foreground leading-relaxed font-extralight">
+                  Pioneer in <span className="text-primary font-bold relative">
+                    Skill Training
+                    <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary to-orange-400 rounded-full"></div>
+                  </span> with 
+                  <span className="text-primary font-bold bg-gradient-to-r from-primary/20 to-primary/10 px-8 py-4 rounded-[2rem] ml-4 border-2 border-primary/30 shadow-xl">13+ years excellence</span>
                 </p>
-                <p className="text-2xl md:text-3xl lg:text-4xl text-muted-foreground leading-relaxed font-light">
-                  Transformed over <span className="text-primary font-black text-5xl md:text-6xl bg-gradient-to-r from-primary to-orange-400 bg-clip-text text-transparent">5 lakh lives</span> across India with 
+                <p className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-muted-foreground leading-relaxed font-light">
+                  Transformed over <span className="text-primary font-black text-6xl md:text-7xl lg:text-8xl bg-gradient-to-r from-primary via-orange-400 to-primary bg-clip-text text-transparent drop-shadow-lg">5 lakh lives</span> across India with 
                   <span className="text-gradient-enhanced bg-clip-text font-bold"> guaranteed placement success</span>
                 </p>
               </div>
             </div>
 
-            {/* Ultra Premium Stats Grid */}
-            <div className="grid grid-cols-3 gap-16 max-w-5xl mx-auto">
-              <div className="text-center group">
-                <div className="text-7xl md:text-8xl lg:text-9xl xl:text-[8rem] font-black text-primary mb-6 group-hover:scale-105 transition-all duration-500">13+</div>
-                <div className="text-2xl font-bold text-muted-foreground uppercase tracking-widest">Years Experience</div>
-                <div className="w-24 h-1 bg-gradient-to-r from-primary to-orange-400 mx-auto mt-4 rounded-full"></div>
+            {/* Magnificent Stats Grid */}
+            <div className="grid grid-cols-3 gap-20 max-w-6xl mx-auto">
+              <div className="text-center group relative">
+                <div className="text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-black text-primary mb-8 group-hover:scale-110 transition-all duration-700 drop-shadow-2xl">13+</div>
+                <div className="text-3xl font-black text-muted-foreground uppercase tracking-[0.3em] mb-4">Years Experience</div>
+                <div className="w-32 h-2 bg-gradient-to-r from-primary via-orange-400 to-primary mx-auto rounded-full shadow-lg"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
-              <div className="text-center group">
-                <div className="text-7xl md:text-8xl lg:text-9xl xl:text-[8rem] font-black text-primary mb-6 group-hover:scale-105 transition-all duration-500">5L+</div>
-                <div className="text-2xl font-bold text-muted-foreground uppercase tracking-widest">Lives Transformed</div>
-                <div className="w-24 h-1 bg-gradient-to-r from-primary to-orange-400 mx-auto mt-4 rounded-full"></div>
+              <div className="text-center group relative">
+                <div className="text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-black text-primary mb-8 group-hover:scale-110 transition-all duration-700 drop-shadow-2xl">5L+</div>
+                <div className="text-3xl font-black text-muted-foreground uppercase tracking-[0.3em] mb-4">Lives Transformed</div>
+                <div className="w-32 h-2 bg-gradient-to-r from-primary via-orange-400 to-primary mx-auto rounded-full shadow-lg"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
-              <div className="text-center group">
-                <div className="text-7xl md:text-8xl lg:text-9xl xl:text-[8rem] font-black text-primary mb-6 group-hover:scale-105 transition-all duration-500">100%</div>
-                <div className="text-2xl font-bold text-muted-foreground uppercase tracking-widest">Placement Success</div>
-                <div className="w-24 h-1 bg-gradient-to-r from-primary to-orange-400 mx-auto mt-4 rounded-full"></div>
+              <div className="text-center group relative">
+                <div className="text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-black text-primary mb-8 group-hover:scale-110 transition-all duration-700 drop-shadow-2xl">100%</div>
+                <div className="text-3xl font-black text-muted-foreground uppercase tracking-[0.3em] mb-4">Placement Success</div>
+                <div className="w-32 h-2 bg-gradient-to-r from-primary via-orange-400 to-primary mx-auto rounded-full shadow-lg"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
             </div>
 
-            {/* Ultra Premium CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-10 justify-center">
-              <Button size="lg" className="btn-primary group text-2xl px-16 py-8 rounded-3xl shadow-2xl hover:shadow-glow transition-all duration-500 border border-primary/20">
-                <span className="font-black">Start Your Journey</span>
-                <ArrowRight className="ml-4 h-8 w-8 group-hover:translate-x-3 transition-transform duration-500" />
+            {/* Supreme CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-12 justify-center">
+              <Button size="lg" className="btn-primary group text-3xl px-20 py-10 rounded-[2rem] shadow-[0_20px_60px_-10px_rgba(255,127,0,0.4)] hover:shadow-[0_30px_80px_-10px_rgba(255,127,0,0.6)] transition-all duration-700 border-2 border-primary/30 relative overflow-hidden">
+                <span className="font-black relative z-10">Start Your Journey</span>
+                <ArrowRight className="ml-5 h-10 w-10 group-hover:translate-x-4 transition-transform duration-700 relative z-10" />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-orange-400 to-primary opacity-0 group-hover:opacity-20 transition-opacity duration-700"></div>
               </Button>
-              <Button size="lg" variant="outline" className="btn-secondary text-2xl px-16 py-8 rounded-3xl border-3 border-primary/40 hover:border-primary hover:bg-primary/10 transition-all duration-500 backdrop-blur-sm">
-                <Play className="mr-4 h-8 w-8" />
-                <span className="font-black">Watch Our Story</span>
+              <Button size="lg" variant="outline" className="btn-secondary text-3xl px-20 py-10 rounded-[2rem] border-4 border-primary/50 hover:border-primary hover:bg-primary/15 transition-all duration-700 backdrop-blur-md relative overflow-hidden">
+                <Play className="mr-5 h-10 w-10 relative z-10" />
+                <span className="font-black relative z-10">Watch Our Story</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-700"></div>
               </Button>
             </div>
 
