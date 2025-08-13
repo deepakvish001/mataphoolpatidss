@@ -82,7 +82,7 @@ const Hero = () => {
           {/* Right Visual Content */}
           <div className="relative lg:block hidden">
             {/* Hero Image with modern frame */}
-            <div className="relative">
+            <div className="relative mx-8">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 p-6">
                 <img 
                   src={heroImage} 
@@ -92,26 +92,26 @@ const Hero = () => {
               </div>
               
               {/* Floating achievement cards */}
-              <div className="absolute -top-6 -right-6 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 min-w-[180px]">
+              <div className="absolute -top-8 -right-12 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 w-48">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Star className="h-5 w-5 text-primary" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-sm font-semibold text-foreground whitespace-nowrap">Top Rated</div>
-                    <div className="text-xs text-muted-foreground whitespace-nowrap">Training Partner</div>
+                    <div className="text-sm font-semibold text-foreground">Top Rated</div>
+                    <div className="text-xs text-muted-foreground">Training Partner</div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute -bottom-6 -left-6 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 min-w-[180px]">
+              <div className="absolute -bottom-8 -left-12 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 w-48">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <TrendingUp className="h-5 w-5 text-primary" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-sm font-semibold text-foreground whitespace-nowrap">99.8% Success</div>
-                    <div className="text-xs text-muted-foreground whitespace-nowrap">Placement Record</div>
+                    <div className="text-sm font-semibold text-foreground">99.8% Success</div>
+                    <div className="text-xs text-muted-foreground">Placement Record</div>
                   </div>
                 </div>
               </div>
@@ -120,19 +120,19 @@ const Hero = () => {
         </div>
 
         {/* Trust Indicators */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-4xl">
-          <div className="flex flex-wrap justify-center gap-8 text-muted-foreground text-sm">
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-full max-w-5xl px-4">
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 text-muted-foreground text-sm">
             <div className="flex items-center space-x-2">
-              <BookOpen className="h-4 w-4 text-primary" />
-              <span>NSDC Certified</span>
+              <BookOpen className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="whitespace-nowrap">NSDC Certified</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Users className="h-4 w-4 text-primary" />
-              <span>Pan India Network</span>
+              <Users className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="whitespace-nowrap">Pan India Network</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Award className="h-4 w-4 text-primary" />
-              <span>Government Approved</span>
+              <Award className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="whitespace-nowrap">Government Approved</span>
             </div>
           </div>
         </div>
