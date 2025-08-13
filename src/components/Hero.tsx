@@ -26,70 +26,76 @@ const Hero = () => {
           {/* Content */}
           <div className="space-y-12">
             <div className="space-y-8">
-              <div className="inline-flex items-center space-x-3 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 text-base">
-                <Award className="h-5 w-5 text-primary" />
-                <span className="text-primary font-semibold">Government Certified Training Partner</span>
+              <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/15 to-primary/5 border border-primary/25 rounded-full px-8 py-4 text-base backdrop-blur-sm shadow-lg">
+                <Award className="h-6 w-6 text-primary" />
+                <span className="text-primary font-bold tracking-wide">Government Certified Training Partner</span>
+                <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
               </div>
               
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tight">
-                <span className="text-gradient-enhanced bg-clip-text">EMPOWERING</span>
-                <br />
-                <span className="text-foreground">WITH ABILITY</span>
+              <h1 className="text-7xl md:text-8xl lg:text-9xl font-black leading-[0.85] tracking-tight">
+                <span className="text-gradient-enhanced bg-clip-text block">EMPOWERING</span>
+                <span className="text-foreground block mt-4">WITH ABILITY</span>
               </h1>
               
-              <div className="space-y-6 max-w-4xl mx-auto">
-                <p className="text-2xl md:text-3xl text-muted-foreground leading-relaxed font-light">
+              <div className="space-y-8 max-w-5xl mx-auto">
+                <p className="text-3xl md:text-4xl lg:text-5xl text-muted-foreground leading-relaxed font-light">
                   Pioneer in <span className="text-primary font-bold">Skill Training</span> with 
-                  <span className="text-primary font-bold"> 13+ years excellence</span>
+                  <span className="text-primary font-bold bg-primary/10 px-4 py-2 rounded-2xl ml-2">13+ years excellence</span>
                 </p>
-                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-                  Trained over <span className="text-primary font-black text-3xl">5 lakh students</span> across India with 
-                  <span className="text-primary font-bold"> guaranteed placement support</span>
+                <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground leading-relaxed font-light">
+                  Transformed over <span className="text-primary font-black text-4xl md:text-5xl">5 lakh lives</span> across India with 
+                  <span className="text-gradient-enhanced bg-clip-text font-bold"> guaranteed placement success</span>
                 </p>
               </div>
             </div>
 
-            {/* Clean Stats Grid */}
-            <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto">
-              <div className="text-center">
-                <div className="text-5xl md:text-6xl font-black text-primary mb-2">13+</div>
-                <div className="text-lg font-medium text-muted-foreground">Years Experience</div>
+            {/* Enhanced Stats Grid */}
+            <div className="grid grid-cols-3 gap-12 max-w-4xl mx-auto">
+              <div className="text-center group">
+                <div className="text-6xl md:text-7xl lg:text-8xl font-black text-primary mb-4 group-hover:scale-110 transition-transform duration-300">13+</div>
+                <div className="text-xl font-semibold text-muted-foreground uppercase tracking-wider">Years Experience</div>
               </div>
-              <div className="text-center">
-                <div className="text-5xl md:text-6xl font-black text-primary mb-2">5L+</div>
-                <div className="text-lg font-medium text-muted-foreground">Students Trained</div>
+              <div className="text-center group">
+                <div className="text-6xl md:text-7xl lg:text-8xl font-black text-primary mb-4 group-hover:scale-110 transition-transform duration-300">5L+</div>
+                <div className="text-xl font-semibold text-muted-foreground uppercase tracking-wider">Lives Transformed</div>
               </div>
-              <div className="text-center">
-                <div className="text-5xl md:text-6xl font-black text-primary mb-2">100%</div>
-                <div className="text-lg font-medium text-muted-foreground">Placement Support</div>
+              <div className="text-center group">
+                <div className="text-6xl md:text-7xl lg:text-8xl font-black text-primary mb-4 group-hover:scale-110 transition-transform duration-300">100%</div>
+                <div className="text-xl font-semibold text-muted-foreground uppercase tracking-wider">Placement Success</div>
               </div>
             </div>
 
-            {/* Simple CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="btn-primary group text-lg px-8 py-4">
-                Start Your Journey
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            {/* Premium CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-8 justify-center">
+              <Button size="lg" className="btn-primary group text-xl px-12 py-6 rounded-2xl shadow-2xl hover:shadow-glow transition-all duration-300">
+                <span className="font-bold">Start Your Journey</span>
+                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </Button>
-              <Button size="lg" variant="outline" className="btn-secondary text-lg px-8 py-4">
-                <Play className="mr-2 h-5 w-5" />
-                Watch Our Story
+              <Button size="lg" variant="outline" className="btn-secondary text-xl px-12 py-6 rounded-2xl border-2 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all duration-300">
+                <Play className="mr-3 h-6 w-6" />
+                <span className="font-bold">Watch Our Story</span>
               </Button>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-8 pt-8 border-t border-border/30 max-w-2xl mx-auto">
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <BookOpen className="h-4 w-4 text-primary" />
-                <span className="font-medium">NSDC Partner</span>
+            {/* Enhanced Trust Indicators */}
+            <div className="flex flex-wrap justify-center gap-12 pt-12 border-t border-border/30 max-w-3xl mx-auto">
+              <div className="flex items-center space-x-3 text-muted-foreground group hover:text-primary transition-colors">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <BookOpen className="h-6 w-6 text-primary" />
+                </div>
+                <span className="font-semibold text-lg">NSDC Partner</span>
               </div>
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <Users className="h-4 w-4 text-primary" />
-                <span className="font-medium">Pan India Presence</span>
+              <div className="flex items-center space-x-3 text-muted-foreground group hover:text-primary transition-colors">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <span className="font-semibold text-lg">Pan India Presence</span>
               </div>
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <Award className="h-4 w-4 text-primary" />
-                <span className="font-medium">Government Certified</span>
+              <div className="flex items-center space-x-3 text-muted-foreground group hover:text-primary transition-colors">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Award className="h-6 w-6 text-primary" />
+                </div>
+                <span className="font-semibold text-lg">Government Certified</span>
               </div>
             </div>
           </div>
