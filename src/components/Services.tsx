@@ -36,14 +36,54 @@ const Services = () => {
   ];
 
   const trainingAreas = [
-    'Apparel Manufacturing',
-    'Organized Retail',
-    'Electronics & Hardware',
-    'Healthcare Services',
-    'Food Processing',
-    'Agriculture & Allied Services',
-    'IT & Software Development',
-    'Automotive Services'
+    {
+      name: 'Apparel Manufacturing',
+      description: 'Fashion Design, Garment Technology, Pattern Making',
+      duration: '6-12 months',
+      certification: 'NSDC Certified'
+    },
+    {
+      name: 'Organized Retail',
+      description: 'Customer Service, Inventory Management, Sales Operations',
+      duration: '3-6 months',
+      certification: 'Industry Recognized'
+    },
+    {
+      name: 'Electronics & Hardware',
+      description: 'PCB Assembly, Device Repair, Quality Testing',
+      duration: '8-10 months',
+      certification: 'Government Approved'
+    },
+    {
+      name: 'Healthcare Services',
+      description: 'Patient Care, Medical Equipment, Health & Safety',
+      duration: '6-9 months',
+      certification: 'Health Ministry Certified'
+    },
+    {
+      name: 'Food Processing',
+      description: 'Food Safety, Quality Control, Packaging Technology',
+      duration: '4-8 months',
+      certification: 'FSSAI Compliant'
+    },
+    {
+      name: 'Agriculture & Allied',
+      description: 'Organic Farming, Crop Management, Dairy Technology',
+      duration: '6-12 months',
+      certification: 'Agriculture Ministry Approved'
+    },
+    {
+      name: 'IT & Software',
+      description: 'Web Development, Database Management, Digital Marketing',
+      duration: '8-12 months',
+      certification: 'Industry Standard'
+    },
+    {
+      name: 'Automotive Services',
+      description: 'Vehicle Maintenance, Auto Electronics, Service Management',
+      duration: '6-10 months',
+      certification: 'Automotive Council Certified'
+    }
   ];
 
   return (
@@ -65,17 +105,24 @@ const Services = () => {
           <h3 className="text-2xl font-semibold text-foreground mb-8 text-center">
             Specialized Training Areas
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {trainingAreas.map((area, index) => (
               <div 
-                key={area}
-                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:border-primary/30 transition-all duration-300 hover:glow-orange animate-fade-in"
+                key={area.name}
+                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:border-primary/30 transition-all duration-300 hover:glow-orange animate-fade-in group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                   <BookOpen className="h-6 w-6 text-primary" />
                 </div>
-                <h4 className="font-medium text-foreground text-sm">{area}</h4>
+                <div className="text-center">
+                  <h4 className="font-semibold text-foreground text-sm mb-2">{area.name}</h4>
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{area.description}</p>
+                  <div className="space-y-1">
+                    <div className="text-xs font-medium text-primary">{area.duration}</div>
+                    <div className="text-xs text-muted-foreground">{area.certification}</div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
