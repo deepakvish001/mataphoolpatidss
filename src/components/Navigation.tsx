@@ -79,11 +79,10 @@ const Navigation = () => {
               
               <div className="hidden md:block">
                 <h1 className="text-lg font-bold text-foreground leading-tight tracking-tight">
-                  <span className="text-primary">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>
+                  MATA PHOOLPATI DEVI
+                  <br />
+                  <span className="text-primary">SHIKSHAN SANSTHAN</span>
                 </h1>
-                <p className="text-xs text-muted-foreground font-medium tracking-wide mt-1">
-                  Excellence in Skill Development Since 2013
-                </p>
               </div>
             </div>
 
