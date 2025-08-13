@@ -1,317 +1,275 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, MapPin, Download, MessageCircle, Star, Award, Users, Clock, Shield, ChevronRight } from 'lucide-react';
+import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [activeSection, setActiveSection] = useState('home');
 
   const navItems = [
-    { name: 'Home', href: '#home', description: 'Welcome & Overview' },
-    { name: 'About Us', href: '#about', description: 'Our Story & Mission' },
-    { name: 'Training', href: '#training', description: 'Courses & Programs' },
-    { name: 'Our Affiliates', href: '#affiliates', description: 'Partners & Recognition' },
-    { name: 'Work With Us', href: '#work-with-us', description: 'Contact & Enquiry' },
+    { name: 'Home', href: '#home', icon: Globe },
+    { name: 'About', href: '#about', icon: Users },
+    { name: 'Programs', href: '#training', icon: BookOpen },
+    { name: 'Partners', href: '#affiliates', icon: Award },
+    { name: 'Contact', href: '#work-with-us', icon: MessageSquare },
   ];
 
-  // Handle scroll effect
+  // Enhanced scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
+      
+      // Update active section based on scroll position
+      const sections = ['home', 'about', 'training', 'affiliates', 'work-with-us'];
+      const currentSection = sections.find(section => {
+        const element = document.getElementById(section.replace('#', ''));
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+      if (currentSection) setActiveSection(currentSection);
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Update time every minute
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-IN', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      timeZone: 'Asia/Kolkata'
-    });
-  };
-
   return (
     <>
-      {/* Enhanced Top Contact Bar */}
-      <div className="bg-gradient-to-r from-primary via-primary to-primary/90 text-primary-foreground py-3 px-4 hidden md:block relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 nav-shimmer opacity-20"></div>
+      {/* Modern Header */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
+        isScrolled 
+          ? 'bg-background/80 backdrop-blur-xl shadow-2xl shadow-black/10 border-b border-primary/20' 
+          : 'bg-transparent'
+      }`}>
         
-        <div className="container-custom relative z-10">
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center space-x-8">
-              <div className="flex items-center space-x-2 group hover:scale-105 transition-transform duration-300">
-                <div className="w-8 h-8 bg-primary-foreground/10 rounded-lg flex items-center justify-center">
-                  <Phone className="h-4 w-4" />
-                </div>
-                <div>
-                  <div className="font-semibold">+91 7007989716</div>
-                  <div className="text-xs opacity-80">24/7 Support Available</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-2 group hover:scale-105 transition-transform duration-300">
-                <div className="w-8 h-8 bg-primary-foreground/10 rounded-lg flex items-center justify-center">
-                  <Mail className="h-4 w-4" />
-                </div>
-                <div>
-                  <div className="font-semibold">info.mpdss@gmail.com</div>
-                  <div className="text-xs opacity-80">Quick Response Guaranteed</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-2 group hover:scale-105 transition-transform duration-300">
-                <div className="w-8 h-8 bg-primary-foreground/10 rounded-lg flex items-center justify-center">
-                  <MapPin className="h-4 w-4" />
-                </div>
-                <div>
-                  <div className="font-semibold">Noida | Ballia</div>
-                  <div className="text-xs opacity-80">Multiple Locations</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2 floating-badge">
-                  <Shield className="h-4 w-4" />
-                  <span className="font-medium">Government Certified</span>
-                </div>
-                <div className="w-px h-6 bg-primary-foreground/30"></div>
-                <div className="flex items-center space-x-2 floating-badge">
-                  <Award className="h-4 w-4" />
-                  <span className="font-medium">100% Placement</span>
-                </div>
-                <div className="w-px h-6 bg-primary-foreground/30"></div>
-                <div className="flex items-center space-x-2">
-                  <Clock className="h-4 w-4" />
-                  <span className="font-medium">IST {formatTime(currentTime)}</span>
-                </div>
+        {/* Top announcement bar */}
+        {!isScrolled && (
+          <div className="bg-gradient-to-r from-primary via-primary/90 to-primary text-primary-foreground py-2 px-4 slide-up">
+            <div className="container-custom">
+              <div className="flex items-center justify-center text-sm font-medium">
+                <Sparkles className="h-4 w-4 mr-2 animate-pulse" />
+                <span>🎉 New Batch Starting Soon - Limited Seats Available!</span>
+                <ArrowRight className="h-4 w-4 ml-2" />
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        )}
 
-      {/* Enhanced Main Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-background/98 backdrop-blur-xl border-b border-border shadow-2xl shadow-primary/5' 
-          : 'bg-background/85 backdrop-blur-lg border-b border-border/30'
-      } ${!isScrolled ? 'md:top-16' : ''}`}>
-        <div className="container-custom">
-          <div className="flex items-center justify-between h-24">
-            {/* Premium Logo Section */}
-            <div className="flex items-center space-x-4 group">
+        {/* Main navigation */}
+        <nav className="px-4 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            
+            {/* Logo Section - Completely New Design */}
+            <div className="flex items-center space-x-4 group cursor-pointer">
               <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary via-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110 logo-pulse">
-                  <div className="w-10 h-10 bg-primary-foreground rounded-xl flex items-center justify-center shadow-inner">
+                {/* Main logo container */}
+                <div className="w-12 h-12 bg-gradient-to-br from-primary via-orange-500 to-red-500 rounded-2xl p-[2px] group-hover:scale-110 transition-all duration-500">
+                  <div className="w-full h-full bg-background rounded-2xl flex items-center justify-center">
                     <span className="text-primary font-bold text-xl">M</span>
                   </div>
                 </div>
-                <div className="absolute -inset-2 bg-gradient-to-r from-primary/30 via-primary/20 to-primary/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                <div className="absolute top-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-background animate-pulse"></div>
+                {/* Glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-orange-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
               </div>
               
-              <div className="hidden sm:block">
-                <h1 className="text-2xl font-bold text-foreground leading-tight tracking-tight">
-                  <span className="text-gradient">MATA PHOOLPATI DEVI</span>
+              <div className="hidden md:block">
+                <h1 className="text-lg font-bold text-foreground leading-tight tracking-tight">
+                  MATA PHOOLPATI DEVI
                   <br />
-                  <span className="text-xl text-primary font-extrabold">SHIKSHAN SANSTHAN</span>
+                  <span className="text-base text-primary font-extrabold">SHIKSHAN SANSTHAN</span>
                 </h1>
-                <div className="flex items-center space-x-3 mt-1">
-                  <p className="text-xs text-muted-foreground font-medium tracking-wide uppercase">
-                    Excellence in Skill Development
-                  </p>
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-current text-yellow-400" />
-                    ))}
-                    <span className="text-xs text-muted-foreground ml-1">4.9/5</span>
-                  </div>
-                </div>
               </div>
             </div>
 
-            {/* Enhanced Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-2">
-              {navItems.map((item, index) => (
-                <div key={item.name} className="relative group">
+            {/* Center Navigation - Modern Pills Design */}
+            <div className="hidden lg:flex items-center space-x-2 bg-muted/30 backdrop-blur-xl rounded-full px-2 py-2 border border-border/50">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeSection === item.href.replace('#', '');
+                return (
                   <a
+                    key={item.name}
                     href={item.href}
-                    className="flex flex-col items-center py-3 px-4 rounded-xl transition-all duration-300 hover:bg-muted/50 group"
-                    style={{ animationDelay: `${index * 0.1}s` }}
+                    className={`nav-link-modern flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 magnetic-effect ${
+                      isActive 
+                        ? 'bg-primary text-primary-foreground shadow-lg' 
+                        : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+                    }`}
                   >
-                    <span className="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
-                      {item.name}
-                    </span>
-                    <span className="text-xs text-muted-foreground group-hover:text-primary/70 transition-colors">
-                      {item.description}
-                    </span>
+                    <Icon className="h-4 w-4" />
+                    <span className="font-medium">{item.name}</span>
                   </a>
-                  <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-primary to-primary/60 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            {/* Enhanced Desktop CTA Section */}
-            <div className="hidden lg:flex items-center space-x-6">
-              {/* Quick Stats with Animation */}
-              <div className="flex items-center space-x-4 bg-muted/30 rounded-xl px-4 py-2 border border-border/50">
-                <div className="text-center group hover:scale-110 transition-transform duration-300">
-                  <div className="text-primary font-bold text-lg">13+</div>
-                  <div className="text-xs text-muted-foreground">Years</div>
-                </div>
-                <div className="w-px h-8 bg-border"></div>
-                <div className="text-center group hover:scale-110 transition-transform duration-300">
-                  <div className="text-primary font-bold text-lg">5L+</div>
-                  <div className="text-xs text-muted-foreground">Trained</div>
-                </div>
-                <div className="w-px h-8 bg-border"></div>
-                <div className="text-center group hover:scale-110 transition-transform duration-300">
-                  <div className="text-primary font-bold text-lg">900+</div>
-                  <div className="text-xs text-muted-foreground">Faculty</div>
+            {/* Right Actions - Premium Design */}
+            <div className="flex items-center space-x-4">
+              
+              {/* Search */}
+              <div className="hidden md:flex items-center space-x-3">
+                <div className="relative group">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                  <Input 
+                    placeholder="Search courses..."
+                    className="pl-10 w-48 bg-muted/30 border-border/50 focus:border-primary/50 rounded-full glass-effect"
+                  />
                 </div>
               </div>
-              
-              {/* Enhanced Action Buttons */}
-              <div className="flex items-center space-x-3">
-                <Button variant="ghost" size="lg" className="btn-ghost group relative overflow-hidden">
-                  <span className="relative z-10 flex items-center">
-                    <Download className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                    Brochure
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-muted to-muted/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+
+              {/* Action Buttons */}
+              <div className="hidden lg:flex items-center space-x-3">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="morphing-button rounded-full px-6 hover:bg-muted/50"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Brochure
                 </Button>
                 
-                <Button size="lg" className="btn-primary group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-                  <span className="relative z-10 flex items-center">
-                    <MessageCircle className="mr-2 h-5 w-5" />
-                    Enquire Now
-                    <ChevronRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary-hover to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <Button 
+                  size="sm" 
+                  className="morphing-button bg-gradient-to-r from-primary to-orange-500 hover:from-orange-500 hover:to-primary text-primary-foreground rounded-full px-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Get Started
+                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </div>
-            </div>
 
-            {/* Enhanced Mobile menu button */}
-            <div className="lg:hidden">
+              {/* Notifications */}
+              <Button variant="ghost" size="sm" className="relative rounded-full w-10 h-10 p-0 hidden md:flex">
+                <Bell className="h-5 w-5" />
+                <span className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full animate-pulse"></span>
+              </Button>
+
+              {/* Mobile Menu Toggle */}
               <Button
                 variant="ghost"
-                size="lg"
+                size="sm"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-3 hover:bg-muted rounded-xl relative group"
+                className="lg:hidden w-10 h-10 p-0 rounded-full hover:bg-muted/50"
               >
-                <div className="relative">
-                  {isMenuOpen ? (
-                    <X className="h-6 w-6 transition-transform duration-300 rotate-90" />
-                  ) : (
-                    <Menu className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
-                  )}
+                <div className="relative w-6 h-6">
+                  <span className={`absolute block w-6 h-0.5 bg-foreground transform transition-all duration-300 ${isMenuOpen ? 'rotate-45 top-3' : 'top-1'}`}></span>
+                  <span className={`absolute block w-6 h-0.5 bg-foreground transform transition-all duration-300 top-3 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+                  <span className={`absolute block w-6 h-0.5 bg-foreground transform transition-all duration-300 ${isMenuOpen ? '-rotate-45 top-3' : 'top-5'}`}></span>
                 </div>
               </Button>
             </div>
           </div>
+        </nav>
 
-          {/* Enhanced Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="lg:hidden absolute top-full left-0 right-0 bg-background/98 backdrop-blur-xl border-b border-border shadow-2xl nav-slide-down">
-              <div className="px-6 py-8 space-y-8">
-                {/* Mobile Contact Info with Enhanced Design */}
-                <div className="bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl p-6 space-y-4 border border-border/50">
-                  <h3 className="font-semibold text-foreground text-lg mb-4">Quick Contact</h3>
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="flex items-center space-x-3 group hover:bg-background/50 rounded-lg p-2 transition-colors">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <Phone className="h-5 w-5 text-primary" />
-                      </div>
-                      <div>
-                        <div className="font-semibold">+91 7007989716</div>
-                        <div className="text-xs text-muted-foreground">24/7 Support</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3 group hover:bg-background/50 rounded-lg p-2 transition-colors">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <Mail className="h-5 w-5 text-primary" />
-                      </div>
-                      <div>
-                        <div className="font-semibold">info.mpdss@gmail.com</div>
-                        <div className="text-xs text-muted-foreground">Quick Response</div>
-                      </div>
-                    </div>
-                  </div>
+        {/* Modern Mobile Menu */}
+        {isMenuOpen && (
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-2xl fade-in-scale">
+            <div className="px-6 py-8 space-y-8">
+              
+              {/* Mobile Search */}
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input 
+                  placeholder="Search courses, programs..."
+                  className="pl-12 h-12 bg-muted/30 border-border/50 rounded-2xl glass-effect text-lg"
+                />
+              </div>
+
+              {/* Quick Stats */}
+              <div className="grid grid-cols-3 gap-4">
+                <div className="text-center p-4 bg-gradient-to-br from-primary/10 to-orange-500/10 rounded-2xl border border-primary/20">
+                  <div className="text-2xl font-bold text-primary">13+</div>
+                  <div className="text-xs text-muted-foreground">Years</div>
                 </div>
+                <div className="text-center p-4 bg-gradient-to-br from-primary/10 to-orange-500/10 rounded-2xl border border-primary/20">
+                  <div className="text-2xl font-bold text-primary">5L+</div>
+                  <div className="text-xs text-muted-foreground">Students</div>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-br from-primary/10 to-orange-500/10 rounded-2xl border border-primary/20">
+                  <div className="text-2xl font-bold text-primary">100%</div>
+                  <div className="text-xs text-muted-foreground">Placement</div>
+                </div>
+              </div>
 
-                {/* Enhanced Mobile Nav Links */}
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-foreground text-lg mb-4">Navigation</h3>
-                  {navItems.map((item, index) => (
+              {/* Navigation Links */}
+              <div className="space-y-2">
+                {navItems.map((item, index) => {
+                  const Icon = item.icon;
+                  return (
                     <a
                       key={item.name}
                       href={item.href}
-                      className="flex items-center justify-between py-4 px-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-xl transition-all duration-300 font-medium border border-transparent hover:border-primary/20 group"
                       onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center space-x-4 p-4 rounded-2xl hover:bg-muted/50 transition-all duration-300 group"
                       style={{ animationDelay: `${index * 0.1}s` }}
                     >
-                      <div>
-                        <div className="font-semibold">{item.name}</div>
-                        <div className="text-xs text-muted-foreground">{item.description}</div>
+                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <Icon className="h-5 w-5" />
                       </div>
-                      <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      <span className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">{item.name}</span>
+                      <ArrowRight className="h-5 w-5 ml-auto text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                     </a>
-                  ))}
-                </div>
+                  );
+                })}
+              </div>
 
-                {/* Enhanced Mobile Stats */}
-                <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20">
-                  <h3 className="font-semibold text-foreground text-lg mb-4 text-center">Our Achievements</h3>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="text-center group hover:scale-105 transition-transform duration-300">
-                      <div className="text-primary font-bold text-2xl">13+</div>
-                      <div className="text-xs text-muted-foreground">Years Experience</div>
+              {/* Contact Cards */}
+              <div className="grid grid-cols-1 gap-4">
+                <div className="p-4 bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl border border-border/50">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                      <Phone className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="text-center group hover:scale-105 transition-transform duration-300">
-                      <div className="text-primary font-bold text-2xl">5L+</div>
-                      <div className="text-xs text-muted-foreground">Students Trained</div>
-                    </div>
-                    <div className="text-center group hover:scale-105 transition-transform duration-300">
-                      <div className="text-primary font-bold text-2xl">100%</div>
-                      <div className="text-xs text-muted-foreground">Placement Help</div>
+                    <div>
+                      <div className="font-semibold text-foreground">+91 7007989716</div>
+                      <div className="text-sm text-muted-foreground">24/7 Support</div>
                     </div>
                   </div>
                 </div>
-
-                {/* Enhanced Mobile CTA Buttons */}
-                <div className="space-y-4">
-                  <Button variant="outline" className="w-full btn-secondary group h-14 text-lg">
-                    <Download className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
-                    Download Brochure
-                  </Button>
-                  <Button className="w-full btn-primary group h-14 text-lg relative overflow-hidden">
-                    <span className="relative z-10 flex items-center justify-center">
-                      <MessageCircle className="mr-3 h-5 w-5" />
-                      Contact Us Now
-                      <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </Button>
+                
+                <div className="p-4 bg-gradient-to-r from-muted/50 to-muted/30 rounded-2xl border border-border/50">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                      <Mail className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-foreground">info.mpdss@gmail.com</div>
+                      <div className="text-sm text-muted-foreground">Quick Response</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      </nav>
 
-      {/* Enhanced Spacer with smooth transition */}
-      <div className={`${isScrolled ? 'h-24' : 'h-40'} md:h-40 transition-all duration-500 ease-out`}></div>
+              {/* CTA Buttons */}
+              <div className="space-y-4">
+                <Button 
+                  variant="outline" 
+                  className="w-full h-14 text-lg rounded-2xl border-2 border-primary/30 hover:bg-primary/10"
+                >
+                  <Download className="h-5 w-5 mr-3" />
+                  Download Brochure
+                </Button>
+                
+                <Button 
+                  className="w-full h-14 text-lg bg-gradient-to-r from-primary to-orange-500 hover:from-orange-500 hover:to-primary rounded-2xl shadow-lg"
+                >
+                  <MessageSquare className="h-5 w-5 mr-3" />
+                  Start Your Journey
+                  <ArrowRight className="h-5 w-5 ml-3" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Dynamic Spacer */}
+      <div className={`${isScrolled ? 'h-20' : 'h-32'} transition-all duration-700 ease-out`}></div>
     </>
   );
 };
