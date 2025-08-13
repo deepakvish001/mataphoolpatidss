@@ -5,81 +5,76 @@ import heroImage from '@/assets/hero-image.jpg';
 
 const Hero = () => {
   return (
-    <section id="home" className="relative min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5 overflow-hidden">
-      {/* Dynamic Background Elements */}
+    <section id="home" className="relative min-h-screen bg-background overflow-hidden">
+      {/* Modern Geometric Background */}
       <div className="absolute inset-0">
-        {/* Floating orbs with glow */}
-        <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-l from-primary/15 to-accent/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        {/* Animated geometric shapes */}
+        <div className="absolute top-0 right-0 w-1/2 h-full">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rotate-45 rounded-3xl animate-float"></div>
+          <div className="absolute top-1/2 right-1/6 w-64 h-64 bg-secondary/10 rotate-12 rounded-2xl animate-float" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-1/4 right-1/3 w-48 h-48 bg-primary/8 -rotate-12 rounded-xl animate-float" style={{animationDelay: '2s'}}></div>
+        </div>
         
-        {/* Geometric shapes with enhanced animations */}
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-br from-primary/10 to-transparent rotate-45 rounded-3xl animate-float shadow-2xl"></div>
-        <div className="absolute top-1/2 right-1/6 w-48 h-48 bg-gradient-to-bl from-secondary/15 to-transparent rotate-12 rounded-2xl animate-float" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-1/4 right-1/3 w-32 h-32 bg-gradient-to-tr from-primary/20 to-transparent -rotate-12 rounded-xl animate-float" style={{animationDelay: '2s'}}></div>
-        
-        {/* Radial gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-background/50 to-background"></div>
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/5"></div>
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-background/80 to-transparent"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
         <div className="grid lg:grid-cols-2 gap-16 items-center w-full">
           {/* Left Content */}
           <div className="space-y-8 lg:pr-8">
-            {/* Status Badge with glow effect */}
-            <div className="flex items-start animate-fade-in">
-              <Badge variant="secondary" className="bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20 px-5 py-2.5 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-300">
-                <Award className="h-4 w-4 mr-2 animate-pulse" />
+            {/* Status Badge */}
+            <div className="flex items-start">
+              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 px-4 py-2 text-sm font-semibold rounded-full">
+                <Award className="h-4 w-4 mr-2" />
                 Government Certified Excellence
               </Badge>
             </div>
 
-            {/* Main Heading with enhanced typography */}
-            <div className="space-y-6 animate-fade-in" style={{animationDelay: '0.2s'}}>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[0.9] tracking-tight">
-                <span className="text-foreground block bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">TRANSFORMING</span>
-                <span className="text-transparent bg-gradient-to-r from-primary via-primary to-secondary bg-clip-text block animate-pulse">CAREERS</span>
-                <span className="text-muted-foreground text-3xl md:text-4xl lg:text-5xl font-light block mt-4">
-                  with <span className="relative">
-                    <span className="text-primary font-semibold">skill excellence</span>
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary opacity-50"></span>
-                  </span>
+            {/* Main Heading */}
+            <div className="space-y-6">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+                <span className="text-foreground block">TRANSFORMING</span>
+                <span className="text-primary block">CAREERS</span>
+                <span className="text-muted-foreground text-3xl md:text-4xl lg:text-5xl font-light block mt-2">
+                  with skill excellence
                 </span>
               </h1>
               
-              <p className="text-xl md:text-2xl text-muted-foreground/90 leading-relaxed max-w-2xl backdrop-blur-sm">
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
                 Join India's leading skill development program with 
-                <span className="text-primary font-semibold bg-primary/10 px-2 py-1 rounded-md mx-1"> 13+ years of proven success</span> and 
-                <span className="text-primary font-semibold bg-primary/10 px-2 py-1 rounded-md mx-1"> 100% placement assistance</span>
+                <span className="text-primary font-semibold"> 13+ years of proven success</span> and 
+                <span className="text-primary font-semibold"> 100% placement assistance</span>
               </p>
             </div>
 
-            {/* Action Buttons with enhanced styling */}
-            <div className="flex flex-col sm:flex-row gap-4 animate-fade-in" style={{animationDelay: '0.4s'}}>
-              <Button size="lg" className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground px-8 py-6 text-lg font-semibold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 group hover:scale-105 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                <Target className="mr-3 h-5 w-5 relative z-10" />
-                <span className="relative z-10">Start Your Journey</span>
-                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform relative z-10" />
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <Target className="mr-3 h-5 w-5" />
+                Start Your Journey
+                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="border-2 border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 px-8 py-6 text-lg font-semibold rounded-xl transition-all duration-300 backdrop-blur-sm hover:scale-105 group">
-                <Play className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
+              <Button size="lg" variant="outline" className="border-2 border-primary/30 text-primary hover:bg-primary/5 px-8 py-6 text-lg font-semibold rounded-xl transition-all duration-300">
+                <Play className="mr-3 h-5 w-5" />
                 Watch Success Stories
               </Button>
             </div>
 
-            {/* Enhanced Quick Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gradient-to-r from-transparent via-border to-transparent animate-fade-in" style={{animationDelay: '0.6s'}}>
-              <div className="text-center group cursor-pointer">
-                <div className="text-3xl md:text-4xl font-black bg-gradient-to-br from-primary to-secondary bg-clip-text text-transparent mb-1 group-hover:scale-110 transition-transform duration-300">5L+</div>
-                <div className="text-sm text-muted-foreground font-medium group-hover:text-foreground transition-colors">Lives Transformed</div>
+            {/* Quick Stats */}
+            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border/20">
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-black text-primary mb-1">5L+</div>
+                <div className="text-sm text-muted-foreground font-medium">Lives Transformed</div>
               </div>
-              <div className="text-center group cursor-pointer">
-                <div className="text-3xl md:text-4xl font-black bg-gradient-to-br from-primary to-secondary bg-clip-text text-transparent mb-1 group-hover:scale-110 transition-transform duration-300">100%</div>
-                <div className="text-sm text-muted-foreground font-medium group-hover:text-foreground transition-colors">Placement Rate</div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-black text-primary mb-1">100%</div>
+                <div className="text-sm text-muted-foreground font-medium">Placement Rate</div>
               </div>
-              <div className="text-center group cursor-pointer">
-                <div className="text-3xl md:text-4xl font-black bg-gradient-to-br from-primary to-secondary bg-clip-text text-transparent mb-1 group-hover:scale-110 transition-transform duration-300">13+</div>
-                <div className="text-sm text-muted-foreground font-medium group-hover:text-foreground transition-colors">Years Excellence</div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-black text-primary mb-1">13+</div>
+                <div className="text-sm text-muted-foreground font-medium">Years Excellence</div>
               </div>
             </div>
           </div>
