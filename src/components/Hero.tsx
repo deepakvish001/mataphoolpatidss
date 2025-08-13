@@ -121,7 +121,7 @@ const Hero = () => {
 
         {/* Trust Indicators */}
         <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-full max-w-5xl px-4">
-          <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 text-muted-foreground text-sm">
+          <div className="flex items-center justify-center gap-8 md:gap-12 text-muted-foreground text-sm">
             <div className="flex items-center space-x-2">
               <BookOpen className="h-4 w-4 text-primary flex-shrink-0" />
               <span className="whitespace-nowrap">NSDC Certified</span>
