@@ -79,19 +79,25 @@ const Hero = () => {
             </div>
 
             {/* Trust Indicators */}
-            <div className="pt-6">
-              <div className="grid grid-cols-1 gap-4 text-center sm:text-left">
-                <div className="flex items-center justify-center sm:justify-start space-x-2">
-                  <BookOpen className="h-4 w-4 text-primary flex-shrink-0" />
-                  <span className="text-muted-foreground text-sm font-medium">NSDC Certified</span>
+            <div className="pt-8 mt-8 border-t border-border/10">
+              <div className="grid grid-cols-1 gap-4">
+                <div className="group flex items-center justify-center sm:justify-start space-x-3 p-3 rounded-lg hover:bg-primary/5 transition-all duration-300">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <BookOpen className="h-4 w-4 text-primary" />
+                  </div>
+                  <span className="text-muted-foreground text-sm font-medium group-hover:text-foreground transition-colors">NSDC Certified</span>
                 </div>
-                <div className="flex items-center justify-center sm:justify-start space-x-2">
-                  <Users className="h-4 w-4 text-primary flex-shrink-0" />
-                  <span className="text-muted-foreground text-sm font-medium">Pan India Network</span>
+                <div className="group flex items-center justify-center sm:justify-start space-x-3 p-3 rounded-lg hover:bg-primary/5 transition-all duration-300">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <Users className="h-4 w-4 text-primary" />
+                  </div>
+                  <span className="text-muted-foreground text-sm font-medium group-hover:text-foreground transition-colors">Pan India Network</span>
                 </div>
-                <div className="flex items-center justify-center sm:justify-start space-x-2">
-                  <Award className="h-4 w-4 text-primary flex-shrink-0" />
-                  <span className="text-muted-foreground text-sm font-medium">Government Approved</span>
+                <div className="group flex items-center justify-center sm:justify-start space-x-3 p-3 rounded-lg hover:bg-primary/5 transition-all duration-300">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <Award className="h-4 w-4 text-primary" />
+                  </div>
+                  <span className="text-muted-foreground text-sm font-medium group-hover:text-foreground transition-colors">Government Approved</span>
                 </div>
               </div>
             </div>
