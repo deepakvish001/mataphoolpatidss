@@ -29,96 +29,81 @@ const Hero = () => {
       <div className="container-custom relative z-10 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <div className="space-y-10">
-            <div className="space-y-8">
-              <div className="inline-flex items-center space-x-4 bg-gradient-to-r from-primary/15 via-orange-500/15 to-primary/15 border-2 border-primary/30 rounded-full px-8 py-4 text-base backdrop-blur-sm shadow-xl">
-                <Award className="h-6 w-6 text-primary" />
-                <span className="text-primary font-black tracking-wide">Government Certified Training Partner</span>
-                <div className="w-3 h-3 bg-primary rounded-full"></div>
+          <div className="space-y-8 animate-fade-in">
+            <div className="space-y-6">
+              <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-500/20 border border-primary/30 rounded-full px-6 py-3 text-sm backdrop-blur-sm shadow-glow">
+                <Award className="h-5 w-5 text-primary" />
+                <span className="text-primary font-bold tracking-wide">Government Certified Training Partner</span>
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
               </div>
               
-              <h1 className="text-7xl md:text-8xl lg:text-9xl font-black leading-tight tracking-tight">
-                <span className="text-gradient-enhanced bg-clip-text text-transparent bg-gradient-to-r from-primary via-orange-500 to-red-500">EMPOWERING</span>
+              <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tight">
+                <span className="text-gradient-enhanced animate-gradient-x bg-clip-text">EMPOWERING</span>
                 <br />
                 <span className="text-foreground drop-shadow-sm">WITH ABILITY</span>
               </h1>
               
-              <div className="space-y-6">
-                <p className="text-2xl md:text-3xl text-muted-foreground leading-relaxed max-w-3xl font-bold">
-                  Pioneer in the field of <span className="text-gradient-enhanced bg-clip-text text-transparent bg-gradient-to-r from-primary to-orange-500 font-black">Skill Training</span> with <span className="text-primary font-black bg-gradient-to-r from-primary/20 to-orange-500/20 px-4 py-2 rounded-2xl border border-primary/30">13+ years of experience</span>. 
+              <div className="space-y-4">
+                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium">
+                  Pioneer in the field of <span className="text-gradient font-bold">Skill Training</span> with <span className="text-primary font-bold bg-primary/10 px-2 py-1 rounded-lg">13+ years of experience</span>. 
                 </p>
-                <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl">
-                  We have trained over <span className="text-primary font-black text-3xl">5 lakh students</span> across India with 
-                  <span className="text-gradient-enhanced bg-clip-text text-transparent bg-gradient-to-r from-primary to-orange-500 font-black"> 100% placement assistance</span>.
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+                  We have trained over <span className="text-primary font-bold text-2xl">5 lakh students</span> across India with 
+                  <span className="text-gradient font-bold"> 100% placement assistance</span>.
                 </p>
               </div>
             </div>
 
-            {/* Ultra-Premium Stats with Enhanced Design */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              <div className="group relative bg-gradient-to-br from-primary/15 via-primary/10 to-transparent border-2 border-primary/30 rounded-3xl p-8 text-center hover:scale-105 transition-all duration-300 backdrop-blur-sm overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
-                <div className="relative z-10">
-                  <div className="text-6xl font-black text-gradient-enhanced bg-clip-text text-transparent bg-gradient-to-r from-primary to-orange-500 mb-3">13+</div>
-                  <div className="text-base font-bold text-muted-foreground uppercase tracking-wide">Years Experience</div>
-                </div>
-                <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-primary/30 rounded-tr-2xl"></div>
+            {/* Enhanced Stats with Premium Design */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="group bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-2xl p-6 text-center hover:scale-105 transition-all duration-300 backdrop-blur-sm animate-fade-in">
+                <div className="text-4xl font-black text-gradient mb-2 group-hover:animate-bounce">13+</div>
+                <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Years Experience</div>
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-              <div className="group relative bg-gradient-to-br from-orange-500/15 via-orange-500/10 to-transparent border-2 border-orange-500/30 rounded-3xl p-8 text-center hover:scale-105 transition-all duration-300 backdrop-blur-sm overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
-                <div className="relative z-10">
-                  <div className="text-6xl font-black text-gradient-enhanced bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-red-500 mb-3">5L+</div>
-                  <div className="text-base font-bold text-muted-foreground uppercase tracking-wide">Students Trained</div>
-                </div>
-                <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-orange-500/30 rounded-tr-2xl"></div>
+              <div className="group bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 rounded-2xl p-6 text-center hover:scale-105 transition-all duration-300 backdrop-blur-sm animate-fade-in" style={{animationDelay: '0.1s'}}>
+                <div className="text-4xl font-black text-gradient mb-2 group-hover:animate-bounce">5L+</div>
+                <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Students Trained</div>
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-              <div className="group relative bg-gradient-to-br from-blue-500/15 via-blue-500/10 to-transparent border-2 border-blue-500/30 rounded-3xl p-8 text-center hover:scale-105 transition-all duration-300 backdrop-blur-sm col-span-2 md:col-span-1 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
-                <div className="relative z-10">
-                  <div className="text-6xl font-black text-gradient-enhanced bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 mb-3">900+</div>
-                  <div className="text-base font-bold text-muted-foreground uppercase tracking-wide">Expert Faculties</div>
-                </div>
-                <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-blue-500/30 rounded-tr-2xl"></div>
+              <div className="group bg-gradient-to-br from-blue-500/10 to-transparent border border-blue-500/20 rounded-2xl p-6 text-center hover:scale-105 transition-all duration-300 backdrop-blur-sm animate-fade-in col-span-2 md:col-span-1" style={{animationDelay: '0.2s'}}>
+                <div className="text-4xl font-black text-gradient mb-2 group-hover:animate-bounce">900+</div>
+                <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Expert Faculties</div>
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
 
-            {/* Ultra-Premium CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-8">
-              <Button size="lg" className="btn-primary group relative overflow-hidden shadow-2xl hover:shadow-glow h-16 px-10 text-xl font-black rounded-2xl">
-                <span className="relative z-10 flex items-center">
+            {/* Enhanced CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Button size="lg" className="btn-primary group relative overflow-hidden shadow-2xl hover:shadow-glow">
+                <span className="relative z-10 flex items-center font-bold text-lg">
                   Start Your Journey
-                  <ArrowRight className="ml-4 h-7 w-7 group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300" />
+                  <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300" />
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary via-orange-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-orange-500 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-gradient-x"></div>
               </Button>
-              <Button size="lg" variant="outline" className="btn-secondary group relative border-3 border-primary/40 hover:border-primary/60 backdrop-blur-sm h-16 px-8 text-xl font-bold rounded-2xl">
-                <div className="flex items-center">
-                  <div className="mr-4 w-14 h-14 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-2xl flex items-center justify-center group-hover:bg-primary/30 transition-colors border border-primary/30">
-                    <Play className="h-7 w-7 text-primary group-hover:scale-110 transition-transform" />
+              <Button size="lg" variant="outline" className="btn-secondary group relative border-2 border-primary/30 hover:border-primary/50 backdrop-blur-sm">
+                <div className="flex items-center font-semibold text-lg">
+                  <div className="mr-3 w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                    <Play className="h-6 w-6 text-primary group-hover:scale-110 transition-transform" />
                   </div>
                   Watch Our Story
                 </div>
               </Button>
             </div>
 
-            {/* Enhanced Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-8 pt-10 border-t-2 border-primary/20">
-              <div className="flex items-center space-x-3 text-base text-muted-foreground font-bold">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-xl flex items-center justify-center">
-                  <BookOpen className="h-6 w-6 text-primary" />
-                </div>
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap items-center gap-6 pt-8 border-t border-border/50">
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <BookOpen className="h-4 w-4 text-primary" />
                 <span>NSDC Training Partner</span>
               </div>
-              <div className="flex items-center space-x-3 text-base text-muted-foreground font-bold">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl flex items-center justify-center">
-                  <Users className="h-6 w-6 text-green-500" />
-                </div>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <Users className="h-4 w-4 text-primary" />
                 <span>Pan India Presence</span>
               </div>
-              <div className="flex items-center space-x-3 text-base text-muted-foreground font-bold">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center">
-                  <Award className="h-6 w-6 text-blue-500" />
-                </div>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <Award className="h-4 w-4 text-primary" />
                 <span>Government Recognized</span>
               </div>
             </div>
