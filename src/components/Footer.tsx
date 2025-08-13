@@ -25,64 +25,89 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-card border-t border-border">
+    <footer className="bg-gradient-to-b from-card to-card/80 border-t border-border">
       <div className="container-custom">
-        {/* Main Footer Content */}
+        {/* Single Unified Footer Content */}
         <div className="py-16">
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
-            {/* Company Info */}
-            <div className="space-y-6">
+          <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-8">
+            
+            {/* Company Info - Takes 2 columns on large screens */}
+            <div className="lg:col-span-2 space-y-6">
               <div>
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-lg">M</span>
+                <div className="flex items-center space-x-3 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-primary-foreground font-bold text-xl">M</span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-foreground">MATA PHOOLPATI DEVI</h3>
-                    <h3 className="text-lg font-bold text-foreground">SHIKSHAN SANSTHAN</h3>
-                    <p className="text-xs text-muted-foreground">Skill Development Programs</p>
+                    <h3 className="text-xl font-bold text-foreground leading-tight">MATA PHOOLPATI DEVI</h3>
+                    <h3 className="text-xl font-bold text-foreground leading-tight">SHIKSHAN SANSTHAN</h3>
+                    <p className="text-sm text-primary font-medium">Skill Development Programs</p>
                   </div>
                 </div>
-                <p className="text-muted-foreground leading-relaxed text-sm">
+                <p className="text-muted-foreground leading-relaxed mb-6">
                   Pioneer in skill training with 13+ years of experience, training 5+ lakh students 
                   across India with government certified courses and 100% placement assistance.
                 </p>
               </div>
 
-              {/* Contact Info */}
+              {/* Contact Info in Cards */}
               <div className="space-y-3">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
                   <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-muted-foreground">
                     Vill- Murarpatti, Post Lalganj, Tahsil Bairiya, Dist Ballia, (U.P.) 271216
                   </span>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
                   <Phone className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-muted-foreground">
                     +91 7007989716, +91 9004362661
                   </span>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
                   <Mail className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-muted-foreground">
                     info.mpdss@gmail.com
                   </span>
                 </div>
               </div>
+
+              {/* Legal Info */}
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-4 border border-primary/20">
+                <h5 className="font-semibold text-foreground mb-3 text-sm">Official Registration</h5>
+                <div className="grid grid-cols-1 gap-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">REG No:</span>
+                    <span className="font-medium text-foreground">BAL/10760/2019-2020</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">GST No:</span>
+                    <span className="font-medium text-foreground">09AAXAM0981E1Z3</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">PAN No:</span>
+                    <span className="font-medium text-foreground">AAXAM0981E</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Website:</span>
+                    <span className="font-medium text-primary">www.mataphoolpatidss.in</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-lg font-semibold text-foreground mb-6">Quick Links</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-6 border-b border-border pb-2">Quick Links</h4>
               <ul className="space-y-3">
                 {quickLinks.map((link) => (
                   <li key={link.name}>
                     <a 
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-2 group"
                     >
-                      {link.name}
+                      <span className="w-1 h-1 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                      <span>{link.name}</span>
                     </a>
                   </li>
                 ))}
@@ -91,94 +116,77 @@ const Footer = () => {
 
             {/* Training Programs */}
             <div>
-              <h4 className="text-lg font-semibold text-foreground mb-6">Training Programs</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-6 border-b border-border pb-2">Training Programs</h4>
               <ul className="space-y-3">
                 {trainingPrograms.map((program) => (
                   <li key={program}>
-                    <span className="text-sm text-muted-foreground">
-                      {program}
+                    <span className="text-sm text-muted-foreground flex items-center space-x-2">
+                      <span className="w-1 h-1 bg-primary rounded-full"></span>
+                      <span>{program}</span>
                     </span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Newsletter */}
+            {/* Newsletter & Social */}
             <div>
-              <h4 className="text-lg font-semibold text-foreground mb-6">Stay Updated</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-6 border-b border-border pb-2">Stay Connected</h4>
               <p className="text-sm text-muted-foreground mb-4">
-                Subscribe to our newsletter to stay updated on our latest training programs and industry news.
+                Subscribe to our newsletter for the latest updates on training programs and industry news.
               </p>
               
-              <div className="space-y-3">
-                <Input 
-                  type="email"
-                  placeholder="Enter your email"
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                />
-                <Button className="w-full btn-primary">
-                  Subscribe
-                </Button>
-              </div>
+              <div className="space-y-4">
+                <div className="flex space-x-2">
+                  <Input 
+                    type="email"
+                    placeholder="Enter your email"
+                    className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary text-sm"
+                  />
+                  <Button className="btn-primary px-4 shrink-0">
+                    Subscribe
+                  </Button>
+                </div>
 
-              {/* Social Links */}
-              <div className="flex space-x-4 mt-6">
-                <a 
-                  href="#" 
-                  className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a 
-                  href="#" 
-                  className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                >
-                  <Youtube className="h-5 w-5" />
-                </a>
-                <a 
-                  href="#" 
-                  className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
+                {/* Social Links */}
+                <div>
+                  <p className="text-sm font-medium text-foreground mb-3">Follow Us</p>
+                  <div className="flex space-x-3">
+                    <a 
+                      href="#" 
+                      className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                    </a>
+                    <a 
+                      href="#" 
+                      className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group"
+                    >
+                      <Youtube className="h-4 w-4" />
+                    </a>
+                    <a 
+                      href="#" 
+                      className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors group"
+                    >
+                      <Facebook className="h-4 w-4" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Legal Footer */}
-        <div className="border-t border-border py-8">
-          <div className="space-y-6">
-            {/* Company Legal Info */}
-            <div className="bg-muted/30 rounded-lg p-6">
-              <div className="grid md:grid-cols-2 gap-6 text-sm">
-                <div>
-                  <h5 className="font-semibold text-foreground mb-2">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</h5>
-                  <div className="space-y-1 text-muted-foreground">
-                    <p>REG No: BAL/10760/2019-2020</p>
-                    <p>GST No: 09AAXAM0981E1Z3</p>
-                    <p>PAN No: AAXAM0981E</p>
-                  </div>
-                </div>
-                <div>
-                  <h5 className="font-semibold text-foreground mb-2">Registered Address</h5>
-                  <div className="text-muted-foreground">
-                    <p>Vill- Murarpatti, Post Lalganj, Tahsil Bairiya,</p>
-                    <p>Dist Ballia, (U.P.) 271216</p>
-                    <p>Website: www.mataphoolpatidss.in</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Copyright */}
-            <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-              <p>© 2025 MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN. All rights reserved.</p>
-              <div className="flex space-x-6 mt-4 md:mt-0">
-                <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-primary transition-colors">Terms & Conditions</a>
-                <a href="#" className="hover:text-primary transition-colors">Cookie Policy</a>
-              </div>
+        {/* Bottom Copyright Bar */}
+        <div className="border-t border-border py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground space-y-4 md:space-y-0">
+            <p className="text-center md:text-left">
+              © 2025 <span className="font-semibold text-foreground">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>. All rights reserved.
+            </p>
+            <div className="flex space-x-6">
+              <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-primary transition-colors">Terms & Conditions</a>
+              <a href="#" className="hover:text-primary transition-colors">Cookie Policy</a>
             </div>
           </div>
         </div>
