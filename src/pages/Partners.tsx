@@ -26,7 +26,22 @@ import {
   ShoppingCart,
   Gamepad2,
   Monitor,
-  Zap
+  Zap,
+  Sparkles,
+  Rocket,
+  TrendingUp,
+  CircleDot,
+  Gift,
+  Badge,
+  Gem,
+  Flame,
+  Layers,
+  Network,
+  Puzzle,
+  Fingerprint,
+  Eye,
+  ChevronRight,
+  GraduationCap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -82,48 +97,157 @@ const Partners = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-background py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-5xl mx-auto">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-6">
-              <Handshake className="h-5 w-5 text-primary" />
-              <span className="text-primary font-semibold">Strategic Partnerships</span>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/80 to-primary/60">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDYwIDAgTCAwIDAgMCA2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSkiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30"></div>
+          
+          {/* Floating Elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-20 left-20 w-2 h-2 bg-white/20 rounded-full animate-ping"></div>
+            <div className="absolute top-40 right-32 w-3 h-3 bg-white/30 rounded-full animate-pulse"></div>
+            <div className="absolute bottom-32 left-1/4 w-2 h-2 bg-white/25 rounded-full animate-bounce"></div>
+            <div className="absolute top-1/3 right-1/4 w-4 h-4 bg-white/20 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute bottom-1/4 right-20 w-3 h-3 bg-white/35 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+          </div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <div className="max-w-6xl mx-auto">
+            {/* Floating Badge */}
+            <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-8 py-4 mb-8 hover:scale-105 transition-transform duration-300">
+              <Sparkles className="h-6 w-6 text-white animate-pulse" />
+              <span className="text-white font-semibold text-lg">Strategic Partnerships</span>
+              <Rocket className="h-6 w-6 text-white animate-bounce" />
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-              Our <span className="text-primary">Esteemed Partners</span>
+            {/* Main Heading with Gradient Text */}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+              <span className="text-white">Our</span>{' '}
+              <span className="bg-gradient-to-r from-white via-accent to-white bg-clip-text text-transparent animate-pulse">
+                Esteemed
+              </span>{' '}
+              <span className="text-white">Partners</span>
             </h1>
             
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-4xl mx-auto">
-              <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is proud to be affiliated with leading private companies and government bodies, creating a robust ecosystem for skill development and placement opportunities across diverse industry sectors.
+            {/* Enhanced Description */}
+            <p className="text-xl md:text-2xl text-white/90 mb-12 leading-relaxed max-w-5xl mx-auto font-light">
+              <span className="font-bold bg-gradient-to-r from-accent to-white bg-clip-text text-transparent">
+                MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+              </span>{' '}
+              is proudly affiliated with leading private companies and government bodies, creating a robust ecosystem for skill development and placement opportunities across diverse industry sectors.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="btn-primary">
-                <Phone className="mr-2 h-5 w-5" />
+            {/* Enhanced Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Button size="lg" className="bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-2xl px-8 py-4 text-lg font-semibold">
+                <Phone className="mr-3 h-6 w-6" />
                 Partner With Us
+                <ChevronRight className="ml-3 h-6 w-6" />
               </Button>
-              <Button variant="outline" className="btn-secondary">
-                <Mail className="mr-2 h-5 w-5" />
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-white/30 text-white hover:bg-white/10 backdrop-blur-md hover:scale-105 transition-all duration-300 px-8 py-4 text-lg font-semibold"
+              >
+                <Mail className="mr-3 h-6 w-6" />
                 View Opportunities
+                <ArrowRight className="ml-3 h-6 w-6" />
               </Button>
             </div>
+
+            {/* Partnership Stats Preview */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 animate-pulse">500+</div>
+                <div className="text-white/80 font-medium">Partner Companies</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 animate-pulse" style={{ animationDelay: '0.5s' }}>25+</div>
+                <div className="text-white/80 font-medium">Government Bodies</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 animate-pulse" style={{ animationDelay: '1s' }}>15+</div>
+                <div className="text-white/80 font-medium">Industry Sectors</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 animate-pulse" style={{ animationDelay: '1.5s' }}>100%</div>
+                <div className="text-white/80 font-medium">Placement Support</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-8 h-8 border-2 border-white/50 rounded-full flex items-center justify-center">
+            <ArrowRight className="h-4 w-4 text-white rotate-90" />
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="section-padding bg-gradient-to-r from-primary/5 to-background">
-        <div className="container mx-auto px-4">
+      {/* Enhanced Stats Section */}
+      <section className="relative py-20 overflow-hidden">
+        {/* Background with Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZG90cyIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIxIiBmaWxsPSJoc2woMjE1IDEwMCUgNjAlIC8gMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNkb3RzKSIvPjwvc3ZnPg==')] opacity-50"></div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center space-x-3 bg-primary/10 backdrop-blur-md border border-primary/20 rounded-full px-6 py-3 mb-6">
+              <TrendingUp className="h-5 w-5 text-primary animate-pulse" />
+              <span className="text-primary font-semibold">Partnership Impact</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Achievements in{' '}
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Numbers
+              </span>
+            </h2>
+          </div>
+
+          {/* Enhanced Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <Card key={index} className="card-hover text-center">
-                <CardContent className="p-6">
-                  <div className={`w-16 h-16 ${stat.bg} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                    <stat.icon className={`h-8 w-8 ${stat.color}`} />
+              <Card 
+                key={index} 
+                className="group relative overflow-hidden bg-card/80 backdrop-blur-md border border-primary/20 hover:border-primary/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+              >
+                <CardContent className="p-8 text-center relative">
+                  {/* Floating Background Element */}
+                  <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+                  
+                  {/* Icon Container */}
+                  <div className={`relative w-20 h-20 ${stat.bg} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                    <stat.icon className={`h-10 w-10 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl"></div>
                   </div>
-                  <div className="text-3xl font-bold text-foreground mb-2">{stat.number}</div>
-                  <div className="text-muted-foreground font-medium">{stat.label}</div>
+                  
+                  {/* Progress Bar */}
+                  <div className="w-full bg-primary/10 rounded-full h-2 mb-4 overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-primary to-accent rounded-full transform -translate-x-full group-hover:translate-x-0 transition-transform duration-1000 ease-out"
+                      style={{ animationDelay: `${index * 0.2}s` }}
+                    ></div>
+                  </div>
+                  
+                  {/* Number with Counter Animation */}
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent mb-3">
+                    {stat.number}
+                  </div>
+                  
+                  {/* Label */}
+                  <div className="text-muted-foreground font-semibold text-lg">{stat.label}</div>
+                  
+                  {/* Decorative Elements */}
+                  <div className="absolute bottom-2 left-2">
+                    <CircleDot className="h-4 w-4 text-primary/30 animate-pulse" />
+                  </div>
+                  <div className="absolute top-2 right-2">
+                    <Sparkles className="h-4 w-4 text-accent/40 animate-pulse" style={{ animationDelay: '1s' }} />
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -131,145 +255,345 @@ const Partners = () => {
         </div>
       </section>
 
-      {/* Private Partners Section */}
-      <section className="section-padding">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">Esteemed Private Placement Partners</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is proud to be affiliated with a number of leading private companies, ensuring excellent placement opportunities across various industry sectors.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {privatePartners.map((partner, index) => (
-              <Card key={index} className="card-hover group">
-                <CardContent className="p-6 text-center">
-                  <div className={`w-16 h-16 ${partner.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <span className="text-2xl">{partner.icon}</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-foreground mb-2">{partner.name}</h3>
-                  <p className={`text-sm font-medium ${partner.color} mb-2`}>{partner.sector}</p>
-                  <div className="flex items-center justify-center space-x-1">
-                    <Star className="h-4 w-4 text-yellow-500" />
-                    <span className="text-sm text-muted-foreground">Premium Partner</span>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+      {/* Enhanced Private Partners Section */}
+      <section className="relative py-24 overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/3 to-background">
+          <div className="absolute inset-0">
+            <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-xl animate-pulse"></div>
+            <div className="absolute bottom-40 right-20 w-48 h-48 bg-accent/5 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
           </div>
         </div>
-      </section>
 
-      {/* Government Partners Section */}
-      <section className="section-padding bg-gradient-to-r from-background to-primary/5">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-6">
-              <Crown className="h-5 w-5 text-primary" />
-              <span className="text-primary font-semibold">Government Collaboration</span>
+        <div className="relative z-10 container mx-auto px-4">
+          {/* Section Header */}
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/10 to-accent/10 backdrop-blur-md border border-primary/20 rounded-full px-8 py-4 mb-8">
+              <Building2 className="h-6 w-6 text-primary animate-pulse" />
+              <span className="text-primary font-bold text-lg">Industry Leaders</span>
+              <Gem className="h-6 w-6 text-accent animate-pulse" />
             </div>
             
-            <h2 className="text-4xl font-bold text-foreground mb-6">Your Gateway to Government Certification and Placement</h2>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is proud to be affiliated with following government bodies, providing certified training programs and guaranteed placement opportunities.
+            <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-8 leading-tight">
+              Esteemed{' '}
+              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-pulse">
+                Private Partners
+              </span>
+            </h2>
+            
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              <span className="font-bold text-primary">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is proudly affiliated with industry-leading private companies, ensuring exceptional placement opportunities across diverse sectors.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {governmentPartners.map((partner, index) => (
-              <Card key={index} className="card-premium group">
-                <CardContent className="p-8">
-                  <div className="flex items-start space-x-4">
-                    <div className={`w-16 h-16 ${partner.bg} rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
-                      <partner.icon className={`h-8 w-8 ${partner.color}`} />
+          {/* Enhanced Partners Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {privatePartners.map((partner, index) => (
+              <Card 
+                key={index} 
+                className="group relative overflow-hidden bg-card/90 backdrop-blur-md border border-primary/20 hover:border-primary/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardContent className="p-8 text-center relative">
+                  {/* Floating Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Icon Container with Animation */}
+                  <div className={`relative w-20 h-20 ${partner.bg} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}>
+                    <span className="text-3xl group-hover:scale-110 transition-transform duration-300">{partner.icon}</span>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl"></div>
+                  </div>
+                  
+                  {/* Company Name */}
+                  <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                    {partner.name}
+                  </h3>
+                  
+                  {/* Sector Badge */}
+                  <div className={`inline-flex items-center space-x-2 px-4 py-2 ${partner.bg} rounded-full mb-4`}>
+                    <Layers className={`h-4 w-4 ${partner.color}`} />
+                    <span className={`text-sm font-semibold ${partner.color}`}>{partner.sector}</span>
+                  </div>
+                  
+                  {/* Premium Badge */}
+                  <div className="flex items-center justify-center space-x-2">
+                    <div className="flex items-center space-x-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star 
+                          key={star} 
+                          className="h-4 w-4 text-yellow-500 fill-current animate-pulse" 
+                          style={{ animationDelay: `${star * 0.1}s` }}
+                        />
+                      ))}
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-foreground mb-2">{partner.name}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{partner.fullName}</p>
-                      <div className="flex items-center space-x-2 mt-3">
-                        <CheckCircle className="h-4 w-4 text-primary" />
-                        <span className="text-sm text-primary font-medium">Certified Partner</span>
-                      </div>
-                    </div>
+                  </div>
+                  <span className="text-sm text-muted-foreground font-medium mt-2 block">Premium Partner</span>
+                  
+                  {/* Decorative Elements */}
+                  <div className="absolute top-4 right-4">
+                    <Badge className="h-5 w-5 text-primary/30 group-hover:text-primary/60 transition-colors duration-300" />
+                  </div>
+                  <div className="absolute bottom-4 left-4">
+                    <Network className="h-4 w-4 text-accent/40 group-hover:text-accent/80 transition-colors duration-300" />
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
+
+          {/* Partnership CTA */}
+          <div className="text-center mt-16">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 shadow-2xl"
+            >
+              <Handshake className="mr-3 h-6 w-6" />
+              Join Our Partner Network
+              <ArrowRight className="ml-3 h-6 w-6" />
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Partnership Benefits Section */}
-      <section className="section-padding">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <Card className="card-premium">
-              <CardContent className="p-12">
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
-                  <div>
-                    <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6">
-                      <Target className="h-4 w-4 text-primary" />
-                      <span className="text-primary font-semibold">Partnership Benefits</span>
+      {/* Enhanced Government Partners Section */}
+      <section className="relative py-24 overflow-hidden">
+        {/* Premium Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImhleGFnb24iIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cG9seWdvbiBwb2ludHM9IjUwIDEwIDkwIDMwIDkwIDcwIDUwIDkwIDEwIDcwIDEwIDMwIiBmaWxsPSJub25lIiBzdHJva2U9ImhzbCgyMTUgMTAwJSA2MCUgLyAwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjaGV4YWdvbikiLz48L3N2Zz4=')] opacity-30"></div>
+          
+          {/* Floating Elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-32 left-16 w-40 h-40 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl animate-pulse"></div>
+            <div className="absolute bottom-32 right-16 w-56 h-56 bg-gradient-to-br from-accent/15 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }}></div>
+          </div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4">
+          {/* Section Header */}
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-xl border border-primary/30 rounded-full px-8 py-4 mb-8">
+              <Crown className="h-6 w-6 text-primary animate-pulse" />
+              <span className="text-primary font-bold text-lg">Government Excellence</span>
+              <Shield className="h-6 w-6 text-accent animate-pulse" />
+            </div>
+            
+            <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-8 leading-tight">
+              Your Gateway to{' '}
+              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                Government Certification
+              </span>
+            </h2>
+            
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-5xl mx-auto leading-relaxed">
+              <span className="font-bold text-primary">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is proudly affiliated with prestigious government bodies, providing certified training programs and guaranteed placement opportunities with complete government backing.
+            </p>
+          </div>
+          
+          {/* Enhanced Government Partners Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {governmentPartners.map((partner, index) => (
+              <Card 
+                key={index} 
+                className="group relative overflow-hidden bg-card/95 backdrop-blur-xl border-2 border-primary/30 hover:border-primary/60 transition-all duration-500 hover:scale-105 hover:shadow-2xl rounded-3xl"
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
+                <CardContent className="p-10 relative">
+                  {/* Premium Background Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                  
+                  {/* Government Badge */}
+                  <div className="absolute top-4 right-4 bg-gradient-to-r from-primary to-accent rounded-full p-2">
+                    <Shield className="h-4 w-4 text-white" />
+                  </div>
+                  
+                  <div className="flex items-start space-x-6 relative">
+                    {/* Enhanced Icon Container */}
+                    <div className={`w-20 h-20 ${partner.bg} rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl relative overflow-hidden`}>
+                      <partner.icon className={`h-10 w-10 ${partner.color} relative z-10`} />
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent"></div>
+                      <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 to-accent/50 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     
-                    <h3 className="text-3xl font-bold text-foreground mb-6">Why Partners Choose Us</h3>
-                    <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                      Our comprehensive training programs and industry-aligned curriculum ensure that our graduates are job-ready and contribute effectively from day one.
-                    </p>
-                    
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Industry-ready skilled workforce</span>
+                    <div className="flex-1">
+                      {/* Organization Name */}
+                      <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                        {partner.name}
+                      </h3>
+                      
+                      {/* Full Name */}
+                      <p className="text-muted-foreground leading-relaxed mb-4">{partner.fullName}</p>
+                      
+                      {/* Certification Badge */}
+                      <div className="flex items-center space-x-3 mb-4">
+                        <div className="flex items-center space-x-2 bg-primary/10 rounded-full px-4 py-2">
+                          <CheckCircle className="h-4 w-4 text-primary" />
+                          <span className="text-sm text-primary font-semibold">Certified Partner</span>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Reduced training and onboarding costs</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Continuous skill upgradation support</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Access to diverse talent pool</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Government certification and compliance</span>
+                      
+                      {/* Government Verification */}
+                      <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <Fingerprint className="h-4 w-4 text-accent" />
+                        <span>Government Verified</span>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-8 border border-primary/20">
-                    <div className="text-center">
-                      <Handshake className="h-16 w-16 text-primary mx-auto mb-6" />
-                      <h4 className="text-2xl font-bold text-foreground mb-4">Partnership Opportunities</h4>
-                      
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Recruitment Partnerships</span>
-                          <ArrowRight className="h-4 w-4 text-primary" />
+                  {/* Progress Indicator */}
+                  <div className="mt-6 w-full bg-primary/10 rounded-full h-1 overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-primary to-accent rounded-full transform -translate-x-full group-hover:translate-x-0 transition-transform duration-1000 ease-out"
+                      style={{ animationDelay: `${index * 0.2}s` }}
+                    ></div>
+                  </div>
+                  
+                  {/* Decorative Elements */}
+                  <div className="absolute bottom-4 right-4">
+                    <Eye className="h-4 w-4 text-primary/30 group-hover:text-primary/60 transition-colors duration-300" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Government Partnership CTA */}
+          <div className="text-center mt-20">
+            <div className="inline-flex flex-col items-center space-y-6">
+              <div className="text-lg text-muted-foreground font-medium">
+                Experience Government-Backed Excellence
+              </div>
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-primary via-accent to-primary hover:scale-105 transition-all duration-300 text-white font-bold px-16 py-6 rounded-full shadow-2xl text-xl"
+              >
+                <Crown className="mr-4 h-7 w-7" />
+                Get Government Certification
+                <ArrowRight className="ml-4 h-7 w-7" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Partnership Benefits Section */}
+      <section className="relative py-24 overflow-hidden">
+        {/* Dynamic Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-accent/5">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iY2lyY2xlcyIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyIiBmaWxsPSJub25lIiBzdHJva2U9ImhzbCgyMTUgMTAwJSA2MCUgLyAwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjY2lyY2xlcykiLz48L3N2Zz4=')] opacity-40"></div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            {/* Premium Card Container */}
+            <Card className="relative overflow-hidden bg-card/95 backdrop-blur-xl border-2 border-primary/30 rounded-3xl shadow-2xl">
+              <CardContent className="p-16">
+                {/* Section Header */}
+                <div className="text-center mb-16">
+                  <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-md border border-primary/30 rounded-full px-8 py-4 mb-8">
+                    <Target className="h-6 w-6 text-primary animate-pulse" />
+                    <span className="text-primary font-bold text-lg">Partnership Excellence</span>
+                    <Gift className="h-6 w-6 text-accent animate-pulse" />
+                  </div>
+                  
+                  <h3 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
+                    Why Partners{' '}
+                    <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                      Choose Us
+                    </span>
+                  </h3>
+                </div>
+
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                  {/* Benefits Content */}
+                  <div className="space-y-8">
+                    <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+                      Our comprehensive training programs and industry-aligned curriculum ensure that our graduates are job-ready and contribute effectively from day one.
+                    </p>
+                    
+                    {/* Enhanced Benefits List */}
+                    <div className="space-y-6">
+                      {[
+                        { text: "Industry-ready skilled workforce", icon: Users },
+                        { text: "Reduced training and onboarding costs", icon: TrendingUp },
+                        { text: "Continuous skill upgradation support", icon: Rocket },
+                        { text: "Access to diverse talent pool", icon: Globe },
+                        { text: "Government certification and compliance", icon: Shield }
+                      ].map((benefit, index) => (
+                        <div 
+                          key={index}
+                          className="flex items-center space-x-4 group hover:scale-105 transition-transform duration-300"
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                          <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <benefit.icon className="h-6 w-6 text-primary" />
+                          </div>
+                          <span className="text-lg text-foreground font-medium group-hover:text-primary transition-colors duration-300">
+                            {benefit.text}
+                          </span>
                         </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Skill Development Programs</span>
-                          <ArrowRight className="h-4 w-4 text-primary" />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Industry Collaborations</span>
-                          <ArrowRight className="h-4 w-4 text-primary" />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Training Partnerships</span>
-                          <ArrowRight className="h-4 w-4 text-primary" />
-                        </div>
-                      </div>
-                      
-                      <Button className="btn-primary mt-6 w-full">
-                        <Handshake className="mr-2 h-5 w-5" />
-                        Become a Partner
+                      ))}
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className="pt-8">
+                      <Button 
+                        size="lg"
+                        className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-bold px-12 py-4 rounded-full hover:scale-105 transition-all duration-300 shadow-xl"
+                      >
+                        <Handshake className="mr-3 h-6 w-6" />
+                        Start Partnership Journey
+                        <ChevronRight className="ml-3 h-6 w-6" />
                       </Button>
+                    </div>
+                  </div>
+                  
+                  {/* Partnership Opportunities Panel */}
+                  <div className="relative">
+                    <div className="bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-xl rounded-3xl p-10 border-2 border-primary/20 relative overflow-hidden">
+                      {/* Floating Background Elements */}
+                      <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-xl animate-pulse"></div>
+                      <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full blur-lg animate-pulse" style={{ animationDelay: '2s' }}></div>
+                      
+                      <div className="relative z-10 text-center">
+                        {/* Animated Icon */}
+                        <div className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl flex items-center justify-center mx-auto mb-8 hover:scale-110 transition-transform duration-300">
+                          <Handshake className="h-12 w-12 text-primary animate-pulse" />
+                        </div>
+                        
+                        <h4 className="text-3xl font-bold text-foreground mb-8">Partnership Opportunities</h4>
+                        
+                        {/* Opportunities List */}
+                        <div className="space-y-6">
+                          {[
+                            { text: "Recruitment Partnerships", icon: Users },
+                            { text: "Skill Development Programs", icon: Puzzle },
+                            { text: "Industry Collaborations", icon: Network },
+                            { text: "Training Partnerships", icon: GraduationCap }
+                          ].map((opportunity, index) => (
+                            <div 
+                              key={index}
+                              className="flex items-center justify-between p-4 bg-card/50 backdrop-blur-md rounded-2xl border border-primary/20 hover:border-primary/40 hover:scale-105 transition-all duration-300 group"
+                              style={{ animationDelay: `${index * 0.15}s` }}
+                            >
+                              <div className="flex items-center space-x-4">
+                                <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center">
+                                  <opportunity.icon className="h-5 w-5 text-primary" />
+                                </div>
+                                <span className="text-foreground font-medium group-hover:text-primary transition-colors duration-300">
+                                  {opportunity.text}
+                                </span>
+                              </div>
+                              <ChevronRight className="h-5 w-5 text-primary group-hover:translate-x-1 transition-transform duration-300" />
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <Button className="w-full mt-8 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-bold py-4 rounded-full hover:scale-105 transition-all duration-300">
+                          <Flame className="mr-3 h-5 w-5" />
+                          Become a Partner
+                          <ArrowRight className="ml-3 h-5 w-5" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
