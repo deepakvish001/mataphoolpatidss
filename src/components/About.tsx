@@ -12,108 +12,97 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="section-padding bg-gradient-to-br from-background via-muted/5 to-background">
+    <section id="about" className="section-padding">
       <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          {/* Ultra Premium Content */}
-          <div className="space-y-10">
-            <div className="space-y-6">
-              <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/10 to-orange-500/10 border border-primary/20 rounded-full px-6 py-3 text-sm backdrop-blur-sm">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <span className="text-primary font-bold tracking-wide">Established 2013</span>
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Content */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 text-sm">
+                <CheckCircle className="h-4 w-4 text-primary" />
+                <span className="text-primary font-semibold">Since 2013</span>
               </div>
               
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-foreground">
-                Pioneering 
-                <br />
-                <span className="bg-gradient-to-r from-primary via-orange-500 to-red-500 bg-clip-text text-transparent">
-                  Skill Development
-                </span>
+              <h2 className="text-4xl font-bold text-foreground">
+                Welcome to <span className="text-primary">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>
               </h2>
               
-              <div className="space-y-6">
-                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-light">
-                  Leading India's largest <span className="text-foreground font-semibold">Mega Skill Centre</span> network, 
-                  transforming lives across remote regions.
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  From Jharkhand to J&K, Uttarakhand to North-East States – we've built a 
-                  <span className="text-primary font-semibold"> nationwide ecosystem</span> of excellence in skill training 
-                  and professional development.
-                </p>
-              </div>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is a pioneer in the field of Skill Training and has been 
+                successfully running skill development programs on PAN India basis since 2013. We have 
+                developed India's largest Mega Skill Centre in difficult and remote areas like Jharkhand, 
+                J&K, Uttarakhand, and North-East States.
+              </p>
             </div>
 
-            {/* Premium Features Grid */}
-            <div className="grid grid-cols-1 gap-4">
+            {/* Features List */}
+            <div className="space-y-3">
               {features.map((feature, index) => (
                 <div 
                   key={index}
-                  className="flex items-center space-x-4 bg-gradient-to-r from-muted/30 to-transparent border border-border/30 rounded-2xl p-4 backdrop-blur-sm hover:border-primary/20 transition-all duration-300"
+                  className="flex items-start space-x-3 animate-slide-in-left"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                  </div>
-                  <span className="text-foreground font-medium">{feature}</span>
+                  <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span className="text-muted-foreground">{feature}</span>
                 </div>
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 pt-4">
-              <Button size="lg" className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-primary to-orange-500 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group">
-                Discover Our Story
-                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform" />
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button className="btn-primary group">
+                Know More About Us
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-semibold border-2 border-primary/20 rounded-2xl hover:border-primary/40 hover:bg-primary/5 transition-all duration-300">
-                Contact: 0120 428 2837
+              <Button variant="outline" className="btn-secondary">
+                Call Us: 0120 428 2837
               </Button>
             </div>
           </div>
 
-          {/* Ultra Premium Vision & Mission */}
+          {/* Vision & Mission Cards */}
           <div className="space-y-8">
             {/* Vision Card */}
-            <div className="bg-gradient-to-br from-primary/8 via-primary/4 to-transparent border border-primary/15 rounded-3xl p-8 backdrop-blur-sm hover:border-primary/25 transition-all duration-500 group">
-              <div className="flex items-start space-x-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-orange-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  <Eye className="h-8 w-8 text-primary" />
+            <div className="card-premium group">
+              <div className="flex items-start space-x-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                  <Eye className="h-6 w-6 text-primary" />
                 </div>
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-black text-foreground">Our Vision</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    To train <span className="text-primary font-bold">10 lakh students per year</span> in different skills, 
-                    empowering them to provide professional services and create wealth for themselves and the nation.
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">Our Vision</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    To train 10 lakh students per year in different skills and to empower them with 
+                    the ability to provide professional services, and create wealth for themselves 
+                    and for the nation.
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Mission Card */}
-            <div className="bg-gradient-to-br from-orange-500/8 via-orange-500/4 to-transparent border border-orange-500/15 rounded-3xl p-8 backdrop-blur-sm hover:border-orange-500/25 transition-all duration-500 group">
-              <div className="flex items-start space-x-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  <Target className="h-8 w-8 text-orange-500" />
+            <div className="card-premium group">
+              <div className="flex items-start space-x-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                  <Target className="h-6 w-6 text-primary" />
                 </div>
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-black text-foreground">Our Mission</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    To be the <span className="text-orange-500 font-bold">world's premier institute</span> in skill training 
-                    & entrepreneurship development, empowering students to become leaders with values, vision & versatility.
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">Our Mission</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    To be world's premium institute in skill training & entrepreneurship development, 
+                    committed to providing the best possible professional, skill oriented education that 
+                    empowers students to become leaders with values, vision & versatility.
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Achievement Highlight */}
-            <div className="bg-gradient-to-br from-blue-500/8 via-blue-500/4 to-transparent border border-blue-500/15 rounded-3xl p-8 backdrop-blur-sm">
-              <div className="text-center space-y-4">
-                <h3 className="text-3xl font-black bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
-                  Excellence Since 2013
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-md mx-auto">
+            <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-xl p-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">Who We Are</div>
+                <p className="text-muted-foreground">
                   Pioneer in skill training with expertise in providing professional education 
-                  that develops students as <span className="text-foreground font-semibold">self-dependent leaders</span>
+                  that develops students as self-dependent leaders
                 </p>
               </div>
             </div>

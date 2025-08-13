@@ -87,66 +87,59 @@ const Services = () => {
   ];
 
   return (
-    <section id="training" className="section-padding bg-gradient-to-br from-background via-muted/3 to-background">
+    <section id="training" className="section-padding bg-muted/10">
       <div className="container-custom">
-        {/* Ultra Premium Section Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/10 to-orange-500/10 border border-primary/20 rounded-full px-6 py-3 text-sm backdrop-blur-sm mb-8">
-            <BookOpen className="h-5 w-5 text-primary" />
-            <span className="text-primary font-bold tracking-wide">Training Excellence</span>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-foreground mb-6">
-            Transformative 
-            <br />
-            <span className="bg-gradient-to-r from-primary via-orange-500 to-red-500 bg-clip-text text-transparent">
-              Training Programs
-            </span>
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-foreground mb-4">
+            Our <span className="text-primary">Training Programs</span>
           </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            Government certified programs designed to enhance employability and unlock 
-            <span className="text-foreground font-semibold"> multiple career opportunities</span> across industries
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Government certified training programs designed to enhance your employability 
+            and provide multiple career opportunities
           </p>
         </div>
 
-        {/* Ultra Premium Training Areas */}
-        <div className="mb-20">
-          <h3 className="text-3xl font-black text-foreground mb-12 text-center">
-            Specialized Training <span className="text-primary">Domains</span>
+        {/* Training Areas */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-semibold text-foreground mb-8 text-center">
+            Specialized Training Areas
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {trainingAreas.map((area, index) => (
               <div 
                 key={area.name}
-                className={`bg-gradient-to-br ${area.color} backdrop-blur-sm border border-border/30 rounded-2xl p-6 text-center hover:border-primary/25 transition-all duration-500 hover:scale-105 group`}
+                className={`bg-gradient-to-br ${area.color} backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:border-primary/30 transition-all duration-300 hover:scale-105 animate-fade-in`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className={`w-16 h-16 ${area.iconBg} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <area.icon className="h-8 w-8 text-primary" />
+                <div className={`w-12 h-12 ${area.iconBg} rounded-lg flex items-center justify-center mx-auto mb-3`}>
+                  <area.icon className="h-6 w-6 text-primary" />
                 </div>
-                <h4 className="font-bold text-foreground text-sm leading-tight">{area.name}</h4>
+                <h4 className="font-medium text-foreground text-sm">{area.name}</h4>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Ultra Premium Certification Benefits */}
-        <div className="mb-20">
-          <h3 className="text-3xl font-black text-foreground mb-12 text-center">
-            Certification <span className="text-primary">Benefits</span>
+        {/* Certification Benefits */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-semibold text-foreground mb-8 text-center">
+            MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN Certification Benefits
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {certificationBenefits.map((benefit, index) => (
               <div 
                 key={benefit.title}
-                className="bg-gradient-to-br from-muted/20 via-muted/10 to-transparent border border-border/30 rounded-3xl p-8 backdrop-blur-sm hover:border-primary/25 transition-all duration-500 group"
+                className="card-premium group animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/15 to-orange-500/15 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <benefit.icon className="h-10 w-10 text-primary" />
+                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                  <benefit.icon className="h-8 w-8 text-primary" />
                 </div>
-                <h4 className="text-xl font-black text-foreground mb-4">
+                <h4 className="text-lg font-semibold text-foreground mb-3">
                   {benefit.title}
                 </h4>
-                <p className="text-muted-foreground leading-relaxed text-lg">
+                <p className="text-muted-foreground leading-relaxed">
                   {benefit.description}
                 </p>
               </div>
@@ -154,71 +147,62 @@ const Services = () => {
           </div>
         </div>
 
-        {/* Ultra Premium Placement Process */}
-        <div className="bg-gradient-to-br from-primary/5 via-orange-500/3 to-blue-500/5 border border-primary/15 rounded-4xl p-12 backdrop-blur-sm">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-black text-foreground mb-4">
-              Placement <span className="text-primary">Process</span>
+        {/* Placement Process */}
+        <div className="card-premium">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-semibold text-foreground mb-4">
+              MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN Placement Process
             </h3>
-            <p className="text-xl text-muted-foreground">
-              Your Journey to <span className="text-foreground font-semibold">Career Success</span>
+            <p className="text-lg text-muted-foreground">
+              Unlocking Your Career Potential
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-primary-foreground font-black text-xl">1</span>
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-primary-foreground font-bold">1</span>
               </div>
-              <h4 className="text-lg font-black text-foreground mb-3">Training</h4>
-              <p className="text-muted-foreground leading-relaxed">Complete your certified training program with expert guidance</p>
+              <h4 className="font-semibold text-foreground mb-2">Training</h4>
+              <p className="text-sm text-muted-foreground">Complete your certified training program</p>
             </div>
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-primary-foreground font-black text-xl">2</span>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-primary-foreground font-bold">2</span>
               </div>
-              <h4 className="text-lg font-black text-foreground mb-3">Assessment</h4>
-              <p className="text-muted-foreground leading-relaxed">Pass comprehensive online and practical assessments</p>
+              <h4 className="font-semibold text-foreground mb-2">Assessment</h4>
+              <p className="text-sm text-muted-foreground">Pass online and practical assessments</p>
             </div>
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-primary-foreground font-black text-xl">3</span>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-primary-foreground font-bold">3</span>
               </div>
-              <h4 className="text-lg font-black text-foreground mb-3">Certification</h4>
-              <p className="text-muted-foreground leading-relaxed">Receive government recognized industry certificate</p>
+              <h4 className="font-semibold text-foreground mb-2">Certification</h4>
+              <p className="text-sm text-muted-foreground">Receive government recognized certificate</p>
             </div>
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <span className="text-primary-foreground font-black text-xl">4</span>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-primary-foreground font-bold">4</span>
               </div>
-              <h4 className="text-lg font-black text-foreground mb-3">Placement</h4>
-              <p className="text-muted-foreground leading-relaxed">Get 100% placement assistance and career support</p>
+              <h4 className="font-semibold text-foreground mb-2">Placement</h4>
+              <p className="text-sm text-muted-foreground">Get 100% placement assistance</p>
             </div>
           </div>
         </div>
 
-        {/* Ultra Premium CTA Section */}
-        <div className="text-center mt-20">
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h3 className="text-3xl font-black text-foreground">
-                Ready to Transform Your <span className="text-primary">Career</span>?
-              </h3>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Join thousands of successful professionals who have enhanced their skills and accelerated their careers 
-                with <span className="text-foreground font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>
-              </p>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="h-16 px-8 text-lg font-semibold bg-gradient-to-r from-primary via-orange-500 to-primary rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
-                Explore Training Programs
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform" />
-              </Button>
-              <Button size="lg" variant="outline" className="h-16 px-8 text-lg font-semibold border-2 border-primary/20 rounded-2xl hover:border-primary/40 hover:bg-primary/5 transition-all duration-500">
-                Download Course Catalog
-              </Button>
-            </div>
+        {/* CTA Section */}
+        <div className="text-center mt-16">
+          <p className="text-lg text-muted-foreground mb-6">
+            Enhance your skills and take your career to the next level with MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="btn-primary group">
+              Explore Training Programs
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button size="lg" variant="outline" className="btn-secondary">
+              Download Course Catalog
+            </Button>
           </div>
         </div>
       </div>
