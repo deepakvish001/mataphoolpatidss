@@ -78,26 +78,29 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="pt-8 mt-8 border-t border-border/10">
-              <div className="grid grid-cols-1 gap-4">
-                <div className="group flex items-center justify-center sm:justify-start space-x-3 p-3 rounded-lg hover:bg-primary/5 transition-all duration-300">
-                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <BookOpen className="h-4 w-4 text-primary" />
+            {/* Trust Indicators Card */}
+            <div className="pt-8">
+              <div className="bg-gradient-to-r from-primary/10 via-secondary/5 to-primary/5 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/20">
+                <h3 className="text-sm font-semibold text-primary mb-4 text-center">TRUSTED BY THOUSANDS</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                      <BookOpen className="h-6 w-6 text-blue-600" />
+                    </div>
+                    <span className="text-xs font-medium text-foreground">NSDC Certified</span>
                   </div>
-                  <span className="text-muted-foreground text-sm font-medium group-hover:text-foreground transition-colors">NSDC Certified</span>
-                </div>
-                <div className="group flex items-center justify-center sm:justify-start space-x-3 p-3 rounded-lg hover:bg-primary/5 transition-all duration-300">
-                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <Users className="h-4 w-4 text-primary" />
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                      <Users className="h-6 w-6 text-green-600" />
+                    </div>
+                    <span className="text-xs font-medium text-foreground">Pan India Network</span>
                   </div>
-                  <span className="text-muted-foreground text-sm font-medium group-hover:text-foreground transition-colors">Pan India Network</span>
-                </div>
-                <div className="group flex items-center justify-center sm:justify-start space-x-3 p-3 rounded-lg hover:bg-primary/5 transition-all duration-300">
-                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <Award className="h-4 w-4 text-primary" />
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                      <Award className="h-6 w-6 text-purple-600" />
+                    </div>
+                    <span className="text-xs font-medium text-foreground">Government Approved</span>
                   </div>
-                  <span className="text-muted-foreground text-sm font-medium group-hover:text-foreground transition-colors">Government Approved</span>
                 </div>
               </div>
             </div>
