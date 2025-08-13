@@ -78,8 +78,8 @@ const Navigation = () => {
               </div>
               
               <div className="hidden md:block">
-                <h1 className="text-lg font-bold text-foreground leading-tight tracking-tight">
-                  MATA PHOOLPATI DEVI
+                <h1 className="text-lg font-bold leading-tight tracking-tight">
+                  <span className="text-foreground">MATA PHOOLPATI DEVI</span>
                   <br />
                   <span className="text-primary">SHIKSHAN SANSTHAN</span>
                 </h1>
@@ -108,7 +108,7 @@ const Navigation = () => {
               })}
             </div>
 
-            {/* Right Actions - Premium Design */}
+            {/* Right Actions - Simplified */}
             <div className="flex items-center space-x-4">
               
               {/* Search */}
@@ -121,33 +121,6 @@ const Navigation = () => {
                   />
                 </div>
               </div>
-
-              {/* Action Buttons */}
-              <div className="hidden lg:flex items-center space-x-3">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="morphing-button rounded-full px-6 hover:bg-muted/50"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Brochure
-                </Button>
-                
-                <Button 
-                  size="sm" 
-                  className="morphing-button bg-gradient-to-r from-primary to-orange-500 hover:from-orange-500 hover:to-primary text-primary-foreground rounded-full px-6 shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  Get Started
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </div>
-
-              {/* Notifications */}
-              <Button variant="ghost" size="sm" className="relative rounded-full w-10 h-10 p-0 hidden md:flex">
-                <Bell className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full animate-pulse"></span>
-              </Button>
 
               {/* Mobile Menu Toggle */}
               <Button
@@ -245,21 +218,13 @@ const Navigation = () => {
                 </div>
               </div>
 
-              {/* CTA Buttons */}
+              {/* CTA Buttons - Simplified */}
               <div className="space-y-4">
-                <Button 
-                  variant="outline" 
-                  className="w-full h-14 text-lg rounded-2xl border-2 border-primary/30 hover:bg-primary/10"
-                >
-                  <Download className="h-5 w-5 mr-3" />
-                  Download Brochure
-                </Button>
-                
                 <Button 
                   className="w-full h-14 text-lg bg-gradient-to-r from-primary to-orange-500 hover:from-orange-500 hover:to-primary rounded-2xl shadow-lg"
                 >
                   <MessageSquare className="h-5 w-5 mr-3" />
-                  Start Your Journey
+                  Contact Us
                   <ArrowRight className="h-5 w-5 ml-3" />
                 </Button>
               </div>
