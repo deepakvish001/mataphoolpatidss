@@ -38,7 +38,7 @@ const Footer = () => {
                     <span className="text-primary-foreground font-bold text-lg">J</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-foreground">JITM Skills</h3>
+                    <h3 className="text-xl font-bold text-foreground">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</h3>
                     <p className="text-xs text-muted-foreground">Skill Development Programs</p>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ const Footer = () => {
 
             {/* Copyright */}
             <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-              <p>© 2025 JITM Skills Private Limited. All rights reserved.</p>
+              <p>© 2025 MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN. All rights reserved.</p>
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
                 <a href="#" className="hover:text-primary transition-colors">Terms & Conditions</a>

@@ -24,11 +24,11 @@ const About = () => {
               </div>
               
               <h2 className="text-4xl font-bold text-foreground">
-                Welcome to <span className="text-primary">JITM Skills</span>
+                Welcome to <span className="text-primary">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>
               </h2>
               
               <p className="text-lg text-muted-foreground leading-relaxed">
-                JITM Skills Private Limited is a pioneer in the field of Skill Training and has been 
+                MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is a pioneer in the field of Skill Training and has been 
                 successfully running skill development programs on PAN India basis since 2013. We have 
                 developed India's largest Mega Skill Centre in difficult and remote areas like Jharkhand, 
                 J&K, Uttarakhand, and North-East States.

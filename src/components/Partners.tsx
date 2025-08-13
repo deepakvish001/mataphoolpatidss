@@ -42,7 +42,7 @@ const Partners = () => {
             Our <span className="text-primary">Partnerships</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            JITM Skills is proud to be affiliated with leading government bodies and 
+            MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is proud to be affiliated with leading government bodies and 
             private companies for comprehensive skill development and placement assistance
           </p>
         </div>

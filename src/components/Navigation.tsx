@@ -23,7 +23,7 @@ const Navigation = () => {
               <span className="text-primary-foreground font-bold text-lg">J</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">JITM Skills</h1>
+              <h1 className="text-xl font-bold text-foreground">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</h1>
               <p className="text-xs text-muted-foreground">Communicate. Collaborate. Create</p>
             </div>
           </div>
