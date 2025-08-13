@@ -165,80 +165,96 @@ const RashtriyaGramSwarajAbhiyan = () => {
         <div className="relative z-10 py-24 md:py-32">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto text-center space-y-12">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-3 bg-card border border-border rounded-full px-6 py-3 shadow-sm">
-                <Crown className="h-5 w-5 text-primary" />
-                <span className="text-sm font-medium text-foreground">GOVERNMENT INITIATIVE</span>
+              {/* Enhanced Badge */}
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-card/80 to-card/60 border border-primary/30 rounded-full px-8 py-4 shadow-lg backdrop-blur-sm animate-pulse-glow">
+                <Crown className="h-6 w-6 text-primary animate-pulse" />
+                <span className="text-sm font-bold text-foreground tracking-wider">GOVERNMENT INITIATIVE</span>
+                <div className="w-2 h-2 bg-primary rounded-full animate-ping"></div>
               </div>
               
-              {/* Main Title */}
-              <div className="space-y-6">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+              {/* Enhanced Main Title */}
+              <div className="space-y-8">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-tight animate-fade-in">
                   Training Under Revamped<br />
-                  <span className="text-primary">
+                  <span className="text-gradient bg-gradient-to-r from-primary via-orange-500 to-primary bg-clip-text text-transparent animate-glow">
                     Rashtiya Gram Swaraj Abhiyan
                   </span>
                 </h1>
                 
-                {/* Subtitle */}
-                <div className="space-y-4">
-                  <h2 className="text-xl md:text-2xl font-medium text-muted-foreground">
+                {/* Enhanced Subtitle */}
+                <div className="space-y-6">
+                  <h2 className="text-2xl md:text-3xl font-bold text-muted-foreground animate-slide-in-left">
                     Panchayati Raj Training by
                   </h2>
-                  <div className="text-lg md:text-xl font-semibold text-foreground bg-muted rounded-lg px-6 py-3 inline-block">
-                    MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                    <div className="relative text-xl md:text-2xl font-black text-foreground bg-gradient-to-r from-muted to-muted/80 rounded-2xl px-8 py-4 inline-block shadow-xl border border-border group-hover:scale-105 transition-all duration-300">
+                      MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+                    </div>
                   </div>
                 </div>
               </div>
               
-              {/* Description */}
-              <div className="max-w-4xl mx-auto space-y-4">
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  Empowering Elected Representatives across <span className="text-primary font-semibold">29 Constitutional Subjects</span> under Article 243(G) and the 11th Schedule
+              {/* Enhanced Description */}
+              <div className="max-w-5xl mx-auto space-y-6 animate-fade-in" style={{animationDelay: '0.3s'}}>
+                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
+                  Empowering Elected Representatives across <span className="text-primary font-black bg-primary/10 px-3 py-1 rounded-lg">29 Constitutional Subjects</span> under Article 243(G) and the 11th Schedule
                 </p>
-                <p className="text-base text-muted-foreground leading-relaxed">
+                <p className="text-lg text-muted-foreground leading-relaxed">
                   Integrating Sustainable Development Goals (SDGs) to enhance local governance effectiveness and build stronger democratic institutions at the grassroots level.
                 </p>
               </div>
               
-              {/* Stats Grid */}
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
-                <div className="bg-card border border-border rounded-lg p-6 text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">465,300</div>
-                  <div className="text-sm font-medium text-muted-foreground">Training Man-days Completed</div>
+              {/* Enhanced Stats Grid */}
+              <div className="grid md:grid-cols-3 gap-8 mb-16 animate-fade-in" style={{animationDelay: '0.5s'}}>
+                <div className="group relative overflow-hidden bg-gradient-to-br from-card/90 to-card/70 border border-primary/30 rounded-2xl p-8 text-center shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative">
+                    <div className="text-4xl md:text-5xl font-black text-primary mb-3 group-hover:scale-110 transition-transform duration-300">465,300</div>
+                    <div className="text-sm font-bold text-muted-foreground tracking-wider">Training Man-days Completed</div>
+                  </div>
                 </div>
                 
-                <div className="bg-card border border-border rounded-lg p-6 text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">29</div>
-                  <div className="text-sm font-medium text-muted-foreground">Constitutional Subjects</div>
+                <div className="group relative overflow-hidden bg-gradient-to-br from-card/90 to-card/70 border border-orange-500/30 rounded-2xl p-8 text-center shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative">
+                    <div className="text-4xl md:text-5xl font-black text-orange-500 mb-3 group-hover:scale-110 transition-transform duration-300">29</div>
+                    <div className="text-sm font-bold text-muted-foreground tracking-wider">Constitutional Subjects</div>
+                  </div>
                 </div>
                 
-                <div className="bg-card border border-border rounded-lg p-6 text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">6+</div>
-                  <div className="text-sm font-medium text-muted-foreground">States Covered</div>
+                <div className="group relative overflow-hidden bg-gradient-to-br from-card/90 to-card/70 border border-green-500/30 rounded-2xl p-8 text-center shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative">
+                    <div className="text-4xl md:text-5xl font-black text-green-500 mb-3 group-hover:scale-110 transition-transform duration-300">6+</div>
+                    <div className="text-sm font-bold text-muted-foreground tracking-wider">States Covered</div>
+                  </div>
                 </div>
               </div>
               
-              {/* CTA Button */}
-              <div className="space-y-6">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg shadow-sm font-medium">
-                  <Phone className="h-5 w-5 mr-2" />
-                  Contact Us Today
-                  <ArrowRight className="h-5 w-5 ml-2" />
-                </Button>
+              {/* Enhanced CTA Section */}
+              <div className="space-y-8 animate-fade-in" style={{animationDelay: '0.7s'}}>
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-orange-500/30 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <Button size="lg" className="relative bg-gradient-to-r from-primary to-orange-500 hover:from-primary/90 hover:to-orange-500/90 text-white px-12 py-4 rounded-2xl shadow-2xl font-bold text-lg transform group-hover:scale-105 transition-all duration-300">
+                    <Phone className="h-6 w-6 mr-3" />
+                    Contact Us Today
+                    <ArrowRight className="h-6 w-6 ml-3 group-hover:translate-x-1 transition-transform duration-300" />
+                  </Button>
+                </div>
                 
-                <div className="flex items-center justify-center gap-6 text-muted-foreground text-sm">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                    <span>Expert Training</span>
+                <div className="flex items-center justify-center gap-8 text-muted-foreground">
+                  <div className="flex items-center gap-3 bg-card/50 backdrop-blur-sm border border-border rounded-full px-4 py-2 hover:bg-card/70 transition-all duration-300">
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    <span className="font-medium">Expert Training</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                    <span>Multilingual Support</span>
+                  <div className="flex items-center gap-3 bg-card/50 backdrop-blur-sm border border-border rounded-full px-4 py-2 hover:bg-card/70 transition-all duration-300">
+                    <CheckCircle className="h-5 w-5 text-orange-500" />
+                    <span className="font-medium">Multilingual Support</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                    <span>Nationwide Coverage</span>
+                  <div className="flex items-center gap-3 bg-card/50 backdrop-blur-sm border border-border rounded-full px-4 py-2 hover:bg-card/70 transition-all duration-300">
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <span className="font-medium">Nationwide Coverage</span>
                   </div>
                 </div>
               </div>

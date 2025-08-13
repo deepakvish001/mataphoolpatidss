@@ -110,28 +110,32 @@ const AAIOE = () => {
         <div className="relative z-10 py-24 md:py-32">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto text-center space-y-12">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-3 bg-card border border-border rounded-full px-6 py-3 shadow-sm">
-                <Brain className="h-5 w-5 text-primary" />
-                <span className="text-sm font-medium text-foreground">AI & ML EXCELLENCE</span>
+              {/* Enhanced Badge */}
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-card/80 to-card/60 border border-purple-500/30 rounded-full px-8 py-4 shadow-lg backdrop-blur-sm animate-pulse-glow">
+                <Brain className="h-6 w-6 text-purple-500 animate-pulse" />
+                <span className="text-sm font-bold text-foreground tracking-wider">AI & ML EXCELLENCE</span>
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-ping"></div>
               </div>
               
-              {/* Main Title */}
-              <div className="space-y-6">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+              {/* Enhanced Main Title */}
+              <div className="space-y-8">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-tight animate-fade-in">
                   Association of Artificial Intelligence<br />
-                  for <span className="text-primary">
+                  for <span className="text-gradient bg-gradient-to-r from-purple-500 via-primary to-blue-500 bg-clip-text text-transparent animate-glow">
                     Organizations and Experts
                   </span>
                 </h1>
                 
-                {/* Subtitle */}
-                <div className="space-y-4">
-                  <h2 className="text-xl md:text-2xl font-medium text-muted-foreground">
+                {/* Enhanced Subtitle */}
+                <div className="space-y-6">
+                  <h2 className="text-2xl md:text-3xl font-bold text-muted-foreground animate-slide-in-left">
                     MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
                   </h2>
-                  <div className="text-lg md:text-xl font-semibold text-foreground bg-muted rounded-lg px-6 py-3 inline-block">
-                    Shaping the Future of AI & ML
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                    <div className="relative text-xl md:text-2xl font-black text-foreground bg-gradient-to-r from-muted to-muted/80 rounded-2xl px-8 py-4 inline-block shadow-xl border border-border group-hover:scale-105 transition-all duration-300">
+                      Shaping the Future of AI & ML
+                    </div>
                   </div>
                 </div>
               </div>

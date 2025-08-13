@@ -121,29 +121,30 @@ const EntrepreneurshipDevelopment = () => {
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
-                {/* Badge */}
-                <div className="inline-flex items-center gap-3 bg-card border border-border rounded-full px-6 py-3 shadow-sm">
-                  <Rocket className="h-5 w-5 text-primary" />
-                  <span className="text-sm font-medium text-foreground">INNOVATION & GROWTH</span>
+                {/* Enhanced Badge */}
+                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-card/80 to-card/60 border border-green-500/30 rounded-full px-8 py-4 shadow-lg backdrop-blur-sm animate-pulse-glow">
+                  <Rocket className="h-6 w-6 text-green-500 animate-pulse" />
+                  <span className="text-sm font-bold text-foreground tracking-wider">INNOVATION & GROWTH</span>
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
                 </div>
                 
-                {/* Main Title */}
-                <div className="space-y-4">
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                {/* Enhanced Main Title */}
+                <div className="space-y-6">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-tight animate-fade-in">
                     ENTREPRENEURSHIP<br />
-                    <span className="text-primary">
+                    <span className="text-gradient bg-gradient-to-r from-green-500 via-primary to-blue-500 bg-clip-text text-transparent animate-glow">
                       DEVELOPMENT
                     </span>
                   </h1>
                 </div>
                 
-                {/* Description */}
-                <div className="space-y-4">
-                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                    Comprehensive <span className="text-primary font-semibold">entrepreneurship ecosystem</span> with dedicated mentoring and support
+                {/* Enhanced Description */}
+                <div className="space-y-6 animate-fade-in" style={{animationDelay: '0.3s'}}>
+                  <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
+                    Comprehensive <span className="text-primary font-black bg-primary/10 px-3 py-1 rounded-lg">entrepreneurship ecosystem</span> with dedicated mentoring and support
                   </p>
-                  <p className="text-base text-muted-foreground leading-relaxed">
-                    <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> has established a dedicated Mudra Facilitation cell with personal monitoring by Prof. Yogesh Kumar, Director
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    <span className="text-primary font-black">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> has established a dedicated Mudra Facilitation cell with personal monitoring by Prof. Yogesh Kumar, Director
                   </p>
                 </div>
                 
