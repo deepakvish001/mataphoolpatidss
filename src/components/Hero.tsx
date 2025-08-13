@@ -92,26 +92,26 @@ const Hero = () => {
               </div>
               
               {/* Floating achievement cards */}
-              <div className="absolute -top-4 -right-4 bg-background/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50">
+              <div className="absolute -top-6 -right-6 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 min-w-[180px]">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Star className="h-5 w-5 text-primary" />
                   </div>
-                  <div>
-                    <div className="text-sm font-semibold text-foreground">Top Rated</div>
-                    <div className="text-xs text-muted-foreground">Training Partner</div>
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-foreground whitespace-nowrap">Top Rated</div>
+                    <div className="text-xs text-muted-foreground whitespace-nowrap">Training Partner</div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute -bottom-4 -left-4 bg-background/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50">
+              <div className="absolute -bottom-6 -left-6 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 min-w-[180px]">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <TrendingUp className="h-5 w-5 text-primary" />
                   </div>
-                  <div>
-                    <div className="text-sm font-semibold text-foreground">99.8% Success</div>
-                    <div className="text-xs text-muted-foreground">Placement Record</div>
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-foreground whitespace-nowrap">99.8% Success</div>
+                    <div className="text-xs text-muted-foreground whitespace-nowrap">Placement Record</div>
                   </div>
                 </div>
               </div>
