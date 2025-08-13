@@ -92,10 +92,19 @@ const AAIOE = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-purple-500/3 to-muted/20">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.15),transparent_70%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,hsl(var(--purple-500)/0.1),transparent_50%)]"></div>
+        </div>
+        
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-24 left-20 w-40 h-40 bg-purple-500/8 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute top-1/4 right-16 w-28 h-28 bg-blue-500/10 rounded-full blur-xl animate-float" style={{animationDelay: '2.5s'}}></div>
+          <div className="absolute bottom-32 left-1/3 w-36 h-36 bg-primary/10 rounded-full blur-2xl animate-float" style={{animationDelay: '4.5s'}}></div>
+          <div className="absolute bottom-16 right-1/4 w-32 h-32 bg-purple-500/6 rounded-full blur-2xl animate-float" style={{animationDelay: '6.5s'}}></div>
         </div>
         
         <div className="relative z-10 py-24 md:py-32">
@@ -367,7 +376,7 @@ const AAIOE = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-animation">
             {benefits.map((benefit, index) => (
-              <Card key={index} className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-lg shadow-xl hover:shadow-3xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2">
+              <Card key={index} className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-lg shadow-2xl hover:shadow-3xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-3 animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
                 {/* Card Background Effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
