@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, MessageSquare, Download, Users, Award, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -33,11 +33,14 @@ const Contact = () => {
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Our Location</h4>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <h4 className="font-semibold text-foreground mb-2">Corporate Headquarters</h4>
+                    <p className="text-muted-foreground leading-relaxed mb-3">
                       D-87, Vyapar Marg, D Block, Sector 2,<br />
-                      Noida - 201301, Uttar Pradesh
+                      Noida - 201301, Uttar Pradesh, India
                     </p>
+                    <div className="text-xs text-primary font-medium">
+                      📍 Near Noida City Centre Metro Station
+                    </div>
                   </div>
                 </div>
 
@@ -47,28 +50,55 @@ const Contact = () => {
                     <Phone className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Call Us</h4>
-                    <div className="space-y-1">
-                      <p className="text-muted-foreground">
-                        <a href="tel:01204282837" className="hover:text-primary transition-colors">
-                          0120 428 2837
-                        </a>
-                      </p>
-                      <p className="text-muted-foreground">
-                        <a href="tel:01204570318" className="hover:text-primary transition-colors">
-                          0120 457 0318
-                        </a>
-                      </p>
-                      <p className="text-muted-foreground">
-                        <a href="tel:+917007989716" className="hover:text-primary transition-colors">
-                          +91 7007989716
-                        </a>
-                      </p>
-                      <p className="text-muted-foreground">
-                        <a href="tel:+919004362661" className="hover:text-primary transition-colors">
-                          +91 9004362661
-                        </a>
-                      </p>
+                    <h4 className="font-semibold text-foreground mb-2">Contact Numbers</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between p-2 bg-muted/30 rounded-lg">
+                        <div>
+                          <p className="text-sm font-medium text-foreground">
+                            <a href="tel:01204282837" className="hover:text-primary transition-colors">
+                              0120 428 2837
+                            </a>
+                          </p>
+                          <p className="text-xs text-muted-foreground">Primary Helpline</p>
+                        </div>
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">Main</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-2 bg-muted/30 rounded-lg">
+                        <div>
+                          <p className="text-sm font-medium text-foreground">
+                            <a href="tel:01204570318" className="hover:text-primary transition-colors">
+                              0120 457 0318
+                            </a>
+                          </p>
+                          <p className="text-xs text-muted-foreground">Admissions</p>
+                        </div>
+                        <span className="text-xs bg-green-500/10 text-green-500 px-2 py-1 rounded">Alt</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-2 bg-muted/30 rounded-lg">
+                        <div>
+                          <p className="text-sm font-medium text-foreground">
+                            <a href="tel:+917007989716" className="hover:text-primary transition-colors">
+                              +91 7007989716
+                            </a>
+                          </p>
+                          <p className="text-xs text-muted-foreground">Student Support</p>
+                        </div>
+                        <span className="text-xs bg-blue-500/10 text-blue-500 px-2 py-1 rounded">Mobile</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-2 bg-muted/30 rounded-lg">
+                        <div>
+                          <p className="text-sm font-medium text-foreground">
+                            <a href="tel:+919004362661" className="hover:text-primary transition-colors">
+                              +91 9004362661
+                            </a>
+                          </p>
+                          <p className="text-xs text-muted-foreground">Placement Cell</p>
+                        </div>
+                        <span className="text-xs bg-purple-500/10 text-purple-500 px-2 py-1 rounded">Jobs</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -79,18 +109,28 @@ const Contact = () => {
                     <Mail className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Email Us</h4>
-                    <div className="space-y-1">
-                      <p className="text-muted-foreground">
-                        <a href="mailto:jitmskillspvtltd@gmail.com" className="hover:text-primary transition-colors">
-                          jitmskillspvtltd@gmail.com
-                        </a>
-                      </p>
-                      <p className="text-muted-foreground">
-                        <a href="mailto:info.mpdss@gmail.com" className="hover:text-primary transition-colors">
-                          info.mpdss@gmail.com
-                        </a>
-                      </p>
+                    <h4 className="font-semibold text-foreground mb-2">Email Support</h4>
+                    <div className="space-y-2">
+                      <div className="p-2 bg-muted/30 rounded-lg">
+                        <p className="text-sm font-medium text-foreground">
+                          <a href="mailto:jitmskillspvtltd@gmail.com" className="hover:text-primary transition-colors">
+                            jitmskillspvtltd@gmail.com
+                          </a>
+                        </p>
+                        <p className="text-xs text-muted-foreground">General Inquiries & Course Information</p>
+                      </div>
+                      <div className="p-2 bg-muted/30 rounded-lg">
+                        <p className="text-sm font-medium text-foreground">
+                          <a href="mailto:info.mpdss@gmail.com" className="hover:text-primary transition-colors">
+                            info.mpdss@gmail.com
+                          </a>
+                        </p>
+                        <p className="text-xs text-muted-foreground">Admissions & Partnership Queries</p>
+                      </div>
+                      <div className="text-xs text-primary font-medium flex items-center space-x-1 mt-2">
+                        <Clock className="h-3 w-3" />
+                        <span>Response within 2-4 hours</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -101,11 +141,23 @@ const Contact = () => {
                     <Clock className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Business Hours</h4>
-                    <div className="space-y-1">
-                      <p className="text-muted-foreground">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                      <p className="text-muted-foreground">Saturday: 9:00 AM - 2:00 PM</p>
-                      <p className="text-muted-foreground">Sunday: Closed</p>
+                    <h4 className="font-semibold text-foreground mb-2">Operating Hours</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded-lg">
+                        <span className="text-sm text-foreground">Monday - Friday</span>
+                        <span className="text-sm font-medium text-primary">9:00 AM - 6:00 PM</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded-lg">
+                        <span className="text-sm text-foreground">Saturday</span>
+                        <span className="text-sm font-medium text-primary">9:00 AM - 2:00 PM</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded-lg">
+                        <span className="text-sm text-foreground">Sunday</span>
+                        <span className="text-sm font-medium text-red-500">Closed</span>
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-2">
+                        ⚡ Emergency support available 24/7 for enrolled students
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -117,15 +169,31 @@ const Contact = () => {
               <h4 className="font-semibold text-foreground mb-4">Quick Actions</h4>
               <div className="space-y-3">
                 <Button className="w-full btn-primary group">
+                  <Calendar className="mr-2 h-5 w-5" />
+                  Schedule Free Counseling
+                </Button>
+                <Button variant="outline" className="w-full btn-secondary group">
+                  <Download className="mr-2 h-5 w-5" />
+                  Download Course Brochure
+                </Button>
+                <Button variant="outline" className="w-full btn-secondary group">
                   <MessageSquare className="mr-2 h-5 w-5" />
-                  Schedule a Call
+                  WhatsApp Chat Support
                 </Button>
-                <Button variant="outline" className="w-full btn-secondary">
-                  Download Brochure
+                <Button variant="outline" className="w-full btn-secondary group">
+                  <Users className="mr-2 h-5 w-5" />
+                  Talk to Alumni
                 </Button>
-                <Button variant="outline" className="w-full btn-secondary">
-                  WhatsApp Us
-                </Button>
+              </div>
+              
+              <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
+                <div className="flex items-start space-x-2">
+                  <Award className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-medium text-primary">Free Career Guidance</p>
+                    <p className="text-xs text-muted-foreground">Get personalized advice from our experts</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
