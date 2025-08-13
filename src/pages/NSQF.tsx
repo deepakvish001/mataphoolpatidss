@@ -18,7 +18,9 @@ import {
   Wheat,
   BookOpen,
   UserCheck,
-  Factory
+  Factory,
+  ArrowRight,
+  Shield
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -93,185 +95,385 @@ const NSQF = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        {/* Background Pattern */}
+      {/* Enhanced Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Dynamic Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-primary/10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary)/0.08),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.15),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_40%,hsl(var(--primary)/0.05)_50%,transparent_60%)]"></div>
         </div>
         
-        <div className="relative py-24 md:py-32">
+        {/* Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-xl animate-float"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-green-500/10 rounded-full blur-lg animate-float" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-20 left-20 w-40 h-40 bg-primary/8 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
+        </div>
+        
+        <div className="relative z-10 py-24 md:py-32">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto text-center">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border rounded-full px-6 py-3 mb-8 animate-fade-in">
-                <GraduationCap className="h-5 w-5 text-primary" />
-                <span className="text-sm font-semibold text-foreground">National Initiative</span>
+            <div className="max-w-6xl mx-auto text-center space-y-12">
+              {/* Enhanced Badge */}
+              <div className="inline-flex items-center gap-3 bg-card/80 backdrop-blur-lg border border-border rounded-full px-8 py-4 shadow-2xl animate-fade-in">
+                <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                <GraduationCap className="h-6 w-6 text-primary" />
+                <span className="text-sm font-bold text-foreground tracking-wide">NATIONAL INITIATIVE</span>
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
               </div>
               
-              {/* Main Title */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 animate-fade-in leading-tight">
-                National Skills Qualification Framework<br />
-                <span className="text-gradient">(NSQF) Project</span>
-              </h1>
+              {/* Enhanced Main Title */}
+              <div className="space-y-8">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 animate-fade-in leading-tight tracking-tight">
+                  National Skills Qualification Framework<br />
+                  <span className="text-gradient bg-gradient-to-r from-primary via-blue-500 to-green-500 bg-clip-text text-transparent animate-pulse">
+                    (NSQF) Project
+                  </span>
+                </h1>
+                
+                {/* Enhanced Subtitle */}
+                <div className="space-y-4">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-muted-foreground animate-fade-in">
+                    Empowering the Future of Work
+                  </h2>
+                  <div className="text-xl md:text-2xl font-semibold text-primary bg-primary/10 rounded-2xl px-8 py-4 inline-block border border-primary/20">
+                    Skills for Tomorrow's Industries
+                  </div>
+                </div>
+              </div>
               
-              {/* Subtitle */}
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-muted-foreground mb-8 animate-fade-in">
-                Empowering the Future of Work
-              </h2>
+              {/* Enhanced Description */}
+              <div className="max-w-5xl mx-auto space-y-6 animate-fade-in">
+                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
+                  <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> partners with JEPC and state governments to transform <span className="text-blue-500 font-bold">vocational education</span> nationwide
+                </p>
+                <p className="text-lg text-muted-foreground/80 leading-relaxed">
+                  Aligning education with modern workforce demands through hands-on training and industry-ready skill development programs
+                </p>
+              </div>
               
-              {/* Description */}
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed max-w-4xl mx-auto animate-fade-in">
-                <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is honoured to be a key partner in the Jharkhand Education Project Council (JEPC) and initiatives by other states to improve vocational education and skill development opportunities for students nationwide.
-              </p>
+              {/* Enhanced Stats Grid */}
+              <div className="grid md:grid-cols-4 gap-6 mb-12 animate-fade-in">
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-blue-400/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-card/60 backdrop-blur-lg border border-border rounded-3xl p-6 hover:bg-card/80 transition-all duration-500 transform group-hover:scale-105">
+                    <div className="text-4xl md:text-5xl font-black text-blue-500 mb-3">480+</div>
+                    <div className="text-sm font-bold text-muted-foreground uppercase tracking-wide">Schools Equipped</div>
+                    <div className="w-full h-1 bg-blue-500/20 rounded-full mt-4">
+                      <div className="w-4/5 h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-green-400/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-card/60 backdrop-blur-lg border border-border rounded-3xl p-6 hover:bg-card/80 transition-all duration-500 transform group-hover:scale-105">
+                    <div className="text-4xl md:text-5xl font-black text-green-500 mb-3">29</div>
+                    <div className="text-sm font-bold text-muted-foreground uppercase tracking-wide">States Covered</div>
+                    <div className="w-full h-1 bg-green-500/20 rounded-full mt-4">
+                      <div className="w-3/4 h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-orange-500/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-card/60 backdrop-blur-lg border border-border rounded-3xl p-6 hover:bg-card/80 transition-all duration-500 transform group-hover:scale-105">
+                    <div className="text-4xl md:text-5xl font-black text-primary mb-3">5</div>
+                    <div className="text-sm font-bold text-muted-foreground uppercase tracking-wide">Key Sectors</div>
+                    <div className="w-full h-1 bg-primary/20 rounded-full mt-4">
+                      <div className="w-full h-full bg-gradient-to-r from-primary to-orange-500 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-purple-400/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-card/60 backdrop-blur-lg border border-border rounded-3xl p-6 hover:bg-card/80 transition-all duration-500 transform group-hover:scale-105">
+                    <div className="text-4xl md:text-5xl font-black text-purple-500 mb-3">100%</div>
+                    <div className="text-sm font-bold text-muted-foreground uppercase tracking-wide">Industry Ready</div>
+                    <div className="w-full h-1 bg-purple-500/20 rounded-full mt-4">
+                      <div className="w-full h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               
-              <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-4xl mx-auto animate-fade-in">
-                This project is a significant step toward empowering students and aligning education with the evolving demands of the modern workforce.
-              </p>
-              
-              {/* CTA Button */}
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in">
-                <Phone className="mr-2 h-5 w-5" />
-                Contact Us Today
-              </Button>
+              {/* Enhanced CTA Button */}
+              <div className="space-y-6 animate-fade-in">
+                <Button size="lg" className="group relative bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 text-white px-12 py-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 font-bold text-lg">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-blue-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-all duration-500"></div>
+                  <div className="relative flex items-center gap-3">
+                    <Phone className="h-6 w-6" />
+                    Contact Us Today
+                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </Button>
+                
+                <div className="flex items-center justify-center gap-8 text-muted-foreground/60 text-sm">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-blue-500" />
+                    <span>Industry Partnerships</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <span>Advanced Equipment</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span>Expert Training</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="section-padding bg-gradient-to-r from-primary/5 to-background">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <Card key={index} className="card-hover text-center">
-                <CardContent className="p-6">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <stat.icon className="h-8 w-8 text-primary" />
-                  </div>
-                  <div className="text-3xl font-bold text-foreground mb-2">{stat.number}</div>
-                  <div className="text-muted-foreground font-medium">{stat.label}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Lab Infrastructure Section */}
-      <section className="section-padding">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">State-of-the-Art Lab Infrastructure</h2>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              As part of the project, we have established state-of-the-art Labs in 480+ schools. These labs are equipped with advanced tools, materials, and infrastructure, ensuring students receive hands-on training in high-demand sectors.
+      {/* Enhanced Lab Infrastructure Section */}
+      <section className="relative section-padding overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/5 to-background">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/3 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500/10 to-green-500/10 border border-primary/20 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+              <Building2 className="h-6 w-6 text-primary" />
+              <span className="text-primary font-black text-lg tracking-wide">LAB INFRASTRUCTURE</span>
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-8 leading-tight">
+              State-of-the-Art <span className="text-gradient bg-gradient-to-r from-blue-500 via-primary to-green-500 bg-clip-text text-transparent">Lab Infrastructure</span>
+            </h2>
+            <p className="text-2xl text-muted-foreground max-w-5xl mx-auto font-medium leading-relaxed">
+              Advanced laboratories in <span className="text-blue-500 font-bold">480+ schools</span> equipped with cutting-edge tools and technology for hands-on training in high-demand sectors
             </p>
+            
+            {/* Decorative Line */}
+            <div className="flex items-center justify-center mt-8">
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full"></div>
+            </div>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-animation">
             {sectors.map((sector, index) => (
-              <Card key={index} className="card-hover group">
-                <CardContent className="p-8 text-center">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <sector.icon className="h-10 w-10 text-primary" />
+              <Card key={index} className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-lg shadow-xl hover:shadow-3xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2">
+                {/* Card Background Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
+                
+                {/* Floating Icon Background */}
+                <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
+                
+                <CardContent className="relative p-8 md:p-10 text-center space-y-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                    <div className="relative w-24 h-24 bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500">
+                      <sector.icon className="h-12 w-12 text-primary group-hover:scale-110 transition-transform duration-300" />
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4">{sector.name}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{sector.description}</p>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-2xl md:text-3xl font-black text-foreground group-hover:text-primary transition-colors duration-500 leading-tight">
+                      {sector.name}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-lg font-medium">
+                      {sector.description}
+                    </p>
+                  </div>
+                  
+                  {/* Progress Indicator */}
+                  <div className="pt-4">
+                    <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-primary to-blue-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left"></div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
+          
+          {/* Bottom Stats */}
+          <div className="text-center mt-16">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-500/10 to-green-500/10 border border-primary/20 rounded-2xl px-8 py-4">
+              <Award className="h-6 w-6 text-blue-500" />
+              <span className="text-lg font-bold text-foreground">Industry-Ready Training Infrastructure</span>
+              <Sparkles className="h-6 w-6 text-green-500" />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Implementation Commitments Section */}
-      <section className="section-padding bg-gradient-to-r from-background to-primary/5">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">Our Implementation Commitments</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is committed to ensuring the seamless implementation of this project through comprehensive support and services.
+      {/* Enhanced Implementation Commitments Section */}
+      <section className="relative section-padding overflow-hidden">
+        {/* Dynamic Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/3 to-background">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,hsl(var(--primary)/0.1),transparent_60%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_50%,hsl(var(--primary)/0.05),transparent_60%)]"></div>
+        </div>
+        
+        {/* Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-blue-500/10 rounded-full blur-xl animate-float"></div>
+          <div className="absolute top-1/3 right-10 w-16 h-16 bg-green-500/10 rounded-full blur-lg animate-float" style={{animationDelay: '3s'}}></div>
+          <div className="absolute bottom-20 left-1/3 w-24 h-24 bg-primary/10 rounded-full blur-xl animate-float" style={{animationDelay: '6s'}}></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-primary/10 via-blue-500/10 to-green-500/10 border border-primary/20 rounded-full px-8 py-4 mb-8 backdrop-blur-sm">
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+              <Shield className="h-6 w-6 text-primary" />
+              <span className="text-primary font-black text-lg tracking-wide">IMPLEMENTATION EXCELLENCE</span>
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+            </div>
+            
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-8 leading-tight">
+              Our <span className="text-gradient bg-gradient-to-r from-primary via-blue-500 to-green-500 bg-clip-text text-transparent">Commitments</span>
+            </h2>
+            <p className="text-2xl text-muted-foreground max-w-4xl mx-auto font-medium leading-relaxed">
+              <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> ensures seamless project implementation through comprehensive support and expert services
             </p>
           </div>
           
-          <div className="space-y-8">
+          <div className="space-y-12">
             {commitments.map((commitment, index) => (
-              <Card key={index} className="card-premium">
-                <CardContent className="p-8">
-                  <div className="flex items-start space-x-6">
-                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                      <commitment.icon className="h-8 w-8 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-foreground mb-4">{commitment.title}</h3>
-                      <p className="text-lg text-muted-foreground leading-relaxed">{commitment.description}</p>
-                    </div>
+              <Card key={index} className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-lg shadow-2xl hover:shadow-3xl transition-all duration-700">
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                
+                <CardContent className="relative p-8 md:p-12">
+                  <div className="flex items-start gap-10">
                     <div className="flex-shrink-0">
-                      <CheckCircle className="h-8 w-8 text-primary" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Partnership Section */}
-      <section className="section-padding">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <Card className="card-premium">
-              <CardContent className="p-12">
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
-                  <div>
-                    <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6">
-                      <Award className="h-4 w-4 text-primary" />
-                      <span className="text-primary font-semibold">Partnership Excellence</span>
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                        <div className="relative w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/10 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                          <commitment.icon className="h-10 w-10 text-primary group-hover:scale-110 transition-transform duration-300" />
+                        </div>
+                      </div>
                     </div>
                     
-                    <h3 className="text-3xl font-bold text-foreground mb-6">Key Partner in Educational Transformation</h3>
-                    <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                      Our collaboration with Jharkhand Education Project Council (JEPC) and various state governments demonstrates our commitment to transforming vocational education across India.
+                    <div className="flex-1 space-y-6">
+                      <h3 className="text-3xl md:text-4xl font-black text-foreground group-hover:text-primary transition-colors duration-500 leading-tight">
+                        {commitment.title}
+                      </h3>
+                      <p className="text-xl text-muted-foreground leading-relaxed font-medium">
+                        {commitment.description}
+                      </p>
+                      
+                      {/* Progress Bar */}
+                      <div className="pt-4">
+                        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                          <div className="h-full bg-gradient-to-r from-primary to-blue-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left"></div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex-shrink-0">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-green-500/30 to-green-500/10 rounded-full blur-lg group-hover:scale-150 transition-all duration-500"></div>
+                        <CheckCircle className="relative h-10 w-10 text-green-500 group-hover:scale-110 transition-transform duration-300" />
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Partnership Section */}
+      <section className="relative section-padding overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/5 to-background">
+          <div className="absolute top-1/4 left-10 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-blue-500/3 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-lg shadow-2xl hover:shadow-3xl transition-all duration-700">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              
+              <CardContent className="relative p-8 md:p-16">
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                  <div className="space-y-8">
+                    <div className="space-y-6">
+                      <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/10 to-blue-500/10 border border-primary/20 rounded-full px-6 py-3">
+                        <Award className="h-5 w-5 text-primary" />
+                        <span className="text-primary font-bold">Partnership Excellence</span>
+                      </div>
+                      
+                      <h3 className="text-3xl md:text-4xl font-black text-foreground leading-tight">
+                        Key Partner in <span className="text-primary">Educational Transformation</span>
+                      </h3>
+                    </div>
+                    
+                    <p className="text-xl text-muted-foreground leading-relaxed font-medium">
+                      Our collaboration with <span className="text-blue-500 font-bold">Jharkhand Education Project Council (JEPC)</span> and various state governments demonstrates our commitment to transforming vocational education across India.
                     </p>
                     
                     <div className="space-y-4">
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Industry-aligned curriculum development</span>
+                      <div className="flex items-center gap-4 p-4 bg-card/30 rounded-xl border border-border hover:border-primary/30 transition-colors duration-300">
+                        <div className="w-3 h-3 bg-primary rounded-full flex-shrink-0"></div>
+                        <span className="text-muted-foreground font-medium">Industry-aligned curriculum development</span>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Hands-on practical training approach</span>
+                      <div className="flex items-center gap-4 p-4 bg-card/30 rounded-xl border border-border hover:border-blue-500/30 transition-colors duration-300">
+                        <div className="w-3 h-3 bg-blue-500 rounded-full flex-shrink-0"></div>
+                        <span className="text-muted-foreground font-medium">Hands-on practical training approach</span>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Continuous monitoring and evaluation</span>
+                      <div className="flex items-center gap-4 p-4 bg-card/30 rounded-xl border border-border hover:border-green-500/30 transition-colors duration-300">
+                        <div className="w-3 h-3 bg-green-500 rounded-full flex-shrink-0"></div>
+                        <span className="text-muted-foreground font-medium">Continuous monitoring and evaluation</span>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span className="text-muted-foreground">Industry exposure and networking</span>
+                      <div className="flex items-center gap-4 p-4 bg-card/30 rounded-xl border border-border hover:border-purple-500/30 transition-colors duration-300">
+                        <div className="w-3 h-3 bg-purple-500 rounded-full flex-shrink-0"></div>
+                        <span className="text-muted-foreground font-medium">Industry exposure and networking</span>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-8 border border-primary/20">
-                    <div className="text-center">
-                      <Building2 className="h-16 w-16 text-primary mx-auto mb-4" />
-                      <h4 className="text-2xl font-bold text-foreground mb-4">Future-Ready Infrastructure</h4>
-                      <p className="text-muted-foreground mb-6">
-                        Advanced labs equipped with cutting-edge technology to prepare students for tomorrow's challenges.
-                      </p>
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-primary">480+</div>
-                          <div className="text-sm text-muted-foreground">Schools</div>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-500/10 rounded-3xl blur-xl"></div>
+                    <div className="relative bg-gradient-to-br from-card to-card/80 rounded-3xl p-10 border border-border shadow-2xl transform hover:scale-105 transition-all duration-500">
+                      <div className="text-center space-y-8">
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg"></div>
+                          <Building2 className="relative h-20 w-20 text-primary mx-auto" />
                         </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-primary">5</div>
-                          <div className="text-sm text-muted-foreground">Sectors</div>
+                        
+                        <div className="space-y-4">
+                          <h4 className="text-2xl md:text-3xl font-black text-foreground">Future-Ready Infrastructure</h4>
+                          <p className="text-muted-foreground font-medium leading-relaxed">
+                            Advanced labs equipped with cutting-edge technology to prepare students for tomorrow's challenges.
+                          </p>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-6">
+                          <div className="text-center space-y-2">
+                            <div className="text-3xl font-black text-primary">480+</div>
+                            <div className="text-sm text-muted-foreground font-medium">Schools Equipped</div>
+                          </div>
+                          <div className="text-center space-y-2">
+                            <div className="text-3xl font-black text-blue-500">5</div>
+                            <div className="text-sm text-muted-foreground font-medium">Key Sectors</div>
+                          </div>
+                        </div>
+                        
+                        {/* Progress Indicators */}
+                        <div className="space-y-3">
+                          <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                            <div className="w-4/5 h-full bg-gradient-to-r from-primary to-blue-500 rounded-full"></div>
+                          </div>
+                          <div className="text-sm text-muted-foreground">Implementation Progress: 80%</div>
                         </div>
                       </div>
                     </div>
@@ -279,6 +481,15 @@ const NSQF = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+          
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-primary/10 to-blue-500/10 border border-primary/20 rounded-2xl px-8 py-4">
+              <Target className="h-6 w-6 text-primary" />
+              <span className="text-lg font-bold text-foreground">Transforming Education Through Innovation</span>
+              <Sparkles className="h-6 w-6 text-blue-500" />
+            </div>
           </div>
         </div>
       </section>
