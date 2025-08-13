@@ -30,36 +30,26 @@ const NSQF = () => {
     {
       name: "Agriculture",
       icon: Wheat,
-      color: "text-green-600",
-      bg: "bg-green-50",
       description: "Modern farming techniques and agricultural practices"
     },
     {
       name: "Healthcare",
       icon: Stethoscope,
-      color: "text-red-600",
-      bg: "bg-red-50", 
       description: "Medical assistance and healthcare support services"
     },
     {
       name: "Media & Entertainment",
       icon: Camera,
-      color: "text-purple-600",
-      bg: "bg-purple-50",
       description: "Digital media production and entertainment industry skills"
     },
     {
       name: "Beauty and Wellness",
       icon: Sparkles,
-      color: "text-pink-600",
-      bg: "bg-pink-50",
       description: "Beauty therapy and wellness service expertise"
     },
     {
       name: "Apparel",
       icon: Shirt,
-      color: "text-blue-600",
-      bg: "bg-blue-50",
       description: "Garment manufacturing and fashion industry skills"
     }
   ];
@@ -68,37 +58,27 @@ const NSQF = () => {
     {
       title: "Lab Establishment",
       description: "Delivering and installing tools, machinery, and equipment to set up fully functional vocational training labs.",
-      icon: Building2,
-      color: "text-blue-600",
-      bg: "bg-blue-50"
+      icon: Building2
     },
     {
       title: "Vocational Trainer Deployment",
       description: "Recruiting and deploying highly trained vocational trainers (VTs) to deliver practical and theoretical lessons to students.",
-      icon: UserCheck,
-      color: "text-green-600",
-      bg: "bg-green-50"
+      icon: UserCheck
     },
     {
       title: "Monitoring Manpower Deployment",
       description: "Appointing dedicated personnel for the continuous monitoring and evaluation of the program's progress.",
-      icon: Monitor,
-      color: "text-orange-600",
-      bg: "bg-orange-50"
+      icon: Monitor
     },
     {
       title: "Guest Lectures",
       description: "Organizing expert-led guest sessions to provide insights into industry trends and real-world practices.",
-      icon: Users,
-      color: "text-purple-600",
-      bg: "bg-purple-50"
+      icon: Users
     },
     {
       title: "Industrial Visits",
       description: "Coordinating visits to industries to give students first-hand exposure to workplace environments and operations.",
-      icon: Factory,
-      color: "text-indigo-600",
-      bg: "bg-indigo-50"
+      icon: Factory
     }
   ];
 
@@ -114,36 +94,48 @@ const NSQF = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-background py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-5xl mx-auto">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-3 mb-6">
-              <GraduationCap className="h-5 w-5 text-primary" />
-              <span className="text-primary font-semibold">National Initiative</span>
+      <section className="relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-primary/10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--primary)/0.08),transparent_50%)]"></div>
+        </div>
+        
+        <div className="relative py-24 md:py-32">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border rounded-full px-6 py-3 mb-8 animate-fade-in">
+                <GraduationCap className="h-5 w-5 text-primary" />
+                <span className="text-sm font-semibold text-foreground">National Initiative</span>
+              </div>
+              
+              {/* Main Title */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 animate-fade-in leading-tight">
+                National Skills Qualification Framework<br />
+                <span className="text-gradient">(NSQF) Project</span>
+              </h1>
+              
+              {/* Subtitle */}
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-muted-foreground mb-8 animate-fade-in">
+                Empowering the Future of Work
+              </h2>
+              
+              {/* Description */}
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed max-w-4xl mx-auto animate-fade-in">
+                <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is honoured to be a key partner in the Jharkhand Education Project Council (JEPC) and initiatives by other states to improve vocational education and skill development opportunities for students nationwide.
+              </p>
+              
+              <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-4xl mx-auto animate-fade-in">
+                This project is a significant step toward empowering students and aligning education with the evolving demands of the modern workforce.
+              </p>
+              
+              {/* CTA Button */}
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in">
+                <Phone className="mr-2 h-5 w-5" />
+                Contact Us Today
+              </Button>
             </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-              National Skills Qualification Framework
-              <br />
-              <span className="text-primary">(NSQF) Project</span>
-            </h1>
-            
-            <h2 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-8">
-              Empowering the Future of Work
-            </h2>
-            
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-4xl mx-auto">
-              <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is honoured to be a key partner in the Jharkhand Education Project Council (JEPC) and initiatives by other states to improve vocational education and skill development opportunities for students nationwide. The program aims to prepare young learners for industry-specific roles by equipping them with practical, job-ready skills.
-            </p>
-            
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-4xl mx-auto">
-              This project is a significant step toward empowering students and aligning education with the evolving demands of the modern workforce.
-            </p>
-            
-            <Button className="btn-primary">
-              <Phone className="mr-2 h-5 w-5" />
-              Contact Us
-            </Button>
           </div>
         </div>
       </section>
@@ -181,8 +173,8 @@ const NSQF = () => {
             {sectors.map((sector, index) => (
               <Card key={index} className="card-hover group">
                 <CardContent className="p-8 text-center">
-                  <div className={`w-20 h-20 ${sector.bg} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <sector.icon className={`h-10 w-10 ${sector.color}`} />
+                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <sector.icon className="h-10 w-10 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-4">{sector.name}</h3>
                   <p className="text-muted-foreground leading-relaxed">{sector.description}</p>
@@ -208,8 +200,8 @@ const NSQF = () => {
               <Card key={index} className="card-premium">
                 <CardContent className="p-8">
                   <div className="flex items-start space-x-6">
-                    <div className={`w-16 h-16 ${commitment.bg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
-                      <commitment.icon className={`h-8 w-8 ${commitment.color}`} />
+                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                      <commitment.icon className="h-8 w-8 text-primary" />
                     </div>
                     <div className="flex-1">
                       <h3 className="text-2xl font-bold text-foreground mb-4">{commitment.title}</h3>
