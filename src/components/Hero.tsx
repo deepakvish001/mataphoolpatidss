@@ -21,10 +21,10 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-background/50 to-background"></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-h-screen flex items-center">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full max-w-7xl mx-auto">
-          {/* Left Content */}
-          <div className="space-y-8 lg:pr-8 text-center lg:text-left">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-h-screen flex items-center py-20 lg:py-0">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full max-w-7xl mx-auto">
+          {/* Left Content - 7 columns */}
+          <div className="lg:col-span-7 space-y-8 lg:space-y-10 text-center lg:text-left flex flex-col justify-center">
             {/* Status Badge with perfect centering */}
             <div className="flex justify-center lg:justify-start animate-fade-in">
               <Badge variant="secondary" className="bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20 px-5 py-2.5 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm hover:scale-105 transition-all duration-300">
@@ -84,38 +84,38 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Visual Content with better alignment */}
-          <div className="relative flex justify-center lg:justify-end">
+          {/* Right Visual Content - 5 columns */}
+          <div className="lg:col-span-5 relative flex justify-center lg:justify-end items-center">
             {/* Hero Image with modern frame */}
-            <div className="relative max-w-md lg:max-w-none">
-              <div className="aspect-[4/5] w-full max-w-sm lg:max-w-md rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 p-6 mx-auto">
+            <div className="relative w-full max-w-sm lg:max-w-full">
+              <div className="aspect-[4/5] w-full rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 p-4 lg:p-6 mx-auto shadow-2xl">
                 <img 
                   src={heroImage} 
                   alt="JITM Skills Training Excellence" 
-                  className="w-full h-full object-cover rounded-2xl shadow-2xl"
+                  className="w-full h-full object-cover rounded-2xl shadow-xl"
                 />
               </div>
               
               {/* Floating achievement cards with better positioning */}
-              <div className="absolute -top-4 -right-4 bg-background/95 backdrop-blur-md rounded-xl p-4 shadow-xl border border-border/50 animate-float">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg flex items-center justify-center">
-                    <Star className="h-5 w-5 text-primary" />
+              <div className="absolute -top-3 -right-3 lg:-top-4 lg:-right-4 bg-background/95 backdrop-blur-md rounded-xl p-3 lg:p-4 shadow-xl border border-border/50 animate-float">
+                <div className="flex items-center space-x-2 lg:space-x-3">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg flex items-center justify-center">
+                    <Star className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-foreground">Top Rated</div>
+                    <div className="text-xs lg:text-sm font-semibold text-foreground">Top Rated</div>
                     <div className="text-xs text-muted-foreground">Training Partner</div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute -bottom-4 -left-4 bg-background/95 backdrop-blur-md rounded-xl p-4 shadow-xl border border-border/50 animate-float" style={{animationDelay: '1s'}}>
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="h-5 w-5 text-primary" />
+              <div className="absolute -bottom-3 -left-3 lg:-bottom-4 lg:-left-4 bg-background/95 backdrop-blur-md rounded-xl p-3 lg:p-4 shadow-xl border border-border/50 animate-float" style={{animationDelay: '1s'}}>
+                <div className="flex items-center space-x-2 lg:space-x-3">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-foreground">99.8% Success</div>
+                    <div className="text-xs lg:text-sm font-semibold text-foreground">99.8% Success</div>
                     <div className="text-xs text-muted-foreground">Placement Record</div>
                   </div>
                 </div>
