@@ -25,91 +25,72 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-b from-card via-card/90 to-background border-t-2 border-primary/20 relative overflow-hidden">
-      {/* Floating background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/3 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-orange-500/3 rounded-full blur-3xl"></div>
-      </div>
-      
-      <div className="container-custom relative z-10">
-        {/* Enhanced Footer Content */}
-        <div className="py-20">
+    <footer className="bg-gradient-to-b from-card to-card/80 border-t border-border">
+      <div className="container-custom">
+        {/* Single Unified Footer Content */}
+        <div className="py-16">
           <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-8">
             
-            {/* Enhanced Company Info - Takes 2 columns on large screens */}
-            <div className="lg:col-span-2 space-y-8">
-              <div className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-transparent backdrop-blur-sm border border-primary/20 rounded-3xl p-8 overflow-hidden">
-                <div className="absolute top-4 right-4 w-24 h-24 bg-primary/5 rounded-full blur-xl"></div>
-                <div className="relative z-10">
-                  <div className="flex items-center space-x-4 mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-xl">
-                      <span className="text-primary-foreground font-black text-2xl">M</span>
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-black text-gradient-enhanced bg-clip-text leading-tight">MATA PHOOLPATI DEVI</h3>
-                      <h3 className="text-2xl font-black text-gradient-enhanced bg-clip-text leading-tight">SHIKSHAN SANSTHAN</h3>
-                      <p className="text-sm text-primary font-bold bg-primary/10 px-3 py-1 rounded-full inline-block mt-2">Skill Development Programs</p>
-                    </div>
+            {/* Company Info - Takes 2 columns on large screens */}
+            <div className="lg:col-span-2 space-y-6">
+              <div>
+                <div className="flex items-center space-x-3 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-primary-foreground font-bold text-xl">M</span>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed mb-6 text-lg">
-                    Pioneer in skill training with <span className="text-primary font-bold">13+ years of experience</span>, training 
-                    <span className="text-primary font-bold"> 5+ lakh students</span> across India with government certified courses and 
-                    <span className="text-primary font-bold"> 100% placement assistance</span>.
-                  </p>
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground leading-tight">MATA PHOOLPATI DEVI</h3>
+                    <h3 className="text-xl font-bold text-foreground leading-tight">SHIKSHAN SANSTHAN</h3>
+                    <p className="text-sm text-primary font-medium">Skill Development Programs</p>
+                  </div>
                 </div>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  Pioneer in skill training with 13+ years of experience, training 5+ lakh students 
+                  across India with government certified courses and 100% placement assistance.
+                </p>
               </div>
 
-              {/* Enhanced Contact Info Cards */}
-              <div className="space-y-4">
-                <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-primary/5 to-transparent border border-primary/20 rounded-2xl hover:bg-primary/10 transition-all duration-300 group">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <MapPin className="h-6 w-6 text-primary" />
-                  </div>
-                  <span className="text-sm text-muted-foreground font-medium">
+              {/* Contact Info in Cards */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
+                  <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-sm text-muted-foreground">
                     Vill- Murarpatti, Post Lalganj, Tahsil Bairiya, Dist Ballia, (U.P.) 271216
                   </span>
                 </div>
-                <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-green-500/5 to-transparent border border-green-500/20 rounded-2xl hover:bg-green-500/10 transition-all duration-300 group">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500/20 to-green-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Phone className="h-6 w-6 text-primary" />
-                  </div>
-                  <span className="text-sm text-muted-foreground font-medium">
+                <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
+                  <Phone className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-sm text-muted-foreground">
                     +91 7007989716, +91 9004362661
                   </span>
                 </div>
-                <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-orange-500/5 to-transparent border border-orange-500/20 rounded-2xl hover:bg-orange-500/10 transition-all duration-300 group">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-500/20 to-orange-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Mail className="h-6 w-6 text-primary" />
-                  </div>
-                  <span className="text-sm text-muted-foreground font-medium">
+                <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
+                  <Mail className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-sm text-muted-foreground">
                     info.mpdss@gmail.com
                   </span>
                 </div>
               </div>
 
-              {/* Enhanced Legal Info */}
-              <div className="relative bg-gradient-to-r from-primary/15 via-primary/10 to-primary/15 rounded-2xl p-6 border-2 border-primary/30 overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(var(--primary),0.1)_0%,transparent_70%)] rounded-2xl"></div>
-                <div className="relative z-10">
-                  <h5 className="font-bold text-foreground mb-4 text-base text-gradient-enhanced bg-clip-text">Official Registration</h5>
-                  <div className="grid grid-cols-1 gap-3 text-sm">
-                    <div className="flex justify-between items-center p-2 bg-background/20 rounded-lg">
-                      <span className="text-muted-foreground font-medium">REG No:</span>
-                      <span className="font-bold text-foreground">BAL/10760/2019-2020</span>
-                    </div>
-                    <div className="flex justify-between items-center p-2 bg-background/20 rounded-lg">
-                      <span className="text-muted-foreground font-medium">GST No:</span>
-                      <span className="font-bold text-foreground">09AAXAM0981E1Z3</span>
-                    </div>
-                    <div className="flex justify-between items-center p-2 bg-background/20 rounded-lg">
-                      <span className="text-muted-foreground font-medium">PAN No:</span>
-                      <span className="font-bold text-foreground">AAXAM0981E</span>
-                    </div>
-                    <div className="flex justify-between items-center p-2 bg-background/20 rounded-lg">
-                      <span className="text-muted-foreground font-medium">Website:</span>
-                      <span className="font-bold text-primary">www.mataphoolpatidss.in</span>
-                    </div>
+              {/* Legal Info */}
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-4 border border-primary/20">
+                <h5 className="font-semibold text-foreground mb-3 text-sm">Official Registration</h5>
+                <div className="grid grid-cols-1 gap-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">REG No:</span>
+                    <span className="font-medium text-foreground">BAL/10760/2019-2020</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">GST No:</span>
+                    <span className="font-medium text-foreground">09AAXAM0981E1Z3</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">PAN No:</span>
+                    <span className="font-medium text-foreground">AAXAM0981E</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Website:</span>
+                    <span className="font-medium text-primary">www.mataphoolpatidss.in</span>
                   </div>
                 </div>
               </div>

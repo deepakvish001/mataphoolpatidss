@@ -87,100 +87,61 @@ const Services = () => {
   ];
 
   return (
-    <section id="training" className="section-padding bg-gradient-to-b from-muted/5 to-background relative overflow-hidden">
-      {/* Floating background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-32 left-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-32 right-32 w-80 h-80 bg-orange-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-blue-500/3 rounded-full blur-2xl"></div>
-      </div>
-      
-      <div className="container-custom relative z-10">
-        {/* Enhanced Section Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-500/20 border border-primary/30 rounded-full px-6 py-3 text-sm backdrop-blur-sm mb-6">
-            <BookOpen className="h-5 w-5 text-primary" />
-            <span className="text-primary font-bold tracking-wide">Professional Training</span>
-            <div className="w-2 h-2 bg-primary rounded-full"></div>
-          </div>
-          <h2 className="text-5xl md:text-6xl font-black text-foreground mb-6">
-            Our <span className="text-gradient-enhanced bg-clip-text">Training Programs</span>
+    <section id="training" className="section-padding bg-muted/10">
+      <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-foreground mb-4">
+            Our <span className="text-primary">Training Programs</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Government certified training programs designed to enhance your employability 
-            and provide multiple career opportunities across diverse industries
+            and provide multiple career opportunities
           </p>
         </div>
 
-        {/* Enhanced Training Areas */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-foreground mb-4">
-              Specialized <span className="text-gradient-enhanced bg-clip-text">Training Areas</span>
-            </h3>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive skill development across high-demand sectors
-            </p>
-          </div>
-          
+        {/* Training Areas */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-semibold text-foreground mb-8 text-center">
+            Specialized Training Areas
+          </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {trainingAreas.map((area, index) => (
               <div 
                 key={area.name}
-                className={`relative bg-gradient-to-br ${area.color} backdrop-blur-sm border border-primary/20 rounded-2xl p-6 text-center hover:border-primary/40 transition-all duration-300 hover:scale-105 group overflow-hidden`}
+                className={`bg-gradient-to-br ${area.color} backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:border-primary/30 transition-all duration-300 hover:scale-105 animate-fade-in`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {/* Background glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-                
-                <div className="relative z-10">
-                  <div className={`w-16 h-16 ${area.iconBg} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                    <area.icon className="h-8 w-8 text-primary" />
-                  </div>
-                  <h4 className="font-bold text-foreground text-sm leading-tight">{area.name}</h4>
+                <div className={`w-12 h-12 ${area.iconBg} rounded-lg flex items-center justify-center mx-auto mb-3`}>
+                  <area.icon className="h-6 w-6 text-primary" />
                 </div>
-                
-                {/* Decorative elements */}
-                <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-primary/30 rounded-tr-lg"></div>
-                <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-primary/30 rounded-bl-lg"></div>
+                <h4 className="font-medium text-foreground text-sm">{area.name}</h4>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Enhanced Certification Benefits */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-foreground mb-4">
-              Certification <span className="text-gradient-enhanced bg-clip-text">Benefits</span>
-            </h3>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Unlock your potential with MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN's comprehensive certification program
-            </p>
-          </div>
-          
+        {/* Certification Benefits */}
+        <div className="mb-16">
+          <h3 className="text-2xl font-semibold text-foreground mb-8 text-center">
+            MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN Certification Benefits
+          </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {certificationBenefits.map((benefit, index) => (
               <div 
                 key={benefit.title}
-                className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-transparent backdrop-blur-sm border border-primary/20 rounded-3xl p-8 group hover:border-primary/30 transition-all duration-300 hover:scale-105 overflow-hidden"
+                className="card-premium group animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {/* Background glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
-                
-                <div className="relative z-10">
-                  <div className="w-18 h-18 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <benefit.icon className="h-10 w-10 text-primary" />
-                  </div>
-                  <h4 className="text-xl font-bold text-foreground mb-4">
-                    {benefit.title}
-                  </h4>
-                  <p className="text-muted-foreground leading-relaxed text-base">
-                    {benefit.description}
-                  </p>
+                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                  <benefit.icon className="h-8 w-8 text-primary" />
                 </div>
-                
-                {/* Decorative corner */}
-                <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-primary/20 rounded-tr-xl"></div>
+                <h4 className="text-lg font-semibold text-foreground mb-3">
+                  {benefit.title}
+                </h4>
+                <p className="text-muted-foreground leading-relaxed">
+                  {benefit.description}
+                </p>
               </div>
             ))}
           </div>

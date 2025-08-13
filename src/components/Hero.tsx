@@ -18,9 +18,9 @@ const Hero = () => {
 
       {/* Floating Background Elements */}
       <div className="absolute inset-0 z-5 overflow-hidden">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-32 right-32 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-2xl"></div>
+        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float-slow"></div>
+        <div className="absolute bottom-32 right-32 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animate-float-slower"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-2xl animate-float"></div>
         
         {/* Grid overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[size:40px_40px] opacity-20"></div>
@@ -31,10 +31,10 @@ const Hero = () => {
           {/* Content */}
           <div className="space-y-8 animate-fade-in">
             <div className="space-y-6">
-              <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-500/20 border border-primary/30 rounded-full px-6 py-3 text-sm backdrop-blur-sm shadow-glow">
-                <Award className="h-5 w-5 text-primary" />
+              <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-500/20 border border-primary/30 rounded-full px-6 py-3 text-sm backdrop-blur-sm shadow-glow animate-glow">
+                <Award className="h-5 w-5 text-primary animate-spin-slow" />
                 <span className="text-primary font-bold tracking-wide">Government Certified Training Partner</span>
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
               </div>
               
               <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tight">
