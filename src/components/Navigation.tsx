@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown } from 'lucide-react';
+import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -15,6 +15,7 @@ const Navigation = () => {
     { name: 'About', href: '/about', icon: Users },
     { name: 'Programs', href: '#training', icon: BookOpen, hasDropdown: true },
     { name: 'Partners', href: '/partners', icon: Award },
+    { name: 'Donate', href: '#donation', icon: Heart },
     { name: 'Contact', href: '/contact', icon: MessageSquare },
   ];
 
