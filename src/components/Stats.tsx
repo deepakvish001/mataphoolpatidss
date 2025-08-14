@@ -48,23 +48,23 @@ const Stats = () => {
           {stats.map((stat, index) => (
             <div 
               key={stat.label}
-              className="stats-card group animate-fade-in"
+              className="card-branded hover-lift-brand animate-fade-in text-center"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="inline-flex items-center justify-center w-12 sm:w-16 h-12 sm:h-16 bg-primary/10 rounded-xl mb-4 sm:mb-6 group-hover:bg-primary/20 transition-colors">
-                <stat.icon className="h-6 sm:h-8 w-6 sm:w-8 text-primary" />
+              <div className="icon-container-large mx-auto mb-6">
+                <stat.icon className="h-8 w-8 text-primary" />
               </div>
               
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2">
+              <div className="text-4xl font-black text-primary mb-2 text-shadow-brand">
                 {stat.number}
                 <span className="text-primary">{stat.suffix}</span>
               </div>
               
-              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
+              <h3 className="text-lg font-bold text-foreground mb-2 text-shadow-brand">
                 {stat.label}
               </h3>
               
-              <p className="text-xs sm:text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 {stat.description}
               </p>
             </div>

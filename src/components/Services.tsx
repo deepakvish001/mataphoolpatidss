@@ -135,16 +135,16 @@ const Services = () => {
             {certificationBenefits.map((benefit, index) => (
               <div 
                 key={benefit.title}
-                className="card-premium group animate-fade-in"
+                className="card-branded hover-lift-brand animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-12 sm:w-16 h-12 sm:h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-primary/20 transition-colors">
-                  <benefit.icon className="h-6 sm:h-8 w-6 sm:w-8 text-primary" />
+                <div className="icon-container-large mb-6 group-hover:bg-gradient-to-br group-hover:from-primary/25 group-hover:to-primary/15">
+                  <benefit.icon className="h-8 w-8 text-primary" />
                 </div>
-                <h4 className="text-base sm:text-lg font-semibold text-foreground mb-3">
+                <h4 className="text-lg font-bold text-foreground mb-3 text-shadow-brand">
                   {benefit.title}
                 </h4>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                <p className="text-base text-muted-foreground leading-relaxed">
                   {benefit.description}
                 </p>
               </div>
