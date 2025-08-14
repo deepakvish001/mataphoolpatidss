@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
+import Welcome from '@/components/Welcome';
 import ModiQuote from '@/components/ModiQuote';
 import MissionCourses from '@/components/MissionCourses';
 import GovernmentSchemes from '@/components/GovernmentSchemes';
@@ -14,6 +15,7 @@ const Index = () => {
       <Navigation />
       <main>
         <Hero />
+        <Welcome />
         <ModiQuote />
         <MissionCourses />
         <GovernmentSchemes />
