@@ -193,6 +193,14 @@ export default {
 						'background-size': '200% 200%',
 						'background-position': 'right center'
 					}
+				},
+				'slide': {
+					'0%': {
+						transform: 'translateX(0)'
+					},
+					'100%': {
+						transform: 'translateX(-50%)'
+					}
 				}
 			},
 			animation: {
@@ -207,7 +215,8 @@ export default {
 				'float-slow': 'float-slow 4s ease-in-out infinite',
 				'float-slower': 'float-slower 5s ease-in-out infinite',
 				'gradient-x': 'gradient-x 15s ease infinite',
-				'spin-slow': 'spin 4s linear infinite'
+				'spin-slow': 'spin 4s linear infinite',
+				'slide': 'slide 30s linear infinite'
 			},
 			backgroundImage: {
 				'hero-gradient': 'var(--hero-gradient)',

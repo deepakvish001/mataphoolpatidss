@@ -3,6 +3,7 @@ import Hero from '@/components/Hero';
 import ModiQuote from '@/components/ModiQuote';
 import MissionCourses from '@/components/MissionCourses';
 import GovernmentSchemes from '@/components/GovernmentSchemes';
+import ImageSlider from '@/components/ImageSlider';
 import Stats from '@/components/Stats';
 import About from '@/components/About';
 import Services from '@/components/Services';
@@ -21,6 +22,7 @@ const Index = () => {
         <ModiQuote />
         <MissionCourses />
         <GovernmentSchemes />
+        <ImageSlider />
         <Stats />
         <About />
         <Services />
