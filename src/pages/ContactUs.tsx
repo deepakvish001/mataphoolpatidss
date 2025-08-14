@@ -377,9 +377,9 @@ const ContactUs = () => {
                           MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
                         </p>
                         <p className="text-muted-foreground leading-relaxed">
-                          Vill- Murarpatti, Post Lalganj,<br />
-                          Tahsil Bairiya, Dist Ballia,<br />
-                          (U.P.) 271216
+                          Shanti Nagar Mehmauni Gali<br />
+                          Kaptanganj Azamgarh<br />
+                          Uttar Pradesh Pin 276141
                         </p>
                       </div>
                       <Button className="bg-primary hover:bg-primary/90 text-white rounded-xl font-semibold transition-all duration-300">
