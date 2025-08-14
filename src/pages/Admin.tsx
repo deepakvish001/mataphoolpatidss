@@ -60,6 +60,7 @@ import BalanceSheetContent from "@/components/admin/BalanceSheetContent";
 import FranchiseRegistrationContent from "@/components/admin/FranchiseRegistrationContent";
 import FranchiseManagementContent from "@/components/admin/FranchiseManagementContent";
 import FranchiseApprovalContent from "@/components/admin/FranchiseApprovalContent";
+import FranchiseDataContent from "@/components/admin/FranchiseDataContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -123,6 +124,7 @@ const Admin = () => {
     if (path === '/admin/franchise-registration') return 'franchise-registration';
     if (path === '/admin/franchise-management') return 'franchise-management';
     if (path === '/admin/franchise-approval') return 'franchise-approval';
+    if (path === '/admin/franchise-data') return 'franchise-data';
     return 'dashboard';
   };
 
@@ -489,6 +491,8 @@ const Admin = () => {
                               navigate('/admin/franchise-management');
                             } else if (subItem.label === "Approval") {
                               navigate('/admin/franchise-approval');
+                            } else if (subItem.label === "Franchise Data") {
+                              navigate('/admin/franchise-data');
                             }
                           }}
                         >
@@ -655,6 +659,7 @@ const Admin = () => {
             <Route path="/franchise-registration" element={<FranchiseRegistrationContent />} />
             <Route path="/franchise-management" element={<FranchiseManagementContent />} />
             <Route path="/franchise-approval" element={<FranchiseApprovalContent />} />
+            <Route path="/franchise-data" element={<FranchiseDataContent />} />
           </Routes>
         </div>
 
