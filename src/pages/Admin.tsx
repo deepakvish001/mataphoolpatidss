@@ -45,10 +45,6 @@ const Admin = () => {
       "Head Office"
     ]
   }, {
-    icon: Users,
-    label: "Head Office",
-    color: "text-orange-400"
-  }, {
     icon: GraduationCap,
     label: "Master",
     hasSubmenu: true,
