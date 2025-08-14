@@ -10,6 +10,7 @@ import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import DashboardContent from "@/components/admin/DashboardContent";
 import EditProfileContent from "@/components/admin/EditProfileContent";
 import ChangePasswordContent from "@/components/admin/ChangePasswordContent";
+import VideoContent from "@/components/admin/VideoContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -23,6 +24,7 @@ const Admin = () => {
     if (path === '/admin' || path === '/admin/') return 'dashboard';
     if (path === '/admin/edit-profile') return 'edit-profile';
     if (path === '/admin/change-password') return 'change-password';
+    if (path === '/admin/video') return 'video';
     return 'dashboard';
   };
 
@@ -289,6 +291,8 @@ const Admin = () => {
                               navigate('/admin/edit-profile');
                             } else if (subItem.label === "Change Login Password") {
                               navigate('/admin/change-password');
+                            } else if (subItem.label === "Video") {
+                              navigate('/admin/video');
                             }
                           }}
                         >
@@ -315,12 +319,14 @@ const Admin = () => {
             <h1 className="text-3xl font-bold text-gray-800 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
               {currentView === 'dashboard' ? 'Dashboard' : 
                currentView === 'edit-profile' ? 'Admin Profile' : 
-               currentView === 'change-password' ? 'Change Password' : 'Dashboard'}
+               currentView === 'change-password' ? 'Change Password' : 
+               currentView === 'video' ? 'Add Videos' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
                currentView === 'edit-profile' ? 'Edit your profile information' : 
-               currentView === 'change-password' ? 'Update your login password' : 'Control panel'}
+               currentView === 'change-password' ? 'Update your login password' : 
+               currentView === 'video' ? 'Upload and manage videos' : 'Control panel'}
             </p>
           </div>
           <div className="flex items-center space-x-6">
@@ -362,6 +368,7 @@ const Admin = () => {
             <Route path="/" element={<DashboardContent />} />
             <Route path="/edit-profile" element={<EditProfileContent />} />
             <Route path="/change-password" element={<ChangePasswordContent />} />
+            <Route path="/video" element={<VideoContent />} />
           </Routes>
         </div>
 
