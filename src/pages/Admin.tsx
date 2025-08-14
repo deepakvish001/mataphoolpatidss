@@ -6,10 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown, Key, Video, Building2, Image, MapPin, Map, BookOpen, Newspaper, FolderPlus, Eye, Target, MessageSquare, Phone, HelpCircle, UserPlus, UserCheck, Database, Shield, CheckCircle, Printer, FileOutput, Upload, Hash, FileCheck, Edit, BarChart, Receipt, Wallet, PlusCircle, Book, Scale, Calculator } from "lucide-react";
+import DashboardContent from "@/components/admin/DashboardContent";
+import EditProfileContent from "@/components/admin/EditProfileContent";
+import ChangePasswordContent from "@/components/admin/ChangePasswordContent";
+
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<Set<number>>(new Set());
+  const [currentView, setCurrentView] = useState('dashboard');
 
   const toggleSubmenu = (index: number) => {
     const newOpenSubmenus = new Set(openSubmenus);
@@ -171,55 +176,17 @@ const Admin = () => {
     label: "LogOut",
     color: "text-gray-400"
   }];
-  const statCards = [{
-    title: "Franchise Panel",
-    percentage: "79%",
-    color: "bg-gradient-to-br from-cyan-500 via-blue-500 to-blue-600",
-    textColor: "text-white",
-    shadowColor: "shadow-blue-500/20"
-  }, {
-    title: "Faculty Panel",
-    percentage: "98%",
-    color: "bg-gradient-to-br from-red-500 via-red-600 to-red-700",
-    textColor: "text-white",
-    shadowColor: "shadow-red-500/20"
-  }, {
-    title: "Students Panel",
-    percentage: "94%",
-    color: "bg-gradient-to-br from-orange-500 via-orange-600 to-amber-600",
-    textColor: "text-white",
-    shadowColor: "shadow-orange-500/20"
-  }, {
-    title: "Total Collection",
-    percentage: "98%",
-    color: "bg-gradient-to-br from-pink-500 via-red-500 to-red-600",
-    textColor: "text-white",
-    shadowColor: "shadow-pink-500/20"
-  }];
-  const tasks = [{
-    name: "Task #1",
-    progress: 90,
-    color: "bg-green-500"
-  }, {
-    name: "Task #2",
-    progress: 70,
-    color: "bg-blue-500"
-  }, {
-    name: "Task #3",
-    progress: 60,
-    color: "bg-orange-500"
-  }, {
-    name: "Task #4",
-    progress: 40,
-    color: "bg-red-500"
-  }];
+
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
+
   const getFirstDayOfMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   };
+
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
   const renderCalendar = () => {
     const daysInMonth = getDaysInMonth(currentDate);
     const firstDay = getFirstDayOfMonth(currentDate);
@@ -232,13 +199,17 @@ const Admin = () => {
 
     // Days of the month
     for (let day = 1; day <= daysInMonth; day++) {
-      days.push(<div key={day} className="p-2 text-center hover:bg-green-600 cursor-pointer rounded text-sm font-medium">
+      days.push(
+        <div key={day} className="p-2 text-center hover:bg-green-600 cursor-pointer rounded text-sm font-medium">
           {day}
-        </div>);
+        </div>
+      );
     }
     return days;
   };
-  return <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Sidebar */}
       <div className={`${sidebarCollapsed ? 'w-20' : 'w-72'} bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white shadow-2xl transition-all duration-300 ease-in-out fixed left-0 top-0 h-full z-40 flex flex-col overflow-visible`}>
         {/* Header */}
@@ -254,12 +225,6 @@ const Admin = () => {
           </div>
         </div>
 
-        {/* Admin Profile */}
-        
-
-        {/* Search */}
-        {!sidebarCollapsed}
-
         {/* Navigation */}
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
           <div className={`${sidebarCollapsed ? 'p-2' : 'p-6'}`}>
@@ -268,13 +233,19 @@ const Admin = () => {
               {sidebarItems.map((item, index) => (
                 <div key={index}>
                   <div 
-                    className={`${sidebarCollapsed ? 'flex items-center justify-center p-4 relative group' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 ${item.active ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`}
-                    onClick={() => item.hasSubmenu && !sidebarCollapsed && toggleSubmenu(index)}
+                    className={`${sidebarCollapsed ? 'flex items-center justify-center p-4 relative group' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 ${item.label === 'Dashboard' && currentView === 'dashboard' ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`}
+                    onClick={() => {
+                      if (item.label === 'Dashboard') {
+                        setCurrentView('dashboard');
+                      } else if (item.hasSubmenu && !sidebarCollapsed) {
+                        toggleSubmenu(index);
+                      }
+                    }}
                   >
                     <item.icon className={`${sidebarCollapsed ? 'h-7 w-7' : 'h-5 w-5'} ${item.color || 'text-gray-400'} group-hover:scale-110 transition-transform duration-200 ${sidebarCollapsed ? 'mx-auto' : ''}`} />
                     {!sidebarCollapsed && (
                       <>
-                        <span className={`text-sm font-medium ${item.active ? 'text-white' : 'text-gray-300'} group-hover:text-white transition-colors duration-200`}>
+                        <span className={`text-sm font-medium ${item.label === 'Dashboard' && currentView === 'dashboard' ? 'text-white' : 'text-gray-300'} group-hover:text-white transition-colors duration-200`}>
                           {item.label}
                         </span>
                         {item.hasSubmenu && (
@@ -303,9 +274,9 @@ const Admin = () => {
                           className="flex items-center space-x-3 p-2 text-sm text-gray-400 hover:text-white hover:bg-gray-700/30 rounded-lg cursor-pointer transition-all duration-200"
                           onClick={() => {
                             if (subItem.label === "Edit My Profile") {
-                              window.location.href = "/edit-profile";
+                              setCurrentView('edit-profile');
                             } else if (subItem.label === "Change Login Password") {
-                              window.location.href = "/change-password";
+                              setCurrentView('change-password');
                             }
                           }}
                         >
@@ -326,13 +297,19 @@ const Admin = () => {
       <div className={`flex-1 flex flex-col ${sidebarCollapsed ? 'ml-20' : 'ml-72'} transition-all duration-300`}>
         {/* Top Bar */}
         <div className="bg-white/80 backdrop-blur-sm shadow-xl border-b border-gray-200 p-6 flex items-center justify-between fixed top-0 right-0 left-0 z-30" style={{
-        left: sidebarCollapsed ? '80px' : '288px'
-      }}>
+          left: sidebarCollapsed ? '80px' : '288px'
+        }}>
           <div>
             <h1 className="text-3xl font-bold text-gray-800 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-              Dashboard
+              {currentView === 'dashboard' ? 'Dashboard' : 
+               currentView === 'edit-profile' ? 'Admin Profile' : 
+               currentView === 'change-password' ? 'Change Password' : 'Dashboard'}
             </h1>
-            <p className="text-gray-600 font-medium mt-1">Control panel</p>
+            <p className="text-gray-600 font-medium mt-1">
+              {currentView === 'dashboard' ? 'Control panel' : 
+               currentView === 'edit-profile' ? 'Edit your profile information' : 
+               currentView === 'change-password' ? 'Update your login password' : 'Control panel'}
+            </p>
           </div>
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-4">
@@ -369,131 +346,9 @@ const Admin = () => {
 
         {/* Dashboard Content */}
         <div className="flex-1 p-8 bg-gradient-to-br from-gray-50 to-white mt-24 overflow-y-auto">
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-            {statCards.map((card, index) => <Card key={index} className={`${card.color} ${card.textColor} border-0 shadow-2xl ${card.shadowColor} hover:shadow-3xl hover:scale-105 transition-all duration-300 ease-out overflow-hidden relative group`}>
-                <CardContent className="p-8 relative z-10">
-                  <div className="text-5xl font-extrabold mb-3 drop-shadow-lg">{card.percentage}</div>
-                  <div className="text-xl font-semibold mb-6 opacity-90">{card.title}</div>
-                  <Button variant="outline" size="sm" className="border-white/40 bg-white/10 text-white hover:bg-white/20 hover:border-white/60 font-semibold px-6 py-2 rounded-xl backdrop-blur-sm transition-all duration-200">
-                    Open Now
-                    <ChevronRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-                  </Button>
-                </CardContent>
-                {/* Decorative elements */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -translate-y-12 translate-x-12"></div>
-                <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/5 rounded-full translate-y-8 -translate-x-8"></div>
-              </Card>)}
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Quick Email */}
-            <div className="lg:col-span-2">
-              <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm hover:shadow-3xl transition-all duration-300">
-                <CardHeader className="flex flex-row items-center justify-between p-8 border-b border-gray-100">
-                  <CardTitle className="flex items-center space-x-3 text-2xl font-bold text-gray-800">
-                    <div className="p-2 bg-blue-500 rounded-lg shadow-lg">
-                      <Mail className="h-6 w-6 text-white" />
-                    </div>
-                    <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Quick Email</span>
-                  </CardTitle>
-                  <Star className="h-6 w-6 text-blue-500 hover:text-yellow-500 transition-colors duration-200 cursor-pointer" />
-                </CardHeader>
-                <CardContent className="space-y-6 p-8">
-                  <Input placeholder="Email to:" className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl text-gray-700 font-medium" />
-                  <Input placeholder="Subject" className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl text-gray-700 font-medium" />
-                  <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                    <div className="border-b border-gray-200 p-4 bg-gray-50 flex items-center space-x-3">
-                      <select className="text-sm border-0 bg-transparent font-medium text-gray-700 focus:outline-none">
-                        <option>Normal text</option>
-                      </select>
-                      <button className="font-bold px-3 py-2 hover:bg-gray-200 rounded-lg transition-colors duration-200 text-gray-700">Bold</button>
-                      <button className="italic px-3 py-2 hover:bg-gray-200 rounded-lg transition-colors duration-200 text-gray-700">Italic</button>
-                      <button className="underline px-3 py-2 hover:bg-gray-200 rounded-lg transition-colors duration-200 text-gray-700">Underline</button>
-                      <button className="text-sm px-3 py-2 hover:bg-gray-200 rounded-lg transition-colors duration-200 text-gray-700">Small</button>
-                    </div>
-                    <Textarea placeholder="Message" className="min-h-[240px] border-0 resize-none focus:ring-0 text-gray-700 font-medium p-6 placeholder-gray-400" />
-                  </div>
-                  <div className="flex justify-end">
-                    <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200">
-                      Send
-                      <Send className="h-5 w-5 ml-2" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Calendar */}
-            <div>
-              <Card className="shadow-2xl bg-gradient-to-br from-emerald-500 via-green-500 to-green-600 text-white border-0 overflow-hidden hover:shadow-3xl transition-all duration-300">
-                <CardHeader className="p-6">
-                  <CardTitle className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm shadow-lg">
-                        <Calendar className="h-6 w-6 text-white" />
-                      </div>
-                      <span className="text-xl font-bold">Calendar</span>
-                    </div>
-                    <div className="flex space-x-2">
-                      <button className="hover:bg-white/20 p-2 rounded-lg transition-colors duration-200 backdrop-blur-sm">
-                        <Minimize2 className="h-4 w-4" />
-                      </button>
-                      <button className="hover:bg-white/20 p-2 rounded-lg transition-colors duration-200 backdrop-blur-sm">
-                        <X className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </CardTitle>
-                  <div className="flex items-center justify-between mt-4">
-                    <button className="hover:bg-white/20 p-3 rounded-xl transition-all duration-200 backdrop-blur-sm hover:scale-110">
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-                    <span className="font-bold text-lg">
-                      {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-                    </span>
-                    <button className="hover:bg-white/20 p-3 rounded-xl transition-all duration-200 backdrop-blur-sm hover:scale-110">
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-7 gap-2 mb-4">
-                    {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => <div key={day} className="text-center text-sm font-bold p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                        {day}
-                      </div>)}
-                  </div>
-                  <div className="grid grid-cols-7 gap-2">
-                    {renderCalendar()}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Tasks */}
-              <Card className="mt-6 shadow-2xl border-0 bg-white/90 backdrop-blur-sm hover:shadow-3xl transition-all duration-300">
-                <CardHeader className="p-6">
-                  <CardTitle className="flex items-center space-x-3 text-xl font-bold text-gray-800">
-                    <div className="p-2 bg-purple-500 rounded-lg shadow-lg">
-                      <Clock className="h-5 w-5 text-white" />
-                    </div>
-                    <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Tasks Progress</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6 space-y-5">
-                  {tasks.map((task, index) => <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-200">
-                      <span className="text-sm font-bold text-gray-700">{task.name}</span>
-                      <div className="flex items-center space-x-4">
-                        <div className="w-24 bg-gray-200 rounded-full h-3 shadow-inner">
-                          <div className={`h-3 rounded-full ${task.color} shadow-sm transition-all duration-500 ease-out`} style={{
-                        width: `${task.progress}%`
-                      }}></div>
-                        </div>
-                        <span className="text-sm font-bold text-gray-700 min-w-[40px]">{task.progress}%</span>
-                      </div>
-                    </div>)}
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+          {currentView === 'dashboard' && <DashboardContent />}
+          {currentView === 'edit-profile' && <EditProfileContent />}
+          {currentView === 'change-password' && <ChangePasswordContent />}
         </div>
 
         {/* Footer */}
@@ -506,6 +361,8 @@ const Admin = () => {
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Admin;
