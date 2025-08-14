@@ -90,14 +90,16 @@ const Navigation = () => {
         <nav className="px-4 lg:px-8">
           <div className="flex items-center justify-between h-20">
             
-            {/* Logo Section - Completely New Design */}
+            {/* Logo Section - Updated with Actual Logo */}
             <a href="/" className="flex items-center space-x-4 group cursor-pointer">
               <div className="relative">
-                {/* Main logo container */}
-                <div className="w-12 h-12 bg-gradient-to-br from-primary via-orange-500 to-red-500 rounded-2xl p-[2px] group-hover:scale-110 transition-all duration-500">
-                  <div className="w-full h-full bg-background rounded-2xl flex items-center justify-center">
-                    <span className="text-primary font-bold text-xl">M</span>
-                  </div>
+                {/* Logo container */}
+                <div className="w-14 h-14 bg-background rounded-2xl p-1 group-hover:scale-110 transition-all duration-500 shadow-lg border border-primary/20">
+                  <img 
+                    src="/lovable-uploads/b43da45b-3faf-4247-a3f7-33e3821aae7b.png" 
+                    alt="Mata Phoolpati Devi Shikshan Sansthan Logo" 
+                    className="w-full h-full object-contain rounded-xl"
+                  />
                 </div>
                 {/* Glow effect */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary to-orange-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
