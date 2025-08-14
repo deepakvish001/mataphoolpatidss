@@ -167,22 +167,22 @@ const StudentDataContent = () => {
 
       {/* Data Table */}
       <div className="px-8 pb-6">
-        <div className="border-0 bg-white">
+        <div className="border-2 border-gray-600 bg-white">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-blue-600 text-white">
-                  <th className="border-2 border-white px-4 py-3 text-sm font-medium text-left min-w-[100px]">TITLE</th>
-                  <th className="border-2 border-white px-4 py-3 text-sm font-medium text-left min-w-[200px]">DETAILS</th>
-                  <th className="border-2 border-white px-4 py-3 text-sm font-medium text-left min-w-[150px]">DATE</th>
-                  <th className="border-2 border-white px-4 py-3 text-sm font-medium text-left min-w-[250px]">CATEGORY</th>
-                  <th className="border-2 border-white px-4 py-3 text-sm font-medium text-left min-w-[100px]">Photo</th>
+                  <th className="border-2 border-gray-600 px-4 py-3 text-sm font-medium text-left min-w-[100px]">TITLE</th>
+                  <th className="border-2 border-gray-600 px-4 py-3 text-sm font-medium text-left min-w-[200px]">DETAILS</th>
+                  <th className="border-2 border-gray-600 px-4 py-3 text-sm font-medium text-left min-w-[150px]">DATE</th>
+                  <th className="border-2 border-gray-600 px-4 py-3 text-sm font-medium text-left min-w-[250px]">CATEGORY</th>
+                  <th className="border-2 border-gray-600 px-4 py-3 text-sm font-medium text-left min-w-[100px]">Photo</th>
                 </tr>
               </thead>
               <tbody>
                 {studentData.map((item, index) => (
                   <tr key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                    <td className="border-2 border-gray-300 px-4 py-3 text-xs">
+                    <td className="border-2 border-gray-600 px-4 py-3 text-xs">
                       <div className="flex gap-1 mb-2">
                         <Button
                           variant="link"
@@ -201,11 +201,11 @@ const StudentDataContent = () => {
                       </div>
                       <div className="font-medium">{item.title}</div>
                     </td>
-                    <td className="border-2 border-gray-300 px-4 py-3 text-xs">{item.details}</td>
-                    <td className="border-2 border-gray-300 px-4 py-3 text-xs">{item.date}</td>
-                    <td className="border-2 border-gray-300 px-4 py-3 text-xs">{item.category}</td>
-                    <td className="border-2 border-gray-300 px-4 py-3">
-                      <div className="w-16 h-12 border border-gray-300 bg-gray-50 flex items-center justify-center">
+                    <td className="border-2 border-gray-600 px-4 py-3 text-xs">{item.details}</td>
+                    <td className="border-2 border-gray-600 px-4 py-3 text-xs">{item.date}</td>
+                    <td className="border-2 border-gray-600 px-4 py-3 text-xs">{item.category}</td>
+                    <td className="border-2 border-gray-600 px-4 py-3">
+                      <div className="w-16 h-12 border-2 border-gray-400 bg-gray-50 flex items-center justify-center">
                         {item.photo ? (
                           <img 
                             src={item.photo} 
