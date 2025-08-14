@@ -134,19 +134,19 @@ const AddMissionContent = () => {
       </Card>
 
       {/* Mission Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="text-white font-bold text-center py-4">Our Mission</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">IMAGE</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Our Mission</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">IMAGE</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {missions.map((mission) => (
-                <TableRow key={mission.id} className="hover:bg-gray-50">
-                  <TableCell className="p-4">
+              {missions.map((mission, index) => (
+                <TableRow key={mission.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 p-4">
                     <div className="flex items-start space-x-2">
                       <div className="flex space-x-2">
                         <Button
@@ -170,8 +170,8 @@ const AddMissionContent = () => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center p-4">
-                    <div className="w-16 h-12 bg-gray-800 border border-gray-300 mx-auto rounded flex items-center justify-center">
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
+                    <div className="w-16 h-12 bg-gray-800 border-2 border-gray-400 mx-auto rounded flex items-center justify-center">
                       <span className="text-xs text-white">IMG</span>
                     </div>
                   </TableCell>

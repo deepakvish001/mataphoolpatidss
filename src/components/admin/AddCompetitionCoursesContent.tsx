@@ -190,36 +190,36 @@ const AddCompetitionCoursesContent = () => {
       </Card>
 
       {/* Competition Courses Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="text-white font-bold text-center py-4">Title</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Description</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Date</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">File</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Action</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Title</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Description</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Date</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">File</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {competitions.map((item) => (
-                <TableRow key={item.id} className="hover:bg-gray-50">
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+              {competitions.map((item, index) => (
+                <TableRow key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {item.title}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {item.description}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {item.date}
                   </TableCell>
-                  <TableCell className="text-center p-4">
-                    <div className="w-12 h-12 bg-gray-200 border border-gray-300 mx-auto rounded-full flex items-center justify-center">
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
+                    <div className="w-12 h-12 bg-gray-200 border-2 border-gray-400 mx-auto rounded-full flex items-center justify-center">
                       <span className="text-xs text-gray-500">IMG</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center p-4">
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
                     <div className="flex justify-center space-x-2">
                       <Button
                         variant="ghost"
