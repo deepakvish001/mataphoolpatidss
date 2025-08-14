@@ -194,28 +194,13 @@ const Navigation = () => {
               <div className="hidden md:flex items-center space-x-3">
                 <a 
                   href="/donation"
-                  className="group relative flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:via-blue-500 hover:to-emerald-500 transition-all duration-500 shadow-lg hover:shadow-2xl transform hover:scale-110 hover:-translate-y-1 border border-white/20"
+                  className="group relative transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 >
-                  {/* Animated glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-500 rounded-xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500 -z-10"></div>
-                  
-                  {/* Payment icons */}
-                  <div className="relative">
-                    <img 
-                      src={securePaymentWhite} 
-                      alt="Secure Payment Options" 
-                      className="h-7 w-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                  
-                  {/* Text with icon */}
-                  <div className="flex items-center space-x-2">
-                    <span className="font-bold text-lg tracking-wide">PAY NOW</span>
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  </div>
-                  
-                  {/* Sparkle effect */}
-                  <div className="absolute top-1 right-1 text-yellow-300 animate-pulse">✨</div>
+                  <img 
+                    src="/lovable-uploads/042e6682-f2c9-4cba-8a89-b44a979f9e80.png" 
+                    alt="Secure Payment Option" 
+                    className="h-12 w-auto drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
+                  />
                 </a>
               </div>
 
@@ -244,25 +229,14 @@ const Navigation = () => {
               {/* Mobile Payment Option */}
               <a 
                 href="/donation"
-                className="group relative flex items-center justify-center space-x-4 p-6 bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-600 text-white rounded-2xl hover:from-purple-600 hover:via-blue-500 hover:to-emerald-500 transition-all duration-500 shadow-xl hover:shadow-2xl transform hover:scale-105 border border-white/20"
+                className="group relative flex items-center justify-center p-4 transition-all duration-300 hover:scale-105 hover:shadow-lg rounded-2xl"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {/* Animated glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500 -z-10"></div>
-                
                 <img 
-                  src={securePaymentWhite} 
-                  alt="Secure Payment Options" 
-                  className="h-10 w-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
+                  src="/lovable-uploads/042e6682-f2c9-4cba-8a89-b44a979f9e80.png" 
+                  alt="Secure Payment Option" 
+                  className="h-16 w-auto drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
                 />
-                <div className="flex flex-col items-center">
-                  <span className="text-xl font-bold tracking-wide">SECURE PAYMENT</span>
-                  <div className="flex items-center space-x-2 mt-1">
-                    <span className="text-sm opacity-90">Multiple Options Available</span>
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  </div>
-                </div>
-                <div className="absolute top-2 right-2 text-yellow-300 animate-pulse">✨</div>
               </a>
 
               {/* Quick Stats */}
