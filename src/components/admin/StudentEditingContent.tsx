@@ -148,155 +148,96 @@ const StudentEditingContent = () => {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Basic Information Table */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-slate-800 mb-2">Student Editing - Complete Information</h2>
+        <p className="text-slate-600">Comprehensive view of all student data in one table</p>
+      </div>
+      
+      {/* Complete Student Information Table */}
       <div className="overflow-x-auto">
-        <h3 className="text-lg font-semibold mb-4">Student Basic Information</h3>
-        <table className="w-full border-collapse">
+        <table className="w-full border-collapse border-2 border-gray-400 bg-white shadow-lg">
           <thead>
             <tr className="bg-blue-600 text-white">
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">id</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">applicant_name</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">father_name</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">mother</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">gender</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">dob</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">category</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">occupation</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">phone_std</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">mobile</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">email</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[80px]">id</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[150px]">applicant_name</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[120px]">father_name</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[120px]">mother</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[80px]">gender</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[100px]">dob</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[120px]">category</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[100px]">occupation</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[120px]">phone_std</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[130px]">mobile</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[150px]">email</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[120px]">address</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[100px]">city_name</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[80px]">state</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[80px]">district</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[80px]">pincode</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[120px]">qualification</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[100px]">passing_year</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[100px]">applied_as</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[130px]">course_category</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[200px]">course_name</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[100px]">course_fees</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[200px]">franchise_center_name</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[150px]">franchise_id</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[150px]">aadhar_number</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[150px]">photo</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[120px]">signature</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[130px]">thumb_impression</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[120px]">student_id</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[130px]">student_password</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[80px]">Approve</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[80px]">status</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold text-xs min-w-[80px]">payment</th>
             </tr>
           </thead>
           <tbody>
             {studentData.map((student, index) => (
               <tr key={student.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                <td className="border border-gray-400 px-2 py-3 text-xs">
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs">
                   <div className="flex items-center gap-1">
                     <Button variant="ghost" size="sm" className="p-1 h-auto">
                       <Edit className="h-3 w-3 text-blue-600" />
                     </Button>
-                    <span>Edit {student.id}</span>
+                    <span className="font-medium">Edit {student.id}</span>
                   </div>
                 </td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.applicantName}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.fatherName}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.mother}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.gender}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.dob}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.category}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.occupation}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.phoneStd}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.mobile}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Address and Course Information Table */}
-      <div className="overflow-x-auto">
-        <h3 className="text-lg font-semibold mb-4">Address & Course Information</h3>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-blue-600 text-white">
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">address</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">city_name</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">state</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">district</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">pincode</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">qualification</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">passing_year</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">applied_as</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">course_category</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">course_name</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">course_fees</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">franchise_center</th>
-            </tr>
-          </thead>
-          <tbody>
-            {studentData.map((student, index) => (
-              <tr key={`addr-${student.id}`} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.address}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.cityName}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.state}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.district}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.pincode}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.qualification}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.passingYear}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.appliedAs}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.courseCategory}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.courseName}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.courseFees}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.franchiseCenterName}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Franchise and Document Information Table */}
-      <div className="overflow-x-auto">
-        <h3 className="text-lg font-semibold mb-4">Franchise & Document Information</h3>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-blue-600 text-white">
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">franchise_center_name</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">franchise_id</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">aadhar_number</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">photo</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">signature</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">thumb_impression</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">student_id</th>
-            </tr>
-          </thead>
-          <tbody>
-            {studentData.map((student, index) => (
-              <tr key={`doc-${student.id}`} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.franchiseCenterName}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.franchiseId}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.aadharNumber}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.photo}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.signature}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.thumbImpression}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.studentId}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Student Status and Payment Information Table */}
-      <div className="overflow-x-auto">
-        <h3 className="text-lg font-semibold mb-4">Student Status & Payment Information</h3>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-blue-600 text-white">
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">aadhar_number</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">photo</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">signature</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">thumb_impression</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">student_id</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">student_password</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">Approve</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">status</th>
-              <th className="border border-gray-400 px-2 py-3 text-left font-semibold text-xs">payment</th>
-            </tr>
-          </thead>
-          <tbody>
-            {studentData.map((student, index) => (
-              <tr key={`status-${student.id}`} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.aadharNumber}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.photo}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.signature}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.thumbImpression}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.studentId}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.studentPassword}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs text-center">
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.applicantName}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.fatherName}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.mother}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.gender}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.dob}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.category}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.occupation}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.phoneStd}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.mobile}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.email}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.address}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.cityName}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.state}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.district}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.pincode}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.qualification}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.passingYear}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.appliedAs}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.courseCategory}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.courseName}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.courseFees}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.franchiseCenterName}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.franchiseId}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.aadharNumber}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.photo}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.signature}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.thumbImpression}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.studentId}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.studentPassword}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs text-center">
                   <Checkbox checked={student.approve} />
                 </td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.status}</td>
-                <td className="border border-gray-400 px-2 py-3 text-xs">{student.payment}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.status}</td>
+                <td className="border-2 border-gray-400 px-2 py-3 text-xs font-medium">{student.payment}</td>
               </tr>
             ))}
           </tbody>
