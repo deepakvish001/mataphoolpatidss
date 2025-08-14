@@ -28,6 +28,7 @@ import AddDirectorMessageContent from "@/components/admin/AddDirectorMessageCont
 import EnquiryContent from "@/components/admin/EnquiryContent";
 import ContactUsContent from "@/components/admin/ContactUsContent";
 import StudentRegistrationContent from "@/components/admin/StudentRegistrationContent";
+import StudentApprovalContent from "@/components/admin/StudentApprovalContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -59,6 +60,7 @@ const Admin = () => {
     if (path === '/admin/enquiry') return 'enquiry';
     if (path === '/admin/contact-us') return 'contact-us';
     if (path === '/admin/student-registration') return 'student-registration';
+    if (path === '/admin/student-approval') return 'student-approval';
     return 'dashboard';
   };
 
@@ -361,6 +363,8 @@ const Admin = () => {
                               navigate('/admin/contact-us');
                             } else if (subItem.label === "Student Registration") {
                               navigate('/admin/student-registration');
+                            } else if (subItem.label === "Student Approval") {
+                              navigate('/admin/student-approval');
                             }
                           }}
                         >
@@ -405,7 +409,8 @@ const Admin = () => {
                 currentView === 'add-director-message' ? 'Add Director Message' : 
                 currentView === 'enquiry' ? 'My All Enquiry' : 
                 currentView === 'contact-us' ? 'My All Contacts' : 
-               currentView === 'student-registration' ? 'Student Registration' : 'Dashboard'}
+                currentView === 'student-registration' ? 'Student Registration' : 
+               currentView === 'student-approval' ? 'Student Approval' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -488,6 +493,7 @@ const Admin = () => {
             <Route path="/enquiry" element={<EnquiryContent />} />
             <Route path="/contact-us" element={<ContactUsContent />} />
             <Route path="/student-registration" element={<StudentRegistrationContent />} />
+            <Route path="/student-approval" element={<StudentApprovalContent />} />
           </Routes>
         </div>
 
