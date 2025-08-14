@@ -68,7 +68,7 @@ const EntrepreneurshipDevelopment = () => {
   const features = [
     {
       title: "Mudra Facilitation Cell",
-      description: "Dedicated cell with personal monitoring and mentoring by Prof. Yogesh Kumar, Director, MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN",
+      description: "Dedicated cell with personal monitoring and mentoring by Director Sanjay Rajbhar, Manager Surendra Prajapati, and Managing Director Neha Bhardwaj at MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN",
       icon: Building2
     },
     {

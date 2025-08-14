@@ -78,10 +78,9 @@ const About = () => {
                 <p className="text-2xl md:text-3xl text-muted-foreground font-medium">
                   Pioneering Excellence in <span className="text-primary font-bold">Skill Development</span>
                 </p>
-                <p className="text-xl text-muted-foreground/80 leading-relaxed">
-                  Where students discover their potential, develop world-class skills, and build successful careers 
-                  through comprehensive training programs designed for the modern industry.
-                </p>
+                 <p className="text-xl text-muted-foreground/80 leading-relaxed">
+                   <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc.
+                 </p>
               </div>
             </div>
 
@@ -161,11 +160,9 @@ const About = () => {
                       <div className="w-20 h-1 bg-gradient-to-r from-primary to-orange-500 rounded-full" />
                     </div>
                   </div>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> stands as a 
-                    pioneer in skill training, providing comprehensive, free, and placement-linked training across 
-                    diverse sectors including apparel, retail, electronics, healthcare, food processing, and agriculture.
-                  </p>
+                   <p className="text-lg text-muted-foreground leading-relaxed">
+                     <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc. We have successfully conducted various projects of Skill Training including DDUGKY, PMKVY  UPSDM,NIESBUD, NULM Uttar Pradesh CSR etc.
+                   </p>
                 </div>
 
                 {/* Impact Card */}
@@ -328,11 +325,11 @@ const About = () => {
                       OUR VISION
                     </h3>
                     <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto mb-6" />
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      To train <span className="text-blue-500 font-bold">10 lakh students per year</span> in different skills and 
-                      empower them with the ability to provide professional services, creating wealth for themselves 
-                      and for the nation.
-                    </p>
+                     <p className="text-lg text-muted-foreground leading-relaxed">
+                       To train <span className="text-blue-500 font-bold">5000 Thousand students per year</span> in different skills and 
+                       empower them with the ability to provide professional services, creating wealth for themselves 
+                       and for the nation.
+                     </p>
                   </div>
                 </div>
               </div>
@@ -348,11 +345,9 @@ const About = () => {
                       OUR MISSION
                     </h3>
                     <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mx-auto mb-6" />
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      To be the <span className="text-green-500 font-bold">world's premium institute</span> in skill training & 
-                      entrepreneurship development, providing professional education that empowers students as 
-                      leaders with values, vision & versatility.
-                    </p>
+                     <p className="text-lg text-muted-foreground leading-relaxed">
+                       MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN has tie-ups with various organizations for providing <span className="text-green-500 font-bold">free courses job training & Placement assistance</span> to Trained Candidates. To be world's premium institute in skill training & entrepreneurship development, committed to providing the best possible professional, skill oriented education that empowers students to become leaders with values, vision & versatility.
+                     </p>
                   </div>
                 </div>
               </div>
@@ -384,89 +379,135 @@ const About = () => {
             {/* Management Cards */}
             <div className="grid lg:grid-cols-2 gap-12">
               
-              {/* Director Profile */}
-              <div className="bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-2xl p-10 hover:shadow-xl transition-all duration-500 group">
-                <div className="text-center space-y-8">
-                  <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <User className="h-12 w-12 text-white" />
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-3xl font-bold text-foreground mb-2 group-hover:text-blue-500 transition-colors">
-                      Prof. Yogesh Kumar
-                    </h3>
-                    <div className="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
-                      <Briefcase className="h-4 w-4 text-blue-500" />
-                      <span className="text-blue-500 font-semibold">DIRECTOR & FOUNDER</span>
-                    </div>
-                    <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto mb-8" />
-                  </div>
-                  
-                  <div className="space-y-6 text-left">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <GraduationCap className="h-4 w-4 text-blue-500" />
-                      </div>
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        <span className="text-primary font-semibold">25+ years</span> of pioneering experience in skill development initiatives, 
-                        transforming lives across India since 1989.
-                      </p>
-                    </div>
-                    
-                    <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <Trophy className="h-4 w-4 text-blue-500" />
-                      </div>
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        <span className="text-primary font-semibold">Ph.D. in Physics</span> from University of Delhi with expertise 
-                        in PMKVY, PMKK, UKSDM, and numerous government initiatives.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+               {/* Director Profile */}
+               <div className="bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-2xl p-10 hover:shadow-xl transition-all duration-500 group">
+                 <div className="text-center space-y-8">
+                   <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                     <User className="h-12 w-12 text-white" />
+                   </div>
+                   
+                   <div>
+                     <h3 className="text-3xl font-bold text-foreground mb-2 group-hover:text-blue-500 transition-colors">
+                       Sanjay Rajbhar
+                     </h3>
+                     <div className="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
+                       <Briefcase className="h-4 w-4 text-blue-500" />
+                       <span className="text-blue-500 font-semibold">DIRECTOR</span>
+                     </div>
+                     <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto mb-8" />
+                   </div>
+                   
+                   <div className="space-y-6 text-left">
+                     <div className="flex items-start space-x-4">
+                       <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                         <GraduationCap className="h-4 w-4 text-blue-500" />
+                       </div>
+                       <p className="text-lg text-muted-foreground leading-relaxed">
+                         <span className="text-primary font-semibold">Strategic leadership</span> in educational excellence and skill development, 
+                         driving institutional growth and innovation across PAN India operations.
+                       </p>
+                     </div>
+                     
+                     <div className="flex items-start space-x-4">
+                       <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                         <Trophy className="h-4 w-4 text-blue-500" />
+                       </div>
+                       <p className="text-lg text-muted-foreground leading-relaxed">
+                         <span className="text-primary font-semibold">Expertise in government partnerships</span> with NSDC, PMKVY, 
+                         DDUGKY and various state-level skill development initiatives.
+                       </p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
 
-              {/* COO Profile */}
-              <div className="bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-2xl p-10 hover:shadow-xl transition-all duration-500 group">
-                <div className="text-center space-y-8">
-                  <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Briefcase className="h-12 w-12 text-white" />
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-3xl font-bold text-foreground mb-2 group-hover:text-green-500 transition-colors">
-                      Mr. Manav Chauhan
-                    </h3>
-                    <div className="inline-flex items-center space-x-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-2 mb-6">
-                      <Target className="h-4 w-4 text-green-500" />
-                      <span className="text-green-500 font-semibold">CHIEF OPERATING OFFICER</span>
-                    </div>
-                    <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mx-auto mb-8" />
-                  </div>
-                  
-                  <div className="space-y-6 text-left">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <Building2 className="h-4 w-4 text-green-500" />
-                      </div>
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        <span className="text-primary font-semibold">Next-generation entrepreneur</span> leading operational excellence 
-                        with innovative profit center verticals and strategic implementation.
-                      </p>
-                    </div>
-                    
-                    <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <CheckCircle className="h-4 w-4 text-green-500" />
-                      </div>
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        <span className="text-primary font-semibold">Expert implementation</span> of DDU-GKY, PMKK, MANAS, 
-                        NULM, and PMKVY schemes with proven track record.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+               {/* Manager Profile */}
+               <div className="bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-2xl p-10 hover:shadow-xl transition-all duration-500 group">
+                 <div className="text-center space-y-8">
+                   <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                     <Briefcase className="h-12 w-12 text-white" />
+                   </div>
+                   
+                   <div>
+                     <h3 className="text-3xl font-bold text-foreground mb-2 group-hover:text-green-500 transition-colors">
+                       Surendra Prajapati
+                     </h3>
+                     <div className="inline-flex items-center space-x-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-2 mb-6">
+                       <Target className="h-4 w-4 text-green-500" />
+                       <span className="text-green-500 font-semibold">MANAGER</span>
+                     </div>
+                     <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mx-auto mb-8" />
+                   </div>
+                   
+                   <div className="space-y-6 text-left">
+                     <div className="flex items-start space-x-4">
+                       <div className="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                         <Building2 className="h-4 w-4 text-green-500" />
+                       </div>
+                       <p className="text-lg text-muted-foreground leading-relaxed">
+                         <span className="text-primary font-semibold">Operational excellence</span> in managing training centers 
+                         and ensuring quality delivery of skill development programs across multiple states.
+                       </p>
+                     </div>
+                     
+                     <div className="flex items-start space-x-4">
+                       <div className="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                         <CheckCircle className="h-4 w-4 text-green-500" />
+                       </div>
+                       <p className="text-lg text-muted-foreground leading-relaxed">
+                         <span className="text-primary font-semibold">Expert coordination</span> of training programs, 
+                         placement activities and maintaining strong industry partnerships.
+                       </p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             {/* Managing Director Profile - Full Width */}
+             <div className="mt-12">
+               <div className="bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-2xl p-10 hover:shadow-xl transition-all duration-500 group">
+                 <div className="text-center space-y-8">
+                   <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
+                     <Star className="h-12 w-12 text-white" />
+                   </div>
+                   
+                   <div>
+                     <h3 className="text-3xl font-bold text-foreground mb-2 group-hover:text-purple-500 transition-colors">
+                       Neha Bhardwaj
+                     </h3>
+                     <div className="inline-flex items-center space-x-2 bg-purple-500/10 border border-purple-500/20 rounded-full px-4 py-2 mb-6">
+                       <Trophy className="h-4 w-4 text-purple-500" />
+                       <span className="text-purple-500 font-semibold">MANAGING DIRECTOR</span>
+                     </div>
+                     <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full mx-auto mb-8" />
+                   </div>
+                   
+                   <div className="max-w-4xl mx-auto">
+                     <div className="grid md:grid-cols-2 gap-8">
+                       <div className="flex items-start space-x-4">
+                         <div className="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                           <Target className="h-4 w-4 text-purple-500" />
+                         </div>
+                         <p className="text-lg text-muted-foreground leading-relaxed">
+                           <span className="text-primary font-semibold">Visionary leadership</span> driving the organization's 
+                           mission to empower 25,000+ students with world-class skill development programs.
+                         </p>
+                       </div>
+                       
+                       <div className="flex items-start space-x-4">
+                         <div className="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                           <Building2 className="h-4 w-4 text-purple-500" />
+                         </div>
+                         <p className="text-lg text-muted-foreground leading-relaxed">
+                           <span className="text-primary font-semibold">Strategic expansion</span> of training centers 
+                           across 22+ states with focus on placement-linked skill training programs.
+                         </p>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
             </div>
           </div>
         </div>

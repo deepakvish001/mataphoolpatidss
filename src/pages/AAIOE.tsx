@@ -77,7 +77,7 @@ const AAIOE = () => {
     {
       title: "Unparalleled Expertise",
       subtitle: "Industry Veterans",
-      description: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is powered by a team of 100+ expert faculties with vast real-world experience across diverse fields. Our 5+ years of excellence has empowered 25,000+ students nationwide through comprehensive skill development programs.",
+      description: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is powered by a team of 100+ expert faculties with vast real-world experience across diverse fields. Since 2023, under the leadership of Director Sanjay Rajbhar, Manager Surendra Prajapati, and Managing Director Neha Bhardwaj, our 5+ years of excellence has empowered 25,000+ students nationwide through comprehensive skill development programs.",
       icon: Users
     },
     {

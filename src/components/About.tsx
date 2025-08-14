@@ -20,7 +20,7 @@ const About = () => {
             <div className="space-y-8">
               <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-400/10 border border-primary/30 rounded-full px-6 py-3 text-base backdrop-blur-sm">
                 <CheckCircle className="h-5 w-5 text-primary" />
-                <span className="text-primary font-bold tracking-wide">Excellence Since 2020</span>
+                <span className="text-primary font-bold tracking-wide">Excellence Since 2023</span>
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
               </div>
               

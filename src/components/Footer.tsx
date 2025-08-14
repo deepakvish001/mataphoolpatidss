@@ -44,10 +44,9 @@ const Footer = () => {
                     <p className="text-sm text-primary font-medium">Skill Development Programs</p>
                   </div>
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  Pioneer in skill training with 5+ years of experience, empowering 25,000+ students 
-                  across India with government certified courses and 100% placement assistance.
-                </p>
+                 <p className="text-muted-foreground leading-relaxed mb-6">
+                   MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner with 5+ years of experience, empowering 25,000+ students across India with 100+ expert faculties and 100% placement assistance.
+                 </p>
               </div>
 
               {/* Contact Info in Cards */}

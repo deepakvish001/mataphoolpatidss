@@ -125,10 +125,9 @@ const Partners = () => {
                 <p className="text-2xl md:text-3xl text-muted-foreground font-medium">
                   Building Excellence Through <span className="text-primary font-bold">Strategic Collaborations</span>
                 </p>
-                <p className="text-xl text-muted-foreground/80 leading-relaxed">
-                  MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN proudly collaborates with leading private companies 
-                  and government bodies, creating exceptional opportunities for our students with 5+ years of excellence and 25,000+ students empowered.
-                </p>
+                 <p className="text-xl text-muted-foreground/80 leading-relaxed">
+                   <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> has tie-ups with various organizations for providing free courses job training & Placement assistance to Trained Candidates. Since 2023, under the leadership of Director <span className="font-semibold">Sanjay Rajbhar</span>, Manager <span className="font-semibold">Surendra Prajapati</span>, and Managing Director <span className="font-semibold">Neha Bhardwaj</span>, we've empowered 25,000+ students with 100+ expert faculties.
+                 </p>
               </div>
             </div>
 

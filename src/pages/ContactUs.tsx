@@ -147,10 +147,9 @@ const ContactUs = () => {
                 <p className="text-2xl md:text-3xl text-muted-foreground font-medium">
                   Ready to Transform Your <span className="text-primary font-bold">Career Journey?</span>
                 </p>
-                <p className="text-xl text-muted-foreground/80 leading-relaxed">
-                  Connect with our expert team at <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> 
-                  and discover the perfect skill development program to launch your successful career with our 5+ years of excellence.
-                </p>
+                 <p className="text-xl text-muted-foreground/80 leading-relaxed">
+                   Connect with <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> - A pioneer in the field of Education, Skill Training running skill development programs on PAN India Basis Since 2023. Under the leadership of Director <span className="font-semibold">Sanjay Rajbhar</span>, Manager <span className="font-semibold">Surendra Prajapati</span>, and Managing Director <span className="font-semibold">Neha Bhardwaj</span>, we've empowered 25,000+ students with 100+ expert faculties.
+                 </p>
               </div>
             </div>
 
