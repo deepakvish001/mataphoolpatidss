@@ -209,7 +209,6 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-cyan-400",
     submenuItems: [
-      { label: "Student Master", icon: GraduationCap },
       { label: "Student Registration", icon: UserPlus },
       { label: "Student Approval", icon: UserCheck },
       { label: "Student Management", icon: Users },
@@ -230,7 +229,6 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-yellow-400",
     submenuItems: [
-      { label: "Course Subject", icon: BookOpen },
       { label: "Alot Number", icon: Hash },
       { label: "Ready Markseet", icon: FileCheck },
       { label: "Report", icon: FileText },
