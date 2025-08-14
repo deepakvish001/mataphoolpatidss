@@ -1,5 +1,5 @@
 import Navigation from '@/components/Navigation';
-import Hero from '@/components/Hero';
+import EnhancedHero from '@/components/EnhancedHero';
 import Welcome from '@/components/Welcome';
 import ModiQuote from '@/components/ModiQuote';
 import MissionCourses from '@/components/MissionCourses';
@@ -15,7 +15,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main>
-        <Hero />
+        <EnhancedHero />
         <Welcome />
         <ModiQuote />
         <MissionCourses />
