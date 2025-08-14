@@ -197,7 +197,7 @@ const Navigation = () => {
                   className="group relative transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 >
                   <img 
-                    src="/lovable-uploads/042e6682-f2c9-4cba-8a89-b44a979f9e80.png" 
+                    src="/lovable-uploads/54cc2f49-d382-49fe-b8b0-de377bceff95.png" 
                     alt="Secure Payment Option" 
                     className="h-12 w-auto drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
                   />
@@ -233,7 +233,7 @@ const Navigation = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <img 
-                  src="/lovable-uploads/042e6682-f2c9-4cba-8a89-b44a979f9e80.png" 
+                  src="/lovable-uploads/54cc2f49-d382-49fe-b8b0-de377bceff95.png" 
                   alt="Secure Payment Option" 
                   className="h-16 w-auto drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
                 />
