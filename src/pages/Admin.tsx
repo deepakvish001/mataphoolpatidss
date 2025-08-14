@@ -47,6 +47,7 @@ import ReportContent from "@/components/admin/ReportContent";
 import EditCRTContent from "@/components/admin/EditCRTContent";
 import StudentMarksheetContent from "@/components/admin/StudentMarksheetContent";
 import StudentAttendanceContent from "@/components/admin/StudentAttendanceContent";
+import StudentAttendanceReportContent from "@/components/admin/StudentAttendanceReportContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -97,6 +98,7 @@ const Admin = () => {
     if (path === '/admin/edit-crt') return 'edit-crt';
     if (path === '/admin/student-marksheet') return 'student-marksheet';
     if (path === '/admin/student-attendance') return 'student-attendance';
+    if (path === '/admin/student-attendance-report') return 'student-attendance-report';
     return 'dashboard';
   };
 
@@ -437,6 +439,8 @@ const Admin = () => {
                               navigate('/admin/student-marksheet');
                             } else if (subItem.label === "Student Attandance") {
                               navigate('/admin/student-attendance');
+                            } else if (subItem.label === "Student Att. Report") {
+                              navigate('/admin/student-attendance-report');
                             }
                           }}
                         >
@@ -590,6 +594,7 @@ const Admin = () => {
             <Route path="/edit-crt" element={<EditCRTContent />} />
             <Route path="/student-marksheet" element={<StudentMarksheetContent />} />
             <Route path="/student-attendance" element={<StudentAttendanceContent />} />
+            <Route path="/student-attendance-report" element={<StudentAttendanceReportContent />} />
           </Routes>
         </div>
 
