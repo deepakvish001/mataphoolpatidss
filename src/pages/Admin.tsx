@@ -29,6 +29,7 @@ import EnquiryContent from "@/components/admin/EnquiryContent";
 import ContactUsContent from "@/components/admin/ContactUsContent";
 import StudentRegistrationContent from "@/components/admin/StudentRegistrationContent";
 import StudentApprovalContent from "@/components/admin/StudentApprovalContent";
+import StudentManagementContent from "@/components/admin/StudentManagementContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -61,6 +62,7 @@ const Admin = () => {
     if (path === '/admin/contact-us') return 'contact-us';
     if (path === '/admin/student-registration') return 'student-registration';
     if (path === '/admin/student-approval') return 'student-approval';
+    if (path === '/admin/student-management') return 'student-management';
     return 'dashboard';
   };
 
@@ -365,6 +367,8 @@ const Admin = () => {
                               navigate('/admin/student-registration');
                             } else if (subItem.label === "Student Approval") {
                               navigate('/admin/student-approval');
+                            } else if (subItem.label === "Student Management") {
+                              navigate('/admin/student-management');
                             }
                           }}
                         >
@@ -410,7 +414,8 @@ const Admin = () => {
                 currentView === 'enquiry' ? 'My All Enquiry' : 
                 currentView === 'contact-us' ? 'My All Contacts' : 
                 currentView === 'student-registration' ? 'Student Registration' : 
-               currentView === 'student-approval' ? 'Student Approval' : 'Dashboard'}
+               currentView === 'student-approval' ? 'Student Approval' : 
+               currentView === 'student-management' ? 'Student Management' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -494,6 +499,7 @@ const Admin = () => {
             <Route path="/contact-us" element={<ContactUsContent />} />
             <Route path="/student-registration" element={<StudentRegistrationContent />} />
             <Route path="/student-approval" element={<StudentApprovalContent />} />
+            <Route path="/student-management" element={<StudentManagementContent />} />
           </Routes>
         </div>
 
