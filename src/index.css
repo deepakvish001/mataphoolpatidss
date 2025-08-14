@@ -410,3 +410,13 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   .nav-donate-blink {
     animation: nav-donate-blink 1.5s ease-in-out infinite;
   }
+
+  /* Image Gallery Slider Animation */
+  @keyframes slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
