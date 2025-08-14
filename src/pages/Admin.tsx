@@ -43,6 +43,7 @@ import UploadStudentContentContent from "@/components/admin/UploadStudentContent
 import CourseSubjectContent from "@/components/admin/CourseSubjectContent";
 import AlotNumberContent from "@/components/admin/AlotNumberContent";
 import ReadyMarksheetContent from "@/components/admin/ReadyMarksheetContent";
+import ReportContent from "@/components/admin/ReportContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -89,6 +90,7 @@ const Admin = () => {
     if (path === '/admin/course-subject') return 'course-subject';
     if (path === '/admin/alot-number') return 'alot-number';
     if (path === '/admin/ready-marksheet') return 'ready-marksheet';
+    if (path === '/admin/report') return 'report';
     return 'dashboard';
   };
 
@@ -421,6 +423,8 @@ const Admin = () => {
                               navigate('/admin/alot-number');
                             } else if (subItem.label === "Ready Markseet") {
                               navigate('/admin/ready-marksheet');
+                            } else if (subItem.label === "Report") {
+                              navigate('/admin/report');
                             }
                           }}
                         >
@@ -570,6 +574,7 @@ const Admin = () => {
             <Route path="/course-subject" element={<CourseSubjectContent />} />
             <Route path="/alot-number" element={<AlotNumberContent />} />
             <Route path="/ready-marksheet" element={<ReadyMarksheetContent />} />
+            <Route path="/report" element={<ReportContent />} />
           </Routes>
         </div>
 
