@@ -80,7 +80,7 @@ const Admin = () => {
   
   const getCurrentView = () => {
     const path = location.pathname;
-    if (path === '/admin' || path === '/admin/') return 'dashboard';
+    if (path === '/admin' || path === '/admin/' || path === '/admin/dashboard') return 'dashboard';
     if (path === '/admin/edit-profile') return 'edit-profile';
     if (path === '/admin/change-password') return 'change-password';
     if (path === '/admin/video') return 'video';
@@ -369,7 +369,7 @@ const Admin = () => {
                     className={`${sidebarCollapsed ? 'flex items-center justify-center p-4 relative group' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 ${item.label === 'Dashboard' && currentView === 'dashboard' ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`}
                     onClick={() => {
                       if (item.label === 'Dashboard') {
-                        navigate('/admin');
+                        navigate('/admin/dashboard');
                       } else if (item.hasSubmenu && !sidebarCollapsed) {
                         toggleSubmenu(index);
                       }
@@ -640,8 +640,9 @@ const Admin = () => {
 
         {/* Dashboard Content */}
         <div className="flex-1 p-8 bg-gradient-to-br from-gray-50 to-white mt-24 overflow-y-auto">
-          <Routes>
-            <Route path="/" element={<DashboardContent />} />
+                  <Routes>
+                    <Route path="/" element={<DashboardContent />} />
+                    <Route path="/dashboard" element={<DashboardContent />} />
             <Route path="/edit-profile" element={<EditProfileContent />} />
             <Route path="/change-password" element={<ChangePasswordContent />} />
             <Route path="/video" element={<VideoContent />} />
