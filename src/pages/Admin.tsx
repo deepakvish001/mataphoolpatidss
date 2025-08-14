@@ -176,7 +176,7 @@ const Admin = () => {
           <div className={`${sidebarCollapsed ? 'p-2' : 'p-6'}`}>
             {!sidebarCollapsed && <div className="text-gray-400 text-xs font-semibold mb-4 uppercase tracking-wider">MAIN NAVIGATION</div>}
             <nav className="space-y-2">
-              {sidebarItems.map((item, index) => <div key={index} className={`${sidebarCollapsed ? 'flex items-center justify-center p-4' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 group ${item.active ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`} title={sidebarCollapsed ? item.label : ''}>
+              {sidebarItems.map((item, index) => <div key={index} className={`${sidebarCollapsed ? 'flex items-center justify-center p-4 relative group' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 ${item.active ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`}>
                   <item.icon className={`${sidebarCollapsed ? 'h-7 w-7' : 'h-5 w-5'} ${item.color || 'text-gray-400'} group-hover:scale-110 transition-transform duration-200 ${sidebarCollapsed ? 'mx-auto' : ''}`} />
                   {!sidebarCollapsed && <>
                       <span className={`text-sm font-medium ${item.active ? 'text-white' : 'text-gray-300'} group-hover:text-white transition-colors duration-200`}>
@@ -184,6 +184,12 @@ const Admin = () => {
                       </span>
                       {item.hasSubmenu && <ChevronLeft className="h-4 w-4 ml-auto text-gray-400 group-hover:text-white transition-colors duration-200" />}
                     </>}
+                  {sidebarCollapsed && (
+                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+                      {item.label}
+                      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-gray-800 rotate-45"></div>
+                    </div>
+                  )}
                 </div>)}
             </nav>
           </div>
