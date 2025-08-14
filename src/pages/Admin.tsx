@@ -48,6 +48,7 @@ import EditCRTContent from "@/components/admin/EditCRTContent";
 import StudentMarksheetContent from "@/components/admin/StudentMarksheetContent";
 import StudentAttendanceContent from "@/components/admin/StudentAttendanceContent";
 import StudentAttendanceReportContent from "@/components/admin/StudentAttendanceReportContent";
+import ClassFeesContent from "@/components/admin/ClassFeesContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -99,6 +100,7 @@ const Admin = () => {
     if (path === '/admin/student-marksheet') return 'student-marksheet';
     if (path === '/admin/student-attendance') return 'student-attendance';
     if (path === '/admin/student-attendance-report') return 'student-attendance-report';
+    if (path === '/admin/class-fees') return 'class-fees';
     return 'dashboard';
   };
 
@@ -441,6 +443,8 @@ const Admin = () => {
                               navigate('/admin/student-attendance');
                             } else if (subItem.label === "Student Att. Report") {
                               navigate('/admin/student-attendance-report');
+                            } else if (subItem.label === "Class Fees") {
+                              navigate('/admin/class-fees');
                             }
                           }}
                         >
@@ -595,6 +599,7 @@ const Admin = () => {
             <Route path="/student-marksheet" element={<StudentMarksheetContent />} />
             <Route path="/student-attendance" element={<StudentAttendanceContent />} />
             <Route path="/student-attendance-report" element={<StudentAttendanceReportContent />} />
+            <Route path="/class-fees" element={<ClassFeesContent />} />
           </Routes>
         </div>
 
