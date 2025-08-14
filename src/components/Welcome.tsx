@@ -22,33 +22,37 @@ const Welcome = () => {
         <div className="max-w-5xl mx-auto text-center">
           {/* Enhanced Welcome Header */}
           <div className="mb-12 animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 animate-scale-in">
-              <Sparkles className="w-4 h-4" />
-              नमस्ते! Welcome to Our Institution
-              <Sparkles className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-6 py-3 rounded-full text-base font-bold mb-8 animate-scale-in border border-primary/30">
+              <Sparkles className="w-5 h-5" />
+              <span className="font-extrabold">Welcome to Excellence in Education</span>
+              <Sparkles className="w-5 h-5" />
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
-              <span className="text-muted-foreground text-2xl md:text-3xl block mb-2">
+            <h1 className="text-5xl md:text-7xl font-black leading-tight mb-8">
+              <span className="text-foreground text-3xl md:text-4xl block mb-4 font-bold">
                 Welcome to
               </span>
-              <span className="block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-fade-in delay-200">
+              <span className="block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-fade-in delay-200 font-black">
                 MATA PHOOLPATI DEVI
               </span>
-              <span className="block bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent animate-fade-in delay-400">
+              <span className="block bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent animate-fade-in delay-400 font-black">
                 SHIKSHAN SANSTHAN
               </span>
             </h1>
             
-            <div className="relative max-w-3xl mx-auto">
-              <p className="text-xl text-muted-foreground leading-relaxed animate-fade-in delay-600">
-                शिक्षा से सशक्तीकरण की दिशा में • Empowering communities through quality education, 
-                skill development, and sustainable growth initiatives. Join us in building a brighter future for all.
+            <div className="relative max-w-4xl mx-auto bg-card/80 backdrop-blur-sm rounded-2xl p-8 border border-border/50 shadow-lg">
+              <p className="text-xl md:text-2xl text-foreground leading-relaxed animate-fade-in delay-600 font-bold">
+                <span className="text-primary font-extrabold">Transforming Lives Through Education</span>
+                <br />
+                <span className="font-semibold text-lg md:text-xl mt-2 block">
+                  We are dedicated to empowering communities through quality education, comprehensive skill development, 
+                  and sustainable growth initiatives. Join us in building a brighter, more prosperous future for everyone.
+                </span>
               </p>
-              <div className="absolute -top-2 -left-2 w-6 h-6 text-primary/20">
+              <div className="absolute -top-3 -left-3 w-8 h-8 text-primary/30">
                 <Star className="w-full h-full" />
               </div>
-              <div className="absolute -bottom-2 -right-2 w-6 h-6 text-secondary/20">
+              <div className="absolute -bottom-3 -right-3 w-8 h-8 text-secondary/30">
                 <Heart className="w-full h-full" />
               </div>
             </div>
@@ -56,48 +60,54 @@ const Welcome = () => {
 
           {/* Enhanced Key Highlights */}
           <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-fade-in delay-700">
+            <div className="group bg-card/80 backdrop-blur-sm border-2 border-primary/20 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 animate-fade-in delay-700">
               <div className="relative mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/70 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <Users className="w-8 h-8 text-white" />
+                <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/70 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <Users className="w-10 h-10 text-white" />
                 </div>
-                <div className="absolute -top-1 -right-1 w-6 h-6 bg-secondary/20 rounded-full animate-pulse"></div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary/30 rounded-full animate-pulse"></div>
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                Community Focus
+              <h3 className="text-2xl font-black text-foreground mb-4 group-hover:text-primary transition-colors">
+                Community Focused
               </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                समुदायिक विकास के लिए प्रतिबद्ध • Dedicated to serving and uplifting local communities through education
+              <p className="text-foreground leading-relaxed font-semibold text-base">
+                <span className="font-bold text-primary">Dedicated to Community Growth:</span><br />
+                We are committed to serving and uplifting local communities through comprehensive 
+                educational programs and community development initiatives.
               </p>
             </div>
             
-            <div className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-fade-in delay-800">
+            <div className="group bg-card/80 backdrop-blur-sm border-2 border-secondary/20 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 animate-fade-in delay-800">
               <div className="relative mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-secondary to-secondary/70 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <BookOpen className="w-8 h-8 text-white" />
+                <div className="w-20 h-20 bg-gradient-to-br from-secondary to-secondary/70 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <BookOpen className="w-10 h-10 text-white" />
                 </div>
-                <div className="absolute -top-1 -right-1 w-6 h-6 bg-primary/20 rounded-full animate-pulse delay-150"></div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-primary/30 rounded-full animate-pulse delay-150"></div>
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">
+              <h3 className="text-2xl font-black text-foreground mb-4 group-hover:text-secondary transition-colors">
                 Quality Education
               </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                गुणवत्तापूर्ण शिक्षा • Providing accessible and comprehensive education for all age groups
+              <p className="text-foreground leading-relaxed font-semibold text-base">
+                <span className="font-bold text-secondary">Excellence in Learning:</span><br />
+                Providing accessible, comprehensive, and high-quality education for learners 
+                of all ages with modern teaching methodologies and resources.
               </p>
             </div>
             
-            <div className="group bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-fade-in delay-900">
+            <div className="group bg-card/80 backdrop-blur-sm border-2 border-primary/20 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 animate-fade-in delay-900">
               <div className="relative mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <Award className="w-8 h-8 text-white" />
+                <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <Award className="w-10 h-10 text-white" />
                 </div>
-                <div className="absolute -top-1 -right-1 w-6 h-6 bg-secondary/20 rounded-full animate-pulse delay-300"></div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary/30 rounded-full animate-pulse delay-300"></div>
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+              <h3 className="text-2xl font-black text-foreground mb-4 group-hover:text-primary transition-colors">
                 Certified Programs
               </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                प्रमाणित पाठ्यक्रम • Government-approved courses and skill development programs
+              <p className="text-foreground leading-relaxed font-semibold text-base">
+                <span className="font-bold text-primary">Government Approved:</span><br />
+                Offering officially recognized, government-approved courses and comprehensive 
+                skill development programs with industry-standard certifications.
               </p>
             </div>
           </div>
@@ -106,18 +116,18 @@ const Welcome = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in delay-1000">
             <Button 
               size="lg" 
-              className="group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 py-4 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              className="group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-10 py-5 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 border-white/20"
             >
-              <span className="text-lg font-semibold">Explore Our Programs</span>
-              <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <span className="text-xl font-black">Explore Our Programs</span>
+              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform font-bold" />
             </Button>
             <Button 
               variant="outline" 
               size="lg"
-              className="group border-2 border-primary/20 bg-card/50 backdrop-blur-sm text-primary hover:bg-primary/10 px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="group border-3 border-primary/30 bg-card/80 backdrop-blur-sm text-foreground hover:bg-primary/10 px-10 py-5 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
             >
-              <span className="text-lg font-semibold">Learn More About Us</span>
-              <Heart className="ml-3 h-5 w-5 group-hover:scale-110 transition-transform" />
+              <span className="text-xl font-black">Learn More About Us</span>
+              <Heart className="ml-3 h-6 w-6 group-hover:scale-125 transition-transform text-primary" />
             </Button>
           </div>
         </div>
