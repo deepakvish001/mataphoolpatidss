@@ -5,10 +5,22 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X } from "lucide-react";
+import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown } from "lucide-react";
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState<Set<number>>(new Set());
+
+  const toggleSubmenu = (index: number) => {
+    const newOpenSubmenus = new Set(openSubmenus);
+    if (newOpenSubmenus.has(index)) {
+      newOpenSubmenus.delete(index);
+    } else {
+      newOpenSubmenus.add(index);
+    }
+    setOpenSubmenus(newOpenSubmenus);
+  };
+
   const sidebarItems = [{
     icon: Home,
     label: "Dashboard",
@@ -17,12 +29,21 @@ const Admin = () => {
   }, {
     icon: User,
     label: "Profile",
-    color: "text-green-400"
+    color: "text-green-400",
+    hasSubmenu: true,
+    submenuItems: [
+      "Edit My Profile",
+      "Change Login Password",
+      "Video"
+    ]
   }, {
     icon: Building,
     label: "My Offices",
     hasSubmenu: true,
-    color: "text-purple-400"
+    color: "text-purple-400",
+    submenuItems: [
+      "Head Office"
+    ]
   }, {
     icon: Users,
     label: "Head Office",
@@ -31,47 +52,124 @@ const Admin = () => {
     icon: GraduationCap,
     label: "Master",
     hasSubmenu: true,
-    color: "text-pink-400"
+    color: "text-pink-400",
+    submenuItems: [
+      "Master",
+      "Menu Content",
+      "Photo Gallery",
+      "Add Bank Details",
+      "EMP Master",
+      "State Master",
+      "Distt Master",
+      "Course Master",
+      "Add News",
+      "Add Course Category",
+      "Add News & Event",
+      "Add Vision",
+      "Add Mission",
+      "Add Director Message",
+      "Contact Us",
+      "Enquiry"
+    ]
   }, {
     icon: Users,
     label: "Student Master",
     hasSubmenu: true,
-    color: "text-cyan-400"
+    color: "text-cyan-400",
+    submenuItems: [
+      "Student Master",
+      "Student Registration",
+      "Student Approval",
+      "Student Management",
+      "Search By Student Data",
+      "Student Verification",
+      "Verification",
+      "Verification Report",
+      "Student Data",
+      "Student Reg. Print",
+      "Make Student Admit Card",
+      "Student Admit Card Report",
+      "Generate Student Admit Card",
+      "Upload Student Content"
+    ]
   }, {
     icon: Award,
     label: "Certificate & Marksheet",
     hasSubmenu: true,
-    color: "text-yellow-400"
+    color: "text-yellow-400",
+    submenuItems: [
+      "Course Subject",
+      "Alot Number",
+      "Ready Markseet",
+      "Report",
+      "Edit CRT",
+      "Student Markseet"
+    ]
   }, {
     icon: Clock,
     label: "Attendance Master",
     hasSubmenu: true,
-    color: "text-red-400"
+    color: "text-red-400",
+    submenuItems: [
+      "Student Attandance",
+      "Student Att. Report"
+    ]
   }, {
     icon: DollarSign,
     label: "Fees Master",
     hasSubmenu: true,
-    color: "text-green-400"
+    color: "text-green-400",
+    submenuItems: [
+      "Class Fees",
+      "Fees Reports",
+      "Fees Management",
+      "Fees Print"
+    ]
   }, {
     icon: Building,
     label: "Expense panel",
     hasSubmenu: true,
-    color: "text-indigo-400"
+    color: "text-indigo-400",
+    submenuItems: [
+      "Expense Master",
+      "Expense Entry",
+      "Day Book",
+      "Opening Balance",
+      "Balance Sheet"
+    ]
   }, {
     icon: Crown,
     label: "Franchise Master",
     hasSubmenu: true,
-    color: "text-amber-400"
+    color: "text-amber-400",
+    submenuItems: [
+      "Registration",
+      "Franchise Management",
+      "Approval",
+      "Franchise Data",
+      "Franchise Reg. Print",
+      "Franchise Upload",
+      "View Franchise Support"
+    ]
   }, {
     icon: FileText,
     label: "Franchise Certificate",
     hasSubmenu: true,
-    color: "text-teal-400"
+    color: "text-teal-400",
+    submenuItems: [
+      "Make Franchise Certificate",
+      "Generate Franchise Certificat"
+    ]
   }, {
     icon: CreditCard,
     label: "Payment Mode",
     hasSubmenu: true,
-    color: "text-rose-400"
+    color: "text-rose-400",
+    submenuItems: [
+      "Payment Section",
+      "Reporting",
+      "Student_Editing"
+    ]
   }, {
     icon: LogOut,
     label: "LogOut",
@@ -171,19 +269,50 @@ const Admin = () => {
           <div className={`${sidebarCollapsed ? 'p-2' : 'p-6'}`}>
             {!sidebarCollapsed && <div className="text-gray-400 text-xs font-semibold mb-4 uppercase tracking-wider">MAIN NAVIGATION</div>}
             <nav className="space-y-2">
-              {sidebarItems.map((item, index) => <div key={index} className={`${sidebarCollapsed ? 'flex items-center justify-center p-4 relative group' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 ${item.active ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`}>
-                  <item.icon className={`${sidebarCollapsed ? 'h-7 w-7' : 'h-5 w-5'} ${item.color || 'text-gray-400'} group-hover:scale-110 transition-transform duration-200 ${sidebarCollapsed ? 'mx-auto' : ''}`} />
-                  {!sidebarCollapsed && <>
-                      <span className={`text-sm font-medium ${item.active ? 'text-white' : 'text-gray-300'} group-hover:text-white transition-colors duration-200`}>
+              {sidebarItems.map((item, index) => (
+                <div key={index}>
+                  <div 
+                    className={`${sidebarCollapsed ? 'flex items-center justify-center p-4 relative group' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 ${item.active ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`}
+                    onClick={() => item.hasSubmenu && !sidebarCollapsed && toggleSubmenu(index)}
+                  >
+                    <item.icon className={`${sidebarCollapsed ? 'h-7 w-7' : 'h-5 w-5'} ${item.color || 'text-gray-400'} group-hover:scale-110 transition-transform duration-200 ${sidebarCollapsed ? 'mx-auto' : ''}`} />
+                    {!sidebarCollapsed && (
+                      <>
+                        <span className={`text-sm font-medium ${item.active ? 'text-white' : 'text-gray-300'} group-hover:text-white transition-colors duration-200`}>
+                          {item.label}
+                        </span>
+                        {item.hasSubmenu && (
+                          <ChevronDown 
+                            className={`h-4 w-4 ml-auto text-gray-400 group-hover:text-white transition-all duration-200 ${
+                              openSubmenus.has(index) ? 'rotate-180' : ''
+                            }`} 
+                          />
+                        )}
+                      </>
+                    )}
+                    {sidebarCollapsed && (
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
                         {item.label}
-                      </span>
-                      {item.hasSubmenu && <ChevronLeft className="h-4 w-4 ml-auto text-gray-400 group-hover:text-white transition-colors duration-200" />}
-                    </>}
-                  {sidebarCollapsed && <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
-                      {item.label}
-                      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-gray-800 rotate-45"></div>
-                    </div>}
-                </div>)}
+                        <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-gray-800 rotate-45"></div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Submenu Items */}
+                  {item.hasSubmenu && item.submenuItems && !sidebarCollapsed && openSubmenus.has(index) && (
+                    <div className="ml-8 mt-2 space-y-1 border-l-2 border-gray-600/50 pl-4">
+                      {item.submenuItems.map((subItem, subIndex) => (
+                        <div 
+                          key={subIndex}
+                          className="p-2 text-sm text-gray-400 hover:text-white hover:bg-gray-700/30 rounded-lg cursor-pointer transition-all duration-200"
+                        >
+                          {subItem}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
             </nav>
           </div>
         </div>
