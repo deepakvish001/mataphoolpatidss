@@ -67,40 +67,39 @@ const StudentMarksheetContent = () => {
             </div>
           </div>
 
-          {/* Institute Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-blue-700 mb-4 tracking-wider">
-              B.SOFT COMPUTER & TECHNICAL INSTITUTE
-            </h1>
-            <div className="text-sm text-black mb-2 leading-tight">
-              <span className="font-medium">Registered NGO DARPAN ID AAYOGRegd. No. </span>
-              <span className="text-red-600 font-bold">UP/2011/0044943</span>
+          {/* Institute Header with Photo */}
+          <div className="relative mb-8">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-blue-700 mb-4 tracking-wider">
+                B.SOFT COMPUTER & TECHNICAL INSTITUTE
+              </h1>
+              <div className="text-sm text-black mb-2 leading-tight">
+                <span className="font-medium">Registered NGO DARPAN ID AAYOGRegd. No. </span>
+                <span className="text-red-600 font-bold">UP/2011/0044943</span>
+              </div>
+              <div className="text-sm text-black mb-2 leading-tight">
+                <span className="font-medium">Regd. with : Society Regd. No. : </span>
+                <span className="text-red-600 font-bold">AZ-13610</span>
+              </div>
+              <div className="text-sm text-black mb-6 leading-tight">
+                <span className="font-medium">ISO 9001:2015 CERTIFIED/No.- </span>
+                <span className="text-red-600 font-bold">UQ-252016790</span>
+              </div>
+              
+              {/* Photo positioned absolute on right side */}
+              <div className="absolute right-0 top-20">
+                <div className="w-24 h-32 border-2 border-black bg-white flex items-center justify-center">
+                  <div className="w-5 h-5 border border-gray-500"></div>
+                </div>
+              </div>
+              
+              <div className="text-pink-600 font-bold text-lg tracking-wide">
+                (AwardedtoUndertheManagement)
+              </div>
+              <h2 className="text-2xl font-bold text-red-600 tracking-wider">
+                CERTIFICATE-CUM-MARKS SHEET
+              </h2>
             </div>
-            <div className="text-sm text-black mb-2 leading-tight">
-              <span className="font-medium">Regd. with : Society Regd. No. : </span>
-              <span className="text-red-600 font-bold">AZ-13610</span>
-            </div>
-            <div className="text-sm text-black mb-6 leading-tight">
-              <span className="font-medium">ISO 9001:2015 CERTIFIED/No.- </span>
-              <span className="text-red-600 font-bold">UQ-252016790</span>
-            </div>
-            <div className="text-pink-600 font-bold text-lg mb-12 tracking-wide">
-              (AwardedtoUndertheManagement)
-            </div>
-          </div>
-
-          {/* Photo placeholder positioned on right */}
-          <div className="flex justify-end mb-8">
-            <div className="w-24 h-32 border-2 border-black bg-white flex items-center justify-center">
-              <div className="w-5 h-5 border border-gray-500"></div>
-            </div>
-          </div>
-
-          {/* Certificate Title */}
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-red-600 tracking-wider">
-              CERTIFICATE-CUM-MARKS SHEET
-            </h2>
           </div>
 
           {/* Certificate Text */}
