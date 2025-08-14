@@ -35,8 +35,8 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-2">Our Location</h4>
                     <p className="text-muted-foreground leading-relaxed">
-                      D-87, Vyapar Marg, D Block, Sector 2,<br />
-                      Noida - 201301, Uttar Pradesh
+                      Shanti Nagar Mehmauni Gali<br />
+                      Kaptanganj Azamgarh Uttar Pradesh Pin 276141
                     </p>
                   </div>
                 </div>
