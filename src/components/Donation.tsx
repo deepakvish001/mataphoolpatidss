@@ -199,17 +199,6 @@ const Donation = () => {
           </div>
         </div>
 
-        {/* Thank You Message */}
-        <div className="text-center mt-16">
-          <div className="card-premium max-w-2xl mx-auto">
-            <Heart className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-3">Thank You for Your Support!</h3>
-            <p className="text-muted-foreground">
-              Your generosity helps us continue our mission of providing quality education and skill development 
-              opportunities to students across Uttar Pradesh. Together, we're building a brighter future.
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
