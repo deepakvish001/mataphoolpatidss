@@ -95,11 +95,11 @@ const Services = () => {
             <BookOpen className="h-5 w-5 text-primary" />
             <span className="text-primary font-bold tracking-wide">Professional Excellence</span>
           </div>
-          <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-foreground mb-8 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-foreground mb-6 sm:mb-8 leading-tight">
             Our <span className="text-gradient-enhanced bg-clip-text">Training</span><br />
             <span className="text-primary">Programs</span>
           </h2>
-          <p className="text-2xl md:text-3xl text-muted-foreground max-w-4xl mx-auto font-light leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-muted-foreground max-w-4xl mx-auto font-light leading-relaxed px-4 sm:px-0">
             <span className="text-primary font-bold">Government certified</span> training programs engineered to 
             <span className="text-gradient font-bold"> transform careers</span> and unlock unlimited opportunities
           </p>
@@ -110,17 +110,17 @@ const Services = () => {
           <h3 className="text-2xl font-semibold text-foreground mb-8 text-center">
             Specialized Training Areas
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
             {trainingAreas.map((area, index) => (
               <div 
                 key={area.name}
-                className={`bg-gradient-to-br ${area.color} backdrop-blur-sm border border-border/50 rounded-xl p-4 text-center hover:border-primary/30 transition-all duration-300 hover:scale-105 animate-fade-in`}
+                className={`bg-gradient-to-br ${area.color} backdrop-blur-sm border border-border/50 rounded-xl p-3 sm:p-4 text-center hover:border-primary/30 transition-all duration-300 hover:scale-105 animate-fade-in`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className={`w-12 h-12 ${area.iconBg} rounded-lg flex items-center justify-center mx-auto mb-3`}>
-                  <area.icon className="h-6 w-6 text-primary" />
+                <div className={`w-10 sm:w-12 h-10 sm:h-12 ${area.iconBg} rounded-lg flex items-center justify-center mx-auto mb-2 sm:mb-3`}>
+                  <area.icon className="h-5 sm:h-6 w-5 sm:w-6 text-primary" />
                 </div>
-                <h4 className="font-medium text-foreground text-sm">{area.name}</h4>
+                <h4 className="font-medium text-foreground text-xs sm:text-sm leading-tight">{area.name}</h4>
               </div>
             ))}
           </div>
@@ -131,20 +131,20 @@ const Services = () => {
           <h3 className="text-2xl font-semibold text-foreground mb-8 text-center">
             MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN Certification Benefits
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {certificationBenefits.map((benefit, index) => (
               <div 
                 key={benefit.title}
                 className="card-premium group animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                  <benefit.icon className="h-8 w-8 text-primary" />
+                <div className="w-12 sm:w-16 h-12 sm:h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-primary/20 transition-colors">
+                  <benefit.icon className="h-6 sm:h-8 w-6 sm:w-8 text-primary" />
                 </div>
-                <h4 className="text-lg font-semibold text-foreground mb-3">
+                <h4 className="text-base sm:text-lg font-semibold text-foreground mb-3">
                   {benefit.title}
                 </h4>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   {benefit.description}
                 </p>
               </div>
@@ -163,34 +163,34 @@ const Services = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary-foreground font-bold">1</span>
+              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <span className="text-primary-foreground font-bold text-sm sm:text-base">1</span>
               </div>
-              <h4 className="font-semibold text-foreground mb-2">Training</h4>
-              <p className="text-sm text-muted-foreground">Complete your certified training program</p>
+              <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Training</h4>
+              <p className="text-xs sm:text-sm text-muted-foreground">Complete your certified training program</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary-foreground font-bold">2</span>
+              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <span className="text-primary-foreground font-bold text-sm sm:text-base">2</span>
               </div>
-              <h4 className="font-semibold text-foreground mb-2">Assessment</h4>
-              <p className="text-sm text-muted-foreground">Pass online and practical assessments</p>
+              <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Assessment</h4>
+              <p className="text-xs sm:text-sm text-muted-foreground">Pass online and practical assessments</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary-foreground font-bold">3</span>
+              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <span className="text-primary-foreground font-bold text-sm sm:text-base">3</span>
               </div>
-              <h4 className="font-semibold text-foreground mb-2">Certification</h4>
-              <p className="text-sm text-muted-foreground">Receive government recognized certificate</p>
+              <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Certification</h4>
+              <p className="text-xs sm:text-sm text-muted-foreground">Receive government recognized certificate</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-primary-foreground font-bold">4</span>
+              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <span className="text-primary-foreground font-bold text-sm sm:text-base">4</span>
               </div>
-              <h4 className="font-semibold text-foreground mb-2">Placement</h4>
-              <p className="text-sm text-muted-foreground">Get 100% placement assistance</p>
+              <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Placement</h4>
+              <p className="text-xs sm:text-sm text-muted-foreground">Get 100% placement assistance</p>
             </div>
           </div>
         </div>

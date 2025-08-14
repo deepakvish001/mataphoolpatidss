@@ -45,7 +45,7 @@ const Testimonials = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {testimonials.map((testimonial, index) => (
             <div 
               key={testimonial.name}
@@ -95,23 +95,23 @@ const Testimonials = () => {
         </div>
 
         {/* Success Stats */}
-        <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-2xl p-8">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
+        <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-2xl p-6 sm:p-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">95%</div>
-              <div className="text-sm text-muted-foreground">Student Satisfaction</div>
+              <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">95%</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Student Satisfaction</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">88%</div>
-              <div className="text-sm text-muted-foreground">Placement Rate</div>
+              <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">88%</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Placement Rate</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">₹25K+</div>
-              <div className="text-sm text-muted-foreground">Average Starting Salary</div>
+              <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">₹25K+</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Average Starting Salary</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary mb-2">500+</div>
-              <div className="text-sm text-muted-foreground">Partner Companies</div>
+              <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">500+</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Partner Companies</div>
             </div>
           </div>
         </div>

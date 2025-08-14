@@ -29,10 +29,10 @@ const Footer = () => {
       <div className="container-custom">
         {/* Single Unified Footer Content */}
         <div className="py-16">
-          <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-5 md:grid-cols-2 gap-6 lg:gap-8">
             
             {/* Company Info - Takes 2 columns on large screens */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-4 sm:space-y-6">
               <div>
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg">
@@ -137,13 +137,13 @@ const Footer = () => {
               </p>
               
               <div className="space-y-4">
-                <div className="flex space-x-2">
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                   <Input 
                     type="email"
                     placeholder="Enter your email"
-                    className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary text-sm"
+                    className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary text-sm flex-1"
                   />
-                  <Button className="btn-primary px-4 shrink-0">
+                  <Button className="btn-primary px-4 shrink-0 w-full sm:w-auto">
                     Subscribe
                   </Button>
                 </div>

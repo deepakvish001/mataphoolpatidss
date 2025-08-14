@@ -33,16 +33,16 @@ const Hero = () => {
             </div>
 
             {/* Main Heading */}
-            <div className="space-y-6">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+            <div className="space-y-4 sm:space-y-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight">
                 <span className="text-foreground block">TRANSFORMING</span>
                 <span className="text-primary block">CAREERS</span>
-                <span className="text-muted-foreground text-3xl md:text-4xl lg:text-5xl font-light block mt-2">
+                <span className="text-muted-foreground text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-5xl font-light block mt-1 sm:mt-2">
                   with skill excellence
                 </span>
               </h1>
               
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
                 Join India's leading skill development program with 
                 <span className="text-primary font-semibold"> 13+ years of proven success</span> and 
                 <span className="text-primary font-semibold"> 100% placement assistance</span>
@@ -50,31 +50,33 @@ const Hero = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
-                <Target className="mr-3 h-5 w-5" />
-                Start Your Journey
-                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group w-full sm:w-auto">
+                <Target className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
+                <span className="sm:hidden">Start Journey</span>
+                <span className="hidden sm:inline">Start Your Journey</span>
+                <ArrowRight className="ml-2 sm:ml-3 h-4 sm:h-5 w-4 sm:w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="border-2 border-primary/30 text-primary hover:bg-primary/5 px-8 py-6 text-lg font-semibold rounded-xl transition-all duration-300">
-                <Play className="mr-3 h-5 w-5" />
-                Watch Success Stories
+              <Button size="lg" variant="outline" className="border-2 border-primary/30 text-primary hover:bg-primary/5 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl transition-all duration-300 w-full sm:w-auto">
+                <Play className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
+                <span className="sm:hidden">Success Stories</span>
+                <span className="hidden sm:inline">Watch Success Stories</span>
               </Button>
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border/20">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8 border-t border-border/20">
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-black text-primary mb-1">5L+</div>
-                <div className="text-sm text-muted-foreground font-medium">Lives Transformed</div>
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-primary mb-1">5L+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Lives Transformed</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-black text-primary mb-1">100%</div>
-                <div className="text-sm text-muted-foreground font-medium">Placement Rate</div>
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-primary mb-1">100%</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Placement Rate</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-black text-primary mb-1">13+</div>
-                <div className="text-sm text-muted-foreground font-medium">Years Excellence</div>
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-primary mb-1">13+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Years Excellence</div>
               </div>
             </div>
 
@@ -107,14 +109,14 @@ const Hero = () => {
           </div>
 
           {/* Right Visual Content */}
-          <div className="relative lg:block hidden">
+          <div className="relative mt-8 lg:mt-0 lg:block">
             {/* Hero Image with modern frame */}
-            <div className="relative mx-8">
-              <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 p-6">
+            <div className="relative mx-4 sm:mx-6 lg:mx-8">
+              <div className="aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 p-4 sm:p-6">
                 <img 
                   src={heroImage} 
                   alt="JITM Skills Training Excellence" 
-                  className="w-full h-full object-cover rounded-2xl shadow-2xl"
+                  className="w-full h-full object-cover rounded-xl sm:rounded-2xl shadow-2xl"
                 />
               </div>
               
