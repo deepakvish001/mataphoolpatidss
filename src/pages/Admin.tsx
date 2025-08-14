@@ -176,8 +176,8 @@ const Admin = () => {
           <div className="p-6">
             {!sidebarCollapsed && <div className="text-gray-400 text-xs font-semibold mb-4 uppercase tracking-wider">MAIN NAVIGATION</div>}
             <nav className="space-y-2">
-              {sidebarItems.map((item, index) => <div key={index} className={`${sidebarCollapsed ? 'flex items-center justify-center p-3' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 group ${item.active ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`} title={sidebarCollapsed ? item.label : ''}>
-                  <item.icon className={`h-5 w-5 ${item.color || 'text-gray-400'} group-hover:scale-110 transition-transform duration-200 ${sidebarCollapsed ? 'mx-auto' : ''}`} />
+              {sidebarItems.map((item, index) => <div key={index} className={`${sidebarCollapsed ? 'flex items-center justify-center p-4' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 group ${item.active ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`} title={sidebarCollapsed ? item.label : ''}>
+                  <item.icon className={`${sidebarCollapsed ? 'h-7 w-7' : 'h-5 w-5'} ${item.color || 'text-gray-400'} group-hover:scale-110 transition-transform duration-200 ${sidebarCollapsed ? 'mx-auto' : ''}`} />
                   {!sidebarCollapsed && <>
                       <span className={`text-sm font-medium ${item.active ? 'text-white' : 'text-gray-300'} group-hover:text-white transition-colors duration-200`}>
                         {item.label}
