@@ -34,16 +34,16 @@ const Footer = () => {
             {/* Company Info - Takes 2 columns on large screens */}
             <div className="lg:col-span-2 space-y-4 sm:space-y-6">
               <div>
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg">
+                <a href="/" className="flex items-center space-x-3 mb-6 group cursor-pointer">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <span className="text-primary-foreground font-bold text-xl">M</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-foreground leading-tight">MATA PHOOLPATI DEVI</h3>
-                    <h3 className="text-xl font-bold text-foreground leading-tight">SHIKSHAN SANSTHAN</h3>
+                    <h3 className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">MATA PHOOLPATI DEVI</h3>
+                    <h3 className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">SHIKSHAN SANSTHAN</h3>
                     <p className="text-sm text-primary font-medium">Skill Development Programs</p>
                   </div>
-                </div>
+                </a>
                  <p className="text-muted-foreground leading-relaxed mb-6">
                    MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner with 5+ years of experience, empowering 25,000+ students across India with 100+ expert faculties and 100% placement assistance.
                  </p>

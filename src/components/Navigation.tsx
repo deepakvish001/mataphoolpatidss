@@ -90,7 +90,7 @@ const Navigation = () => {
           <div className="flex items-center justify-between h-20">
             
             {/* Logo Section - Completely New Design */}
-            <div className="flex items-center space-x-4 group cursor-pointer">
+            <a href="/" className="flex items-center space-x-4 group cursor-pointer">
               <div className="relative">
                 {/* Main logo container */}
                 <div className="w-12 h-12 bg-gradient-to-br from-primary via-orange-500 to-red-500 rounded-2xl p-[2px] group-hover:scale-110 transition-all duration-500">
@@ -109,7 +109,7 @@ const Navigation = () => {
                   <span className="text-primary">SHIKSHAN SANSTHAN</span>
                 </h1>
               </div>
-            </div>
+            </a>
 
             {/* Center Navigation - Modern Pills Design */}
             <div className="hidden lg:flex items-center space-x-2 bg-muted/30 backdrop-blur-xl rounded-full px-2 py-2 border border-border/50">
