@@ -45,6 +45,7 @@ import AlotNumberContent from "@/components/admin/AlotNumberContent";
 import ReadyMarksheetContent from "@/components/admin/ReadyMarksheetContent";
 import ReportContent from "@/components/admin/ReportContent";
 import EditCRTContent from "@/components/admin/EditCRTContent";
+import StudentMarksheetContent from "@/components/admin/StudentMarksheetContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -93,6 +94,7 @@ const Admin = () => {
     if (path === '/admin/ready-marksheet') return 'ready-marksheet';
     if (path === '/admin/report') return 'report';
     if (path === '/admin/edit-crt') return 'edit-crt';
+    if (path === '/admin/student-marksheet') return 'student-marksheet';
     return 'dashboard';
   };
 
@@ -429,6 +431,8 @@ const Admin = () => {
                               navigate('/admin/report');
                             } else if (subItem.label === "Edit CRT") {
                               navigate('/admin/edit-crt');
+                            } else if (subItem.label === "Student Markseet") {
+                              navigate('/admin/student-marksheet');
                             }
                           }}
                         >
@@ -580,6 +584,7 @@ const Admin = () => {
             <Route path="/ready-marksheet" element={<ReadyMarksheetContent />} />
             <Route path="/report" element={<ReportContent />} />
             <Route path="/edit-crt" element={<EditCRTContent />} />
+            <Route path="/student-marksheet" element={<StudentMarksheetContent />} />
           </Routes>
         </div>
 
