@@ -2,10 +2,8 @@ import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-
 const Contact = () => {
-  return (
-    <section id="work-with-us" className="section-padding bg-muted/10">
+  return <section id="work-with-us" className="section-padding bg-muted/10">
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -35,8 +33,8 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-2">Our Location</h4>
                     <p className="text-muted-foreground leading-relaxed">
-                      Shanti Nagar Mehmauni Gali<br />
-                      Kaptanganj Azamgarh Uttar Pradesh Pin 276141
+                      D-87, Vyapar Marg, D Block, Sector 2,<br />
+                      Noida - 201301, Uttar Pradesh
                     </p>
                   </div>
                 </div>
@@ -49,11 +47,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-2">Call Us</h4>
                     <div className="space-y-1">
-                      <p className="text-muted-foreground">
-                        <a href="tel:01204282837" className="hover:text-primary transition-colors">
-                          0120 428 2837
-                        </a>
-                      </p>
+                      
                       <p className="text-muted-foreground">
                         <a href="tel:01204570318" className="hover:text-primary transition-colors">
                           0120 457 0318
@@ -142,19 +136,13 @@ const Contact = () => {
                   <label className="block text-sm font-medium text-foreground mb-2">
                     First Name
                   </label>
-                  <Input 
-                    placeholder="Enter your first name"
-                    className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                  />
+                  <Input placeholder="Enter your first name" className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Last Name
                   </label>
-                  <Input 
-                    placeholder="Enter your last name"
-                    className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                  />
+                  <Input placeholder="Enter your last name" className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary" />
                 </div>
               </div>
 
@@ -162,43 +150,28 @@ const Contact = () => {
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Email Address
                 </label>
-                <Input 
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                />
+                <Input type="email" placeholder="Enter your email address" className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary" />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Phone Number
                 </label>
-                <Input 
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                />
+                <Input type="tel" placeholder="Enter your phone number" className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary" />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Course of Interest
                 </label>
-                <Input 
-                  placeholder="Which course are you interested in?"
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                />
+                <Input placeholder="Which course are you interested in?" className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary" />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Message
                 </label>
-                <Textarea 
-                  placeholder="Tell us about your requirements..."
-                  rows={4}
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                />
+                <Textarea placeholder="Tell us about your requirements..." rows={4} className="bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary" />
               </div>
 
               <Button type="submit" className="w-full btn-primary group">
@@ -209,8 +182,6 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Contact;
