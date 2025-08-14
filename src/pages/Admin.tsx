@@ -42,6 +42,7 @@ import GenerateStudentAdmitCardContent from "@/components/admin/GenerateStudentA
 import UploadStudentContentContent from "@/components/admin/UploadStudentContentContent";
 import CourseSubjectContent from "@/components/admin/CourseSubjectContent";
 import AlotNumberContent from "@/components/admin/AlotNumberContent";
+import ReadyMarksheetContent from "@/components/admin/ReadyMarksheetContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -87,6 +88,7 @@ const Admin = () => {
     if (path === '/admin/upload-student-content') return 'upload-student-content';
     if (path === '/admin/course-subject') return 'course-subject';
     if (path === '/admin/alot-number') return 'alot-number';
+    if (path === '/admin/ready-marksheet') return 'ready-marksheet';
     return 'dashboard';
   };
 
@@ -417,6 +419,8 @@ const Admin = () => {
                               navigate('/admin/course-subject');
                             } else if (subItem.label === "Alot Number") {
                               navigate('/admin/alot-number');
+                            } else if (subItem.label === "Ready Markseet") {
+                              navigate('/admin/ready-marksheet');
                             }
                           }}
                         >
@@ -565,6 +569,7 @@ const Admin = () => {
             <Route path="/upload-student-content" element={<UploadStudentContentContent />} />
             <Route path="/course-subject" element={<CourseSubjectContent />} />
             <Route path="/alot-number" element={<AlotNumberContent />} />
+            <Route path="/ready-marksheet" element={<ReadyMarksheetContent />} />
           </Routes>
         </div>
 
