@@ -1,5 +1,4 @@
 import Navigation from '@/components/Navigation';
-import Welcome from '@/components/Welcome';
 import Hero from '@/components/Hero';
 import ModiQuote from '@/components/ModiQuote';
 import MissionCourses from '@/components/MissionCourses';
@@ -14,7 +13,6 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main>
-        <Welcome />
         <Hero />
         <ModiQuote />
         <MissionCourses />
