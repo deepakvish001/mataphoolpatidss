@@ -68,30 +68,28 @@ const StudentRegistrationContent = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-6 border-b border-gray-100 bg-gray-400">
-          <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-            <div className="p-2 bg-blue-500 rounded-lg">
-              <GraduationCap className="h-6 w-6 text-white" />
-            </div>
+    <div className="space-y-4 max-w-7xl mx-auto">
+      <Card className="shadow-lg border-0 bg-white">
+        <CardHeader className="p-4 border-b border-gray-200 bg-gray-300">
+          <CardTitle className="text-xl font-bold text-gray-800 flex items-center space-x-2">
+            <GraduationCap className="h-5 w-5" />
             <span>Student Registration</span>
           </CardTitle>
         </CardHeader>
         
-        <CardContent className="p-6">
-          <div className="space-y-8">
+        <CardContent className="p-4">
+          <div className="space-y-4">
             {/* Examination Details */}
-            <div>
-              <div className="bg-blue-600 text-white px-4 py-2 rounded-t font-semibold">
+            <div className="border border-gray-300">
+              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-medium">
                 Examination Details / परीक्षा विवरण
               </div>
-              <div className="border border-gray-300 p-4 space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Applied for Examination / जिस परीक्षा के लिए आवेदन किया*</label>
+              <div className="p-3 space-y-3 bg-gray-50">
+                <div className="grid grid-cols-12 gap-2 items-end">
+                  <div className="col-span-3">
+                    <label className="text-xs text-gray-700 block mb-1">Applied for Examination / जिस परीक्षा के लिए आवेदन किया*</label>
                     <Select value={formData.courseCategory} onValueChange={(value) => handleInputChange('courseCategory', value)}>
-                      <SelectTrigger className="mt-1">
+                      <SelectTrigger className="h-8 text-xs">
                         <SelectValue placeholder="--------Select Course Category--------" />
                       </SelectTrigger>
                       <SelectContent>
@@ -101,9 +99,9 @@ const StudentRegistrationContent = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div>
+                  <div className="col-span-3">
                     <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-8 text-xs">
                         <SelectValue placeholder="-------Select Course Name-------" />
                       </SelectTrigger>
                       <SelectContent>
@@ -113,108 +111,104 @@ const StudentRegistrationContent = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div>
-                    <span className="text-sm">Fee : Rs/</span>
+                  <div className="col-span-2">
+                    <span className="text-xs text-gray-700">Fee : Rs/</span>
                   </div>
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Examination Location / परीक्षा केंद्र *</label>
-                  <Select value={formData.studyCenter} onValueChange={(value) => handleInputChange('studyCenter', value)}>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="-----Select Study Center-----" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="azamgarh">Azamgarh</SelectItem>
-                      <SelectItem value="mau">Mau</SelectItem>
-                      <SelectItem value="baliya">Baliya</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-12 gap-2">
+                  <div className="col-span-3">
+                    <label className="text-xs text-gray-700 block mb-1">Examination Location / परीक्षा केंद्र *</label>
+                    <Select value={formData.studyCenter} onValueChange={(value) => handleInputChange('studyCenter', value)}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="-----Select Study Center-----" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="azamgarh">Azamgarh</SelectItem>
+                        <SelectItem value="mau">Mau</SelectItem>
+                        <SelectItem value="baliya">Baliya</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Applicant's Personal Details */}
-            <div>
-              <div className="bg-blue-600 text-white px-4 py-2 rounded-t font-semibold">
+            <div className="border border-gray-300">
+              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-medium">
                 Applicant's Personal Details /आवेदक का व्यक्तिगत विवरण
               </div>
-              <div className="border border-gray-300 p-4 space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Applicant's Full Name / आवेदक का पूरा नाम *</label>
-                    <div className="flex gap-2 mt-1">
-                      <Select>
-                        <SelectTrigger className="w-20">
-                          <SelectValue placeholder="Mr./श्री" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="mr">Mr./श्री</SelectItem>
-                          <SelectItem value="mrs">Mrs./श्रीमती</SelectItem>
-                          <SelectItem value="ms">Ms./सुश्री</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Input
-                        value={formData.applicantName}
-                        onChange={(e) => handleInputChange('applicantName', e.target.value)}
-                        className="flex-1"
-                        placeholder="Enter full name"
-                      />
-                    </div>
+              <div className="space-y-2 bg-gray-50">
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Applicant's Full Name / आवेदक का पूरा नाम *</div>
+                  <div className="col-span-1">
+                    <Select>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Mr./श्री" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="mr">Mr./श्री</SelectItem>
+                        <SelectItem value="mrs">Mrs./श्रीमती</SelectItem>
+                        <SelectItem value="ms">Ms./सुश्री</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <div></div>
+                  <div className="col-span-8">
+                    <Input
+                      value={formData.applicantName}
+                      onChange={(e) => handleInputChange('applicantName', e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Father's Name / पिता का नाम *</label>
-                    <div className="flex gap-2 mt-1">
-                      <Select>
-                        <SelectTrigger className="w-20">
-                          <SelectValue placeholder="Mr./श्री" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="mr">Mr./श्री</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Input
-                        value={formData.fatherName}
-                        onChange={(e) => handleInputChange('fatherName', e.target.value)}
-                        className="flex-1"
-                        placeholder="Enter father's name"
-                      />
-                    </div>
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Father's Name / पिता का नाम *</div>
+                  <div className="col-span-1">
+                    <Select>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Mr./श्री" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="mr">Mr./श्री</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <div></div>
+                  <div className="col-span-8">
+                    <Input
+                      value={formData.fatherName}
+                      onChange={(e) => handleInputChange('fatherName', e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Mother's Name / माता का नाम *</label>
-                    <div className="flex gap-2 mt-1">
-                      <Select>
-                        <SelectTrigger className="w-20">
-                          <SelectValue placeholder="Mrs./श्रीमती" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="mrs">Mrs./श्रीमती</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Input
-                        value={formData.motherName}
-                        onChange={(e) => handleInputChange('motherName', e.target.value)}
-                        className="flex-1"
-                        placeholder="Enter mother's name"
-                      />
-                    </div>
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Mother's Name / माता का नाम *</div>
+                  <div className="col-span-1">
+                    <Select>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Mrs./श्रीमती" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="mrs">Mrs./श्रीमती</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <div></div>
+                  <div className="col-span-8">
+                    <Input
+                      value={formData.motherName}
+                      onChange={(e) => handleInputChange('motherName', e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Gender / लिंग*</label>
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Gender / लिंग*</div>
+                  <div className="col-span-3">
                     <Select value={formData.gender} onValueChange={(value) => handleInputChange('gender', value)}>
-                      <SelectTrigger className="mt-1">
+                      <SelectTrigger className="h-8 text-xs">
                         <SelectValue placeholder="Select One" />
                       </SelectTrigger>
                       <SelectContent>
@@ -224,28 +218,26 @@ const StudentRegistrationContent = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div></div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Date of Birth / जन्म दिनांक *</label>
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Date of Birth / जन्म दिनांक *</div>
+                  <div className="col-span-3">
                     <Input
-                      type="date"
+                      type="text"
                       value={formData.dateOfBirth}
                       onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                      className="mt-1"
+                      className="h-8 text-xs"
                       placeholder="dd/MM/yyyy"
                     />
                   </div>
-                  <div></div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Category / वर्ग*</label>
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Category / वर्ग*</div>
+                  <div className="col-span-3">
                     <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                      <SelectTrigger className="mt-1">
+                      <SelectTrigger className="h-8 text-xs">
                         <SelectValue placeholder="Select One" />
                       </SelectTrigger>
                       <SelectContent>
@@ -256,209 +248,217 @@ const StudentRegistrationContent = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div></div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Date Of Registration *</label>
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Date Of Registration *</div>
+                  <div className="col-span-3">
                     <Input
-                      type="date"
+                      type="text"
                       value={formData.registrationDate}
                       onChange={(e) => handleInputChange('registrationDate', e.target.value)}
-                      className="mt-1"
+                      className="h-8 text-xs"
                       placeholder="dd/MM/yyyy"
                     />
                   </div>
-                  <div></div>
                 </div>
               </div>
             </div>
 
             {/* Contact Details */}
-            <div>
-              <div className="bg-blue-600 text-white px-4 py-2 rounded-t font-semibold">
+            <div className="border border-gray-300">
+              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-medium">
                 Contact Details / संपर्क विवरण
               </div>
-              <div className="border border-gray-300 p-4 space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Mobile / मोबाइल *</label>
-                    <div className="flex gap-2 mt-1">
-                      <Select>
-                        <SelectTrigger className="w-20">
-                          <SelectValue placeholder="+91" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="+91">+91</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Input
-                        value={formData.mobile}
-                        onChange={(e) => handleInputChange('mobile', e.target.value)}
-                        className="flex-1"
-                        placeholder="Enter mobile number"
-                      />
-                    </div>
+              <div className="space-y-2 bg-gray-50">
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Mobile / मोबाइल *</div>
+                  <div className="col-span-1">
+                    <Select>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="+91" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="+91">+91</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <div></div>
+                  <div className="col-span-8">
+                    <Input
+                      value={formData.mobile}
+                      onChange={(e) => handleInputChange('mobile', e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Email / ईमेल पता *</label>
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Email / ईमेल पता *</div>
+                  <div className="col-span-9">
                     <Input
                       type="email"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="mt-1"
-                      placeholder="Enter email address"
+                      className="h-8 text-xs"
                     />
                   </div>
-                  <div></div>
                 </div>
               </div>
             </div>
 
             {/* Address Details */}
-            <div>
-              <div className="bg-blue-600 text-white px-4 py-2 rounded-t font-semibold">
+            <div className="border border-gray-300">
+              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-medium">
                 Address Details / पता विवरण
               </div>
-              <div className="border border-gray-300 p-4 space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Full Address / पता *</label>
-                  <Input
-                    value={formData.fullAddress}
-                    onChange={(e) => handleInputChange('fullAddress', e.target.value)}
-                    className="mt-1"
-                    placeholder="Enter full address"
-                  />
+              <div className="space-y-2 bg-gray-50">
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Full Address / पता *</div>
+                  <div className="col-span-9">
+                    <Input
+                      value={formData.fullAddress}
+                      onChange={(e) => handleInputChange('fullAddress', e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">City Name / शहर का नाम *</label>
-                  <Input
-                    value={formData.cityName}
-                    onChange={(e) => handleInputChange('cityName', e.target.value)}
-                    className="mt-1"
-                    placeholder="Enter city name"
-                  />
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">City Name / शहर का नाम *</div>
+                  <div className="col-span-9">
+                    <Input
+                      value={formData.cityName}
+                      onChange={(e) => handleInputChange('cityName', e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">State / राज्य *</label>
-                  <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="-------------Select State--------------" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="up">Uttar Pradesh</SelectItem>
-                      <SelectItem value="bihar">Bihar</SelectItem>
-                      <SelectItem value="mp">Madhya Pradesh</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">State / राज्य *</div>
+                  <div className="col-span-9">
+                    <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="-------------Select State--------------" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="up">Uttar Pradesh</SelectItem>
+                        <SelectItem value="bihar">Bihar</SelectItem>
+                        <SelectItem value="mp">Madhya Pradesh</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">District / जिला *</label>
-                  <Select value={formData.district} onValueChange={(value) => handleInputChange('district', value)}>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="-------------Select Distt--------------" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="azamgarh">Azamgarh</SelectItem>
-                      <SelectItem value="mau">Mau</SelectItem>
-                      <SelectItem value="baliya">Baliya</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">District / जिला *</div>
+                  <div className="col-span-9">
+                    <Select value={formData.district} onValueChange={(value) => handleInputChange('district', value)}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="-------------Select Distt--------------" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="azamgarh">Azamgarh</SelectItem>
+                        <SelectItem value="mau">Mau</SelectItem>
+                        <SelectItem value="baliya">Baliya</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Pin Code / पिन कोड *</label>
-                  <Input
-                    value={formData.pinCode}
-                    onChange={(e) => handleInputChange('pinCode', e.target.value)}
-                    className="mt-1"
-                    placeholder="Enter pin code"
-                  />
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Pin Code / पिन कोड *</div>
+                  <div className="col-span-9">
+                    <Input
+                      value={formData.pinCode}
+                      onChange={(e) => handleInputChange('pinCode', e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Educational/Qualification Details */}
-            <div>
-              <div className="bg-blue-600 text-white px-4 py-2 rounded-t font-semibold">
+            <div className="border border-gray-300">
+              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-medium">
                 Educational / Qualification Details / शैक्षिक / योग्यता का विवरण
               </div>
-              <div className="border border-gray-300 p-4 space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Highest Educational Qualification / उच्चतम शैक्षिक योग्यता *</label>
-                  <Select value={formData.qualification} onValueChange={(value) => handleInputChange('qualification', value)}>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Select One" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="10th">10th</SelectItem>
-                      <SelectItem value="12th">12th</SelectItem>
-                      <SelectItem value="graduate">Graduate</SelectItem>
-                      <SelectItem value="postgraduate">Post Graduate</SelectItem>
-                    </SelectContent>
-                  </Select>
+              <div className="space-y-2 bg-gray-50">
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Highest Educational Qualification / उच्चतम शैक्षिक योग्यता *</div>
+                  <div className="col-span-9">
+                    <Select value={formData.qualification} onValueChange={(value) => handleInputChange('qualification', value)}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select One" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="10th">10th</SelectItem>
+                        <SelectItem value="12th">12th</SelectItem>
+                        <SelectItem value="graduate">Graduate</SelectItem>
+                        <SelectItem value="postgraduate">Post Graduate</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Year of Passing / उत्तीर्ण वर्ष *</label>
-                  <Input
-                    value={formData.yearOfPassing}
-                    onChange={(e) => handleInputChange('yearOfPassing', e.target.value)}
-                    className="mt-1"
-                    placeholder="yyyy"
-                  />
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Year of Passing / उत्तीर्ण वर्ष *</div>
+                  <div className="col-span-9">
+                    <Input
+                      value={formData.yearOfPassing}
+                      onChange={(e) => handleInputChange('yearOfPassing', e.target.value)}
+                      className="h-8 text-xs"
+                      placeholder="yyyy"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Identification Details */}
-            <div>
-              <div className="bg-blue-600 text-white px-4 py-2 rounded-t font-semibold">
+            <div className="border border-gray-300">
+              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-medium">
                 Identification Details / पहचान की सूचना
               </div>
-              <div className="border border-gray-300 p-4 space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Aadhar Card Number / आधार कार्ड संख्या*</label>
-                  <Input
-                    value={formData.aadharNumber}
-                    onChange={(e) => handleInputChange('aadharNumber', e.target.value)}
-                    className="mt-1"
-                    placeholder="Enter Aadhar number"
-                  />
+              <div className="space-y-2 bg-gray-50">
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Aadhar Card Number / आधार कार्ड संख्या*</div>
+                  <div className="col-span-9">
+                    <Input
+                      value={formData.aadharNumber}
+                      onChange={(e) => handleInputChange('aadharNumber', e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Upload Photo / फोटो अपलोड *</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="mt-1 text-gray-700"
-                  />
+                <div className="grid grid-cols-12 gap-2 p-2 bg-blue-100">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Upload Photo / फोटो अपलोड *</div>
+                  <div className="col-span-9">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="text-xs"
+                    />
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Student ID & Password</label>
+                <div className="grid grid-cols-12 gap-2 p-2">
+                  <div className="col-span-3 text-xs text-gray-700 font-medium py-1">Student ID & Password</div>
+                  <div className="col-span-2">
                     <Input
                       value={formData.studentId}
                       readOnly
-                      className="mt-1 bg-gray-100"
+                      className="h-8 text-xs bg-gray-100"
                     />
                   </div>
-                  <div>
+                  <div className="col-span-2">
                     <Input
                       value={formData.password}
                       readOnly
-                      className="mt-1 bg-gray-100"
+                      className="h-8 text-xs bg-gray-100"
                     />
                   </div>
                 </div>
@@ -466,18 +466,18 @@ const StudentRegistrationContent = () => {
             </div>
 
             {/* Declaration */}
-            <div>
-              <div className="bg-blue-600 text-white px-4 py-2 rounded-t font-semibold">
+            <div className="border border-gray-300">
+              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-medium">
                 Declaration
               </div>
-              <div className="border border-gray-300 p-4">
+              <div className="p-3 bg-gray-50">
                 <div className="flex items-start space-x-2">
                   <Checkbox
                     id="declaration"
                     checked={formData.declaration}
                     onCheckedChange={(checked) => handleInputChange('declaration', checked as string)}
                   />
-                  <label htmlFor="declaration" className="text-sm text-gray-700">
+                  <label htmlFor="declaration" className="text-xs text-gray-700">
                     * I, hereby declare that the particulars submitted by me in the Student Reg.
                   </label>
                 </div>
@@ -485,10 +485,10 @@ const StudentRegistrationContent = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex justify-end">
+            <div className="flex justify-end pt-4">
               <Button
                 onClick={handleSubmit}
-                className="bg-black hover:bg-gray-800 text-white font-semibold px-8 py-3 rounded"
+                className="bg-black hover:bg-gray-800 text-white font-semibold px-8 py-2 text-sm"
               >
                 Submit Now
               </Button>
