@@ -1,5 +1,8 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import upsdmLogo from '@/assets/upsdm-logo.png';
+import nabardLogo from '@/assets/nabard-logo.png';
+import indiaEmblem from '@/assets/india-emblem.png';
 
 const GovernmentSchemes = () => {
   const schemes = [
@@ -9,7 +12,7 @@ const GovernmentSchemes = () => {
       ministry: "Ministry of Housing and Urban Poverty Alleviation",
       government: "Government of India",
       description: "Training and placement of more than 1300 urban poor under ICT/Beauty wellness/Textile in Buland-Shahr. To reduce poverty and vulnerability of the urban poor households by enabling them to access gainful self employment and skilled wage employment opportunities, resulting in an appreciable improvement in their livelihoods in a sustainable basis",
-      icon: "🏛️",
+      logoUrl: indiaEmblem,
       color: "from-blue-50 to-blue-100",
       borderColor: "border-blue-200",
       textColor: "text-blue-700",
@@ -21,7 +24,7 @@ const GovernmentSchemes = () => {
       ministry: "Department of Vocational Education and Skill Development",
       government: "Government of Uttar Pradesh",
       description: "Training and Placement of 5400 beneficiaries per year for 3 years under ICT/Retail of Distt Etah / Kasganj / Azamgarh / Deoria / Bahraich. A National Skill Development Policy was launched in 2009 with the aim of skilling 500 million persons by 2022. Under the National Plan, the State of Uttar Pradesh aims to skill over 4 million youth by the end of the 12th Five Year Plan.",
-      icon: "🎯",
+      logoUrl: upsdmLogo,
       color: "from-purple-50 to-purple-100",
       borderColor: "border-purple-200",
       textColor: "text-purple-700",
@@ -33,7 +36,7 @@ const GovernmentSchemes = () => {
       ministry: "Ministry of Panchayati Raj",
       government: "Government of India",
       description: "Capacity Development Program for more than 45000+ PRI beneficiaries of Etah & Kasganj Districts 8994 beneficiaries, Moradabad Distt -9458 Beneficiaries Bijnore Distt -9458 Beneficiaries. Panchayats or village assemblies existed in ancient India as self-governing institutions which had distinct and well-defined functions. The institution of Panchayat",
-      icon: "⚖️",
+      logoUrl: indiaEmblem,
       color: "from-green-50 to-green-100",
       borderColor: "border-green-200",
       textColor: "text-green-700",
@@ -45,7 +48,7 @@ const GovernmentSchemes = () => {
       ministry: "Ministry of Finance",
       government: "Government of India",
       description: "60 Beneficiaries each at Faizabad & Deoria Districts. Promoting cultural and social development of society through the provision of information services, consulting, implementation of education and creative programs that help all-round",
-      icon: "🌾",
+      logoUrl: nabardLogo,
       color: "from-emerald-50 to-emerald-100",
       borderColor: "border-emerald-200",
       textColor: "text-emerald-700",
@@ -87,8 +90,12 @@ const GovernmentSchemes = () => {
                 {/* Card Header with Icon and Title */}
                 <CardHeader className="text-center pb-4">
                   <div className="flex flex-col items-center mb-4">
-                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:rotate-12 transition-transform duration-300">
-                      <span className="text-3xl">{scheme.icon}</span>
+                    <div className="w-20 h-20 bg-white rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 p-2">
+                      <img 
+                        src={scheme.logoUrl} 
+                        alt={`${scheme.title} logo`}
+                        className="w-full h-full object-contain"
+                      />
                     </div>
                     <CardTitle className={`text-2xl font-black ${scheme.titleColor} mb-2`}>
                       {scheme.title}
