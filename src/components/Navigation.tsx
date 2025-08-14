@@ -194,13 +194,14 @@ const Navigation = () => {
               <div className="hidden md:flex items-center space-x-3">
                 <a 
                   href="/donation"
-                  className="group relative transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  className="group relative transition-all duration-300 hover:scale-105 hover:shadow-lg flex flex-col items-center"
                 >
                   <img 
                     src="/lovable-uploads/54cc2f49-d382-49fe-b8b0-de377bceff95.png" 
                     alt="Secure Payment Option" 
                     className="h-12 w-auto drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
                   />
+                  <span className="text-xs text-muted-foreground mt-1 font-medium">SECURE PAYMENT OPTION</span>
                 </a>
               </div>
 
@@ -229,7 +230,7 @@ const Navigation = () => {
               {/* Mobile Payment Option */}
               <a 
                 href="/donation"
-                className="group relative flex items-center justify-center p-4 transition-all duration-300 hover:scale-105 hover:shadow-lg rounded-2xl"
+                className="group relative flex flex-col items-center justify-center p-4 transition-all duration-300 hover:scale-105 hover:shadow-lg rounded-2xl"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <img 
@@ -237,6 +238,7 @@ const Navigation = () => {
                   alt="Secure Payment Option" 
                   className="h-16 w-auto drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
                 />
+                <span className="text-sm text-muted-foreground mt-2 font-medium">SECURE PAYMENT OPTION</span>
               </a>
 
               {/* Quick Stats */}
