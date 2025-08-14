@@ -19,6 +19,7 @@ import EmployeeMasterContent from "@/components/admin/EmployeeMasterContent";
 import StateMasterContent from "@/components/admin/StateMasterContent";
 import DistrictMasterContent from "@/components/admin/DistrictMasterContent";
 import CourseMasterContent from "@/components/admin/CourseMasterContent";
+import AddNewsContent from "@/components/admin/AddNewsContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -41,6 +42,7 @@ const Admin = () => {
     if (path === '/admin/state-master') return 'state-master';
     if (path === '/admin/district-master') return 'district-master';
     if (path === '/admin/course-master') return 'course-master';
+    if (path === '/admin/add-news') return 'add-news';
     return 'dashboard';
   };
 
@@ -325,6 +327,8 @@ const Admin = () => {
                               navigate('/admin/district-master');
                             } else if (subItem.label === "Course Master") {
                               navigate('/admin/course-master');
+                            } else if (subItem.label === "Add News") {
+                              navigate('/admin/add-news');
                             }
                           }}
                         >
@@ -360,7 +364,8 @@ const Admin = () => {
                currentView === 'employee-master' ? 'Employee Master' : 
                 currentView === 'state-master' ? 'State Master' : 
                 currentView === 'district-master' ? 'District Master' : 
-               currentView === 'course-master' ? 'Course Master' : 'Dashboard'}
+                currentView === 'course-master' ? 'Course Master' : 
+               currentView === 'add-news' ? 'Add News' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -374,7 +379,8 @@ const Admin = () => {
                currentView === 'employee-master' ? 'Manage employee information' : 
                 currentView === 'state-master' ? 'Manage state information' : 
                 currentView === 'district-master' ? 'Manage district information' : 
-               currentView === 'course-master' ? 'Manage course information' : 'Control panel'}
+                currentView === 'course-master' ? 'Manage course information' : 
+               currentView === 'add-news' ? 'Manage news and announcements' : 'Control panel'}
             </p>
           </div>
           <div className="flex items-center space-x-6">
@@ -425,6 +431,7 @@ const Admin = () => {
             <Route path="/state-master" element={<StateMasterContent />} />
             <Route path="/district-master" element={<DistrictMasterContent />} />
             <Route path="/course-master" element={<CourseMasterContent />} />
+            <Route path="/add-news" element={<AddNewsContent />} />
           </Routes>
         </div>
 
