@@ -31,27 +31,35 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Clean & Modern Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-muted/5 to-background">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,127,0,0.1),transparent_70%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_40%,rgba(255,127,0,0.05)_50%,transparent_60%)]" />
+      {/* Enhanced Modern Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-primary/2 to-background">
+        {/* Sophisticated Background Pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.08),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.06),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_40%,rgba(59,130,246,0.03)_50%,transparent_60%)]" />
+          
+          {/* Floating geometric elements */}
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-to-br from-primary/10 to-blue-500/5 rounded-full animate-float-slow blur-sm" />
+          <div className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-gradient-to-br from-blue-500/8 to-primary/5 rounded-full animate-float-slower blur-sm" />
+          <div className="absolute top-2/3 right-1/3 w-16 h-16 bg-gradient-to-br from-primary/12 to-blue-600/6 rounded-full animate-float blur-sm" />
+        </div>
         
         <div className="container-custom relative z-10 py-32">
           <div className="max-w-6xl mx-auto text-center space-y-16">
             
-            {/* Clean Header Badge */}
-            <div className="inline-flex items-center space-x-3 bg-primary/10 border border-primary/20 rounded-full px-8 py-4 backdrop-blur-sm">
+            {/* Enhanced Header Badge */}
+            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/10 via-blue-500/8 to-primary/10 border border-primary/20 rounded-full px-8 py-4 backdrop-blur-sm shadow-lg">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              <span className="text-primary font-semibold text-lg">About Our Institution</span>
+              <span className="text-primary font-semibold text-lg tracking-wide">About Our Institution</span>
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
             </div>
 
-            {/* Clean Title Design */}
+            {/* Enhanced Title Design */}
             <div className="space-y-8">
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-tight">
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black leading-tight">
                 <span className="block text-foreground">MATA PHOOLPATI DEVI</span>
-                <span className="block text-gradient bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-primary via-blue-600 to-primary bg-clip-text text-transparent animate-gradient-x">
                   SHIKSHAN SANSTHAN
                 </span>
               </h1>
@@ -66,39 +74,41 @@ const About = () => {
               </div>
             </div>
 
-            {/* Clean Stats Grid */}
+            {/* Enhanced Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-              <div className="text-center space-y-3">
-                <div className="text-5xl font-bold text-primary">5+</div>
+              <div className="group text-center space-y-3 p-6 rounded-2xl bg-gradient-to-br from-card to-card/50 border border-primary/10 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
+                <div className="text-5xl font-black text-primary group-hover:scale-110 transition-transform duration-300">5+</div>
                 <div className="text-muted-foreground font-medium">Years of Excellence</div>
-                <div className="w-16 h-0.5 bg-primary/30 mx-auto rounded-full" />
+                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
               </div>
-              <div className="text-center space-y-3">
-                <div className="text-5xl font-bold text-green-500">25K+</div>
+              <div className="group text-center space-y-3 p-6 rounded-2xl bg-gradient-to-br from-card to-card/50 border border-green-500/10 hover:border-green-500/30 transition-all duration-500 hover:shadow-xl">
+                <div className="text-5xl font-black text-green-500 group-hover:scale-110 transition-transform duration-300">25K+</div>
                 <div className="text-muted-foreground font-medium">Students Empowered</div>
-                <div className="w-16 h-0.5 bg-green-500/30 mx-auto rounded-full" />
+                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-green-500 to-transparent mx-auto rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
               </div>
-              <div className="text-center space-y-3">
-                <div className="text-5xl font-bold text-blue-500">100+</div>
+              <div className="group text-center space-y-3 p-6 rounded-2xl bg-gradient-to-br from-card to-card/50 border border-blue-500/10 hover:border-blue-500/30 transition-all duration-500 hover:shadow-xl">
+                <div className="text-5xl font-black text-blue-500 group-hover:scale-110 transition-transform duration-300">100+</div>
                 <div className="text-muted-foreground font-medium">Expert Faculties</div>
-                <div className="w-16 h-0.5 bg-blue-500/30 mx-auto rounded-full" />
+                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
               </div>
-              <div className="text-center space-y-3">
-                <div className="text-5xl font-bold text-purple-500">95%</div>
+              <div className="group text-center space-y-3 p-6 rounded-2xl bg-gradient-to-br from-card to-card/50 border border-purple-500/10 hover:border-purple-500/30 transition-all duration-500 hover:shadow-xl">
+                <div className="text-5xl font-black text-purple-500 group-hover:scale-110 transition-transform duration-300">95%</div>
                 <div className="text-muted-foreground font-medium">Success Rate</div>
-                <div className="w-16 h-0.5 bg-purple-500/30 mx-auto rounded-full" />
+                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
               </div>
             </div>
 
-            {/* Clean CTA Section */}
+            {/* Enhanced CTA Section */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
-                <GraduationCap className="mr-3 h-6 w-6" />
+              <Button size="lg" className="group bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <GraduationCap className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                 Explore Our Programs
+                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
-              <Button size="lg" variant="outline" className="border-2 border-primary/30 text-primary hover:bg-primary/5 px-10 py-4 rounded-xl font-semibold transition-all duration-300">
-                <Phone className="mr-3 h-5 w-5" />
+              <Button size="lg" variant="outline" className="group border-2 border-primary/30 text-primary hover:bg-primary/5 px-10 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                <Phone className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
                 Contact Us
+                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
             </div>
           </div>

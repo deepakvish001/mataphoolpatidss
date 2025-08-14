@@ -6,18 +6,20 @@ import heroImage from '@/assets/hero-image.jpg';
 const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen bg-background overflow-hidden">
-      {/* Modern Geometric Background */}
+      {/* Enhanced Modern Geometric Background */}
       <div className="absolute inset-0">
-        {/* Animated geometric shapes */}
+        {/* Sophisticated animated geometric shapes */}
         <div className="absolute top-0 right-0 w-1/2 h-full">
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rotate-45 rounded-3xl animate-float"></div>
-          <div className="absolute top-1/2 right-1/6 w-64 h-64 bg-secondary/10 rotate-12 rounded-2xl animate-float" style={{animationDelay: '1s'}}></div>
-          <div className="absolute bottom-1/4 right-1/3 w-48 h-48 bg-primary/8 -rotate-12 rounded-xl animate-float" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-primary/8 to-blue-500/5 rotate-45 rounded-3xl animate-float-slow shadow-2xl"></div>
+          <div className="absolute top-1/2 right-1/6 w-64 h-64 bg-gradient-to-br from-blue-500/6 to-primary/8 rotate-12 rounded-2xl animate-float-slower shadow-xl" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-1/4 right-1/3 w-48 h-48 bg-gradient-to-br from-primary/10 to-blue-600/6 -rotate-12 rounded-xl animate-float shadow-lg" style={{animationDelay: '2s'}}></div>
         </div>
         
-        {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/5"></div>
-        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-background/80 to-transparent"></div>
+        {/* Enhanced gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/3"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.05),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(59,130,246,0.04),transparent_50%)]"></div>
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-background/90 to-transparent"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
@@ -49,16 +51,16 @@ const Hero = () => {
               </p>
             </div>
 
-            {/* Action Buttons */}
+            {/* Enhanced Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group w-full sm:w-auto">
-                <Target className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
+              <Button size="lg" className="group bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <Target className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
                 <span className="sm:hidden">Start Journey</span>
                 <span className="hidden sm:inline">Start Your Journey</span>
                 <ArrowRight className="ml-2 sm:ml-3 h-4 sm:h-5 w-4 sm:w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="border-2 border-primary/30 text-primary hover:bg-primary/5 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl transition-all duration-300 w-full sm:w-auto">
-                <Play className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5" />
+              <Button size="lg" variant="outline" className="group border-2 border-primary/30 text-primary hover:bg-primary/5 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105">
+                <Play className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
                 <span className="sm:hidden">Success Stories</span>
                 <span className="hidden sm:inline">Watch Success Stories</span>
               </Button>
