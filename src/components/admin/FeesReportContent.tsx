@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const FeesReportContent = () => {
   const [feesData] = useState([
@@ -85,106 +84,106 @@ const FeesReportContent = () => {
       {/* Main Content */}
       <div className="px-4 py-6">
         {/* Fees Report Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-500 text-white">
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+        <div className="bg-white rounded-lg shadow overflow-x-auto">
+          <table className="w-full border-collapse border-2 border-gray-800">
+            <thead>
+              <tr className="bg-blue-500">
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[120px]">
                   Edit Delete
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[60px]">
                   id
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[100px]">
                   Receipt
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[100px]">
                   Date
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[150px]">
                   Student
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[80px]">
                   feefor
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[90px]">
                   Totalfee
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[80px]">
                   feepaid
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[80px]">
                   freedue
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[200px]">
                   other
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[100px]">
                   frmid
-                </TableHead>
-                <TableHead className="text-white font-bold text-center border border-gray-300 px-2 py-3 text-sm">
+                </th>
+                <th className="text-white font-bold text-center border-2 border-gray-800 px-3 py-3 text-sm min-w-[150px]">
                   frmname
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {feesData.map((fee) => (
-                <TableRow key={fee.id} className="hover:bg-gray-50">
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
-                    <div className="flex gap-1 justify-center">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {feesData.map((fee, index) => (
+                <tr key={fee.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm">
+                    <div className="flex gap-2 justify-center">
                       <Button 
                         size="sm" 
                         variant="outline" 
-                        className="text-xs px-2 py-1 h-6"
+                        className="text-xs px-3 py-1 h-7 border-gray-400"
                       >
                         Edit
                       </Button>
                       <Button 
                         size="sm" 
                         variant="outline" 
-                        className="text-xs px-2 py-1 h-6"
+                        className="text-xs px-3 py-1 h-7 border-gray-400"
                       >
                         Delete
                       </Button>
                     </div>
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm font-medium">
                     {fee.id}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm">
                     {fee.receipt}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm">
                     {fee.date}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm">
                     {fee.student}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm">
                     {fee.feefor}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm font-medium">
                     {fee.totalfee}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm font-medium">
                     {fee.feepaid}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm font-medium">
                     {fee.freedue}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm">
                     {fee.other}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm">
                     {fee.frmid}
-                  </TableCell>
-                  <TableCell className="border border-gray-300 px-2 py-2 text-center text-sm">
+                  </td>
+                  <td className="border-2 border-gray-800 px-3 py-3 text-center text-sm">
                     {fee.frmname}
-                  </TableCell>
-                </TableRow>
+                  </td>
+                </tr>
               ))}
-            </TableBody>
-          </Table>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
