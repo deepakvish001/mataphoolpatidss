@@ -61,6 +61,7 @@ import FranchiseRegistrationContent from "@/components/admin/FranchiseRegistrati
 import FranchiseManagementContent from "@/components/admin/FranchiseManagementContent";
 import FranchiseApprovalContent from "@/components/admin/FranchiseApprovalContent";
 import FranchiseDataContent from "@/components/admin/FranchiseDataContent";
+import FranchiseRegPrintContent from "@/components/admin/FranchiseRegPrintContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -125,6 +126,7 @@ const Admin = () => {
     if (path === '/admin/franchise-management') return 'franchise-management';
     if (path === '/admin/franchise-approval') return 'franchise-approval';
     if (path === '/admin/franchise-data') return 'franchise-data';
+    if (path === '/admin/franchise-reg-print') return 'franchise-reg-print';
     return 'dashboard';
   };
 
@@ -493,6 +495,8 @@ const Admin = () => {
                               navigate('/admin/franchise-approval');
                             } else if (subItem.label === "Franchise Data") {
                               navigate('/admin/franchise-data');
+                            } else if (subItem.label === "Franchise Reg. Print") {
+                              navigate('/admin/franchise-reg-print');
                             }
                           }}
                         >
@@ -660,6 +664,7 @@ const Admin = () => {
             <Route path="/franchise-management" element={<FranchiseManagementContent />} />
             <Route path="/franchise-approval" element={<FranchiseApprovalContent />} />
             <Route path="/franchise-data" element={<FranchiseDataContent />} />
+            <Route path="/franchise-reg-print" element={<FranchiseRegPrintContent />} />
           </Routes>
         </div>
 
