@@ -8,62 +8,58 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
 
 @layer base {
   :root {
-    /* Core branded light theme backgrounds */
+    /* Core dark white theme backgrounds */
     --background: 0 0% 100%;
-    --foreground: 220 15% 15%;
+    --foreground: 0 0% 0%;
 
-    /* Card system - sophisticated whites with branded touches */
-    --card: 220 20% 99%;
-    --card-foreground: 220 15% 15%;
+    /* Card system - pure white with dark text */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
 
     /* Popover system */
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 0 0% 0%;
 
-    /* Sophisticated dark blue brand system */
-    --primary: 220 90% 35%;
+    /* Dark blue primary system */
+    --primary: 220 100% 40%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 220 90% 30%;
-    --primary-light: 220 90% 95%;
+    --primary-hover: 220 100% 35%;
     
-    /* Enhanced gradient system with brand colors */
-    --text-gradient-enhanced: linear-gradient(135deg, hsl(220 90% 35%) 0%, hsl(230 85% 45%) 30%, hsl(210 95% 40%) 60%, hsl(220 90% 35%) 100%);
-    --shadow-glow: 0 20px 40px -12px hsl(220 90% 35% / 0.25);
+    /* Enhanced gradient system */
+    --text-gradient-enhanced: linear-gradient(135deg, hsl(220 100% 40%) 0%, hsl(230 100% 50%) 30%, hsl(220 100% 40%) 60%, hsl(210 100% 45%) 100%);
+    --shadow-glow: 0 20px 40px -12px hsl(220 100% 40% / 0.2);
 
-    /* Secondary system - sophisticated grays with brand touch */
-    --secondary: 220 25% 96%;
-    --secondary-foreground: 220 15% 25%;
+    /* Secondary system - light gray with dark text */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
 
-    /* Muted system - warm grays */
-    --muted: 220 20% 97%;
-    --muted-foreground: 220 15% 40%;
+    /* Muted system - light grays with dark text */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 20%;
 
-    /* Accent system - brand blue variants */
-    --accent: 220 90% 97%;
-    --accent-foreground: 220 15% 25%;
+    /* Accent system - blue variants */
+    --accent: 220 100% 96%;
+    --accent-foreground: 0 0% 0%;
 
-    /* Status colors - sophisticated palette */
-    --destructive: 0 75% 55%;
+    /* Status colors */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --success: 140 70% 40%;
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
-    --warning: 35 85% 55%;
-    --warning-foreground: 0 0% 100%;
 
-    /* Input and border system - refined */
-    --border: 220 25% 88%;
-    --input: 220 20% 99%;
-    --ring: 220 90% 35%;
+    /* Input and border system */
+    --border: 0 0% 85%;
+    --input: 0 0% 100%;
+    --ring: 220 100% 40%;
 
     /* Border radius */
     --radius: 0.75rem;
 
-    /* Custom branded theme tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(220 25% 99%) 0%, hsl(220 30% 97%) 100%);
-    --card-gradient: linear-gradient(145deg, hsl(220 25% 99%) 0%, hsl(220 20% 98%) 100%);
-    --card-hover-gradient: linear-gradient(145deg, hsl(220 30% 98%) 0%, hsl(220 25% 96%) 100%);
-    --brand-glow: 0 0 30px hsl(220 90% 35% / 0.15);
-    --text-gradient: linear-gradient(135deg, hsl(220 15% 15%) 0%, hsl(220 15% 35%) 100%);
+    /* Custom JITM theme tokens */
+    --hero-gradient: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 99%) 100%);
+    --card-gradient: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(0 0% 99%) 100%);
+    --orange-glow: 0 0 30px hsl(220 100% 40% / 0.15);
+    --text-gradient: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(0 0% 20%) 100%);
     
     /* Typography scale */
     --font-size-xs: 0.75rem;
@@ -76,15 +72,15 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     --font-size-4xl: 2.25rem;
     --font-size-5xl: 3rem;
 
-    /* Sidebar system for branded light theme */
-    --sidebar-background: 220 25% 99%;
-    --sidebar-foreground: 220 15% 15%;
-    --sidebar-primary: 220 90% 35%;
+    /* Sidebar system for dark white theme */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 0%;
+    --sidebar-primary: 220 100% 40%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 97%;
-    --sidebar-accent-foreground: 220 15% 25%;
-    --sidebar-border: 220 25% 88%;
-    --sidebar-ring: 220 90% 35%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 0%;
+    --sidebar-border: 0 0% 85%;
+    --sidebar-ring: 220 100% 40%;
 
     /* Animation timings */
     --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -122,16 +118,12 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     box-shadow: var(--shadow-glow);
   }
 
-  .glow-brand {
-    box-shadow: var(--brand-glow);
-  }
-
   .glow-blue {
-    box-shadow: var(--brand-glow);
+    box-shadow: var(--orange-glow);
   }
 
   .glow-orange {
-    box-shadow: var(--brand-glow);
+    box-shadow: var(--orange-glow);
   }
 
   .hero-gradient {
@@ -140,10 +132,6 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
 
   .card-gradient {
     background: var(--card-gradient);
-  }
-
-  .card-hover-gradient {
-    background: var(--card-hover-gradient);
   }
 
   /* Modern header animations */
@@ -320,30 +308,26 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   }
 
 @layer components {
-  /* Premium branded button variants */
+  /* Enhanced button variants */
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary-hover transition-all duration-300 rounded-xl px-6 py-3 font-semibold shadow-lg hover:shadow-xl hover:glow-brand hover:scale-105;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg px-6 py-3 font-semibold shadow-lg hover:glow-blue hover:scale-105;
   }
 
   .btn-secondary {
-    @apply bg-secondary border-2 border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 rounded-xl px-6 py-3 font-semibold hover:scale-105;
+    @apply bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 rounded-lg px-6 py-3 font-semibold hover:scale-105;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-foreground hover:bg-muted transition-all duration-300 rounded-xl px-4 py-2 hover:scale-105;
+    @apply bg-transparent text-foreground hover:bg-muted transition-all duration-300 rounded-lg px-4 py-2 hover:scale-105;
   }
 
-  /* Sophisticated card styles */
+  /* Enhanced card styles */
   .card-premium {
-    @apply card-gradient border border-border/30 rounded-2xl p-6 backdrop-blur-sm hover:card-hover-gradient hover:border-primary/20 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02];
-  }
-
-  .card-branded {
-    @apply bg-gradient-to-br from-card via-card to-secondary/30 border border-border/40 rounded-2xl p-8 backdrop-blur-sm hover:shadow-2xl hover:border-primary/30 transition-all duration-500;
+    @apply card-gradient border border-border/50 rounded-xl p-6 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:scale-[1.02];
   }
 
   .stats-card {
-    @apply text-center p-8 rounded-2xl border border-primary/15 bg-gradient-to-br from-primary-light to-card backdrop-blur-sm hover:border-primary/40 hover:shadow-xl transition-all duration-500 hover:glow-brand hover:scale-105;
+    @apply text-center p-8 rounded-xl border border-primary/20 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-500 hover:glow-blue hover:scale-105;
   }
 
   /* Enhanced navigation styles */
@@ -352,7 +336,7 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   }
 
   .nav-link::after {
-    @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary via-primary to-primary transition-all duration-300;
+    @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-blue-500 transition-all duration-300;
   }
 
   .nav-link:hover::after {
@@ -368,28 +352,20 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     @apply max-w-7xl mx-auto;
   }
 
-  /* New branded utility classes */
-  .text-shadow-brand {
-    text-shadow: 0 2px 8px hsl(220 90% 35% / 0.15);
+  /* New utility classes */
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  .hover-lift-brand {
-    @apply transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:glow-brand;
+  .hover-lift {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
   }
 
-  .gradient-border-brand {
-    @apply relative bg-gradient-to-r from-primary via-primary to-primary p-[1px] rounded-2xl;
+  .gradient-border {
+    @apply relative bg-gradient-to-r from-primary via-blue-500 to-primary p-[1px] rounded-xl;
   }
 
-  .gradient-border-brand::before {
-    @apply content-[''] absolute inset-[1px] bg-background rounded-[calc(1rem-1px)];
-  }
-
-  .icon-container {
-    @apply w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center transition-all duration-300;
-  }
-
-  .icon-container-large {
-    @apply w-16 h-16 bg-gradient-to-br from-primary/15 to-primary/10 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-lg;
+  .gradient-border::before {
+    @apply content-[''] absolute inset-[1px] bg-background rounded-[calc(0.75rem-1px)];
   }
 }
