@@ -12,6 +12,7 @@ import EditProfileContent from "@/components/admin/EditProfileContent";
 import ChangePasswordContent from "@/components/admin/ChangePasswordContent";
 import VideoContent from "@/components/admin/VideoContent";
 import HeadOfficeContent from "@/components/admin/HeadOfficeContent";
+import MenuContentContent from "@/components/admin/MenuContentContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -27,6 +28,7 @@ const Admin = () => {
     if (path === '/admin/change-password') return 'change-password';
     if (path === '/admin/video') return 'video';
     if (path === '/admin/head-office') return 'head-office';
+    if (path === '/admin/menu-content') return 'menu-content';
     return 'dashboard';
   };
 
@@ -297,6 +299,8 @@ const Admin = () => {
                               navigate('/admin/video');
                             } else if (subItem.label === "Head Office") {
                               navigate('/admin/head-office');
+                            } else if (subItem.label === "Menu Content") {
+                              navigate('/admin/menu-content');
                             }
                           }}
                         >
@@ -325,14 +329,16 @@ const Admin = () => {
                currentView === 'edit-profile' ? 'Admin Profile' : 
                currentView === 'change-password' ? 'Change Password' : 
                currentView === 'video' ? 'Add Videos' : 
-               currentView === 'head-office' ? 'Head Office Details' : 'Dashboard'}
+               currentView === 'head-office' ? 'Head Office Details' : 
+               currentView === 'menu-content' ? 'Add Menu Content' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
                currentView === 'edit-profile' ? 'Edit your profile information' : 
                currentView === 'change-password' ? 'Update your login password' : 
                currentView === 'video' ? 'Upload and manage videos' : 
-               currentView === 'head-office' ? 'Manage head office information' : 'Control panel'}
+               currentView === 'head-office' ? 'Manage head office information' : 
+               currentView === 'menu-content' ? 'Upload and manage menu content' : 'Control panel'}
             </p>
           </div>
           <div className="flex items-center space-x-6">
@@ -376,6 +382,7 @@ const Admin = () => {
             <Route path="/change-password" element={<ChangePasswordContent />} />
             <Route path="/video" element={<VideoContent />} />
             <Route path="/head-office" element={<HeadOfficeContent />} />
+            <Route path="/menu-content" element={<MenuContentContent />} />
           </Routes>
         </div>
 
