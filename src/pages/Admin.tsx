@@ -49,6 +49,7 @@ import StudentMarksheetContent from "@/components/admin/StudentMarksheetContent"
 import StudentAttendanceContent from "@/components/admin/StudentAttendanceContent";
 import StudentAttendanceReportContent from "@/components/admin/StudentAttendanceReportContent";
 import ClassFeesContent from "@/components/admin/ClassFeesContent";
+import FeesReportContent from "@/components/admin/FeesReportContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -101,6 +102,7 @@ const Admin = () => {
     if (path === '/admin/student-attendance') return 'student-attendance';
     if (path === '/admin/student-attendance-report') return 'student-attendance-report';
     if (path === '/admin/class-fees') return 'class-fees';
+    if (path === '/admin/fees-reports') return 'fees-reports';
     return 'dashboard';
   };
 
@@ -445,6 +447,8 @@ const Admin = () => {
                               navigate('/admin/student-attendance-report');
                             } else if (subItem.label === "Class Fees") {
                               navigate('/admin/class-fees');
+                            } else if (subItem.label === "Fees Reports") {
+                              navigate('/admin/fees-reports');
                             }
                           }}
                         >
@@ -600,6 +604,7 @@ const Admin = () => {
             <Route path="/student-attendance" element={<StudentAttendanceContent />} />
             <Route path="/student-attendance-report" element={<StudentAttendanceReportContent />} />
             <Route path="/class-fees" element={<ClassFeesContent />} />
+            <Route path="/fees-reports" element={<FeesReportContent />} />
           </Routes>
         </div>
 
