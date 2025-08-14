@@ -221,23 +221,23 @@ const BankDetailsContent = () => {
       </Card>
 
       {/* Bank Details Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="text-white font-bold text-center py-4">Bank Name</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Account Number</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Branch Name</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">IFSC Code</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">MICR Code</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Bank Photo</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Bank Name</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Account Number</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Branch Name</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">IFSC Code</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">MICR Code</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Bank Photo</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {bankDetails.map((detail) => (
-                <TableRow key={detail.id} className="hover:bg-gray-50">
-                  <TableCell className="p-4">
+              {bankDetails.map((detail, index) => (
+                <TableRow key={detail.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 p-4">
                     <div className="flex items-center space-x-2">
                       <div className="flex space-x-2">
                         <Button
@@ -261,25 +261,25 @@ const BankDetailsContent = () => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {detail.accountNumber}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {detail.branchName}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {detail.ifscCode}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {detail.micrCode}
                   </TableCell>
-                  <TableCell className="text-center p-4">
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
                     {detail.bankPhotoUrl && (
                       <div className="flex justify-center">
                         <img
                           src={detail.bankPhotoUrl}
                           alt="Bank photo"
-                          className="w-16 h-10 object-cover rounded border border-gray-200"
+                          className="w-16 h-10 object-cover rounded border-2 border-gray-400"
                         />
                       </div>
                     )}
