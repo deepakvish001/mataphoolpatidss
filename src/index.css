@@ -20,14 +20,14 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
 
-    /* Orange primary system */
-    --primary: 22 100% 50%;
+    /* Dark blue primary system */
+    --primary: 220 100% 40%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 22 100% 45%;
+    --primary-hover: 220 100% 35%;
     
     /* Enhanced gradient system */
-    --text-gradient-enhanced: linear-gradient(135deg, hsl(22 100% 50%) 0%, hsl(35 100% 60%) 30%, hsl(22 100% 50%) 60%, hsl(10 100% 55%) 100%);
-    --shadow-glow: 0 20px 40px -12px hsl(22 100% 50% / 0.2);
+    --text-gradient-enhanced: linear-gradient(135deg, hsl(220 100% 40%) 0%, hsl(230 100% 50%) 30%, hsl(220 100% 40%) 60%, hsl(210 100% 45%) 100%);
+    --shadow-glow: 0 20px 40px -12px hsl(220 100% 40% / 0.2);
 
     /* Secondary system - light gray with dark text */
     --secondary: 0 0% 96%;
@@ -37,8 +37,8 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 20%;
 
-    /* Accent system - orange variants */
-    --accent: 22 100% 96%;
+    /* Accent system - blue variants */
+    --accent: 220 100% 96%;
     --accent-foreground: 0 0% 0%;
 
     /* Status colors */
@@ -50,7 +50,7 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     /* Input and border system */
     --border: 0 0% 85%;
     --input: 0 0% 100%;
-    --ring: 22 100% 50%;
+    --ring: 220 100% 40%;
 
     /* Border radius */
     --radius: 0.75rem;
@@ -58,7 +58,7 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     /* Custom JITM theme tokens */
     --hero-gradient: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 99%) 100%);
     --card-gradient: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(0 0% 99%) 100%);
-    --orange-glow: 0 0 30px hsl(22 100% 50% / 0.15);
+    --orange-glow: 0 0 30px hsl(220 100% 40% / 0.15);
     --text-gradient: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(0 0% 20%) 100%);
     
     /* Typography scale */
@@ -75,12 +75,12 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     /* Sidebar system for dark white theme */
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 0 0% 0%;
-    --sidebar-primary: 22 100% 50%;
+    --sidebar-primary: 220 100% 40%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 96%;
     --sidebar-accent-foreground: 0 0% 0%;
     --sidebar-border: 0 0% 85%;
-    --sidebar-ring: 22 100% 50%;
+    --sidebar-ring: 220 100% 40%;
 
     /* Animation timings */
     --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -116,6 +116,10 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
 
   .shadow-glow {
     box-shadow: var(--shadow-glow);
+  }
+
+  .glow-blue {
+    box-shadow: var(--orange-glow);
   }
 
   .glow-orange {
@@ -184,7 +188,7 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   .glass-effect {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 127, 0, 0.2);
+    border: 1px solid hsl(220 100% 40% / 0.2);
   }
 
   .magnetic-effect {
@@ -208,7 +212,7 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
     left: 50%;
     width: 0;
     height: 0;
-    background: rgba(255, 127, 0, 0.1);
+    background: hsl(220 100% 40% / 0.1);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
@@ -255,9 +259,9 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   /* Enhanced glow effect */
   .enhanced-glow {
     box-shadow: 
-      0 0 20px rgba(255, 127, 0, 0.3),
-      0 0 40px rgba(255, 127, 0, 0.2),
-      0 0 60px rgba(255, 127, 0, 0.1);
+      0 0 20px hsl(220 100% 40% / 0.3),
+      0 0 40px hsl(220 100% 40% / 0.2),
+      0 0 60px hsl(220 100% 40% / 0.1);
   }
 
   /* Parallax scroll effect */
@@ -306,7 +310,7 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
 @layer components {
   /* Custom button variants */
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg px-6 py-3 font-semibold shadow-lg hover:glow-orange;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg px-6 py-3 font-semibold shadow-lg hover:glow-blue;
   }
 
   .btn-secondary {
@@ -323,7 +327,7 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   }
 
   .stats-card {
-    @apply text-center p-8 rounded-xl border border-primary/20 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 hover:glow-orange;
+    @apply text-center p-8 rounded-xl border border-primary/20 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 hover:glow-blue;
   }
 
   /* Navigation styles */
