@@ -479,16 +479,16 @@ Cutting-edge aesthetics with premium gradients and sophisticated color harmony.
   }
 
   .btn-ghost {
-    @apply glass-ultra text-foreground hover:scale-[1.05] transition-all duration-400 rounded-3xl px-8 py-4 border border-border/20 backdrop-blur-xl;
+    @apply glass-ultra text-foreground hover:scale-[1.05] transition-all duration-300 rounded-3xl px-8 py-4 border border-border/20 backdrop-blur-xl;
   }
 
   /* Ultra-modern card styles */
   .card-premium {
-    @apply crystal-gradient border border-border/20 rounded-3xl p-10 backdrop-blur-xl hover:border-primary/20 hover:shadow-designer hover:glow-ultra transition-all duration-600 hover:scale-[1.03];
+    @apply crystal-gradient border border-border/20 rounded-3xl p-10 backdrop-blur-xl hover:border-primary/20 hover:shadow-designer hover:glow-ultra transition-all duration-500 hover:scale-[1.03];
   }
 
   .stats-card {
-    @apply text-center p-10 rounded-3xl border-2 border-primary/10 glass-ultra backdrop-blur-xl hover:border-primary/40 transition-all duration-600 hover:glow-designer hover:scale-[1.08] hover:neon-glow;
+    @apply text-center p-10 rounded-3xl border-2 border-primary/10 glass-ultra backdrop-blur-xl hover:border-primary/40 transition-all duration-500 hover:glow-designer hover:scale-[1.08] hover:neon-glow;
   }
 
   /* Navigation styles */
