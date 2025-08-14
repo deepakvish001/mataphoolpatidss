@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+// Import payment logos
+import visaLogo from '@/assets/visa-logo.png';
+import mastercardLogo from '@/assets/mastercard-logo.png';
+import maestroLogo from '@/assets/maestro-logo.png';
+import discoverLogo from '@/assets/discover-logo.png';
+import paypalLogo from '@/assets/paypal-logo.png';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -199,15 +205,15 @@ const Navigation = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-green-400 to-purple-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500 -z-10"></div>
                   
                   {/* Payment icons container */}
-                  <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-xl">
+                  <div className="flex items-center space-x-3 bg-gray-50 px-4 py-2 rounded-xl">
                     <div className="text-xs font-semibold text-gray-600 whitespace-nowrap">SECURE PAYMENT</div>
-                    <div className="flex items-center space-x-1">
-                      {/* Individual Payment Logos */}
-                      <div className="w-8 h-5 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-bold">VISA</div>
-                      <div className="w-8 h-5 bg-gradient-to-r from-red-500 to-yellow-500 rounded text-white text-xs flex items-center justify-center font-bold">MC</div>
-                      <div className="w-8 h-5 bg-blue-500 rounded text-white text-xs flex items-center justify-center font-bold">ME</div>
-                      <div className="w-8 h-5 bg-orange-500 rounded text-white text-xs flex items-center justify-center font-bold">DC</div>
-                      <div className="w-8 h-5 bg-blue-700 rounded text-white text-xs flex items-center justify-center font-bold">PP</div>
+                    <div className="flex items-center space-x-2">
+                      {/* Actual Payment Logos */}
+                      <img src={visaLogo} alt="Visa" className="h-6 w-auto object-contain" />
+                      <img src={mastercardLogo} alt="MasterCard" className="h-6 w-auto object-contain" />
+                      <img src={maestroLogo} alt="Maestro" className="h-6 w-auto object-contain" />
+                      <img src={discoverLogo} alt="Discover" className="h-6 w-auto object-contain" />
+                      <img src={paypalLogo} alt="PayPal" className="h-6 w-auto object-contain" />
                     </div>
                   </div>
                   
@@ -263,12 +269,12 @@ const Navigation = () => {
                 </div>
                 
                 {/* Payment logos grid */}
-                <div className="grid grid-cols-5 gap-2 bg-gray-50 p-3 rounded-xl">
-                  <div className="w-12 h-8 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-bold shadow-sm">VISA</div>
-                  <div className="w-12 h-8 bg-gradient-to-r from-red-500 to-yellow-500 rounded text-white text-xs flex items-center justify-center font-bold shadow-sm">MC</div>
-                  <div className="w-12 h-8 bg-blue-500 rounded text-white text-xs flex items-center justify-center font-bold shadow-sm">ME</div>
-                  <div className="w-12 h-8 bg-orange-500 rounded text-white text-xs flex items-center justify-center font-bold shadow-sm">DC</div>
-                  <div className="w-12 h-8 bg-blue-700 rounded text-white text-xs flex items-center justify-center font-bold shadow-sm">PP</div>
+                <div className="flex items-center justify-center space-x-3 bg-gray-50 p-4 rounded-xl">
+                  <img src={visaLogo} alt="Visa" className="h-8 w-auto object-contain" />
+                  <img src={mastercardLogo} alt="MasterCard" className="h-8 w-auto object-contain" />
+                  <img src={maestroLogo} alt="Maestro" className="h-8 w-auto object-contain" />
+                  <img src={discoverLogo} alt="Discover" className="h-8 w-auto object-contain" />
+                  <img src={paypalLogo} alt="PayPal" className="h-8 w-auto object-contain" />
                 </div>
                 
                 {/* CTA */}
