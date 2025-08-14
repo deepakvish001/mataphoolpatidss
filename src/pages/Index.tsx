@@ -3,6 +3,7 @@ import Hero from '@/components/Hero';
 import Welcome from '@/components/Welcome';
 import ModiQuote from '@/components/ModiQuote';
 import MissionCourses from '@/components/MissionCourses';
+import EducationalSlider from '@/components/EducationalSlider';
 import GovernmentSchemes from '@/components/GovernmentSchemes';
 import ImageSlider from '@/components/ImageSlider';
 import Donation from '@/components/Donation';
@@ -18,6 +19,7 @@ const Index = () => {
         <Welcome />
         <ModiQuote />
         <MissionCourses />
+        <EducationalSlider />
         <GovernmentSchemes />
         <ImageSlider />
         <div id="donation">
