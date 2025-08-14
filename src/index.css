@@ -2,43 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-/* JITM Skills Premium Dark Theme Design System
-All colors MUST be HSL. Orange primary, dark backgrounds, white text.
+/* White and Blue Premium Theme Design System
+All colors MUST be HSL. Blue primary, white backgrounds, dark text.
 */
 
 @layer base {
   :root {
-    /* Core dark theme backgrounds */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    /* Core light theme backgrounds */
+    --background: 0 0% 100%;
+    --foreground: 220 14% 16%;
 
-    /* Card system - dark with subtle variations */
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 100%;
+    /* Card system - white with subtle shadows */
+    --card: 0 0% 100%;
+    --card-foreground: 220 14% 16%;
 
     /* Popover system */
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 14% 16%;
 
-    /* Orange primary system */
-    --primary: 22 100% 50%;
+    /* Blue primary system */
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 22 100% 45%;
+    --primary-hover: 217 91% 55%;
     
     /* Enhanced gradient system */
-    --text-gradient-enhanced: linear-gradient(135deg, hsl(22 100% 50%) 0%, hsl(35 100% 60%) 30%, hsl(22 100% 50%) 60%, hsl(10 100% 55%) 100%);
-    --shadow-glow: 0 20px 40px -12px hsl(22 100% 50% / 0.3);
+    --text-gradient-enhanced: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(207 91% 70%) 30%, hsl(217 91% 60%) 60%, hsl(227 91% 65%) 100%);
+    --shadow-glow: 0 20px 40px -12px hsl(217 91% 60% / 0.3);
 
-    /* Secondary system - transparent with orange */
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 22 100% 50%;
+    /* Secondary system - light blue */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 217 91% 60%;
 
-    /* Muted system - dark grays */
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 80%;
+    /* Muted system - light grays */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    /* Accent system - orange variants */
-    --accent: 22 100% 50%;
+    /* Accent system - blue variants */
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
 
     /* Status colors */
@@ -48,18 +48,18 @@ All colors MUST be HSL. Orange primary, dark backgrounds, white text.
     --success-foreground: 0 0% 100%;
 
     /* Input and border system */
-    --border: 0 0% 20%;
-    --input: 0 0% 15%;
-    --ring: 22 100% 50%;
+    --border: 214 32% 91%;
+    --input: 0 0% 100%;
+    --ring: 217 91% 60%;
 
     /* Border radius */
     --radius: 0.75rem;
 
-    /* Custom JITM theme tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(0 0% 8%) 100%);
-    --card-gradient: linear-gradient(145deg, hsl(0 0% 7%) 0%, hsl(0 0% 5%) 100%);
-    --orange-glow: 0 0 30px hsl(22 100% 50% / 0.3);
-    --text-gradient: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 85%) 100%);
+    /* Custom white-blue theme tokens */
+    --hero-gradient: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(207 91% 70%) 100%);
+    --card-gradient: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
+    --blue-glow: 0 0 30px hsl(217 91% 60% / 0.3);
+    --text-gradient: linear-gradient(135deg, hsl(220 14% 16%) 0%, hsl(215 16% 35%) 100%);
     
     /* Typography scale */
     --font-size-xs: 0.75rem;
@@ -72,15 +72,15 @@ All colors MUST be HSL. Orange primary, dark backgrounds, white text.
     --font-size-4xl: 2.25rem;
     --font-size-5xl: 3rem;
 
-    /* Sidebar system for dark theme */
-    --sidebar-background: 0 0% 4%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 22 100% 50%;
+    /* Sidebar system for light theme */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 14% 16%;
+    --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 22 100% 50%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 220 14% 16%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 217 91% 60%;
 
     /* Animation timings */
     --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -118,8 +118,8 @@ All colors MUST be HSL. Orange primary, dark backgrounds, white text.
     box-shadow: var(--shadow-glow);
   }
 
-  .glow-orange {
-    box-shadow: var(--orange-glow);
+  .glow-blue {
+    box-shadow: var(--blue-glow);
   }
 
   .hero-gradient {
@@ -182,9 +182,9 @@ All colors MUST be HSL. Orange primary, dark backgrounds, white text.
   }
 
   .glass-effect {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 127, 0, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.1);
   }
 
   .magnetic-effect {
@@ -255,9 +255,9 @@ All colors MUST be HSL. Orange primary, dark backgrounds, white text.
   /* Enhanced glow effect */
   .enhanced-glow {
     box-shadow: 
-      0 0 20px rgba(255, 127, 0, 0.3),
-      0 0 40px rgba(255, 127, 0, 0.2),
-      0 0 60px rgba(255, 127, 0, 0.1);
+      0 0 20px rgba(59, 130, 246, 0.3),
+      0 0 40px rgba(59, 130, 246, 0.2),
+      0 0 60px rgba(59, 130, 246, 0.1);
   }
 
   /* Parallax scroll effect */
@@ -306,7 +306,7 @@ All colors MUST be HSL. Orange primary, dark backgrounds, white text.
 @layer components {
   /* Custom button variants */
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg px-6 py-3 font-semibold shadow-lg hover:glow-orange;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded-lg px-6 py-3 font-semibold shadow-lg hover:glow-blue;
   }
 
   .btn-secondary {
@@ -323,7 +323,7 @@ All colors MUST be HSL. Orange primary, dark backgrounds, white text.
   }
 
   .stats-card {
-    @apply text-center p-8 rounded-xl border border-primary/20 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 hover:glow-orange;
+    @apply text-center p-8 rounded-xl border border-primary/20 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 hover:glow-blue;
   }
 
   /* Navigation styles */
