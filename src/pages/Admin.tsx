@@ -15,6 +15,7 @@ import HeadOfficeContent from "@/components/admin/HeadOfficeContent";
 import MenuContentContent from "@/components/admin/MenuContentContent";
 import PhotoGalleryContent from "@/components/admin/PhotoGalleryContent";
 import BankDetailsContent from "@/components/admin/BankDetailsContent";
+import EmployeeMasterContent from "@/components/admin/EmployeeMasterContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -33,6 +34,7 @@ const Admin = () => {
     if (path === '/admin/menu-content') return 'menu-content';
     if (path === '/admin/photo-gallery') return 'photo-gallery';
     if (path === '/admin/bank-details') return 'bank-details';
+    if (path === '/admin/employee-master') return 'employee-master';
     return 'dashboard';
   };
 
@@ -309,6 +311,8 @@ const Admin = () => {
                               navigate('/admin/photo-gallery');
                             } else if (subItem.label === "Add Bank Details") {
                               navigate('/admin/bank-details');
+                            } else if (subItem.label === "EMP Master") {
+                              navigate('/admin/employee-master');
                             }
                           }}
                         >
@@ -340,7 +344,8 @@ const Admin = () => {
                currentView === 'head-office' ? 'Head Office Details' : 
                currentView === 'menu-content' ? 'Add Menu Content' : 
                currentView === 'photo-gallery' ? 'Add Photo To Gallery' : 
-               currentView === 'bank-details' ? 'Add Bank Details' : 'Dashboard'}
+               currentView === 'bank-details' ? 'Add Bank Details' : 
+               currentView === 'employee-master' ? 'Employee Master' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -350,7 +355,8 @@ const Admin = () => {
                currentView === 'head-office' ? 'Manage head office information' : 
                currentView === 'menu-content' ? 'Upload and manage menu content' : 
                currentView === 'photo-gallery' ? 'Upload and manage gallery photos' : 
-               currentView === 'bank-details' ? 'Manage bank account details' : 'Control panel'}
+               currentView === 'bank-details' ? 'Manage bank account details' : 
+               currentView === 'employee-master' ? 'Manage employee information' : 'Control panel'}
             </p>
           </div>
           <div className="flex items-center space-x-6">
@@ -397,6 +403,7 @@ const Admin = () => {
             <Route path="/menu-content" element={<MenuContentContent />} />
             <Route path="/photo-gallery" element={<PhotoGalleryContent />} />
             <Route path="/bank-details" element={<BankDetailsContent />} />
+            <Route path="/employee-master" element={<EmployeeMasterContent />} />
           </Routes>
         </div>
 
