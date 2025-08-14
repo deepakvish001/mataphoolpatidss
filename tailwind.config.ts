@@ -38,38 +38,6 @@ export default {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
-				},
-				electric: {
-					DEFAULT: 'hsl(var(--electric))',
-					foreground: 'hsl(var(--electric-foreground))'
-				},
-				magenta: {
-					DEFAULT: 'hsl(var(--magenta))',
-					foreground: 'hsl(var(--magenta-foreground))'
-				},
-				lime: {
-					DEFAULT: 'hsl(var(--lime))',
-					foreground: 'hsl(var(--lime-foreground))'
-				},
-				coral: {
-					DEFAULT: 'hsl(var(--coral))',
-					foreground: 'hsl(var(--coral-foreground))'
-				},
-				violet: {
-					DEFAULT: 'hsl(var(--violet))',
-					foreground: 'hsl(var(--violet-foreground))'
-				},
-				cyan: {
-					DEFAULT: 'hsl(var(--cyan))',
-					foreground: 'hsl(var(--cyan-foreground))'
-				},
-				gold: {
-					DEFAULT: 'hsl(var(--gold))',
-					foreground: 'hsl(var(--gold-foreground))'
-				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
@@ -78,17 +46,13 @@ export default {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'
 				},
-				warning: {
-					DEFAULT: 'hsl(var(--warning))',
-					foreground: 'hsl(var(--warning-foreground))'
-				},
-				info: {
-					DEFAULT: 'hsl(var(--info))',
-					foreground: 'hsl(var(--info-foreground))'
-				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
+				},
+				accent: {
+					DEFAULT: 'hsl(var(--accent))',
+					foreground: 'hsl(var(--accent-foreground))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -153,10 +117,10 @@ export default {
 				},
 				'glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 40px hsl(212 100% 50% / 0.5)'
+						boxShadow: '0 0 20px hsl(22 100% 50% / 0.3)'
 					},
 					'50%': {
-						boxShadow: '0 0 80px hsl(212 100% 50% / 0.8)'
+						boxShadow: '0 0 40px hsl(22 100% 50% / 0.5)'
 					}
 				},
 				'float': {
@@ -247,13 +211,7 @@ export default {
 			},
 			backgroundImage: {
 				'hero-gradient': 'var(--hero-gradient)',
-				'neo-gradient': 'var(--neo-gradient)',
-				'cyber-gradient': 'var(--cyber-gradient)',
-				'plasma-gradient': 'var(--plasma-gradient)',
-				'aurora-ultra': 'var(--aurora-ultra)',
-				'holographic': 'var(--holographic)',
-				'crystal-gradient': 'var(--crystal-gradient)',
-				'glass-ultra': 'var(--glass-ultra)',
+				'card-gradient': 'var(--card-gradient)',
 				'text-gradient': 'var(--text-gradient)'
 			}
 		}
