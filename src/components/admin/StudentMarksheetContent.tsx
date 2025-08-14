@@ -84,7 +84,7 @@ const StudentMarksheetContent = () => {
               <span className="font-medium">ISO 9001:2015 CERTIFIED/No.- </span>
               <span className="text-red-600 font-bold">UQ-252016790</span>
             </div>
-            <div className="text-pink-600 font-bold text-base mb-4 tracking-wide">
+            <div className="text-pink-600 font-bold text-base mb-1 tracking-wide">
               (AwardedtoUndertheManagement)
             </div>
           </div>
