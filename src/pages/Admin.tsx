@@ -30,6 +30,7 @@ import ContactUsContent from "@/components/admin/ContactUsContent";
 import StudentRegistrationContent from "@/components/admin/StudentRegistrationContent";
 import StudentApprovalContent from "@/components/admin/StudentApprovalContent";
 import StudentManagementContent from "@/components/admin/StudentManagementContent";
+import SearchByStudentDataContent from "@/components/admin/SearchByStudentDataContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -63,6 +64,7 @@ const Admin = () => {
     if (path === '/admin/student-registration') return 'student-registration';
     if (path === '/admin/student-approval') return 'student-approval';
     if (path === '/admin/student-management') return 'student-management';
+    if (path === '/admin/search-by-student-data') return 'search-by-student-data';
     return 'dashboard';
   };
 
@@ -369,6 +371,8 @@ const Admin = () => {
                               navigate('/admin/student-approval');
                             } else if (subItem.label === "Student Management") {
                               navigate('/admin/student-management');
+                            } else if (subItem.label === "Search By Student Data") {
+                              navigate('/admin/search-by-student-data');
                             }
                           }}
                         >
@@ -415,7 +419,8 @@ const Admin = () => {
                 currentView === 'contact-us' ? 'My All Contacts' : 
                 currentView === 'student-registration' ? 'Student Registration' : 
                currentView === 'student-approval' ? 'Student Approval' : 
-               currentView === 'student-management' ? 'Student Management' : 'Dashboard'}
+               currentView === 'student-management' ? 'Student Management' : 
+               currentView === 'search-by-student-data' ? 'Search By Student Data' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -500,6 +505,7 @@ const Admin = () => {
             <Route path="/student-registration" element={<StudentRegistrationContent />} />
             <Route path="/student-approval" element={<StudentApprovalContent />} />
             <Route path="/student-management" element={<StudentManagementContent />} />
+            <Route path="/search-by-student-data" element={<SearchByStudentDataContent />} />
           </Routes>
         </div>
 
