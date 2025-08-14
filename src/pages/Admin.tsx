@@ -23,6 +23,7 @@ import AddNewsContent from "@/components/admin/AddNewsContent";
 import AddCourseCategoryContent from "@/components/admin/AddCourseCategoryContent";
 import AddCompetitionCoursesContent from "@/components/admin/AddCompetitionCoursesContent";
 import AddVisionContent from "@/components/admin/AddVisionContent";
+import AddMissionContent from "@/components/admin/AddMissionContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -49,6 +50,7 @@ const Admin = () => {
     if (path === '/admin/add-course-category') return 'add-course-category';
     if (path === '/admin/add-competition-courses') return 'add-competition-courses';
     if (path === '/admin/add-vision') return 'add-vision';
+    if (path === '/admin/add-mission') return 'add-mission';
     return 'dashboard';
   };
 
@@ -341,6 +343,8 @@ const Admin = () => {
                               navigate('/admin/add-competition-courses');
                             } else if (subItem.label === "Add Vision") {
                               navigate('/admin/add-vision');
+                            } else if (subItem.label === "Add Mission") {
+                              navigate('/admin/add-mission');
                             }
                           }}
                         >
@@ -380,7 +384,8 @@ const Admin = () => {
                 currentView === 'add-news' ? 'Add News' : 
                 currentView === 'add-course-category' ? 'Add Course Category' : 
                 currentView === 'add-competition-courses' ? 'Add Competition Courses' : 
-               currentView === 'add-vision' ? 'Add Our Vision' : 'Dashboard'}
+                currentView === 'add-vision' ? 'Add Our Vision' : 
+               currentView === 'add-mission' ? 'Add Our Mission' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -398,7 +403,8 @@ const Admin = () => {
                 currentView === 'add-news' ? 'Manage news and announcements' : 
                 currentView === 'add-course-category' ? 'Manage course categories' : 
                 currentView === 'add-competition-courses' ? 'Manage competition courses and events' : 
-               currentView === 'add-vision' ? 'Manage organization vision' : 'Control panel'}
+                currentView === 'add-vision' ? 'Manage organization vision' : 
+               currentView === 'add-mission' ? 'Manage organization mission' : 'Control panel'}
             </p>
           </div>
           <div className="flex items-center space-x-6">
@@ -453,6 +459,7 @@ const Admin = () => {
             <Route path="/add-course-category" element={<AddCourseCategoryContent />} />
             <Route path="/add-competition-courses" element={<AddCompetitionCoursesContent />} />
             <Route path="/add-vision" element={<AddVisionContent />} />
+            <Route path="/add-mission" element={<AddMissionContent />} />
           </Routes>
         </div>
 
