@@ -56,6 +56,7 @@ import ExpenseMasterContent from "@/components/admin/ExpenseMasterContent";
 import ExpenseEntryContent from "@/components/admin/ExpenseEntryContent";
 import DayBookContent from "@/components/admin/DayBookContent";
 import OpeningBalanceContent from "@/components/admin/OpeningBalanceContent";
+import BalanceSheetContent from "@/components/admin/BalanceSheetContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -115,6 +116,7 @@ const Admin = () => {
     if (path === '/admin/expense-entry') return 'expense-entry';
     if (path === '/admin/day-book') return 'day-book';
     if (path === '/admin/opening-balance') return 'opening-balance';
+    if (path === '/admin/balance-sheet') return 'balance-sheet';
     return 'dashboard';
   };
 
@@ -473,6 +475,8 @@ const Admin = () => {
                               navigate('/admin/day-book');
                             } else if (subItem.label === "Opening Balance") {
                               navigate('/admin/opening-balance');
+                            } else if (subItem.label === "Balance Sheet") {
+                              navigate('/admin/balance-sheet');
                             }
                           }}
                         >
@@ -635,6 +639,7 @@ const Admin = () => {
             <Route path="/expense-entry" element={<ExpenseEntryContent />} />
             <Route path="/day-book" element={<DayBookContent />} />
             <Route path="/opening-balance" element={<OpeningBalanceContent />} />
+            <Route path="/balance-sheet" element={<BalanceSheetContent />} />
           </Routes>
         </div>
 
