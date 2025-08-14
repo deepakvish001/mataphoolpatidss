@@ -34,6 +34,7 @@ import SearchByStudentDataContent from "@/components/admin/SearchByStudentDataCo
 import StudentVerificationContent from "@/components/admin/StudentVerificationContent";
 import VerificationContent from "@/components/admin/VerificationContent";
 import VerificationReportContent from "@/components/admin/VerificationReportContent";
+import StudentDataContent from "@/components/admin/StudentDataContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -71,6 +72,7 @@ const Admin = () => {
     if (path === '/admin/student-verification') return 'student-verification';
     if (path === '/admin/verification') return 'verification';
     if (path === '/admin/verification-report') return 'verification-report';
+    if (path === '/admin/student-data') return 'student-data';
     return 'dashboard';
   };
 
@@ -385,6 +387,8 @@ const Admin = () => {
                               navigate('/admin/verification');
                             } else if (subItem.label === "Verification Report") {
                               navigate('/admin/verification-report');
+                            } else if (subItem.label === "Student Data") {
+                              navigate('/admin/student-data');
                             }
                           }}
                         >
@@ -435,7 +439,8 @@ const Admin = () => {
                currentView === 'search-by-student-data' ? 'Search By Student Data' : 
                currentView === 'student-verification' ? 'Student Verification' : 
                currentView === 'verification' ? 'Verification' : 
-               currentView === 'verification-report' ? 'Verification Report' : 'Dashboard'}
+               currentView === 'verification-report' ? 'Verification Report' : 
+               currentView === 'student-data' ? 'Student Data' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -524,6 +529,7 @@ const Admin = () => {
             <Route path="/student-verification" element={<StudentVerificationContent />} />
             <Route path="/verification" element={<VerificationContent />} />
             <Route path="/verification-report" element={<VerificationReportContent />} />
+            <Route path="/student-data" element={<StudentDataContent />} />
           </Routes>
         </div>
 
