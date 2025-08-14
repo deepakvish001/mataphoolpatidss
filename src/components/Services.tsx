@@ -153,44 +153,73 @@ const Services = () => {
         </div>
 
         {/* Placement Process */}
-        <div className="card-premium">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-semibold text-foreground mb-4">
-              MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN Placement Process
+        <div className="relative overflow-hidden bg-gradient-to-br from-background via-muted/30 to-primary/5 rounded-3xl p-8 sm:p-12 border border-border/50 shadow-2xl backdrop-blur-sm">
+          {/* Background decoration */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-orange-500/10 to-transparent rounded-full blur-2xl"></div>
+          
+          <div className="relative text-center mb-12">
+            <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-400/10 border border-primary/30 rounded-full px-6 py-3 text-sm mb-6 backdrop-blur-sm">
+              <Award className="h-4 w-4 text-primary" />
+              <span className="text-primary font-semibold tracking-wide">Career Journey</span>
+            </div>
+            <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground to-primary bg-clip-text">
+              MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
             </h3>
-            <p className="text-lg text-muted-foreground">
-              Unlocking Your Career Potential
+            <h4 className="text-xl sm:text-2xl font-semibold text-primary mb-4">
+              Placement Process
+            </h4>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              A systematic approach to <span className="text-primary font-semibold">transform your skills</span> into career success
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <span className="text-primary-foreground font-bold text-sm sm:text-base">1</span>
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+            {/* Connecting lines for desktop */}
+            <div className="hidden lg:block absolute top-16 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-primary/50 via-primary to-primary/50"></div>
+            
+            <div className="relative text-center group">
+              <div className="relative w-16 sm:w-20 h-16 sm:h-20 mx-auto mb-6 group-hover:scale-110 transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-orange-500 rounded-2xl shadow-lg group-hover:shadow-primary/25 group-hover:shadow-xl transition-all duration-300"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-xl sm:text-2xl">1</span>
+                </div>
               </div>
-              <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Training</h4>
-              <p className="text-xs sm:text-sm text-muted-foreground">Complete your certified training program</p>
+              <h4 className="font-bold text-foreground mb-3 text-base sm:text-lg">Training</h4>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">Complete your certified training program with expert guidance</p>
             </div>
-            <div className="text-center">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <span className="text-primary-foreground font-bold text-sm sm:text-base">2</span>
+
+            <div className="relative text-center group">
+              <div className="relative w-16 sm:w-20 h-16 sm:h-20 mx-auto mb-6 group-hover:scale-110 transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl shadow-lg group-hover:shadow-blue-500/25 group-hover:shadow-xl transition-all duration-300"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
+                  <span className="text-white font-bold text-xl sm:text-2xl">2</span>
+                </div>
               </div>
-              <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Assessment</h4>
-              <p className="text-xs sm:text-sm text-muted-foreground">Pass online and practical assessments</p>
+              <h4 className="font-bold text-foreground mb-3 text-base sm:text-lg">Assessment</h4>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">Pass comprehensive online and practical evaluations</p>
             </div>
-            <div className="text-center">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <span className="text-primary-foreground font-bold text-sm sm:text-base">3</span>
+
+            <div className="relative text-center group">
+              <div className="relative w-16 sm:w-20 h-16 sm:h-20 mx-auto mb-6 group-hover:scale-110 transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl shadow-lg group-hover:shadow-green-500/25 group-hover:shadow-xl transition-all duration-300"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center">
+                  <span className="text-white font-bold text-xl sm:text-2xl">3</span>
+                </div>
               </div>
-              <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Certification</h4>
-              <p className="text-xs sm:text-sm text-muted-foreground">Receive government recognized certificate</p>
+              <h4 className="font-bold text-foreground mb-3 text-base sm:text-lg">Certification</h4>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">Receive government recognized industry certificate</p>
             </div>
-            <div className="text-center">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <span className="text-primary-foreground font-bold text-sm sm:text-base">4</span>
+
+            <div className="relative text-center group">
+              <div className="relative w-16 sm:w-20 h-16 sm:h-20 mx-auto mb-6 group-hover:scale-110 transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-violet-500 rounded-2xl shadow-lg group-hover:shadow-purple-500/25 group-hover:shadow-xl transition-all duration-300"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                  <span className="text-white font-bold text-xl sm:text-2xl">4</span>
+                </div>
               </div>
-              <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-base">Placement</h4>
-              <p className="text-xs sm:text-sm text-muted-foreground">Get 100% placement assistance</p>
+              <h4 className="font-bold text-foreground mb-3 text-base sm:text-lg">Placement</h4>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">Get 100% guaranteed placement assistance</p>
             </div>
           </div>
         </div>
