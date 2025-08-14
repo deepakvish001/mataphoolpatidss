@@ -23,7 +23,6 @@ const About = () => {
   const centers = [
     { state: "UTTAR PRADESH", district: "AZAMGARH", name: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN HEAD OFFICE", address: "Shanti Nagar Mehmauni Gali Kaptanganj Azamgarh Uttar Pradesh Pin 276141" },
     { state: "UTTAR PRADESH", district: "AMBEDKAR NAGAR", name: "MATA PHOOLPATI DEVI TRAINING CENTRE", address: "Training Centre Ambedkar Nagar, Uttar Pradesh" },
-    { state: "UTTAR PRADESH", district: "BALLIA", name: "MATA PHOOLPATI DEVI TRAINING CENTRE", address: "Training Centre Ballia, Uttar Pradesh" },
     { state: "UTTAR PRADESH", district: "JAUNPUR", name: "MATA PHOOLPATI DEVI TRAINING CENTRE", address: "Training Centre Jaunpur, Uttar Pradesh" },
     { state: "UTTAR PRADESH", district: "MAU", name: "MATA PHOOLPATI DEVI TRAINING CENTRE", address: "Training Centre MAU, Uttar Pradesh" }
   ];
