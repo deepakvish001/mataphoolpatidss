@@ -58,6 +58,7 @@ import DayBookContent from "@/components/admin/DayBookContent";
 import OpeningBalanceContent from "@/components/admin/OpeningBalanceContent";
 import BalanceSheetContent from "@/components/admin/BalanceSheetContent";
 import FranchiseRegistrationContent from "@/components/admin/FranchiseRegistrationContent";
+import FranchiseManagementContent from "@/components/admin/FranchiseManagementContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -119,6 +120,7 @@ const Admin = () => {
     if (path === '/admin/opening-balance') return 'opening-balance';
     if (path === '/admin/balance-sheet') return 'balance-sheet';
     if (path === '/admin/franchise-registration') return 'franchise-registration';
+    if (path === '/admin/franchise-management') return 'franchise-management';
     return 'dashboard';
   };
 
@@ -481,6 +483,8 @@ const Admin = () => {
                               navigate('/admin/balance-sheet');
                             } else if (subItem.label === "Registration") {
                               navigate('/admin/franchise-registration');
+                            } else if (subItem.label === "Franchise Management") {
+                              navigate('/admin/franchise-management');
                             }
                           }}
                         >
@@ -645,6 +649,7 @@ const Admin = () => {
             <Route path="/opening-balance" element={<OpeningBalanceContent />} />
             <Route path="/balance-sheet" element={<BalanceSheetContent />} />
             <Route path="/franchise-registration" element={<FranchiseRegistrationContent />} />
+            <Route path="/franchise-management" element={<FranchiseManagementContent />} />
           </Routes>
         </div>
 
