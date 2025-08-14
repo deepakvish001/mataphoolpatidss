@@ -66,6 +66,8 @@ import FranchiseUploadContent from "@/components/admin/FranchiseUploadContent";
 import ViewFranchiseSupportContent from "@/components/admin/ViewFranchiseSupportContent";
 import MakeFranchiseCertificateContent from "@/components/admin/MakeFranchiseCertificateContent";
 import GenerateFranchiseCertificateContent from "@/components/admin/GenerateFranchiseCertificateContent";
+import PaymentSectionContent from "@/components/admin/PaymentSectionContent";
+import PaymentReportingContent from "@/components/admin/PaymentReportingContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -135,6 +137,8 @@ const Admin = () => {
     if (path === '/admin/view-franchise-support') return 'view-franchise-support';
     if (path === '/admin/make-franchise-certificate') return 'make-franchise-certificate';
     if (path === '/admin/generate-franchise-certificate') return 'generate-franchise-certificate';
+    if (path === '/admin/payment-section') return 'payment-section';
+    if (path === '/admin/payment-reporting') return 'payment-reporting';
     return 'dashboard';
   };
 
@@ -513,6 +517,10 @@ const Admin = () => {
                               navigate('/admin/make-franchise-certificate');
                             } else if (subItem.label === "Generate Franchise Certificate") {
                               navigate('/admin/generate-franchise-certificate');
+                            } else if (subItem.label === "Payment Section") {
+                              navigate('/admin/payment-section');
+                            } else if (subItem.label === "Reporting") {
+                              navigate('/admin/payment-reporting');
                             }
                           }}
                         >
@@ -685,6 +693,8 @@ const Admin = () => {
             <Route path="/view-franchise-support" element={<ViewFranchiseSupportContent />} />
             <Route path="/make-franchise-certificate" element={<MakeFranchiseCertificateContent />} />
             <Route path="/generate-franchise-certificate" element={<GenerateFranchiseCertificateContent />} />
+            <Route path="/payment-section" element={<PaymentSectionContent />} />
+            <Route path="/payment-reporting" element={<PaymentReportingContent />} />
           </Routes>
         </div>
 
