@@ -36,6 +36,7 @@ import VerificationContent from "@/components/admin/VerificationContent";
 import VerificationReportContent from "@/components/admin/VerificationReportContent";
 import StudentDataContent from "@/components/admin/StudentDataContent";
 import StudentRegPrintContent from "@/components/admin/StudentRegPrintContent";
+import MakeStudentAdmitCardContent from "@/components/admin/MakeStudentAdmitCardContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -75,6 +76,7 @@ const Admin = () => {
     if (path === '/admin/verification-report') return 'verification-report';
     if (path === '/admin/student-data') return 'student-data';
     if (path === '/admin/student-reg-print') return 'student-reg-print';
+    if (path === '/admin/make-student-admit-card') return 'make-student-admit-card';
     return 'dashboard';
   };
 
@@ -393,6 +395,8 @@ const Admin = () => {
                               navigate('/admin/student-data');
                             } else if (subItem.label === "Student Reg. Print") {
                               navigate('/admin/student-reg-print');
+                            } else if (subItem.label === "Make Student Admit Card") {
+                              navigate('/admin/make-student-admit-card');
                             }
                           }}
                         >
@@ -535,6 +539,7 @@ const Admin = () => {
             <Route path="/verification-report" element={<VerificationReportContent />} />
             <Route path="/student-data" element={<StudentDataContent />} />
             <Route path="/student-reg-print" element={<StudentRegPrintContent />} />
+            <Route path="/make-student-admit-card" element={<MakeStudentAdmitCardContent />} />
           </Routes>
         </div>
 
