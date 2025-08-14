@@ -40,6 +40,7 @@ import MakeStudentAdmitCardContent from "@/components/admin/MakeStudentAdmitCard
 import StudentAdmitCardReportContent from "@/components/admin/StudentAdmitCardReportContent";
 import GenerateStudentAdmitCardContent from "@/components/admin/GenerateStudentAdmitCardContent";
 import UploadStudentContentContent from "@/components/admin/UploadStudentContentContent";
+import CourseSubjectContent from "@/components/admin/CourseSubjectContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -83,6 +84,7 @@ const Admin = () => {
     if (path === '/admin/student-admit-card-report') return 'student-admit-card-report';
     if (path === '/admin/generate-student-admit-card') return 'generate-student-admit-card';
     if (path === '/admin/upload-student-content') return 'upload-student-content';
+    if (path === '/admin/course-subject') return 'course-subject';
     return 'dashboard';
   };
 
@@ -409,6 +411,8 @@ const Admin = () => {
                               navigate('/admin/generate-student-admit-card');
                             } else if (subItem.label === "Upload Student Content") {
                               navigate('/admin/upload-student-content');
+                            } else if (subItem.label === "Course Subject") {
+                              navigate('/admin/course-subject');
                             }
                           }}
                         >
@@ -555,6 +559,7 @@ const Admin = () => {
             <Route path="/student-admit-card-report" element={<StudentAdmitCardReportContent />} />
             <Route path="/generate-student-admit-card" element={<GenerateStudentAdmitCardContent />} />
             <Route path="/upload-student-content" element={<UploadStudentContentContent />} />
+            <Route path="/course-subject" element={<CourseSubjectContent />} />
           </Routes>
         </div>
 
