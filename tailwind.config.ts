@@ -42,25 +42,33 @@ export default {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
 				},
+				electric: {
+					DEFAULT: 'hsl(var(--electric))',
+					foreground: 'hsl(var(--electric-foreground))'
+				},
+				magenta: {
+					DEFAULT: 'hsl(var(--magenta))',
+					foreground: 'hsl(var(--magenta-foreground))'
+				},
+				lime: {
+					DEFAULT: 'hsl(var(--lime))',
+					foreground: 'hsl(var(--lime-foreground))'
+				},
+				coral: {
+					DEFAULT: 'hsl(var(--coral))',
+					foreground: 'hsl(var(--coral-foreground))'
+				},
 				violet: {
 					DEFAULT: 'hsl(var(--violet))',
 					foreground: 'hsl(var(--violet-foreground))'
 				},
-				emerald: {
-					DEFAULT: 'hsl(var(--emerald))',
-					foreground: 'hsl(var(--emerald-foreground))'
+				cyan: {
+					DEFAULT: 'hsl(var(--cyan))',
+					foreground: 'hsl(var(--cyan-foreground))'
 				},
-				rose: {
-					DEFAULT: 'hsl(var(--rose))',
-					foreground: 'hsl(var(--rose-foreground))'
-				},
-				amber: {
-					DEFAULT: 'hsl(var(--amber))',
-					foreground: 'hsl(var(--amber-foreground))'
-				},
-				indigo: {
-					DEFAULT: 'hsl(var(--indigo))',
-					foreground: 'hsl(var(--indigo-foreground))'
+				gold: {
+					DEFAULT: 'hsl(var(--gold))',
+					foreground: 'hsl(var(--gold-foreground))'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -145,10 +153,10 @@ export default {
 				},
 				'glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 30px hsl(250 84% 54% / 0.4)'
+						boxShadow: '0 0 40px hsl(212 100% 50% / 0.5)'
 					},
 					'50%': {
-						boxShadow: '0 0 60px hsl(250 84% 54% / 0.6)'
+						boxShadow: '0 0 80px hsl(212 100% 50% / 0.8)'
 					}
 				},
 				'float': {
@@ -239,13 +247,13 @@ export default {
 			},
 			backgroundImage: {
 				'hero-gradient': 'var(--hero-gradient)',
-				'premium-gradient': 'var(--premium-gradient)',
-				'ocean-gradient': 'var(--ocean-gradient)',
-				'sunset-gradient': 'var(--sunset-gradient)',
-				'aurora-gradient': 'var(--aurora-gradient)',
-				'royal-gradient': 'var(--royal-gradient)',
-				'card-gradient': 'var(--card-gradient)',
-				'glass-gradient': 'var(--glass-gradient)',
+				'neo-gradient': 'var(--neo-gradient)',
+				'cyber-gradient': 'var(--cyber-gradient)',
+				'plasma-gradient': 'var(--plasma-gradient)',
+				'aurora-ultra': 'var(--aurora-ultra)',
+				'holographic': 'var(--holographic)',
+				'crystal-gradient': 'var(--crystal-gradient)',
+				'glass-ultra': 'var(--glass-ultra)',
 				'text-gradient': 'var(--text-gradient)'
 			}
 		}

@@ -2,95 +2,158 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Premium Modern Theme Design System
-Sophisticated color palette with elegant gradients and premium aesthetics.
+/* Ultra-Modern Designer Theme System
+Cutting-edge aesthetics with premium gradients and sophisticated color harmony.
 */
 
 @layer base {
   :root {
-    /* Core sophisticated backgrounds */
-    --background: 0 0% 98%;
-    --foreground: 215 28% 17%;
+    /* Ultra-modern foundation */
+    --background: 0 0% 99%;
+    --foreground: 224 33% 15%;
 
-    /* Card system - pristine white with elegant shadows */
+    /* Designer card system */
     --card: 0 0% 100%;
-    --card-foreground: 215 28% 17%;
+    --card-foreground: 224 33% 15%;
 
-    /* Popover system */
+    /* Premium popover system */
     --popover: 0 0% 100%;
-    --popover-foreground: 215 28% 17%;
+    --popover-foreground: 224 33% 15%;
 
-    /* Premium Purple-Blue Primary System */
-    --primary: 250 84% 54%;
+    /* Modern Brand Primary - Electric Blue */
+    --primary: 212 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 250 84% 48%;
+    --primary-hover: 212 100% 45%;
     
-    /* Sophisticated Secondary Colors */
-    --secondary: 197 71% 52%;
+    /* Sophisticated Brand Colors */
+    --secondary: 280 100% 65%;
     --secondary-foreground: 0 0% 100%;
     
-    /* Elegant Accent Colors */
-    --accent: 142 69% 58%;
+    --accent: 168 100% 50%;
     --accent-foreground: 0 0% 100%;
     
-    /* Premium Color Palette */
-    --violet: 262 83% 58%;
+    /* Designer Color Palette */
+    --electric: 212 100% 50%;
+    --electric-foreground: 0 0% 100%;
+    --magenta: 320 100% 60%;
+    --magenta-foreground: 0 0% 100%;
+    --lime: 84 100% 59%;
+    --lime-foreground: 224 33% 15%;
+    --coral: 11 100% 60%;
+    --coral-foreground: 0 0% 100%;
+    --violet: 280 100% 65%;
     --violet-foreground: 0 0% 100%;
-    --emerald: 158 64% 52%;
-    --emerald-foreground: 0 0% 100%;
-    --rose: 330 81% 60%;
-    --rose-foreground: 0 0% 100%;
-    --amber: 43 96% 56%;
-    --amber-foreground: 215 28% 17%;
-    --indigo: 239 84% 67%;
-    --indigo-foreground: 0 0% 100%;
+    --cyan: 168 100% 50%;
+    --cyan-foreground: 0 0% 100%;
+    --gold: 45 100% 51%;
+    --gold-foreground: 224 33% 15%;
     
-    /* Sophisticated Gradient System */
-    --text-gradient-premium: linear-gradient(135deg, hsl(250 84% 54%) 0%, hsl(262 83% 58%) 25%, hsl(197 71% 52%) 50%, hsl(142 69% 58%) 75%, hsl(330 81% 60%) 100%);
-    --shadow-premium: 0 25px 50px -12px hsl(250 84% 54% / 0.25);
-    --shadow-luxury: 0 20px 40px -8px hsl(250 84% 54% / 0.3), 0 8px 16px -4px hsl(262 83% 58% / 0.2);
+    /* Ultra-Premium Gradient System */
+    --text-gradient-ultra: linear-gradient(135deg, 
+      hsl(212 100% 50%) 0%, 
+      hsl(280 100% 65%) 15%, 
+      hsl(320 100% 60%) 30%, 
+      hsl(168 100% 50%) 45%, 
+      hsl(84 100% 59%) 60%, 
+      hsl(11 100% 60%) 75%, 
+      hsl(45 100% 51%) 90%, 
+      hsl(212 100% 50%) 100%);
+      
+    --shadow-ultra: 0 32px 64px -12px hsl(212 100% 50% / 0.4);
+    --shadow-designer: 
+      0 4px 16px hsl(212 100% 50% / 0.1), 
+      0 8px 32px hsl(280 100% 65% / 0.1), 
+      0 16px 64px hsl(320 100% 60% / 0.05);
 
-    /* Muted system - subtle and refined */
-    --muted: 220 13% 96%;
-    --muted-foreground: 215 16% 46%;
+    /* Refined muted system */
+    --muted: 220 14% 96%;
+    --muted-foreground: 224 15% 40%;
 
-    /* Status colors - refined */
-    --destructive: 0 72% 51%;
+    /* Designer status colors */
+    --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
-    --success: 142 69% 58%;
+    --success: 120 100% 40%;
     --success-foreground: 0 0% 100%;
-    --warning: 43 96% 56%;
-    --warning-foreground: 215 28% 17%;
-    --info: 197 71% 52%;
+    --warning: 45 100% 51%;
+    --warning-foreground: 224 33% 15%;
+    --info: 212 100% 50%;
     --info-foreground: 0 0% 100%;
 
-    /* Input and border system */
-    --border: 220 13% 91%;
+    /* Ultra-modern inputs */
+    --border: 220 14% 91%;
     --input: 0 0% 100%;
-    --ring: 250 84% 54%;
+    --ring: 212 100% 50%;
 
-    /* Border radius - more modern */
-    --radius: 1rem;
+    /* Designer border radius */
+    --radius: 1.25rem;
 
-    /* Premium gradient collection */
-    --hero-gradient: linear-gradient(135deg, hsl(250 84% 54%) 0%, hsl(262 83% 58%) 50%, hsl(197 71% 52%) 100%);
-    --premium-gradient: linear-gradient(135deg, hsl(250 84% 54%) 0%, hsl(262 83% 58%) 100%);
-    --ocean-gradient: linear-gradient(135deg, hsl(197 71% 52%) 0%, hsl(142 69% 58%) 100%);
-    --sunset-gradient: linear-gradient(135deg, hsl(330 81% 60%) 0%, hsl(43 96% 56%) 100%);
-    --aurora-gradient: linear-gradient(135deg, hsl(262 83% 58%) 0%, hsl(197 71% 52%) 50%, hsl(142 69% 58%) 100%);
-    --royal-gradient: linear-gradient(135deg, hsl(239 84% 67%) 0%, hsl(250 84% 54%) 100%);
+    /* Ultra-Premium Gradient Collection */
+    --hero-gradient: linear-gradient(135deg, 
+      hsl(212 100% 50%) 0%, 
+      hsl(280 100% 65%) 25%, 
+      hsl(320 100% 60%) 50%, 
+      hsl(168 100% 50%) 75%, 
+      hsl(84 100% 59%) 100%);
+      
+    --neo-gradient: linear-gradient(135deg, 
+      hsl(212 100% 50%) 0%, 
+      hsl(280 100% 65%) 100%);
+      
+    --cyber-gradient: linear-gradient(135deg, 
+      hsl(168 100% 50%) 0%, 
+      hsl(84 100% 59%) 100%);
+      
+    --plasma-gradient: linear-gradient(135deg, 
+      hsl(320 100% 60%) 0%, 
+      hsl(11 100% 60%) 100%);
+      
+    --aurora-ultra: linear-gradient(135deg, 
+      hsl(280 100% 65%) 0%, 
+      hsl(212 100% 50%) 25%, 
+      hsl(168 100% 50%) 50%, 
+      hsl(320 100% 60%) 75%, 
+      hsl(45 100% 51%) 100%);
+      
+    --holographic: linear-gradient(135deg, 
+      hsl(212 100% 50%) 0%, 
+      hsl(320 100% 60%) 20%, 
+      hsl(168 100% 50%) 40%, 
+      hsl(280 100% 65%) 60%, 
+      hsl(84 100% 59%) 80%, 
+      hsl(212 100% 50%) 100%);
+      
+    --crystal-gradient: linear-gradient(145deg, 
+      hsl(0 0% 100%) 0%, 
+      hsl(220 14% 99%) 25%, 
+      hsl(212 30% 97%) 50%, 
+      hsl(220 14% 98%) 75%, 
+      hsl(0 0% 100%) 100%);
+      
+    --glass-ultra: linear-gradient(145deg, 
+      hsl(0 0% 100% / 0.9) 0%, 
+      hsl(220 14% 98% / 0.7) 50%, 
+      hsl(0 0% 100% / 0.8) 100%);
     
-    --card-gradient: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 13% 98%) 100%);
-    --glass-gradient: linear-gradient(145deg, hsl(0 0% 100% / 0.8) 0%, hsl(220 13% 98% / 0.6) 100%);
+    /* Ultra-modern effects */
+    --glow-ultra: 0 0 80px hsl(212 100% 50% / 0.5);
+    --glow-designer: 0 0 120px hsl(280 100% 65% / 0.4);
+    --neon-glow: 
+      0 0 20px hsl(212 100% 50% / 0.8),
+      0 0 40px hsl(280 100% 65% / 0.6),
+      0 0 80px hsl(320 100% 60% / 0.4);
     
-    --premium-glow: 0 0 60px hsl(250 84% 54% / 0.4);
-    --luxury-glow: 0 0 80px hsl(262 83% 58% / 0.3);
-    --text-gradient: linear-gradient(135deg, hsl(215 28% 17%) 0%, hsl(215 16% 25%) 100%);
+    /* Premium text gradient */
+    --text-gradient: linear-gradient(135deg, hsl(224 33% 15%) 0%, hsl(224 15% 25%) 100%);
     
-    /* Animation and effects */
-    --shimmer: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.4), transparent);
+    /* Designer animations */
+    --shimmer-ultra: linear-gradient(
+      90deg, 
+      transparent, 
+      hsl(0 0% 100% / 0.6), 
+      transparent
+    );
     
-    /* Typography scale - refined */
+    /* Typography refinements */
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
@@ -100,21 +163,23 @@ Sophisticated color palette with elegant gradients and premium aesthetics.
     --font-size-3xl: 1.875rem;
     --font-size-4xl: 2.25rem;
     --font-size-5xl: 3rem;
+    --font-size-6xl: 3.75rem;
 
-    /* Sidebar system */
+    /* Ultra-modern sidebar */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215 28% 17%;
-    --sidebar-primary: 250 84% 54%;
+    --sidebar-foreground: 224 33% 15%;
+    --sidebar-primary: 212 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 13% 96%;
-    --sidebar-accent-foreground: 215 28% 17%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 250 84% 54%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 224 33% 15%;
+    --sidebar-border: 220 14% 91%;
+    --sidebar-ring: 212 100% 50%;
 
-    /* Animation timings */
-    --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Designer transitions */
+    --transition-base: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
@@ -135,21 +200,27 @@ Sophisticated color palette with elegant gradients and premium aesthetics.
     background-clip: text;
   }
 
-  .text-gradient-premium {
-    background: var(--text-gradient-premium);
+  .text-gradient-ultra {
+    background: var(--text-gradient-ultra);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    background-size: 400% 400%;
-    animation: gradient-flow 6s ease infinite;
+    background-size: 800% 800%;
+    animation: gradient-ultra 8s ease infinite;
   }
 
-  @keyframes gradient-flow {
+  @keyframes gradient-ultra {
     0%, 100% {
       background-position: 0% 50%;
     }
+    25% {
+      background-position: 100% 0%;
+    }
     50% {
-      background-position: 100% 50%;
+      background-position: 100% 100%;
+    }
+    75% {
+      background-position: 0% 100%;
     }
   }
 
@@ -157,48 +228,56 @@ Sophisticated color palette with elegant gradients and premium aesthetics.
     box-shadow: var(--shadow-glow);
   }
 
-  .glow-premium {
-    box-shadow: var(--premium-glow);
+  .glow-ultra {
+    box-shadow: var(--glow-ultra);
   }
 
-  .glow-luxury {
-    box-shadow: var(--luxury-glow);
+  .glow-designer {
+    box-shadow: var(--glow-designer);
   }
 
-  .shadow-premium {
-    box-shadow: var(--shadow-premium);
+  .neon-glow {
+    box-shadow: var(--neon-glow);
   }
 
-  .shadow-luxury {
-    box-shadow: var(--shadow-luxury);
+  .shadow-ultra {
+    box-shadow: var(--shadow-ultra);
+  }
+
+  .shadow-designer {
+    box-shadow: var(--shadow-designer);
   }
 
   .hero-gradient {
     background: var(--hero-gradient);
   }
 
-  .premium-gradient {
-    background: var(--premium-gradient);
+  .neo-gradient {
+    background: var(--neo-gradient);
   }
 
-  .ocean-gradient {
-    background: var(--ocean-gradient);
+  .cyber-gradient {
+    background: var(--cyber-gradient);
   }
 
-  .sunset-gradient {
-    background: var(--sunset-gradient);
+  .plasma-gradient {
+    background: var(--plasma-gradient);
   }
 
-  .aurora-gradient {
-    background: var(--aurora-gradient);
+  .aurora-ultra {
+    background: var(--aurora-ultra);
   }
 
-  .royal-gradient {
-    background: var(--royal-gradient);
+  .holographic {
+    background: var(--holographic);
   }
 
-  .glass-gradient {
-    background: var(--glass-gradient);
+  .crystal-gradient {
+    background: var(--crystal-gradient);
+  }
+
+  .glass-ultra {
+    background: var(--glass-ultra);
   }
 
   .card-gradient {
@@ -257,10 +336,12 @@ Sophisticated color palette with elegant gradients and premium aesthetics.
   }
 
   .glass-effect {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(60px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
   .magnetic-effect {
@@ -328,12 +409,12 @@ Sophisticated color palette with elegant gradients and premium aesthetics.
     }
   }
 
-  /* Enhanced premium glow effect */
+  /* Ultra-modern enhanced glow */
   .enhanced-glow {
     box-shadow: 
-      0 0 30px rgba(124, 58, 237, 0.4),
-      0 0 60px rgba(147, 51, 234, 0.3),
-      0 0 90px rgba(59, 130, 246, 0.2);
+      0 0 40px rgba(0, 123, 255, 0.6),
+      0 0 80px rgba(156, 39, 176, 0.4),
+      0 0 120px rgba(233, 30, 99, 0.3);
   }
 
   /* Parallax scroll effect */
@@ -382,32 +463,32 @@ Sophisticated color palette with elegant gradients and premium aesthetics.
 @layer components {
   /* Custom button variants */
   .btn-primary {
-    @apply premium-gradient text-primary-foreground hover:scale-[1.05] transition-all duration-500 rounded-2xl px-8 py-4 font-semibold shadow-luxury hover:shadow-premium;
+    @apply neo-gradient text-primary-foreground hover:scale-[1.08] transition-all duration-500 rounded-3xl px-10 py-5 font-bold shadow-ultra hover:shadow-designer hover:neon-glow;
   }
 
   .btn-secondary {
-    @apply ocean-gradient text-secondary-foreground hover:scale-[1.05] transition-all duration-500 rounded-2xl px-8 py-4 font-semibold shadow-lg;
+    @apply cyber-gradient text-cyan-foreground hover:scale-[1.08] transition-all duration-500 rounded-3xl px-10 py-5 font-bold shadow-lg;
   }
 
   .btn-accent {
-    @apply sunset-gradient text-amber-foreground hover:scale-[1.05] transition-all duration-500 rounded-2xl px-8 py-4 font-semibold shadow-lg;
+    @apply plasma-gradient text-coral-foreground hover:scale-[1.08] transition-all duration-500 rounded-3xl px-10 py-5 font-bold shadow-lg;
   }
 
   .btn-luxury {
-    @apply royal-gradient text-indigo-foreground hover:scale-[1.05] transition-all duration-500 rounded-2xl px-8 py-4 font-semibold shadow-lg;
+    @apply holographic text-electric-foreground hover:scale-[1.08] transition-all duration-500 rounded-3xl px-10 py-5 font-bold shadow-lg;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-foreground hover:glass-gradient hover:scale-[1.02] transition-all duration-300 rounded-2xl px-6 py-3 border border-border/30;
+    @apply glass-ultra text-foreground hover:scale-[1.05] transition-all duration-400 rounded-3xl px-8 py-4 border border-border/20 backdrop-blur-xl;
   }
 
-  /* Card styles */
+  /* Ultra-modern card styles */
   .card-premium {
-    @apply card-gradient border border-border/30 rounded-3xl p-8 backdrop-blur-sm hover:border-primary/20 hover:shadow-luxury transition-all duration-500 hover:scale-[1.02];
+    @apply crystal-gradient border border-border/20 rounded-3xl p-10 backdrop-blur-xl hover:border-primary/20 hover:shadow-designer hover:glow-ultra transition-all duration-600 hover:scale-[1.03];
   }
 
   .stats-card {
-    @apply text-center p-8 rounded-3xl border-2 border-primary/10 glass-gradient backdrop-blur-xl hover:border-primary/30 transition-all duration-500 hover:glow-premium hover:scale-[1.05];
+    @apply text-center p-10 rounded-3xl border-2 border-primary/10 glass-ultra backdrop-blur-xl hover:border-primary/40 transition-all duration-600 hover:glow-designer hover:scale-[1.08] hover:neon-glow;
   }
 
   /* Navigation styles */
