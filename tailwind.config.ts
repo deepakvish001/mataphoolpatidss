@@ -54,6 +54,22 @@ export default {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
 				},
+				orange: {
+					DEFAULT: 'hsl(var(--orange))',
+					foreground: 'hsl(var(--orange-foreground))'
+				},
+				pink: {
+					DEFAULT: 'hsl(var(--pink))',
+					foreground: 'hsl(var(--pink-foreground))'
+				},
+				green: {
+					DEFAULT: 'hsl(var(--green))',
+					foreground: 'hsl(var(--green-foreground))'
+				},
+				yellow: {
+					DEFAULT: 'hsl(var(--yellow))',
+					foreground: 'hsl(var(--yellow-foreground))'
+				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))'
@@ -212,6 +228,9 @@ export default {
 			backgroundImage: {
 				'hero-gradient': 'var(--hero-gradient)',
 				'card-gradient': 'var(--card-gradient)',
+				'button-gradient': 'var(--button-gradient)',
+				'accent-gradient': 'var(--accent-gradient)',
+				'warm-gradient': 'var(--warm-gradient)',
 				'text-gradient': 'var(--text-gradient)'
 			}
 		}
