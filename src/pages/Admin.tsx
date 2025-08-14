@@ -65,6 +65,7 @@ import FranchiseRegPrintContent from "@/components/admin/FranchiseRegPrintConten
 import FranchiseUploadContent from "@/components/admin/FranchiseUploadContent";
 import ViewFranchiseSupportContent from "@/components/admin/ViewFranchiseSupportContent";
 import MakeFranchiseCertificateContent from "@/components/admin/MakeFranchiseCertificateContent";
+import GenerateFranchiseCertificateContent from "@/components/admin/GenerateFranchiseCertificateContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -133,6 +134,7 @@ const Admin = () => {
     if (path === '/admin/franchise-upload') return 'franchise-upload';
     if (path === '/admin/view-franchise-support') return 'view-franchise-support';
     if (path === '/admin/make-franchise-certificate') return 'make-franchise-certificate';
+    if (path === '/admin/generate-franchise-certificate') return 'generate-franchise-certificate';
     return 'dashboard';
   };
 
@@ -509,6 +511,8 @@ const Admin = () => {
                               navigate('/admin/view-franchise-support');
                             } else if (subItem.label === "Make Franchise Certificate") {
                               navigate('/admin/make-franchise-certificate');
+                            } else if (subItem.label === "Generate Franchise Certificate") {
+                              navigate('/admin/generate-franchise-certificate');
                             }
                           }}
                         >
@@ -680,6 +684,7 @@ const Admin = () => {
             <Route path="/franchise-upload" element={<FranchiseUploadContent />} />
             <Route path="/view-franchise-support" element={<ViewFranchiseSupportContent />} />
             <Route path="/make-franchise-certificate" element={<MakeFranchiseCertificateContent />} />
+            <Route path="/generate-franchise-certificate" element={<GenerateFranchiseCertificateContent />} />
           </Routes>
         </div>
 
