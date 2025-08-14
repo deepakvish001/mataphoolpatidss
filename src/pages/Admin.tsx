@@ -18,6 +18,7 @@ import BankDetailsContent from "@/components/admin/BankDetailsContent";
 import EmployeeMasterContent from "@/components/admin/EmployeeMasterContent";
 import StateMasterContent from "@/components/admin/StateMasterContent";
 import DistrictMasterContent from "@/components/admin/DistrictMasterContent";
+import CourseMasterContent from "@/components/admin/CourseMasterContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -39,6 +40,7 @@ const Admin = () => {
     if (path === '/admin/employee-master') return 'employee-master';
     if (path === '/admin/state-master') return 'state-master';
     if (path === '/admin/district-master') return 'district-master';
+    if (path === '/admin/course-master') return 'course-master';
     return 'dashboard';
   };
 
@@ -321,6 +323,8 @@ const Admin = () => {
                               navigate('/admin/state-master');
                             } else if (subItem.label === "Distt Master") {
                               navigate('/admin/district-master');
+                            } else if (subItem.label === "Course Master") {
+                              navigate('/admin/course-master');
                             }
                           }}
                         >
@@ -355,7 +359,8 @@ const Admin = () => {
                currentView === 'bank-details' ? 'Add Bank Details' : 
                currentView === 'employee-master' ? 'Employee Master' : 
                 currentView === 'state-master' ? 'State Master' : 
-               currentView === 'district-master' ? 'District Master' : 'Dashboard'}
+                currentView === 'district-master' ? 'District Master' : 
+               currentView === 'course-master' ? 'Course Master' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -368,7 +373,8 @@ const Admin = () => {
                currentView === 'bank-details' ? 'Manage bank account details' : 
                currentView === 'employee-master' ? 'Manage employee information' : 
                 currentView === 'state-master' ? 'Manage state information' : 
-               currentView === 'district-master' ? 'Manage district information' : 'Control panel'}
+                currentView === 'district-master' ? 'Manage district information' : 
+               currentView === 'course-master' ? 'Manage course information' : 'Control panel'}
             </p>
           </div>
           <div className="flex items-center space-x-6">
@@ -418,6 +424,7 @@ const Admin = () => {
             <Route path="/employee-master" element={<EmployeeMasterContent />} />
             <Route path="/state-master" element={<StateMasterContent />} />
             <Route path="/district-master" element={<DistrictMasterContent />} />
+            <Route path="/course-master" element={<CourseMasterContent />} />
           </Routes>
         </div>
 
