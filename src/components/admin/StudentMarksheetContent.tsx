@@ -84,9 +84,14 @@ const StudentMarksheetContent = () => {
               <span className="font-medium">ISO 9001:2015 CERTIFIED/No.- </span>
               <span className="text-red-600 font-bold">UQ-252016790</span>
             </div>
-            <div className="text-pink-600 font-bold text-base mb-1 tracking-wide">
+            <div className="text-pink-600 font-bold text-base mb-0 tracking-wide">
               (AwardedtoUndertheManagement)
             </div>
+            
+            {/* Certificate Title - moved here to remove space */}
+            <h2 className="text-xl font-bold text-red-600 tracking-wider mt-0">
+              CERTIFICATE-CUM-MARKS SHEET
+            </h2>
           </div>
 
           {/* Photo placeholder positioned on right */}
@@ -94,13 +99,6 @@ const StudentMarksheetContent = () => {
             <div className="w-24 h-32 border-2 border-black bg-white flex items-center justify-center">
               <div className="w-5 h-5 border border-gray-500"></div>
             </div>
-          </div>
-
-          {/* Certificate Title */}
-          <div className="text-center mb-4">
-            <h2 className="text-xl font-bold text-red-600 tracking-wider">
-              CERTIFICATE-CUM-MARKS SHEET
-            </h2>
           </div>
 
           {/* Certificate Text */}
