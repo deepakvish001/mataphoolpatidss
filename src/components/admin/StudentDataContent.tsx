@@ -87,7 +87,7 @@ const StudentDataContent = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-gray-200 min-h-screen">
+    <div className="w-full max-w-none bg-gray-200 min-h-screen">
       {/* Header */}
       <div className="bg-gray-400 px-6 py-4 border-b border-gray-500">
         <h1 className="text-xl font-medium text-gray-800">Student Data</h1>
@@ -135,22 +135,30 @@ const StudentDataContent = () => {
         {/* Photo Upload */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700">Photo</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
-            className="w-full h-12 border-2 border-gray-400 bg-white p-2 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
-          />
+          <div className="border-2 border-gray-400 bg-white flex">
+            <label className="bg-gray-100 hover:bg-gray-200 border-r border-gray-400 px-4 py-2 cursor-pointer text-sm font-medium text-gray-700">
+              Choose file
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+                className="hidden"
+              />
+            </label>
+            <span className="px-3 py-2 text-gray-500 text-sm flex-1">
+              {formData.photoFile ? formData.photoFile.name : "No file chosen"}
+            </span>
+          </div>
         </div>
 
         {/* Date of Publish */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700">Date of Publish</label>
           <Input
-            type="date"
             value={formData.dateOfPublish}
             onChange={(e) => handleInputChange('dateOfPublish', e.target.value)}
             className="w-full h-12 border-2 border-gray-400 bg-white"
+            placeholder=""
           />
         </div>
 
