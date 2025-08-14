@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown, Key, Video, Building2, Image, MapPin, Map, BookOpen, Newspaper, FolderPlus, Eye, Target, MessageSquare, Phone, HelpCircle, UserPlus, UserCheck, Database, Shield, CheckCircle, Printer, FileOutput, Upload, Hash, FileCheck, Edit, BarChart, Receipt, Wallet, PlusCircle, Book, Scale, Calculator } from "lucide-react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import NewDashboardContent from "@/components/admin/NewDashboardContent";
 import DashboardContent from "@/components/admin/DashboardContent";
 import EditProfileContent from "@/components/admin/EditProfileContent";
 import ChangePasswordContent from "@/components/admin/ChangePasswordContent";
@@ -641,7 +642,7 @@ const Admin = () => {
         {/* Dashboard Content */}
         <div className="flex-1 p-8 bg-gradient-to-br from-gray-50 to-white mt-24 overflow-y-auto">
           <Routes>
-            <Route path="/dashboard" element={<DashboardContent />} />
+            <Route path="/dashboard" element={<NewDashboardContent />} />
             <Route path="/edit-profile" element={<EditProfileContent />} />
             <Route path="/change-password" element={<ChangePasswordContent />} />
             <Route path="/video" element={<VideoContent />} />
