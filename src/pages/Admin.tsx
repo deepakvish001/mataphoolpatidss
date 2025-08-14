@@ -127,9 +127,9 @@ const Admin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Sidebar */}
-      <div className={`${sidebarCollapsed ? 'w-20' : 'w-72'} bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white shadow-2xl transition-all duration-300 ease-in-out`}>
+      <div className={`${sidebarCollapsed ? 'w-20' : 'w-72'} bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white shadow-2xl transition-all duration-300 ease-in-out fixed left-0 top-0 h-full z-40 flex flex-col`}>
         {/* Header */}
         <div className="p-6 border-b border-gray-700/50 bg-gray-800/50">
           <div className="flex items-center justify-between">
@@ -178,41 +178,43 @@ const Admin = () => {
         )}
 
         {/* Navigation */}
-        <div className="p-6">
-          {!sidebarCollapsed && (
-            <div className="text-gray-400 text-xs font-semibold mb-4 uppercase tracking-wider">MAIN NAVIGATION</div>
-          )}
-          <nav className="space-y-2">
-            {sidebarItems.map((item, index) => (
-              <div 
-                key={index} 
-                className={`flex items-center space-x-4 p-3 rounded-xl cursor-pointer transition-all duration-200 group ${
-                  item.active 
-                    ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' 
-                    : 'hover:bg-gray-700/50 hover:shadow-md'
-                }`}
-              >
-                <item.icon className={`h-5 w-5 ${item.color || 'text-gray-400'} group-hover:scale-110 transition-transform duration-200`} />
-                {!sidebarCollapsed && (
-                  <>
-                    <span className={`text-sm font-medium ${item.active ? 'text-white' : 'text-gray-300'} group-hover:text-white transition-colors duration-200`}>
-                      {item.label}
-                    </span>
-                    {item.hasSubmenu && (
-                      <ChevronLeft className="h-4 w-4 ml-auto text-gray-400 group-hover:text-white transition-colors duration-200" />
-                    )}
-                  </>
-                )}
-              </div>
-            ))}
-          </nav>
+        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+          <div className="p-6">
+            {!sidebarCollapsed && (
+              <div className="text-gray-400 text-xs font-semibold mb-4 uppercase tracking-wider">MAIN NAVIGATION</div>
+            )}
+            <nav className="space-y-2">
+              {sidebarItems.map((item, index) => (
+                <div 
+                  key={index} 
+                  className={`flex items-center space-x-4 p-3 rounded-xl cursor-pointer transition-all duration-200 group ${
+                    item.active 
+                      ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' 
+                      : 'hover:bg-gray-700/50 hover:shadow-md'
+                  }`}
+                >
+                  <item.icon className={`h-5 w-5 ${item.color || 'text-gray-400'} group-hover:scale-110 transition-transform duration-200`} />
+                  {!sidebarCollapsed && (
+                    <>
+                      <span className={`text-sm font-medium ${item.active ? 'text-white' : 'text-gray-300'} group-hover:text-white transition-colors duration-200`}>
+                        {item.label}
+                      </span>
+                      {item.hasSubmenu && (
+                        <ChevronLeft className="h-4 w-4 ml-auto text-gray-400 group-hover:text-white transition-colors duration-200" />
+                      )}
+                    </>
+                  )}
+                </div>
+              ))}
+            </nav>
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className={`flex-1 flex flex-col ${sidebarCollapsed ? 'ml-20' : 'ml-72'} transition-all duration-300`}>
         {/* Top Bar */}
-        <div className="bg-white/80 backdrop-blur-sm shadow-xl border-b border-gray-200 p-6 flex items-center justify-between">
+        <div className="bg-white/80 backdrop-blur-sm shadow-xl border-b border-gray-200 p-6 flex items-center justify-between fixed top-0 right-0 left-0 z-30" style={{ left: sidebarCollapsed ? '80px' : '288px' }}>
           <div>
             <h1 className="text-3xl font-bold text-gray-800 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
               Dashboard
@@ -253,7 +255,7 @@ const Admin = () => {
         </div>
 
         {/* Dashboard Content */}
-        <div className="flex-1 p-8 bg-gradient-to-br from-gray-50 to-white">
+        <div className="flex-1 p-8 bg-gradient-to-br from-gray-50 to-white mt-24 overflow-y-auto">
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             {statCards.map((card, index) => (
