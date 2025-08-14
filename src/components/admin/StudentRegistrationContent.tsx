@@ -334,49 +334,49 @@ const StudentRegistrationContent = () => {
         </div>
 
         {/* Address Details */}
-        <div className="border border-gray-300 border-t-0">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium">
+        <div className="border-collapse">
+          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
             Address Details / पता विवरण
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-white">
                 Full Address / पता *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
                 <Input
                   value={formData.fullAddress}
                   onChange={(e) => handleInputChange('fullAddress', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 City Name / शहर का नाम *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-white">
                 <Input
                   value={formData.cityName}
                   onChange={(e) => handleInputChange('cityName', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-blue-50">
                 State / राज्य *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-white">
                 <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="-------------Select State--------------" />
                   </SelectTrigger>
                   <SelectContent>
@@ -389,14 +389,14 @@ const StudentRegistrationContent = () => {
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 District / जिला *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
                 <Select value={formData.district} onValueChange={(value) => handleInputChange('district', value)}>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="-------------Select Distt--------------" />
                   </SelectTrigger>
                   <SelectContent>
@@ -409,16 +409,16 @@ const StudentRegistrationContent = () => {
             </div>
           </div>
 
-          <div>
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-white">
                 Pin Code / पिन कोड *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-white">
                 <Input
                   value={formData.pinCode}
                   onChange={(e) => handleInputChange('pinCode', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
@@ -426,19 +426,19 @@ const StudentRegistrationContent = () => {
         </div>
 
         {/* Educational/Qualification Details */}
-        <div className="border border-gray-300 border-t-0">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium">
+        <div className="border-collapse">
+          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
             Educational / Qualification Details / शैक्षिक / योग्यता का विवरण
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-blue-50">
                 Highest Educational Qualification / उच्चतम शैक्षिक योग्यता *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-white">
                 <Select value={formData.qualification} onValueChange={(value) => handleInputChange('qualification', value)}>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="Select One" />
                   </SelectTrigger>
                   <SelectContent>
@@ -452,16 +452,16 @@ const StudentRegistrationContent = () => {
             </div>
           </div>
 
-          <div>
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 Year of Passing / उत्तीर्ण वर्ष *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
                 <Input
                   value={formData.yearOfPassing}
                   onChange={(e) => handleInputChange('yearOfPassing', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                   placeholder="yyyy"
                 />
               </div>
@@ -470,58 +470,58 @@ const StudentRegistrationContent = () => {
         </div>
 
         {/* Identification Details */}
-        <div className="border border-gray-300 border-t-0">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium">
+        <div className="border-collapse">
+          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
             Identification Details / पहचान की सूचना
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-white">
                 Aadhar Card Number / आधार कार्ड संख्या*
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
                 <Input
                   value={formData.aadharNumber}
                   onChange={(e) => handleInputChange('aadharNumber', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 Upload Photo / फोटो अपलोड *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-white">
                 <input
                   type="file"
                   accept="image/*"
-                  className="text-xs"
+                  className="text-xs border-2 border-gray-400 bg-white p-1 rounded"
                 />
               </div>
             </div>
           </div>
 
-          <div>
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-blue-50">
                 Student ID & Password
               </div>
-              <div className="col-span-4 px-3 py-2 border-r border-gray-300 flex items-center">
+              <div className="col-span-4 px-3 py-2 border-r-2 border-gray-600 flex items-center bg-white">
                 <Input
                   value={formData.studentId}
                   readOnly
-                  className="h-8 text-xs border-gray-300 bg-gray-100"
+                  className="h-8 text-xs border-2 border-gray-400 bg-gray-100"
                 />
               </div>
-              <div className="col-span-5 px-3 py-2 flex items-center">
+              <div className="col-span-5 px-3 py-2 flex items-center bg-white">
                 <Input
                   value={formData.password}
                   readOnly
-                  className="h-8 text-xs border-gray-300 bg-gray-100"
+                  className="h-8 text-xs border-2 border-gray-400 bg-gray-100"
                 />
               </div>
             </div>
@@ -529,24 +529,24 @@ const StudentRegistrationContent = () => {
         </div>
 
         {/* Declaration */}
-        <div className="border border-gray-300 border-t-0">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium">
+        <div className="border-collapse">
+          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
             Declaration
           </div>
-          <div className="p-4 bg-gray-50 flex justify-between items-center">
+          <div className="p-4 bg-gray-50 flex justify-between items-center border-2 border-gray-600 border-t-0">
             <div className="flex items-start space-x-2">
               <Checkbox
                 id="declaration"
                 checked={formData.declaration}
                 onCheckedChange={(checked) => handleInputChange('declaration', checked as string)}
               />
-              <label htmlFor="declaration" className="text-sm text-gray-700">
+              <label htmlFor="declaration" className="text-sm text-gray-700 font-medium">
                 * I, hereby declare that the particulars submitted by me in the Student Reg.
               </label>
             </div>
             <Button
               onClick={handleSubmit}
-              className="bg-black hover:bg-gray-800 text-white font-semibold px-8 py-2 text-sm"
+              className="bg-black hover:bg-gray-800 text-white font-semibold px-8 py-2 text-sm border-2 border-black"
             >
               Submit Now
             </Button>
