@@ -39,6 +39,7 @@ import StudentRegPrintContent from "@/components/admin/StudentRegPrintContent";
 import MakeStudentAdmitCardContent from "@/components/admin/MakeStudentAdmitCardContent";
 import StudentAdmitCardReportContent from "@/components/admin/StudentAdmitCardReportContent";
 import GenerateStudentAdmitCardContent from "@/components/admin/GenerateStudentAdmitCardContent";
+import UploadStudentContentContent from "@/components/admin/UploadStudentContentContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -81,6 +82,7 @@ const Admin = () => {
     if (path === '/admin/make-student-admit-card') return 'make-student-admit-card';
     if (path === '/admin/student-admit-card-report') return 'student-admit-card-report';
     if (path === '/admin/generate-student-admit-card') return 'generate-student-admit-card';
+    if (path === '/admin/upload-student-content') return 'upload-student-content';
     return 'dashboard';
   };
 
@@ -405,6 +407,8 @@ const Admin = () => {
                               navigate('/admin/student-admit-card-report');
                             } else if (subItem.label === "Generate Student Admit Card") {
                               navigate('/admin/generate-student-admit-card');
+                            } else if (subItem.label === "Upload Student Content") {
+                              navigate('/admin/upload-student-content');
                             }
                           }}
                         >
@@ -550,6 +554,7 @@ const Admin = () => {
             <Route path="/make-student-admit-card" element={<MakeStudentAdmitCardContent />} />
             <Route path="/student-admit-card-report" element={<StudentAdmitCardReportContent />} />
             <Route path="/generate-student-admit-card" element={<GenerateStudentAdmitCardContent />} />
+            <Route path="/upload-student-content" element={<UploadStudentContentContent />} />
           </Routes>
         </div>
 
