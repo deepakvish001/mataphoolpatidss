@@ -69,6 +69,7 @@ import GenerateFranchiseCertificateContent from "@/components/admin/GenerateFran
 import PaymentSectionContent from "@/components/admin/PaymentSectionContent";
 import PaymentReportingContent from "@/components/admin/PaymentReportingContent";
 import StudentEditingContent from "@/components/admin/StudentEditingContent";
+import AdminFooter from "@/components/admin/AdminFooter";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -704,14 +705,7 @@ const Admin = () => {
         </div>
 
         {/* Footer */}
-        <div className="bg-gradient-to-r from-gray-800 to-gray-900 border-t border-gray-700 p-6 text-center shadow-2xl">
-          <div className="text-sm text-gray-300 font-medium">
-            Copyright © 2020 <span className="text-blue-400 font-bold hover:text-blue-300 transition-colors duration-200 cursor-pointer">Utthan Social</span>. All rights reserved. 
-          </div>
-          <div className="text-xs text-gray-400 mt-2">
-            Design By <span className="font-bold text-purple-400 hover:text-purple-300 transition-colors duration-200 cursor-pointer">Vivek Yadav</span>
-          </div>
-        </div>
+        <AdminFooter />
       </div>
     </div>
   );
