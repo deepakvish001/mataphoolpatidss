@@ -386,10 +386,10 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   }
 
   .icon-container {
-    @apply w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-primary/20 group-hover:to-primary/10;
+    @apply w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center transition-all duration-300;
   }
 
   .icon-container-large {
-    @apply w-16 h-16 bg-gradient-to-br from-primary/15 to-primary/8 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-primary/25 group-hover:to-primary/15 shadow-lg;
+    @apply w-16 h-16 bg-gradient-to-br from-primary/15 to-primary/10 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-lg;
   }
 }
