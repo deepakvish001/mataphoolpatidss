@@ -68,6 +68,7 @@ import MakeFranchiseCertificateContent from "@/components/admin/MakeFranchiseCer
 import GenerateFranchiseCertificateContent from "@/components/admin/GenerateFranchiseCertificateContent";
 import PaymentSectionContent from "@/components/admin/PaymentSectionContent";
 import PaymentReportingContent from "@/components/admin/PaymentReportingContent";
+import StudentEditingContent from "@/components/admin/StudentEditingContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -139,6 +140,7 @@ const Admin = () => {
     if (path === '/admin/generate-franchise-certificate') return 'generate-franchise-certificate';
     if (path === '/admin/payment-section') return 'payment-section';
     if (path === '/admin/payment-reporting') return 'payment-reporting';
+    if (path === '/admin/student-editing') return 'student-editing';
     return 'dashboard';
   };
 
@@ -521,6 +523,8 @@ const Admin = () => {
                               navigate('/admin/payment-section');
                             } else if (subItem.label === "Reporting") {
                               navigate('/admin/payment-reporting');
+                            } else if (subItem.label === "Student_Editing") {
+                              navigate('/admin/student-editing');
                             }
                           }}
                         >
@@ -695,6 +699,7 @@ const Admin = () => {
             <Route path="/generate-franchise-certificate" element={<GenerateFranchiseCertificateContent />} />
             <Route path="/payment-section" element={<PaymentSectionContent />} />
             <Route path="/payment-reporting" element={<PaymentReportingContent />} />
+            <Route path="/student-editing" element={<StudentEditingContent />} />
           </Routes>
         </div>
 
