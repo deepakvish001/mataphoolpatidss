@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import securePaymentWhite from '@/assets/secure-payment-white.png';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -201,8 +202,8 @@ const Navigation = () => {
                   {/* Payment icons */}
                   <div className="relative">
                     <img 
-                      src="/lovable-uploads/6c6e5574-a79c-4491-9b27-f19a22d00a2c.png" 
-                      alt="Secure Payment" 
+                      src={securePaymentWhite} 
+                      alt="Secure Payment Options" 
                       className="h-7 w-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
@@ -250,8 +251,8 @@ const Navigation = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500 -z-10"></div>
                 
                 <img 
-                  src="/lovable-uploads/6c6e5574-a79c-4491-9b27-f19a22d00a2c.png" 
-                  alt="Secure Payment" 
+                  src={securePaymentWhite} 
+                  alt="Secure Payment Options" 
                   className="h-10 w-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="flex flex-col items-center">
