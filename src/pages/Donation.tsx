@@ -85,12 +85,22 @@ const DonationPage = () => {
                   🏛️ AXIS BANK
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700 transition-colors">
-                    <span className="text-white">Open AXIS BANK Branch Locator</span>
-                  </div>
-                  <div className="bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700 transition-colors">
-                    <span className="text-white">Login to AXIS BANK Internet Banking</span>
-                  </div>
+                  <a 
+                    href="https://www.axisbank.com/corporate/branch-atm-locator" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700 transition-all duration-300 hover:scale-105 text-center block"
+                  >
+                    <span className="text-white font-medium">Open AXIS BANK Branch Locator</span>
+                  </a>
+                  <a 
+                    href="https://www.axisbank.com/corporate/online-banking" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700 transition-all duration-300 hover:scale-105 text-center block"
+                  >
+                    <span className="text-white font-medium">Login to AXIS BANK Internet Banking</span>
+                  </a>
                 </div>
               </div>
               
