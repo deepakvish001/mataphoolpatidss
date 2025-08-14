@@ -149,11 +149,16 @@ const Admin = () => {
 
   const toggleSubmenu = (index: number) => {
     const newOpenSubmenus = new Set(openSubmenus);
+    
     if (newOpenSubmenus.has(index)) {
+      // If the clicked submenu is already open, close it
       newOpenSubmenus.delete(index);
     } else {
+      // Close all other submenus and open only the clicked one
+      newOpenSubmenus.clear();
       newOpenSubmenus.add(index);
     }
+    
     setOpenSubmenus(newOpenSubmenus);
   };
 
