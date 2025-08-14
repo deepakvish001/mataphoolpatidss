@@ -166,27 +166,27 @@ const VerificationReportContent = () => {
       </div>
 
       {/* Verification Report Table */}
-      <div className="border-0 bg-white">
+      <div className="border-2 border-gray-600 bg-white">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse min-w-[1800px]">
             <thead>
               <tr className="bg-blue-600 text-white">
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[80px]">State</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[80px]">Distt</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[120px]">center_code</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[130px]">Enrollment_no</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[100px]">dob</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[150px]">Name</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[280px]">Course_Name</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[200px]">Photo</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[200px]">Certificate</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[250px]">Marksheet</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[80px]">State</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[80px]">Distt</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[120px]">center_code</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[130px]">Enrollment_no</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[100px]">dob</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[150px]">Name</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[280px]">Course_Name</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[200px]">Photo</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[200px]">Certificate</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[250px]">Marksheet</th>
               </tr>
             </thead>
             <tbody>
               {students.map((student, index) => (
                 <tr key={student.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                  <td className="border-0 px-3 py-3 text-xs">
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">
                     <div className="flex gap-1 mb-2">
                       <Button
                         variant="link"
@@ -203,17 +203,17 @@ const VerificationReportContent = () => {
                         Delete
                       </Button>
                     </div>
-                    <div>{student.state}</div>
+                    <div className="font-medium">{student.state}</div>
                   </td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.district}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.centerCode}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.enrollmentNo}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.dob}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.name}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.courseName}</td>
-                  <td className="border-0 px-3 py-3 text-xs break-all">{student.photo}</td>
-                  <td className="border-0 px-3 py-3 text-xs break-all">{student.certificate}</td>
-                  <td className="border-0 px-3 py-3 text-xs break-all">{student.marksheet}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.district}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.centerCode}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.enrollmentNo}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.dob}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.name}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.courseName}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs break-all">{student.photo}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs break-all">{student.certificate}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs break-all">{student.marksheet}</td>
                 </tr>
               ))}
             </tbody>

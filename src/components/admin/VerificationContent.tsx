@@ -157,44 +157,44 @@ const VerificationContent = () => {
       </div>
 
       {/* Verification Table */}
-      <div className="border-0 bg-white">
+      <div className="border-2 border-gray-600 bg-white">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-blue-600 text-white">
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[80px]">State</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[80px]">Distt</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[120px]">center_code</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[130px]">Enrollment_no</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[100px]">dob</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[150px]">Name</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[250px]">Course_Name</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[100px]">Photo</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[100px]">Certificate</th>
-                <th className="border-2 border-white px-3 py-3 text-sm font-medium text-left min-w-[100px]">Marksheet</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[80px]">State</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[80px]">Distt</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[120px]">center_code</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[130px]">Enrollment_no</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[100px]">dob</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[150px]">Name</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[250px]">Course_Name</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[100px]">Photo</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[100px]">Certificate</th>
+                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[100px]">Marksheet</th>
               </tr>
             </thead>
             <tbody>
               {students.map((student, index) => (
                 <tr key={student.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                  <td className="border-0 px-3 py-3 text-xs">
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">
                     <Button
                       variant="link"
                       onClick={() => handleDelete(student.id)}
-                      className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs"
+                      className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs mb-2"
                     >
                       Delete
                     </Button>
-                    <div className="mt-1">{student.state}</div>
+                    <div className="font-medium">{student.state}</div>
                   </td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.district}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.centerCode}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.enrollmentNo}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.dob}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.name}</td>
-                  <td className="border-0 px-3 py-3 text-xs">{student.courseName}</td>
-                  <td className="border-0 px-3 py-3">
-                    <div className="w-16 h-16 border border-gray-300 bg-gray-50 flex items-center justify-center">
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.district}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.centerCode}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.enrollmentNo}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.dob}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.name}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.courseName}</td>
+                  <td className="border-2 border-gray-600 px-3 py-3">
+                    <div className="w-16 h-16 border-2 border-gray-400 bg-gray-50 flex items-center justify-center">
                       {student.photo ? (
                         <img 
                           src={student.photo} 
@@ -206,8 +206,8 @@ const VerificationContent = () => {
                       )}
                     </div>
                   </td>
-                  <td className="border-0 px-3 py-3">
-                    <div className="w-16 h-16 border border-gray-300 bg-gray-50 flex items-center justify-center">
+                  <td className="border-2 border-gray-600 px-3 py-3">
+                    <div className="w-16 h-16 border-2 border-gray-400 bg-gray-50 flex items-center justify-center">
                       {student.certificate ? (
                         <img 
                           src={student.certificate} 
@@ -219,8 +219,8 @@ const VerificationContent = () => {
                       )}
                     </div>
                   </td>
-                  <td className="border-0 px-3 py-3">
-                    <div className="w-16 h-16 border border-gray-300 bg-gray-50 flex items-center justify-center">
+                  <td className="border-2 border-gray-600 px-3 py-3">
+                    <div className="w-16 h-16 border-2 border-gray-400 bg-gray-50 flex items-center justify-center">
                       {student.marksheet ? (
                         <img 
                           src={student.marksheet} 
