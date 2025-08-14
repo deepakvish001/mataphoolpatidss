@@ -1,6 +1,7 @@
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import ModiQuote from '@/components/ModiQuote';
+import MissionCourses from '@/components/MissionCourses';
 import Stats from '@/components/Stats';
 import About from '@/components/About';
 import Services from '@/components/Services';
@@ -17,6 +18,7 @@ const Index = () => {
       <main>
         <Hero />
         <ModiQuote />
+        <MissionCourses />
         <Stats />
         <About />
         <Services />
