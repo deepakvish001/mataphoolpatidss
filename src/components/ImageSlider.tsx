@@ -2,16 +2,26 @@ import React from 'react';
 
 const ImageSlider = () => {
   const images = [
-    '/lovable-uploads/767db9eb-7c2e-4b94-869d-d7b52c3b85bc.png',
-    '/lovable-uploads/826f162e-1417-45ee-bec0-7b1539fd2090.png',
-    '/lovable-uploads/88b8f60b-e761-455e-b18f-01d8271389a5.png',
-    '/lovable-uploads/857ae7b2-1d84-4084-9efd-ad9aa8f23eb8.png',
-    '/lovable-uploads/bd4748be-2192-4dd2-a780-086700f48940.png',
-    '/lovable-uploads/376bf80e-326d-4c04-8d95-d167152497f9.png',
-    '/lovable-uploads/124478ce-accd-4ae6-8894-6702c3ec546d.png',
-    '/lovable-uploads/053fbcea-43b7-49b0-ab13-2bef1dfa1237.png',
-    '/lovable-uploads/9620e816-f7c5-4d6f-abd0-4af4654dc295.png',
-    '/lovable-uploads/3e0e5b19-aebb-453d-9da8-0dfd427dc60f.png'
+    '/lovable-uploads/723be1c6-c5e7-4d43-bbad-b170da032229.png',
+    '/lovable-uploads/4cd208ae-f9ff-4614-8831-91a1dc6716f4.png',
+    '/lovable-uploads/d598ee8e-ee36-41ee-b17b-933f2277fdb1.png',
+    '/lovable-uploads/9a48eb76-06d6-48a1-81c8-32d7236bafe7.png',
+    '/lovable-uploads/173e82aa-0e49-4526-a540-980cb76a6dea.png',
+    '/lovable-uploads/21d3df37-0a02-4ca8-82d3-0df17b07b7d2.png',
+    '/lovable-uploads/fcd3f64e-f3eb-4022-9014-6631054fe066.png',
+    '/lovable-uploads/b4f9bcfa-fc20-4f3e-91ac-3b8d447a0afa.png',
+    '/lovable-uploads/0f92bdc7-1abb-454c-a82e-0250c4a41b48.png',
+    '/lovable-uploads/359bc7ca-c903-4895-bfc8-c92e95791bf4.png',
+    '/lovable-uploads/fa22b092-0fae-4fd3-84e4-61513d2533c6.png',
+    '/lovable-uploads/174d07a9-4227-4e6b-b307-3a6fdca4d15a.png',
+    '/lovable-uploads/3340c4fb-dbb4-4a5c-b260-87e4d5a4ad3b.png',
+    '/lovable-uploads/6746fd07-acd4-48f9-81ce-043af17c8b3d.png',
+    '/lovable-uploads/a1146d18-230d-484d-ae40-ff5439edd4ed.png',
+    '/lovable-uploads/ade740a9-8824-4c3f-be17-dd3443834ef0.png',
+    '/lovable-uploads/216f993d-6433-4e0a-8d58-3df60c2f8d0f.png',
+    '/lovable-uploads/160b7eaa-6ad6-488a-af88-fa7b24d69478.png',
+    '/lovable-uploads/6cc4a1b9-3a9c-4f0a-a095-52b78971fbd1.png',
+    '/lovable-uploads/d1f44324-44da-4d6f-9e28-a843fac807bc.png'
   ];
 
   return (
