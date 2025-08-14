@@ -93,7 +93,7 @@ const StudentMarksheetContent = () => {
                 </div>
               </div>
               
-              <div className="text-pink-600 font-bold text-lg tracking-wide">
+              <div className="text-pink-600 font-bold text-lg tracking-wide mb-2">
                 (AwardedtoUndertheManagement)
               </div>
               <h2 className="text-2xl font-bold text-red-600 tracking-wider">
