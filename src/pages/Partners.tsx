@@ -127,7 +127,7 @@ const Partners = () => {
                 </p>
                 <p className="text-xl text-muted-foreground/80 leading-relaxed">
                   MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN proudly collaborates with leading private companies 
-                  and government bodies, creating exceptional opportunities for our students.
+                  and government bodies, creating exceptional opportunities for our students with 5+ years of excellence and 25,000+ students empowered.
                 </p>
               </div>
             </div>

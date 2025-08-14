@@ -6,10 +6,10 @@ import Footer from '@/components/Footer';
 
 const About = () => {
   const stats = [
-    { icon: Calendar, number: "25+", label: "Years of Experience", gradient: "from-blue-500 to-blue-600" },
-    { icon: Users, number: "600+", label: "Expert Faculties", gradient: "from-green-500 to-green-600" },
+    { icon: Calendar, number: "5+", label: "Years of Experience", gradient: "from-blue-500 to-blue-600" },
+    { icon: Users, number: "100+", label: "Expert Faculties", gradient: "from-green-500 to-green-600" },
     { icon: Award, number: "15+", label: "National Awards", gradient: "from-purple-500 to-purple-600" },
-    { icon: GraduationCap, number: "15 Lakhs+", label: "Students Empowered", gradient: "from-primary to-orange-600" }
+    { icon: GraduationCap, number: "25K+", label: "Students Empowered", gradient: "from-primary to-orange-600" }
   ];
 
   const achievements = [
@@ -88,18 +88,18 @@ const About = () => {
             {/* Clean Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
               <div className="text-center space-y-3">
-                <div className="text-5xl font-bold text-primary">25+</div>
+                <div className="text-5xl font-bold text-primary">5+</div>
                 <div className="text-muted-foreground font-medium">Years of Excellence</div>
                 <div className="w-16 h-0.5 bg-primary/30 mx-auto rounded-full" />
               </div>
               <div className="text-center space-y-3">
-                <div className="text-5xl font-bold text-green-500">15L+</div>
-                <div className="text-muted-foreground font-medium">Students Trained</div>
+                <div className="text-5xl font-bold text-green-500">25K+</div>
+                <div className="text-muted-foreground font-medium">Students Empowered</div>
                 <div className="w-16 h-0.5 bg-green-500/30 mx-auto rounded-full" />
               </div>
               <div className="text-center space-y-3">
-                <div className="text-5xl font-bold text-blue-500">22+</div>
-                <div className="text-muted-foreground font-medium">States Covered</div>
+                <div className="text-5xl font-bold text-blue-500">100+</div>
+                <div className="text-muted-foreground font-medium">Expert Faculties</div>
                 <div className="w-16 h-0.5 bg-blue-500/30 mx-auto rounded-full" />
               </div>
               <div className="text-center space-y-3">
@@ -214,8 +214,8 @@ const About = () => {
                   <h3 className="text-3xl font-bold text-foreground mb-4">Our Mission</h3>
                   <div className="w-16 h-1 bg-gradient-to-r from-primary to-orange-500 rounded-full mx-auto mb-6" />
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    Empowering <span className="text-primary font-bold">10 lakh students</span> annually with 
-                    world-class skills and creating opportunities for sustainable employment and entrepreneurship.
+                    To train 5000 Thousand students per year in different skills and empower them with 
+                    the ability to provide professional services, creating wealth for themselves and for the nation.
                   </p>
                 </div>
 
@@ -226,7 +226,7 @@ const About = () => {
                     <div className="text-muted-foreground font-medium">Training Centers</div>
                   </div>
                   <div className="bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300">
-                    <div className="text-3xl font-bold text-green-500 mb-2">600+</div>
+                    <div className="text-3xl font-bold text-green-500 mb-2">100+</div>
                     <div className="text-muted-foreground font-medium">Expert Faculty</div>
                   </div>
                   <div className="bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300">

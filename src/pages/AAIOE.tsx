@@ -29,9 +29,9 @@ import Footer from '@/components/Footer';
 const AAIOE = () => {
   const stats = [
     { number: "21", label: "Published Books", icon: BookOpen },
-    { number: "55", label: "AI/ML Experts", icon: Users },
-    { number: "100%", label: "Industry Focused", icon: Target },
-    { number: "∞", label: "Innovation Potential", icon: Lightbulb }
+    { number: "100+", label: "Expert Faculties", icon: Users },
+    { number: "25K+", label: "Students Empowered", icon: Target },
+    { number: "5+", label: "Years of Excellence", icon: Lightbulb }
   ];
 
   const benefits = [
@@ -77,7 +77,7 @@ const AAIOE = () => {
     {
       title: "Unparalleled Expertise",
       subtitle: "Industry Veterans",
-      description: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is powered by a team of 55 seasoned experts with vast real-world experience in Artificial Intelligence and Machine Learning. These industry veterans are innovators who bring their hands-on expertise, cutting-edge knowledge, and practical insights into every course and collaboration.",
+      description: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is powered by a team of 100+ expert faculties with vast real-world experience across diverse fields. Our 5+ years of excellence has empowered 25,000+ students nationwide through comprehensive skill development programs.",
       icon: Users
     },
     {

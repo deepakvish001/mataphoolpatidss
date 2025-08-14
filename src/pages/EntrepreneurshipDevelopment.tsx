@@ -144,7 +144,7 @@ const EntrepreneurshipDevelopment = () => {
                     Comprehensive <span className="text-primary font-black bg-primary/10 px-3 py-1 rounded-lg">entrepreneurship ecosystem</span> with dedicated mentoring and support
                   </p>
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    <span className="text-primary font-black">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> has established a dedicated Mudra Facilitation cell with personal monitoring by Prof. Yogesh Kumar, Director
+                    <span className="text-primary font-black">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> with 5+ years of excellence and 25,000+ students empowered, has established a dedicated Mudra Facilitation cell with personal monitoring by Prof. Yogesh Kumar, Director
                   </p>
                 </div>
                 

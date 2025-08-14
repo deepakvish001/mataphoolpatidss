@@ -149,7 +149,7 @@ const ContactUs = () => {
                 </p>
                 <p className="text-xl text-muted-foreground/80 leading-relaxed">
                   Connect with our expert team at <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> 
-                  and discover the perfect skill development program to launch your successful career.
+                  and discover the perfect skill development program to launch your successful career with our 5+ years of excellence.
                 </p>
               </div>
             </div>
@@ -167,8 +167,8 @@ const ContactUs = () => {
                 <div className="w-16 h-0.5 bg-green-500/30 mx-auto rounded-full" />
               </div>
               <div className="text-center space-y-3">
-                <div className="text-5xl font-bold text-blue-500">22+</div>
-                <div className="text-muted-foreground font-medium">States Covered</div>
+                <div className="text-5xl font-bold text-blue-500">100+</div>
+                <div className="text-muted-foreground font-medium">Expert Faculties</div>
                 <div className="w-16 h-0.5 bg-blue-500/30 mx-auto rounded-full" />
               </div>
               <div className="text-center space-y-3">
