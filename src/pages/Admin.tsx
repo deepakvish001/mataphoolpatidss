@@ -164,12 +164,7 @@ const Admin = () => {
         
 
         {/* Search */}
-        {!sidebarCollapsed && <div className="p-6 border-b border-gray-700/50">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <Input placeholder="Search..." className="pl-12 bg-gray-700/50 border-gray-600/50 text-white placeholder-gray-400 h-12 rounded-xl focus:bg-gray-700 focus:border-blue-500 transition-all duration-200" />
-            </div>
-          </div>}
+        {!sidebarCollapsed}
 
         {/* Navigation */}
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
@@ -184,12 +179,10 @@ const Admin = () => {
                       </span>
                       {item.hasSubmenu && <ChevronLeft className="h-4 w-4 ml-auto text-gray-400 group-hover:text-white transition-colors duration-200" />}
                     </>}
-                  {sidebarCollapsed && (
-                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+                  {sidebarCollapsed && <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
                       {item.label}
                       <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-gray-800 rotate-45"></div>
-                    </div>
-                  )}
+                    </div>}
                 </div>)}
             </nav>
           </div>
