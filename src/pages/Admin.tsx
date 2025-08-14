@@ -54,6 +54,7 @@ import FeesManagementContent from "@/components/admin/FeesManagementContent";
 import FeesPrintContent from "@/components/admin/FeesPrintContent";
 import ExpenseMasterContent from "@/components/admin/ExpenseMasterContent";
 import ExpenseEntryContent from "@/components/admin/ExpenseEntryContent";
+import DayBookContent from "@/components/admin/DayBookContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -111,6 +112,7 @@ const Admin = () => {
     if (path === '/admin/fees-print') return 'fees-print';
     if (path === '/admin/expense-master') return 'expense-master';
     if (path === '/admin/expense-entry') return 'expense-entry';
+    if (path === '/admin/day-book') return 'day-book';
     return 'dashboard';
   };
 
@@ -465,6 +467,8 @@ const Admin = () => {
                               navigate('/admin/expense-master');
                             } else if (subItem.label === "Expense Entry") {
                               navigate('/admin/expense-entry');
+                            } else if (subItem.label === "Day Book") {
+                              navigate('/admin/day-book');
                             }
                           }}
                         >
@@ -625,6 +629,7 @@ const Admin = () => {
             <Route path="/fees-print" element={<FeesPrintContent />} />
             <Route path="/expense-master" element={<ExpenseMasterContent />} />
             <Route path="/expense-entry" element={<ExpenseEntryContent />} />
+            <Route path="/day-book" element={<DayBookContent />} />
           </Routes>
         </div>
 
