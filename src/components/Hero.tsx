@@ -165,6 +165,29 @@ const Hero = () => {
             </div>
           </div>
         </div>
+
+        {/* PM Modi Quote Section */}
+        <div className="mt-16">
+          <div className="relative w-full">
+            <img 
+              src="/lovable-uploads/f1cf0043-5b2b-48b3-a0b5-fc08c31c0480.png" 
+              alt="PM Narendra Modi Quote on Entrepreneurship" 
+              className="w-full h-auto rounded-2xl shadow-lg"
+            />
+          </div>
+        </div>
+
+        {/* Pankh Paridhi Foundation Section */}
+        <div className="mt-12">
+          <div className="relative w-full">
+            <img 
+              src="/lovable-uploads/227f4b44-6802-4010-89bd-90f316f0458e.png" 
+              alt="Pankh Paridhi Foundation - Our Mission and Courses" 
+              className="w-full h-auto rounded-2xl shadow-lg"
+            />
+          </div>
+        </div>
+
       </div>
     </section>
   );
