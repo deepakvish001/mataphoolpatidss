@@ -4,11 +4,6 @@ import ModiQuote from '@/components/ModiQuote';
 import MissionCourses from '@/components/MissionCourses';
 import GovernmentSchemes from '@/components/GovernmentSchemes';
 import ImageSlider from '@/components/ImageSlider';
-import Stats from '@/components/Stats';
-import About from '@/components/About';
-import Services from '@/components/Services';
-import Partners from '@/components/Partners';
-import Testimonials from '@/components/Testimonials';
 import Donation from '@/components/Donation';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -23,11 +18,6 @@ const Index = () => {
         <MissionCourses />
         <GovernmentSchemes />
         <ImageSlider />
-        <Stats />
-        <About />
-        <Services />
-        <Partners />
-        <Testimonials />
         <div id="donation">
           <Donation />
         </div>
