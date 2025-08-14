@@ -160,11 +160,14 @@ const DonationPage = () => {
 
                   {/* Action Buttons */}
                   <div className="space-y-3">
-                    {/* Blinking Donate Button */}
-                    <Button className="w-full btn-primary animate-pulse bg-gradient-to-r from-primary via-orange-500 to-red-500 hover:from-red-500 hover:via-orange-500 hover:to-primary text-lg h-14 font-bold shadow-2xl border-2 border-white">
-                      <Heart className="mr-3 h-6 w-6 animate-pulse" />
-                      DONATE NOW ✨
-                      <Heart className="ml-3 h-6 w-6 animate-pulse" />
+                    {/* Enhanced Blinking Donate Button */}
+                    <Button className="w-full donate-blink text-white text-lg h-16 font-bold shadow-2xl border-2 border-white/50 rounded-xl overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary via-orange-500 to-red-500 animate-pulse"></div>
+                      <div className="relative z-10 flex items-center justify-center">
+                        <Heart className="mr-3 h-6 w-6 animate-pulse" />
+                        <span className="text-xl">💖 DONATE NOW ✨</span>
+                        <Heart className="ml-3 h-6 w-6 animate-pulse" />
+                      </div>
                     </Button>
                     
                     <Dialog>
