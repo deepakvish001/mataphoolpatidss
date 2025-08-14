@@ -133,7 +133,7 @@ const EnquiryContent = () => {
   return (
     <div className="space-y-8">
       {/* Enquiry Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardHeader className="p-8 border-b border-gray-100 bg-gray-400">
           <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
             <div className="p-2 bg-blue-500 rounded-lg">
@@ -147,20 +147,20 @@ const EnquiryContent = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="text-white font-bold text-center py-4">First Name</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Last Name</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Email</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Phone</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">State</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">City</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Organization</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Address</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">First Name</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Last Name</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Email</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Phone</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">State</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">City</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Organization</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Address</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {enquiries.map((enquiry) => (
-                <TableRow key={enquiry.id} className="hover:bg-gray-50">
-                  <TableCell className="p-4">
+              {enquiries.map((enquiry, index) => (
+                <TableRow key={enquiry.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 p-4">
                     <div className="flex items-center space-x-2">
                       <Button
                         variant="ghost"
@@ -176,25 +176,25 @@ const EnquiryContent = () => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {enquiry.lastName}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {enquiry.email}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {enquiry.phone}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {enquiry.state}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {enquiry.city || "-"}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {enquiry.organization || "-"}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {enquiry.address || "-"}
                   </TableCell>
                 </TableRow>

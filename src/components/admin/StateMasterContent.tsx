@@ -116,20 +116,20 @@ const StateMasterContent = () => {
       </Card>
 
       {/* States Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-red-800 hover:bg-red-800">
-                <TableHead className="text-white font-bold text-center py-4">cityid</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">cityname</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">createddate</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">cityid</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">cityname</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">createddate</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {states.map((state) => (
-                <TableRow key={state.cityid} className="hover:bg-gray-50">
-                  <TableCell className="p-4">
+              {states.map((state, index) => (
+                <TableRow key={state.cityid} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 p-4">
                     <div className="flex items-center space-x-2">
                       <div className="flex space-x-2">
                         <Button
@@ -153,10 +153,10 @@ const StateMasterContent = () => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {state.cityname}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {state.createddate || "-"}
                   </TableCell>
                 </TableRow>

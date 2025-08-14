@@ -200,21 +200,21 @@ const DistrictMasterContent = () => {
       </Card>
 
       {/* Districts Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-red-800 hover:bg-red-800">
-                <TableHead className="text-white font-bold text-center py-4">siteid</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">cityid</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">sitename</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">createddate</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">siteid</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">cityid</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">sitename</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">createddate</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {districts.map((district) => (
-                <TableRow key={district.siteid} className="hover:bg-gray-50">
-                  <TableCell className="p-4">
+              {districts.map((district, index) => (
+                <TableRow key={district.siteid} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 p-4">
                     <div className="flex items-center space-x-2">
                       <div className="flex space-x-2">
                         <Button
@@ -238,13 +238,13 @@ const DistrictMasterContent = () => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {district.cityid}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {district.sitename}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {district.createddate || "-"}
                   </TableCell>
                 </TableRow>

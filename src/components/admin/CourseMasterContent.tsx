@@ -266,23 +266,23 @@ const CourseMasterContent = () => {
       </Card>
 
       {/* Courses Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="text-white font-bold text-center py-4">id</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Course_Name</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Course_Sort_Name</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Course_Duration</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Fees</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Category</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">id</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course_Name</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course_Sort_Name</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course_Duration</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Fees</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Category</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {courses.map((course) => (
-                <TableRow key={course.id} className="hover:bg-gray-50">
-                  <TableCell className="p-4">
+              {courses.map((course, index) => (
+                <TableRow key={course.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 p-4">
                     <div className="flex items-center space-x-2">
                       <div className="flex space-x-2">
                         <Button
@@ -306,19 +306,19 @@ const CourseMasterContent = () => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {course.courseName}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {course.courseSortName}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {course.courseDuration}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {course.fees}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {course.category}
                   </TableCell>
                 </TableRow>

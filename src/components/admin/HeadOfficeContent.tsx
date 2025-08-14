@@ -142,20 +142,20 @@ const HeadOfficeContent = () => {
       </Card>
 
       {/* Head Office List Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="text-white font-bold text-center py-4">Address</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Phone</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Email-ID</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Address</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Phone</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Email-ID</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {headOffices.map((office) => (
-                <TableRow key={office.id} className="hover:bg-gray-50">
-                  <TableCell className="p-4">
+              {headOffices.map((office, index) => (
+                <TableRow key={office.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 p-4">
                     <div className="flex items-start space-x-2">
                       <div className="flex space-x-2">
                         <Button
@@ -179,10 +179,10 @@ const HeadOfficeContent = () => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {office.phone}
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {office.email}
                   </TableCell>
                 </TableRow>

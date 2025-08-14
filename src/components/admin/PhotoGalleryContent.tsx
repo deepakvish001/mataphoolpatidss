@@ -154,20 +154,20 @@ const PhotoGalleryContent = () => {
       </Card>
 
       {/* Photo Gallery Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-500 hover:bg-blue-500">
-                <TableHead className="text-white font-bold text-center py-4 w-24">Delete</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">Title</TableHead>
-                <TableHead className="text-white font-bold text-center py-4">IMAGE</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4 w-24">Delete</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Title</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">IMAGE</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {galleryItems.map((item) => (
-                <TableRow key={item.id} className="hover:bg-gray-50">
-                  <TableCell className="text-center p-4">
+              {galleryItems.map((item, index) => (
+                <TableRow key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -177,10 +177,10 @@ const PhotoGalleryContent = () => {
                       <Trash2 className="h-5 w-5" />
                     </Button>
                   </TableCell>
-                  <TableCell className="text-center p-4 text-gray-700 font-medium">
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {item.title}
                   </TableCell>
-                  <TableCell className="text-center p-4">
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
                     <div className="flex justify-center">
                       <img
                         src={item.imageUrl}
