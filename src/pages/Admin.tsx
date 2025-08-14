@@ -186,7 +186,6 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-pink-400",
     submenuItems: [
-      { label: "Master", icon: Settings },
       { label: "Menu Content", icon: Menu },
       { label: "Photo Gallery", icon: Image },
       { label: "Add Bank Details", icon: CreditCard },
