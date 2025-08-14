@@ -57,179 +57,210 @@ const DonationPage = () => {
               Make a <span className="text-primary">Donation</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Your support helps us provide quality education and skill development to students across Uttar Pradesh. 
+              Your support helps us provide quality education and skill development to students across Rajasthan. 
               Every contribution makes a difference in someone's life.
             </p>
+            <div className="flex justify-center mt-8">
+              <img 
+                src="/lovable-uploads/6c6e5574-a79c-4491-9b27-f19a22d00a2c.png" 
+                alt="Secure Payment Options" 
+                className="h-12 w-auto opacity-90"
+              />
+            </div>
           </div>
 
-          {/* Donation Cards */}
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
-            {/* Impact Stats */}
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-2xl font-semibold text-foreground mb-6">
-                  Your Impact
-                </h3>
-                
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  <div className="card-premium text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">₹500</div>
-                    <p className="text-sm text-muted-foreground">Can sponsor study materials for 1 student</p>
+          {/* Bank-Style Payment Section */}
+          <div className="max-w-4xl mx-auto">
+            
+            {/* Direct Deposit Section */}
+            <div className="bg-white border-2 border-gray-800 mb-8 shadow-2xl">
+              {/* Header */}
+              <div className="bg-gray-100 border-b-2 border-gray-800 p-4 text-center">
+                <h2 className="text-2xl font-bold text-gray-800">Direct Deposit In AXIS BANK</h2>
+              </div>
+              
+              {/* AXIS Bank Logo Section */}
+              <div className="bg-gray-50 border-b border-gray-300 p-8 text-center">
+                <div className="text-6xl font-bold text-[#97144D] mb-4">
+                  🏛️ AXIS BANK
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700 transition-colors">
+                    <span className="text-white">Open AXIS BANK Branch Locator</span>
                   </div>
-                  <div className="card-premium text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">₹2,000</div>
-                    <p className="text-sm text-muted-foreground">Can fund certification fees for 1 student</p>
-                  </div>
-                  <div className="card-premium text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">₹5,000</div>
-                    <p className="text-sm text-muted-foreground">Can support complete training for 1 student</p>
-                  </div>
-                  <div className="card-premium text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">₹10,000</div>
-                    <p className="text-sm text-muted-foreground">Can sponsor placement support for 5 students</p>
+                  <div className="bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700 transition-colors">
+                    <span className="text-white">Login to AXIS BANK Internet Banking</span>
                   </div>
                 </div>
               </div>
-
-              {/* Organization Details */}
-              <div className="card-premium">
-                <h4 className="font-semibold text-foreground mb-4 flex items-center">
-                  <Building className="h-5 w-5 text-primary mr-2" />
-                  About Our Organization
-                </h4>
-                <div className="space-y-3 text-sm text-muted-foreground">
-                  <p>
-                    <strong className="text-foreground">Organization:</strong> Mata Phoolpati Devi Shikshan Sansthan
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Location:</strong> Shanti Nagar Mehmauni Gali Kaptanganj, Azamgarh, UP - 276141
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Mission:</strong> Providing quality skill development and educational opportunities to empower students across Uttar Pradesh.
-                  </p>
+              
+              {/* Bank Details Table */}
+              <div className="grid grid-cols-2">
+                <div className="border-r border-gray-800">
+                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Bank Name</div>
+                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Account Name</div>
+                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Account No.</div>
+                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">IFSC Code</div>
+                  <div className="bg-gray-100 p-3 font-semibold">City Name</div>
+                </div>
+                <div>
+                  <div className="border-b border-gray-800 p-3 flex justify-between items-center">
+                    <span>AXIS BANK</span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => copyToClipboard("AXIS BANK", "Bank Name")}
+                      className="h-6 w-6 p-0"
+                    >
+                      {copiedField === "Bank Name" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                    </Button>
+                  </div>
+                  <div className="border-b border-gray-800 p-3 flex justify-between items-center">
+                    <span className="text-sm">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => copyToClipboard("MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN", "Account Name")}
+                      className="h-6 w-6 p-0"
+                    >
+                      {copiedField === "Account Name" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                    </Button>
+                  </div>
+                  <div className="border-b border-gray-800 p-3 flex justify-between items-center">
+                    <span className="font-mono">916020030503115</span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => copyToClipboard("916020030503115", "Account Number")}
+                      className="h-6 w-6 p-0"
+                    >
+                      {copiedField === "Account Number" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                    </Button>
+                  </div>
+                  <div className="border-b border-gray-800 p-3 flex justify-between items-center">
+                    <span className="font-mono">UTIB0001955</span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => copyToClipboard("UTIB0001955", "IFSC Code")}
+                      className="h-6 w-6 p-0"
+                    >
+                      {copiedField === "IFSC Code" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                    </Button>
+                  </div>
+                  <div className="p-3 flex justify-between items-center">
+                    <span>Kota, Rajasthan</span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => copyToClipboard("Kota, Rajasthan", "City")}
+                      className="h-6 w-6 p-0"
+                    >
+                      {copiedField === "City" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Important Note */}
+              <div className="bg-yellow-50 border-t border-gray-800 p-4">
+                <p className="font-semibold text-gray-800">IMPORTANT: PLEASE DEPOSIT CASH ONLY IN AXIS BANK</p>
+              </div>
+              
+              {/* Payment Methods */}
+              <div className="border-t border-gray-800 p-4">
+                <p className="font-semibold text-gray-800 mb-2">At All Your Nearest Branches of AXIS You Can Pay Us By</p>
+                <ol className="text-gray-700 space-y-1">
+                  <li>1. Depositing Cash To Our AXIS Account</li>
+                  <li>2. Drop a Cheque for Collection in Our AXIS Account</li>
+                  <li>3. Online Transfer from Your AXIS to Our AXIS Account using EFT</li>
+                  <li>4. Online Transfer from Any Bank to Our AXIS Account using NEFT</li>
+                </ol>
+              </div>
+            </div>
+            
+            {/* DD/Cheque Section */}
+            <div className="bg-white border-2 border-gray-800 shadow-2xl">
+              {/* Header */}
+              <div className="bg-gray-100 border-b-2 border-gray-800 p-4">
+                <h2 className="text-2xl font-bold text-gray-800 text-center">
+                  &gt;&gt; DD/Cheque By Post
+                </h2>
+              </div>
+              
+              <div className="p-6 space-y-4">
+                <p className="text-gray-700 text-center">
+                  Payments can also be made by Demand Draft/Cheque or Pay Order, to us by Post or Courier.
+                </p>
+                
+                <div className="text-center">
+                  <p className="text-gray-700 mb-2">The Demand Draft/Cheque should be drawn in favour of</p>
+                  <p className="text-xl font-bold text-gray-800 mb-4">"Mata Phoolpati Devi Shikshan Sansthan"</p>
+                </div>
+                
+                <p className="text-gray-700 text-center mb-6">
+                  Please attach your details while mailing your DD/Cheque/Pay Order at the given address.
+                </p>
+                
+                {/* Address */}
+                <div className="text-center bg-gray-50 p-6 border border-gray-300 rounded">
+                  <p className="font-bold text-gray-800 mb-2">To: MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</p>
+                  <p className="text-gray-700">362-E RK Puram</p>
+                  <p className="text-gray-700">Kota Rajasthan - 324010 India.</p>
+                  <p className="text-gray-700 mt-3">Phone no:- 0744-2470400/6991400</p>
+                  <p className="text-gray-700">Contact No.:- +91-8957341912</p>
+                  <p className="text-gray-700">Email id: info.mpdss@gmail.com</p>
                 </div>
               </div>
             </div>
-
-            {/* Donation Methods */}
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-2xl font-semibold text-foreground mb-6">
-                  How to Donate
-                </h3>
-                
-                {/* Bank Transfer Option */}
-                <div className="card-premium space-y-6">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-foreground flex items-center">
-                      <CreditCard className="h-5 w-5 text-primary mr-2" />
-                      Bank Transfer
-                    </h4>
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">Recommended</span>
-                  </div>
-
-                  {/* Bank Details */}
+            
+            {/* Donate Now Button */}
+            <div className="text-center mt-8">
+              <Button className="donate-blink px-12 py-4 text-2xl font-bold bg-gradient-to-r from-green-500 to-blue-500 hover:from-blue-500 hover:to-green-500 text-white rounded-full shadow-xl transform transition-all duration-300 hover:scale-105">
+                💖 Donate Now 💖
+              </Button>
+            </div>
+            
+            {/* View Bank Cheque Dialog */}
+            <div className="text-center mt-4">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="px-6 py-3">
+                    <CreditCard className="mr-2 h-5 w-5" />
+                    View Bank Cheque Details
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl">
+                  <DialogHeader>
+                    <DialogTitle>Bank Account Details</DialogTitle>
+                  </DialogHeader>
                   <div className="space-y-4">
-                    {Object.entries({
-                      'Account Holder': bankDetails.accountHolder,
-                      'Bank Name': bankDetails.bankName,
-                      'Branch': bankDetails.branch,
-                      'Account Number': bankDetails.accountNumber,
-                      'IFSC Code': bankDetails.ifscCode
-                    }).map(([label, value]) => (
-                      <div key={label} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                        <div>
-                          <div className="text-sm font-medium text-foreground">{label}</div>
-                          <div className="text-sm text-muted-foreground">{value}</div>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => copyToClipboard(value, label)}
-                          className="ml-2"
-                        >
-                          {copiedField === label ? (
-                            <Check className="h-4 w-4 text-green-500" />
-                          ) : (
-                            <Copy className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="space-y-3">
-                    {/* Enhanced Blinking Donate Button */}
-                    <Button className="w-full donate-blink text-white text-lg h-16 font-bold shadow-2xl border-2 border-white/50 rounded-xl overflow-hidden relative">
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary via-orange-500 to-red-500 animate-pulse"></div>
-                      <div className="relative z-10 flex items-center justify-center">
-                        <Heart className="mr-3 h-6 w-6 animate-pulse" />
-                        <span className="text-xl">💖 DONATE NOW ✨</span>
-                        <Heart className="ml-3 h-6 w-6 animate-pulse" />
-                      </div>
-                    </Button>
-                    
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button variant="outline" className="w-full">
-                          <CreditCard className="mr-2 h-5 w-5" />
-                          View Bank Cheque
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-4xl">
-                        <DialogHeader>
-                          <DialogTitle>Bank Account Details</DialogTitle>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <img 
-                            src="/lovable-uploads/d6f8d578-d3ad-4ed6-a475-b15bdaee0d0e.png" 
-                            alt="Bank Cheque with Account Details" 
-                            className="w-full h-auto rounded-lg shadow-lg"
-                          />
-                          <p className="text-sm text-muted-foreground text-center">
-                            Use the above bank details to make your donation via bank transfer
-                          </p>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                    
-                    <Button 
-                      variant="outline" 
-                      className="w-full btn-secondary"
-                      onClick={() => {
-                        const allDetails = Object.values(bankDetails).join('\n');
-                        copyToClipboard(allDetails, 'All Bank Details');
-                      }}
-                    >
-                      Copy All Details
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact for Donations */}
-              <div className="card-premium">
-                <h4 className="font-semibold text-foreground mb-4 flex items-center">
-                  <Phone className="h-5 w-5 text-primary mr-2" />
-                  Need Help with Donation?
-                </h4>
-                <div className="space-y-3">
-                  <p className="text-sm text-muted-foreground">
-                    For any queries regarding donations or if you need assistance with the transfer process, please contact us:
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-sm">
-                      <strong className="text-foreground">Phone:</strong> 
-                      <a href="tel:+917007989716" className="text-primary hover:underline ml-1">+91 7007989716</a>
-                    </p>
-                    <p className="text-sm">
-                      <strong className="text-foreground">Email:</strong> 
-                      <a href="mailto:info.mpdss@gmail.com" className="text-primary hover:underline ml-1">info.mpdss@gmail.com</a>
+                    <img 
+                      src="/lovable-uploads/d6f8d578-d3ad-4ed6-a475-b15bdaee0d0e.png" 
+                      alt="Bank Cheque with Account Details" 
+                      className="w-full h-auto rounded-lg shadow-lg"
+                    />
+                    <p className="text-sm text-muted-foreground text-center">
+                      Use the above bank details to make your donation via bank transfer
                     </p>
                   </div>
-                </div>
-              </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+            
+            {/* Copy All Details Button */}
+            <div className="text-center mt-4">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  const allDetails = `Bank Name: AXIS BANK\nAccount Name: MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN\nAccount Number: 916020030503115\nIFSC Code: UTIB0001955\nCity: Kota, Rajasthan\n\nAddress: 362-E RK Puram, Kota Rajasthan - 324010 India\nPhone: 0744-2470400/6991400\nContact: +91-8957341912\nEmail: info.mpdss@gmail.com`;
+                  copyToClipboard(allDetails, "All Details");
+                }}
+                className="flex items-center justify-center space-x-2 px-8 py-3"
+              >
+                <Copy className="h-5 w-5" />
+                <span className="text-lg">Copy All Bank Details</span>
+              </Button>
             </div>
           </div>
 

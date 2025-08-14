@@ -189,15 +189,19 @@ const Navigation = () => {
             {/* Right Actions - Simplified */}
             <div className="flex items-center space-x-4">
               
-              {/* Search */}
+              {/* Payment Options */}
               <div className="hidden md:flex items-center space-x-3">
-                <div className="relative group">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                  <Input 
-                    placeholder="Search courses..."
-                    className="pl-10 w-48 bg-muted/30 border-border/50 focus:border-primary/50 rounded-full glass-effect"
+                <a 
+                  href="/donation"
+                  className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-primary to-orange-500 text-white rounded-full hover:from-orange-500 hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  <img 
+                    src="/lovable-uploads/6c6e5574-a79c-4491-9b27-f19a22d00a2c.png" 
+                    alt="Secure Payment" 
+                    className="h-6 w-auto"
                   />
-                </div>
+                  <span className="font-medium">Pay Now</span>
+                </a>
               </div>
 
               {/* Mobile Menu Toggle */}
@@ -222,14 +226,19 @@ const Navigation = () => {
           <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-2xl fade-in-scale">
             <div className="px-6 py-8 space-y-8">
               
-              {/* Mobile Search */}
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input 
-                  placeholder="Search courses, programs..."
-                  className="pl-12 h-12 bg-muted/30 border-border/50 rounded-2xl glass-effect text-lg"
+              {/* Mobile Payment Option */}
+              <a 
+                href="/donation"
+                className="flex items-center justify-center space-x-3 p-4 bg-gradient-to-r from-primary to-orange-500 text-white rounded-2xl hover:from-orange-500 hover:to-primary transition-all duration-300 shadow-lg"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <img 
+                  src="/lovable-uploads/6c6e5574-a79c-4491-9b27-f19a22d00a2c.png" 
+                  alt="Secure Payment" 
+                  className="h-8 w-auto"
                 />
-              </div>
+                <span className="text-lg font-medium">Secure Payment Options</span>
+              </a>
 
               {/* Quick Stats */}
               <div className="grid grid-cols-3 gap-4">
