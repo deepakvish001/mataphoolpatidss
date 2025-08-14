@@ -3,11 +3,7 @@ import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOp
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 // Import payment logos
-import visaLogo from '@/assets/visa-logo.png';
-import mastercardLogo from '@/assets/mastercard-logo.png';
-import maestroLogo from '@/assets/maestro-logo.png';
-import discoverLogo from '@/assets/discover-logo.png';
-import paypalLogo from '@/assets/paypal-logo.png';
+import paymentOptionsWhite from '@/assets/payment-options-white.png';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -205,16 +201,12 @@ const Navigation = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-green-400 to-purple-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500 -z-10"></div>
                   
                   {/* Payment icons container */}
-                  <div className="flex items-center space-x-3 bg-gray-50 px-4 py-2 rounded-xl">
-                    <div className="text-xs font-semibold text-gray-600 whitespace-nowrap">SECURE PAYMENT</div>
-                    <div className="flex items-center space-x-2">
-                      {/* Actual Payment Logos */}
-                      <img src={visaLogo} alt="Visa" className="h-6 w-auto object-contain" />
-                      <img src={mastercardLogo} alt="MasterCard" className="h-6 w-auto object-contain" />
-                      <img src={maestroLogo} alt="Maestro" className="h-6 w-auto object-contain" />
-                      <img src={discoverLogo} alt="Discover" className="h-6 w-auto object-contain" />
-                      <img src={paypalLogo} alt="PayPal" className="h-6 w-auto object-contain" />
-                    </div>
+                  <div className="flex items-center space-x-3">
+                    <img 
+                      src={paymentOptionsWhite} 
+                      alt="Secure Payment Options - Visa, MasterCard, Maestro, Discover, PayPal" 
+                      className="h-12 w-auto object-contain"
+                    />
                   </div>
                   
                   {/* Text with icon */}
@@ -268,13 +260,13 @@ const Navigation = () => {
                   <div className="text-sm text-gray-500">Multiple Payment Methods Available</div>
                 </div>
                 
-                {/* Payment logos grid */}
-                <div className="flex items-center justify-center space-x-3 bg-gray-50 p-4 rounded-xl">
-                  <img src={visaLogo} alt="Visa" className="h-8 w-auto object-contain" />
-                  <img src={mastercardLogo} alt="MasterCard" className="h-8 w-auto object-contain" />
-                  <img src={maestroLogo} alt="Maestro" className="h-8 w-auto object-contain" />
-                  <img src={discoverLogo} alt="Discover" className="h-8 w-auto object-contain" />
-                  <img src={paypalLogo} alt="PayPal" className="h-8 w-auto object-contain" />
+                {/* Payment options image */}
+                <div className="flex items-center justify-center">
+                  <img 
+                    src={paymentOptionsWhite} 
+                    alt="Secure Payment Options - Visa, MasterCard, Maestro, Discover, PayPal" 
+                    className="h-16 w-auto object-contain"
+                  />
                 </div>
                 
                 {/* CTA */}
