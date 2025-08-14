@@ -19,10 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter Variable', 'Inter', 'system-ui', 'sans-serif'],
-				serif: ['Playfair Display Variable', 'Playfair Display', 'serif'],
-				display: ['Space Grotesk Variable', 'Space Grotesk', 'sans-serif'],
-				mono: ['JetBrains Mono Variable', 'JetBrains Mono', 'monospace'],
+				sans: ['Inter', 'sans-serif'],
+				serif: ['Playfair Display', 'serif'],
+				display: ['Space Grotesk', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -33,9 +32,7 @@ export default {
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
-					hover: 'hsl(var(--primary-hover))',
-					light: 'hsl(var(--primary-light))',
-					dark: 'hsl(var(--primary-dark))'
+					hover: 'hsl(var(--primary-hover))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -48,14 +45,6 @@ export default {
 				success: {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'
-				},
-				warning: {
-					DEFAULT: 'hsl(var(--warning))',
-					foreground: 'hsl(var(--warning-foreground))'
-				},
-				info: {
-					DEFAULT: 'hsl(var(--info))',
-					foreground: 'hsl(var(--info-foreground))'
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
@@ -232,21 +221,7 @@ export default {
 			backgroundImage: {
 				'hero-gradient': 'var(--hero-gradient)',
 				'card-gradient': 'var(--card-gradient)',
-				'text-gradient': 'var(--text-gradient)',
-				'accent-gradient': 'var(--accent-gradient)'
-			},
-			boxShadow: {
-				'elegant': 'var(--shadow-elegant)',
-				'glow': 'var(--shadow-glow)'
-			},
-			spacing: {
-				'xs': 'var(--spacing-xs)',
-				'sm': 'var(--spacing-sm)', 
-				'md': 'var(--spacing-md)',
-				'lg': 'var(--spacing-lg)',
-				'xl': 'var(--spacing-xl)',
-				'2xl': 'var(--spacing-2xl)',
-				'3xl': 'var(--spacing-3xl)'
+				'text-gradient': 'var(--text-gradient)'
 			}
 		}
 	},
