@@ -392,3 +392,21 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   .donate-blink {
     animation: donate-blink 2s ease-in-out infinite;
   }
+
+  /* Navigation donate button blink */
+  @keyframes nav-donate-blink {
+    0%, 100% {
+      background-color: hsl(220 100% 40%);
+      box-shadow: 0 0 10px hsl(220 100% 40% / 0.5);
+      transform: scale(1);
+    }
+    50% {
+      background-color: hsl(0 84% 60%);
+      box-shadow: 0 0 15px hsl(0 84% 60% / 0.7);
+      transform: scale(1.05);
+    }
+  }
+
+  .nav-donate-blink {
+    animation: nav-donate-blink 1.5s ease-in-out infinite;
+  }

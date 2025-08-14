@@ -171,13 +171,16 @@ const Navigation = () => {
                     key={item.name}
                     href={item.href}
                     className={`nav-link-modern flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 magnetic-effect ${
-                      isActive 
+                      item.name === 'Donate' 
+                        ? 'nav-donate-blink bg-primary text-primary-foreground shadow-lg' 
+                        : isActive 
                         ? 'bg-primary text-primary-foreground shadow-lg' 
                         : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
                     }`}
                   >
                     <Icon className="h-4 w-4" />
                     <span className="font-medium">{item.name}</span>
+                    {item.name === 'Donate' && <span className="animate-pulse">💖</span>}
                   </a>
                 );
               })}
@@ -286,13 +289,22 @@ const Navigation = () => {
                       key={item.name}
                       href={item.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center space-x-4 p-4 rounded-2xl hover:bg-muted/50 transition-all duration-300 group"
+                      className={`flex items-center space-x-4 p-4 rounded-2xl hover:bg-muted/50 transition-all duration-300 group ${
+                        item.name === 'Donate' ? 'nav-donate-blink' : ''
+                      }`}
                       style={{ animationDelay: `${index * 0.1}s` }}
                     >
-                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors ${
+                        item.name === 'Donate' ? 'bg-primary text-primary-foreground' : 'bg-primary/10'
+                      }`}>
                         <Icon className="h-5 w-5" />
                       </div>
-                      <span className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">{item.name}</span>
+                      <span className={`text-lg font-medium transition-colors ${
+                        item.name === 'Donate' ? 'text-primary' : 'text-foreground group-hover:text-primary'
+                      }`}>
+                        {item.name}
+                        {item.name === 'Donate' && <span className="ml-2 animate-pulse">💖</span>}
+                      </span>
                       <ArrowRight className="h-5 w-5 ml-auto text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                     </a>
                   );
