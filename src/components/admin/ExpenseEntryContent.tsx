@@ -196,33 +196,33 @@ const ExpenseEntryContent = () => {
 
         {/* Data Table */}
         <div className="bg-white rounded-lg shadow overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse border-2 border-gray-800">
             <thead>
               <tr className="bg-blue-500">
-                <th className="text-white font-bold text-center px-4 py-4 text-base border border-gray-300">
+                <th className="text-white font-bold text-center px-4 py-4 text-base border-2 border-gray-800 min-w-[120px]">
                   Service Name
                 </th>
-                <th className="text-white font-bold text-center px-4 py-4 text-base border border-gray-300">
+                <th className="text-white font-bold text-center px-4 py-4 text-base border-2 border-gray-800 min-w-[120px]">
                   Expense Name
                 </th>
-                <th className="text-white font-bold text-center px-4 py-4 text-base border border-gray-300">
+                <th className="text-white font-bold text-center px-4 py-4 text-base border-2 border-gray-800 min-w-[80px]">
                   Quantity
                 </th>
-                <th className="text-white font-bold text-center px-4 py-4 text-base border border-gray-300">
+                <th className="text-white font-bold text-center px-4 py-4 text-base border-2 border-gray-800 min-w-[100px]">
                   Given To
                 </th>
-                <th className="text-white font-bold text-center px-4 py-4 text-base border border-gray-300">
+                <th className="text-white font-bold text-center px-4 py-4 text-base border-2 border-gray-800 min-w-[120px]">
                   Description
                 </th>
-                <th className="text-white font-bold text-center px-4 py-4 text-base border border-gray-300">
+                <th className="text-white font-bold text-center px-4 py-4 text-base border-2 border-gray-800 min-w-[100px]">
                   date
                 </th>
               </tr>
             </thead>
             <tbody>
               {expenseData.map((expense, index) => (
-                <tr key={expense.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-base">
+                <tr key={expense.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                  <td className="border-2 border-gray-800 px-4 py-3 text-center text-base">
                     <div className="flex items-center justify-between">
                       <div className="flex gap-2">
                         <Button 
@@ -243,19 +243,19 @@ const ExpenseEntryContent = () => {
                       <span className="font-medium">{expense.serviceName}</span>
                     </div>
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-base">
+                  <td className="border-2 border-gray-800 px-4 py-3 text-center text-base font-medium">
                     {expense.expenseName}
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-base">
+                  <td className="border-2 border-gray-800 px-4 py-3 text-center text-base font-medium">
                     {expense.quantity}
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-base">
+                  <td className="border-2 border-gray-800 px-4 py-3 text-center text-base font-medium">
                     {expense.givenTo}
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-base">
+                  <td className="border-2 border-gray-800 px-4 py-3 text-center text-base">
                     {expense.description}
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-base">
+                  <td className="border-2 border-gray-800 px-4 py-3 text-center text-base">
                     {expense.date}
                   </td>
                 </tr>

@@ -96,21 +96,21 @@ const ExpenseMasterContent = () => {
 
         {/* Data Table */}
         <div className="bg-white rounded-lg shadow overflow-x-auto max-w-4xl">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse border-2 border-gray-800">
             <thead>
               <tr className="bg-blue-500">
-                <th className="text-white font-bold text-center px-6 py-4 text-base border border-gray-300">
+                <th className="text-white font-bold text-center px-6 py-4 text-base border-2 border-gray-800">
                   Service Name
                 </th>
-                <th className="text-white font-bold text-center px-6 py-4 text-base border border-gray-300">
+                <th className="text-white font-bold text-center px-6 py-4 text-base border-2 border-gray-800">
                   Description
                 </th>
               </tr>
             </thead>
             <tbody>
               {expenseData.map((expense, index) => (
-                <tr key={expense.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                  <td className="border border-gray-300 px-6 py-4 text-center text-base">
+                <tr key={expense.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
+                  <td className="border-2 border-gray-800 px-6 py-4 text-center text-base">
                     <div className="flex items-center justify-between">
                       <div className="flex gap-2">
                         <Button 
@@ -131,7 +131,7 @@ const ExpenseMasterContent = () => {
                       <span className="font-medium">{expense.serviceName}</span>
                     </div>
                   </td>
-                  <td className="border border-gray-300 px-6 py-4 text-center text-base font-medium">
+                  <td className="border-2 border-gray-800 px-6 py-4 text-center text-base font-medium">
                     {expense.description}
                   </td>
                 </tr>
