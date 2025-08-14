@@ -57,27 +57,27 @@ const StudentRegistrationContent = () => {
   };
 
   return (
-    <div className="w-full max-w-none">
+    <div className="w-full max-w-none bg-white">
       {/* Header */}
-      <div className="bg-gray-400 px-4 py-3 mb-4">
+      <div className="bg-gray-400 px-4 py-3 mb-4 border border-gray-500">
         <h1 className="text-lg font-medium text-gray-800">Student Registration</h1>
       </div>
 
-      <div className="space-y-0">
+      <div className="space-y-0 border-2 border-gray-600">
         {/* Examination Details */}
-        <div className="border border-gray-300">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium">
+        <div className="border-collapse">
+          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
             Examination Details / परीक्षा विवरण
           </div>
           
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 Applied for Examination / जिस परीक्षा के लिए आवेदन किया*
               </div>
-              <div className="col-span-3 px-3 py-2 border-r border-gray-300 flex items-center">
+              <div className="col-span-3 px-3 py-2 border-r-2 border-gray-600 flex items-center bg-white">
                 <Select value={formData.courseCategory} onValueChange={(value) => handleInputChange('courseCategory', value)}>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="--------Select Course Category--------" />
                   </SelectTrigger>
                   <SelectContent>
@@ -87,9 +87,9 @@ const StudentRegistrationContent = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="col-span-3 px-3 py-2 border-r border-gray-300 flex items-center">
+              <div className="col-span-3 px-3 py-2 border-r-2 border-gray-600 flex items-center bg-white">
                 <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="-------Select Course Name-------" />
                   </SelectTrigger>
                   <SelectContent>
@@ -99,20 +99,20 @@ const StudentRegistrationContent = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="col-span-3 px-3 py-2 flex items-center">
-                <span className="text-xs text-gray-700">Fee : Rs/</span>
+              <div className="col-span-3 px-3 py-2 flex items-center bg-blue-50">
+                <span className="text-xs text-gray-700 font-medium">Fee : Rs/</span>
               </div>
             </div>
           </div>
 
-          <div>
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-white">
                 Examination Location / परीक्षा केंद्र *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
                 <Select value={formData.studyCenter} onValueChange={(value) => handleInputChange('studyCenter', value)}>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="-----Select Study Center-----" />
                   </SelectTrigger>
                   <SelectContent>
@@ -127,19 +127,19 @@ const StudentRegistrationContent = () => {
         </div>
 
         {/* Applicant's Personal Details */}
-        <div className="border border-gray-300 border-t-0">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium">
+        <div className="border-collapse">
+          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
             Applicant's Personal Details /आवेदक का व्यक्तिगत विवरण
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 Applicant's Full Name / आवेदक का पूरा नाम *
               </div>
-              <div className="col-span-2 px-3 py-2 border-r border-gray-300 flex items-center">
+              <div className="col-span-2 px-3 py-2 border-r-2 border-gray-600 flex items-center bg-white">
                 <Select>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="Mr./श्री" />
                   </SelectTrigger>
                   <SelectContent>
@@ -149,24 +149,24 @@ const StudentRegistrationContent = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="col-span-7 px-3 py-2 flex items-center">
+              <div className="col-span-7 px-3 py-2 flex items-center bg-blue-50">
                 <Input
                   value={formData.applicantName}
                   onChange={(e) => handleInputChange('applicantName', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-white">
                 Father's Name / पिता का नाम *
               </div>
-              <div className="col-span-2 px-3 py-2 border-r border-gray-300 flex items-center">
+              <div className="col-span-2 px-3 py-2 border-r-2 border-gray-600 flex items-center bg-blue-50">
                 <Select>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="Mr./श्री" />
                   </SelectTrigger>
                   <SelectContent>
@@ -174,24 +174,24 @@ const StudentRegistrationContent = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="col-span-7 px-3 py-2 flex items-center">
+              <div className="col-span-7 px-3 py-2 flex items-center bg-white">
                 <Input
                   value={formData.fatherName}
                   onChange={(e) => handleInputChange('fatherName', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 Mother's Name / माता का नाम *
               </div>
-              <div className="col-span-2 px-3 py-2 border-r border-gray-300 flex items-center">
+              <div className="col-span-2 px-3 py-2 border-r-2 border-gray-600 flex items-center bg-white">
                 <Select>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="Mrs./श्रीमती" />
                   </SelectTrigger>
                   <SelectContent>
@@ -199,24 +199,24 @@ const StudentRegistrationContent = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="col-span-7 px-3 py-2 flex items-center">
+              <div className="col-span-7 px-3 py-2 flex items-center bg-blue-50">
                 <Input
                   value={formData.motherName}
                   onChange={(e) => handleInputChange('motherName', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-white">
                 Gender / लिंग*
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
                 <Select value={formData.gender} onValueChange={(value) => handleInputChange('gender', value)}>
-                  <SelectTrigger className="h-8 text-xs border-gray-300 max-w-xs">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400 max-w-xs">
                     <SelectValue placeholder="Select One" />
                   </SelectTrigger>
                   <SelectContent>
@@ -229,31 +229,31 @@ const StudentRegistrationContent = () => {
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 Date of Birth / जन्म दिनांक *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-white">
                 <Input
                   type="text"
                   value={formData.dateOfBirth}
                   onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                  className="h-8 text-xs border-gray-300 max-w-xs"
+                  className="h-8 text-xs border-2 border-gray-400 max-w-xs"
                   placeholder="dd/MM/yyyy"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-blue-50">
                 Category / वर्ग*
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-white">
                 <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                  <SelectTrigger className="h-8 text-xs border-gray-300 max-w-xs">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400 max-w-xs">
                     <SelectValue placeholder="Select One" />
                   </SelectTrigger>
                   <SelectContent>
@@ -267,17 +267,17 @@ const StudentRegistrationContent = () => {
             </div>
           </div>
 
-          <div>
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 Date Of Registration *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
                 <Input
                   type="text"
                   value={formData.registrationDate}
                   onChange={(e) => handleInputChange('registrationDate', e.target.value)}
-                  className="h-8 text-xs border-gray-300 max-w-xs"
+                  className="h-8 text-xs border-2 border-gray-400 max-w-xs"
                   placeholder="dd/MM/yyyy"
                 />
               </div>
@@ -286,19 +286,19 @@ const StudentRegistrationContent = () => {
         </div>
 
         {/* Contact Details */}
-        <div className="border border-gray-300 border-t-0">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium">
+        <div className="border-collapse">
+          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
             Contact Details / संपर्क विवरण
           </div>
 
-          <div className="border-b border-gray-300">
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center bg-white">
                 Mobile / मोबाइल *
               </div>
-              <div className="col-span-2 px-3 py-2 border-r border-gray-300 flex items-center">
+              <div className="col-span-2 px-3 py-2 border-r-2 border-gray-600 flex items-center bg-blue-50">
                 <Select>
-                  <SelectTrigger className="h-8 text-xs border-gray-300">
+                  <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="+91" />
                   </SelectTrigger>
                   <SelectContent>
@@ -306,27 +306,27 @@ const StudentRegistrationContent = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="col-span-7 px-3 py-2 flex items-center">
+              <div className="col-span-7 px-3 py-2 flex items-center bg-white">
                 <Input
                   value={formData.mobile}
                   onChange={(e) => handleInputChange('mobile', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
           </div>
 
-          <div>
-            <div className="grid grid-cols-12 min-h-[40px]">
-              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r border-gray-300 text-sm font-medium text-gray-700 flex items-center">
+          <div className="border-b-2 border-gray-600">
+            <div className="grid grid-cols-12 min-h-[45px] border-collapse">
+              <div className="col-span-3 bg-blue-100 px-4 py-2 border-r-2 border-gray-600 text-sm font-medium text-gray-700 flex items-center">
                 Email / ईमेल पता *
               </div>
-              <div className="col-span-9 px-3 py-2 flex items-center">
+              <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
                 <Input
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="h-8 text-xs border-gray-300"
+                  className="h-8 text-xs border-2 border-gray-400"
                 />
               </div>
             </div>
