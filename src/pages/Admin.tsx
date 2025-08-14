@@ -146,7 +146,7 @@ const Admin = () => {
   };
   return <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Sidebar */}
-      <div className={`${sidebarCollapsed ? 'w-20' : 'w-72'} bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white shadow-2xl transition-all duration-300 ease-in-out fixed left-0 top-0 h-full z-40 flex flex-col`}>
+      <div className={`${sidebarCollapsed ? 'w-20' : 'w-72'} bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white shadow-2xl transition-all duration-300 ease-in-out fixed left-0 top-0 h-full z-40 flex flex-col overflow-visible`}>
         {/* Header */}
         <div className="p-6 border-b border-gray-700/50 bg-gray-800/50">
           <div className="flex items-center justify-between">
@@ -173,7 +173,7 @@ const Admin = () => {
 
         {/* Navigation */}
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
-          <div className="p-6">
+          <div className={`${sidebarCollapsed ? 'p-2' : 'p-6'}`}>
             {!sidebarCollapsed && <div className="text-gray-400 text-xs font-semibold mb-4 uppercase tracking-wider">MAIN NAVIGATION</div>}
             <nav className="space-y-2">
               {sidebarItems.map((item, index) => <div key={index} className={`${sidebarCollapsed ? 'flex items-center justify-center p-4' : 'flex items-center space-x-4 p-3'} rounded-xl cursor-pointer transition-all duration-200 group ${item.active ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 shadow-lg' : 'hover:bg-gray-700/50 hover:shadow-md'}`} title={sidebarCollapsed ? item.label : ''}>
