@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown } from "lucide-react";
+import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown, Key, Video, Building2, Image, MapPin, Map, BookOpen, Newspaper, FolderPlus, Eye, Target, MessageSquare, Phone, HelpCircle, UserPlus, UserCheck, Database, Shield, CheckCircle, Printer, FileOutput, Upload, Hash, FileCheck, Edit, BarChart, Receipt, Wallet, PlusCircle, Book, Scale, Calculator } from "lucide-react";
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -32,9 +32,9 @@ const Admin = () => {
     color: "text-green-400",
     hasSubmenu: true,
     submenuItems: [
-      "Edit My Profile",
-      "Change Login Password",
-      "Video"
+      { label: "Edit My Profile", icon: User },
+      { label: "Change Login Password", icon: Key },
+      { label: "Video", icon: Video }
     ]
   }, {
     icon: Building,
@@ -42,7 +42,7 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-purple-400",
     submenuItems: [
-      "Head Office"
+      { label: "Head Office", icon: Building2 }
     ]
   }, {
     icon: GraduationCap,
@@ -50,22 +50,22 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-pink-400",
     submenuItems: [
-      "Master",
-      "Menu Content",
-      "Photo Gallery",
-      "Add Bank Details",
-      "EMP Master",
-      "State Master",
-      "Distt Master",
-      "Course Master",
-      "Add News",
-      "Add Course Category",
-      "Add News & Event",
-      "Add Vision",
-      "Add Mission",
-      "Add Director Message",
-      "Contact Us",
-      "Enquiry"
+      { label: "Master", icon: Settings },
+      { label: "Menu Content", icon: Menu },
+      { label: "Photo Gallery", icon: Image },
+      { label: "Add Bank Details", icon: CreditCard },
+      { label: "EMP Master", icon: Users },
+      { label: "State Master", icon: MapPin },
+      { label: "Distt Master", icon: Map },
+      { label: "Course Master", icon: BookOpen },
+      { label: "Add News", icon: Newspaper },
+      { label: "Add Course Category", icon: FolderPlus },
+      { label: "Add News & Event", icon: Calendar },
+      { label: "Add Vision", icon: Eye },
+      { label: "Add Mission", icon: Target },
+      { label: "Add Director Message", icon: MessageSquare },
+      { label: "Contact Us", icon: Phone },
+      { label: "Enquiry", icon: HelpCircle }
     ]
   }, {
     icon: Users,
@@ -73,20 +73,20 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-cyan-400",
     submenuItems: [
-      "Student Master",
-      "Student Registration",
-      "Student Approval",
-      "Student Management",
-      "Search By Student Data",
-      "Student Verification",
-      "Verification",
-      "Verification Report",
-      "Student Data",
-      "Student Reg. Print",
-      "Make Student Admit Card",
-      "Student Admit Card Report",
-      "Generate Student Admit Card",
-      "Upload Student Content"
+      { label: "Student Master", icon: GraduationCap },
+      { label: "Student Registration", icon: UserPlus },
+      { label: "Student Approval", icon: UserCheck },
+      { label: "Student Management", icon: Users },
+      { label: "Search By Student Data", icon: Search },
+      { label: "Student Verification", icon: Shield },
+      { label: "Verification", icon: CheckCircle },
+      { label: "Verification Report", icon: FileText },
+      { label: "Student Data", icon: Database },
+      { label: "Student Reg. Print", icon: Printer },
+      { label: "Make Student Admit Card", icon: CreditCard },
+      { label: "Student Admit Card Report", icon: FileText },
+      { label: "Generate Student Admit Card", icon: FileOutput },
+      { label: "Upload Student Content", icon: Upload }
     ]
   }, {
     icon: Award,
@@ -94,12 +94,12 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-yellow-400",
     submenuItems: [
-      "Course Subject",
-      "Alot Number",
-      "Ready Markseet",
-      "Report",
-      "Edit CRT",
-      "Student Markseet"
+      { label: "Course Subject", icon: BookOpen },
+      { label: "Alot Number", icon: Hash },
+      { label: "Ready Markseet", icon: FileCheck },
+      { label: "Report", icon: FileText },
+      { label: "Edit CRT", icon: Edit },
+      { label: "Student Markseet", icon: Award }
     ]
   }, {
     icon: Clock,
@@ -107,8 +107,8 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-red-400",
     submenuItems: [
-      "Student Attandance",
-      "Student Att. Report"
+      { label: "Student Attandance", icon: Clock },
+      { label: "Student Att. Report", icon: BarChart }
     ]
   }, {
     icon: DollarSign,
@@ -116,10 +116,10 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-green-400",
     submenuItems: [
-      "Class Fees",
-      "Fees Reports",
-      "Fees Management",
-      "Fees Print"
+      { label: "Class Fees", icon: DollarSign },
+      { label: "Fees Reports", icon: Receipt },
+      { label: "Fees Management", icon: Wallet },
+      { label: "Fees Print", icon: Printer }
     ]
   }, {
     icon: Building,
@@ -127,11 +127,11 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-indigo-400",
     submenuItems: [
-      "Expense Master",
-      "Expense Entry",
-      "Day Book",
-      "Opening Balance",
-      "Balance Sheet"
+      { label: "Expense Master", icon: Receipt },
+      { label: "Expense Entry", icon: PlusCircle },
+      { label: "Day Book", icon: Book },
+      { label: "Opening Balance", icon: Scale },
+      { label: "Balance Sheet", icon: Calculator }
     ]
   }, {
     icon: Crown,
@@ -139,13 +139,13 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-amber-400",
     submenuItems: [
-      "Registration",
-      "Franchise Management",
-      "Approval",
-      "Franchise Data",
-      "Franchise Reg. Print",
-      "Franchise Upload",
-      "View Franchise Support"
+      { label: "Registration", icon: UserPlus },
+      { label: "Franchise Management", icon: Building },
+      { label: "Approval", icon: CheckCircle },
+      { label: "Franchise Data", icon: Database },
+      { label: "Franchise Reg. Print", icon: Printer },
+      { label: "Franchise Upload", icon: Upload },
+      { label: "View Franchise Support", icon: HelpCircle }
     ]
   }, {
     icon: FileText,
@@ -153,8 +153,8 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-teal-400",
     submenuItems: [
-      "Make Franchise Certificate",
-      "Generate Franchise Certificat"
+      { label: "Make Franchise Certificate", icon: Award },
+      { label: "Generate Franchise Certificat", icon: FileOutput }
     ]
   }, {
     icon: CreditCard,
@@ -162,9 +162,9 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-rose-400",
     submenuItems: [
-      "Payment Section",
-      "Reporting",
-      "Student_Editing"
+      { label: "Payment Section", icon: CreditCard },
+      { label: "Reporting", icon: BarChart },
+      { label: "Student_Editing", icon: Edit }
     ]
   }, {
     icon: LogOut,
@@ -300,9 +300,10 @@ const Admin = () => {
                       {item.submenuItems.map((subItem, subIndex) => (
                         <div 
                           key={subIndex}
-                          className="p-2 text-sm text-gray-400 hover:text-white hover:bg-gray-700/30 rounded-lg cursor-pointer transition-all duration-200"
+                          className="flex items-center space-x-3 p-2 text-sm text-gray-400 hover:text-white hover:bg-gray-700/30 rounded-lg cursor-pointer transition-all duration-200"
                         >
-                          {subItem}
+                          <subItem.icon className="h-4 w-4 text-gray-500" />
+                          <span>{subItem.label}</span>
                         </div>
                       ))}
                     </div>
