@@ -45,7 +45,7 @@ const Footer = () => {
                   </div>
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  Pioneer in skill training with 13+ years of experience, training 5+ lakh students 
+                  Pioneer in skill training with 5+ years of experience, empowering 25,000+ students 
                   across India with government certified courses and 100% placement assistance.
                 </p>
               </div>

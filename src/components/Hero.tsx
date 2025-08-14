@@ -44,7 +44,7 @@ const Hero = () => {
               
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
                 Join India's leading skill development program with 
-                <span className="text-primary font-semibold"> 13+ years of proven success</span> and 
+                <span className="text-primary font-semibold"> 5+ years of proven success</span> and 
                 <span className="text-primary font-semibold"> 100% placement assistance</span>
               </p>
             </div>
@@ -67,15 +67,15 @@ const Hero = () => {
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8 border-t border-border/20">
               <div className="text-center">
-                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-primary mb-1">5L+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Lives Transformed</div>
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-primary mb-1">25K+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Students Empowered</div>
               </div>
               <div className="text-center">
                 <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-primary mb-1">100%</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">Placement Rate</div>
               </div>
               <div className="text-center">
-                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-primary mb-1">13+</div>
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-primary mb-1">5+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">Years Excellence</div>
               </div>
             </div>

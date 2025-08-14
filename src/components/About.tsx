@@ -20,7 +20,7 @@ const About = () => {
             <div className="space-y-8">
               <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-primary/20 to-orange-400/10 border border-primary/30 rounded-full px-6 py-3 text-base backdrop-blur-sm">
                 <CheckCircle className="h-5 w-5 text-primary" />
-                <span className="text-primary font-bold tracking-wide">Excellence Since 2013</span>
+                <span className="text-primary font-bold tracking-wide">Excellence Since 2020</span>
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
               </div>
               
@@ -31,9 +31,10 @@ const About = () => {
               
               <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl font-light">
                 India's <span className="text-primary font-bold text-2xl">leading pioneer</span> in skill training excellence, 
-                transforming lives through <span className="text-gradient font-bold">professional education</span> since 2013. 
-                Our mega skill centers span across India's most challenging terrains including 
-                <span className="text-primary font-semibold"> Jharkhand, J&K, Uttarakhand, and North-East States</span>.
+                transforming lives through <span className="text-gradient font-bold">professional education</span> since inception. 
+                With <span className="text-primary font-semibold">5+ years of experience</span>, we have successfully 
+                <span className="text-primary font-semibold"> empowered 25,000+ students</span> across India with our 
+                <span className="text-primary font-semibold">100+ expert faculties</span>.
               </p>
             </div>
 
@@ -73,8 +74,8 @@ const About = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-3">Our Vision</h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    To train 10 lakh students per year in different skills and to empower them with 
-                    the ability to provide professional services, and create wealth for themselves 
+                    To train 5000 Thousand students per year in different skills and empower them with 
+                    the ability to provide professional services, creating wealth for themselves 
                     and for the nation.
                   </p>
                 </div>
@@ -101,10 +102,10 @@ const About = () => {
             {/* Achievement Highlight */}
             <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-xl p-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">Who We Are</div>
+                <div className="text-3xl font-bold text-primary mb-2">Our Impact</div>
                 <p className="text-muted-foreground">
-                  Pioneer in skill training with expertise in providing professional education 
-                  that develops students as self-dependent leaders
+                  Pioneer in skill training with 5+ years of experience, empowering 25,000+ students 
+                  with 100+ expert faculties delivering professional education excellence
                 </p>
               </div>
             </div>

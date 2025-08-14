@@ -228,16 +228,16 @@ const Navigation = () => {
               {/* Quick Stats */}
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-gradient-to-br from-primary/10 to-orange-500/10 rounded-2xl border border-primary/20">
-                  <div className="text-2xl font-bold text-primary">13+</div>
+                  <div className="text-2xl font-bold text-primary">5+</div>
                   <div className="text-xs text-muted-foreground">Years</div>
                 </div>
                 <div className="text-center p-4 bg-gradient-to-br from-primary/10 to-orange-500/10 rounded-2xl border border-primary/20">
-                  <div className="text-2xl font-bold text-primary">5L+</div>
+                  <div className="text-2xl font-bold text-primary">25K+</div>
                   <div className="text-xs text-muted-foreground">Students</div>
                 </div>
                 <div className="text-center p-4 bg-gradient-to-br from-primary/10 to-orange-500/10 rounded-2xl border border-primary/20">
-                  <div className="text-2xl font-bold text-primary">100%</div>
-                  <div className="text-xs text-muted-foreground">Placement</div>
+                  <div className="text-2xl font-bold text-primary">100+</div>
+                  <div className="text-xs text-muted-foreground">Faculties</div>
                 </div>
               </div>
 

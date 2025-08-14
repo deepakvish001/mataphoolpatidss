@@ -4,14 +4,14 @@ const Stats = () => {
   const stats = [
     {
       icon: TrendingUp,
-      number: '13',
+      number: '5',
       suffix: '+',
       label: 'Years of Experience',
-      description: 'Leading the industry since 2013',
+      description: 'Committed to excellence since inception',
     },
     {
       icon: Users,
-      number: '900',
+      number: '100',
       suffix: '+',
       label: 'Expert Faculties',
       description: 'Certified trainers across India',
@@ -25,9 +25,9 @@ const Stats = () => {
     },
     {
       icon: GraduationCap,
-      number: '5',
-      suffix: ' Lakhs+',
-      label: 'Students Trained',
+      number: '25',
+      suffix: 'K+',
+      label: 'Students Empowered',
       description: 'Successful placements nationwide',
     },
   ];
@@ -40,7 +40,7 @@ const Stats = () => {
             Our Impact in <span className="text-primary">Numbers</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Over a decade of excellence in skill development and training across India
+            5+ years of excellence in skill development and training across India
           </p>
         </div>
 
