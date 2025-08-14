@@ -2,81 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Vibrant Multicolor Premium Theme Design System
-All colors MUST be HSL. Colorful gradients, vibrant accents, dark readable text.
+/* Premium Modern Theme Design System
+Sophisticated color palette with elegant gradients and premium aesthetics.
 */
 
 @layer base {
   :root {
-    /* Core light theme backgrounds */
-    --background: 0 0% 99%;
-    --foreground: 220 25% 15%;
+    /* Core sophisticated backgrounds */
+    --background: 0 0% 98%;
+    --foreground: 215 28% 17%;
 
-    /* Card system - white with colorful shadows */
+    /* Card system - pristine white with elegant shadows */
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 15%;
+    --card-foreground: 215 28% 17%;
 
     /* Popover system */
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 15%;
+    --popover-foreground: 215 28% 17%;
 
-    /* Primary gradient system - Blue to Purple */
-    --primary: 217 91% 60%;
+    /* Premium Purple-Blue Primary System */
+    --primary: 250 84% 54%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 217 91% 55%;
+    --primary-hover: 250 84% 48%;
     
-    /* Secondary vibrant colors */
-    --secondary: 300 76% 72%;
+    /* Sophisticated Secondary Colors */
+    --secondary: 197 71% 52%;
     --secondary-foreground: 0 0% 100%;
     
-    /* Accent colors - Teal */
-    --accent: 172 100% 45%;
+    /* Elegant Accent Colors */
+    --accent: 142 69% 58%;
     --accent-foreground: 0 0% 100%;
     
-    /* Additional vibrant colors */
-    --orange: 25 100% 60%;
-    --orange-foreground: 0 0% 100%;
-    --pink: 330 85% 65%;
-    --pink-foreground: 0 0% 100%;
-    --green: 142 76% 45%;
-    --green-foreground: 0 0% 100%;
-    --yellow: 45 100% 55%;
-    --yellow-foreground: 220 25% 15%;
+    /* Premium Color Palette */
+    --violet: 262 83% 58%;
+    --violet-foreground: 0 0% 100%;
+    --emerald: 158 64% 52%;
+    --emerald-foreground: 0 0% 100%;
+    --rose: 330 81% 60%;
+    --rose-foreground: 0 0% 100%;
+    --amber: 43 96% 56%;
+    --amber-foreground: 215 28% 17%;
+    --indigo: 239 84% 67%;
+    --indigo-foreground: 0 0% 100%;
     
-    /* Enhanced gradient system */
-    --text-gradient-enhanced: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(300 76% 72%) 30%, hsl(172 100% 45%) 60%, hsl(25 100% 60%) 100%);
-    --shadow-glow: 0 20px 40px -12px hsl(217 91% 60% / 0.4);
-    --shadow-colorful: 0 10px 30px -5px hsl(217 91% 60% / 0.3), 0 20px 40px -10px hsl(300 76% 72% / 0.2), 0 30px 50px -15px hsl(172 100% 45% / 0.15);
+    /* Sophisticated Gradient System */
+    --text-gradient-premium: linear-gradient(135deg, hsl(250 84% 54%) 0%, hsl(262 83% 58%) 25%, hsl(197 71% 52%) 50%, hsl(142 69% 58%) 75%, hsl(330 81% 60%) 100%);
+    --shadow-premium: 0 25px 50px -12px hsl(250 84% 54% / 0.25);
+    --shadow-luxury: 0 20px 40px -8px hsl(250 84% 54% / 0.3), 0 8px 16px -4px hsl(262 83% 58% / 0.2);
 
-    /* Muted system - subtle tints */
-    --muted: 210 40% 97%;
-    --muted-foreground: 215 20% 35%;
+    /* Muted system - subtle and refined */
+    --muted: 220 13% 96%;
+    --muted-foreground: 215 16% 46%;
 
-    /* Status colors */
-    --destructive: 0 84% 60%;
+    /* Status colors - refined */
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --success: 142 76% 45%;
+    --success: 142 69% 58%;
     --success-foreground: 0 0% 100%;
+    --warning: 43 96% 56%;
+    --warning-foreground: 215 28% 17%;
+    --info: 197 71% 52%;
+    --info-foreground: 0 0% 100%;
 
     /* Input and border system */
-    --border: 214 32% 91%;
+    --border: 220 13% 91%;
     --input: 0 0% 100%;
-    --ring: 217 91% 60%;
+    --ring: 250 84% 54%;
 
-    /* Border radius */
-    --radius: 0.75rem;
+    /* Border radius - more modern */
+    --radius: 1rem;
 
-    /* Custom vibrant theme tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(300 76% 72%) 50%, hsl(172 100% 45%) 100%);
-    --card-gradient: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
-    --button-gradient: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(300 76% 72%) 100%);
-    --accent-gradient: linear-gradient(135deg, hsl(172 100% 45%) 0%, hsl(142 76% 45%) 100%);
-    --warm-gradient: linear-gradient(135deg, hsl(25 100% 60%) 0%, hsl(330 85% 65%) 100%);
+    /* Premium gradient collection */
+    --hero-gradient: linear-gradient(135deg, hsl(250 84% 54%) 0%, hsl(262 83% 58%) 50%, hsl(197 71% 52%) 100%);
+    --premium-gradient: linear-gradient(135deg, hsl(250 84% 54%) 0%, hsl(262 83% 58%) 100%);
+    --ocean-gradient: linear-gradient(135deg, hsl(197 71% 52%) 0%, hsl(142 69% 58%) 100%);
+    --sunset-gradient: linear-gradient(135deg, hsl(330 81% 60%) 0%, hsl(43 96% 56%) 100%);
+    --aurora-gradient: linear-gradient(135deg, hsl(262 83% 58%) 0%, hsl(197 71% 52%) 50%, hsl(142 69% 58%) 100%);
+    --royal-gradient: linear-gradient(135deg, hsl(239 84% 67%) 0%, hsl(250 84% 54%) 100%);
     
-    --colorful-glow: 0 0 40px hsl(217 91% 60% / 0.4);
-    --text-gradient: linear-gradient(135deg, hsl(220 25% 15%) 0%, hsl(215 20% 25%) 100%);
+    --card-gradient: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 13% 98%) 100%);
+    --glass-gradient: linear-gradient(145deg, hsl(0 0% 100% / 0.8) 0%, hsl(220 13% 98% / 0.6) 100%);
     
-    /* Typography scale */
+    --premium-glow: 0 0 60px hsl(250 84% 54% / 0.4);
+    --luxury-glow: 0 0 80px hsl(262 83% 58% / 0.3);
+    --text-gradient: linear-gradient(135deg, hsl(215 28% 17%) 0%, hsl(215 16% 25%) 100%);
+    
+    /* Animation and effects */
+    --shimmer: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.4), transparent);
+    
+    /* Typography scale - refined */
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
@@ -87,19 +101,20 @@ All colors MUST be HSL. Colorful gradients, vibrant accents, dark readable text.
     --font-size-4xl: 2.25rem;
     --font-size-5xl: 3rem;
 
-    /* Sidebar system for colorful theme */
+    /* Sidebar system */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 25% 15%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-foreground: 215 28% 17%;
+    --sidebar-primary: 250 84% 54%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 97%;
-    --sidebar-accent-foreground: 220 25% 15%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 220 13% 96%;
+    --sidebar-accent-foreground: 215 28% 17%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 250 84% 54%;
 
     /* Animation timings */
     --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
@@ -120,41 +135,70 @@ All colors MUST be HSL. Colorful gradients, vibrant accents, dark readable text.
     background-clip: text;
   }
 
-  .text-gradient-enhanced {
-    background: var(--text-gradient-enhanced);
+  .text-gradient-premium {
+    background: var(--text-gradient-premium);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    background-size: 300% 300%;
-    animation: gradient-x 3s ease infinite;
+    background-size: 400% 400%;
+    animation: gradient-flow 6s ease infinite;
+  }
+
+  @keyframes gradient-flow {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
   }
 
   .shadow-glow {
     box-shadow: var(--shadow-glow);
   }
 
-  .glow-colorful {
-    box-shadow: var(--colorful-glow);
+  .glow-premium {
+    box-shadow: var(--premium-glow);
   }
 
-  .shadow-colorful {
-    box-shadow: var(--shadow-colorful);
+  .glow-luxury {
+    box-shadow: var(--luxury-glow);
+  }
+
+  .shadow-premium {
+    box-shadow: var(--shadow-premium);
+  }
+
+  .shadow-luxury {
+    box-shadow: var(--shadow-luxury);
   }
 
   .hero-gradient {
     background: var(--hero-gradient);
   }
 
-  .button-gradient {
-    background: var(--button-gradient);
+  .premium-gradient {
+    background: var(--premium-gradient);
   }
 
-  .accent-gradient {
-    background: var(--accent-gradient);
+  .ocean-gradient {
+    background: var(--ocean-gradient);
   }
 
-  .warm-gradient {
-    background: var(--warm-gradient);
+  .sunset-gradient {
+    background: var(--sunset-gradient);
+  }
+
+  .aurora-gradient {
+    background: var(--aurora-gradient);
+  }
+
+  .royal-gradient {
+    background: var(--royal-gradient);
+  }
+
+  .glass-gradient {
+    background: var(--glass-gradient);
   }
 
   .card-gradient {
@@ -213,9 +257,10 @@ All colors MUST be HSL. Colorful gradients, vibrant accents, dark readable text.
   }
 
   .glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
 
   .magnetic-effect {
@@ -283,12 +328,12 @@ All colors MUST be HSL. Colorful gradients, vibrant accents, dark readable text.
     }
   }
 
-  /* Enhanced colorful glow effect */
+  /* Enhanced premium glow effect */
   .enhanced-glow {
     box-shadow: 
-      0 0 20px rgba(59, 130, 246, 0.4),
-      0 0 40px rgba(192, 132, 252, 0.3),
-      0 0 60px rgba(45, 212, 191, 0.2);
+      0 0 30px rgba(124, 58, 237, 0.4),
+      0 0 60px rgba(147, 51, 234, 0.3),
+      0 0 90px rgba(59, 130, 246, 0.2);
   }
 
   /* Parallax scroll effect */
@@ -337,28 +382,32 @@ All colors MUST be HSL. Colorful gradients, vibrant accents, dark readable text.
 @layer components {
   /* Custom button variants */
   .btn-primary {
-    @apply button-gradient text-primary-foreground hover:scale-105 transition-all duration-300 rounded-xl px-8 py-4 font-semibold shadow-lg hover:shadow-colorful;
+    @apply premium-gradient text-primary-foreground hover:scale-[1.05] transition-all duration-500 rounded-2xl px-8 py-4 font-semibold shadow-luxury hover:shadow-premium;
   }
 
   .btn-secondary {
-    @apply accent-gradient text-accent-foreground hover:scale-105 transition-all duration-300 rounded-xl px-8 py-4 font-semibold shadow-lg;
+    @apply ocean-gradient text-secondary-foreground hover:scale-[1.05] transition-all duration-500 rounded-2xl px-8 py-4 font-semibold shadow-lg;
   }
 
   .btn-accent {
-    @apply warm-gradient text-orange-foreground hover:scale-105 transition-all duration-300 rounded-xl px-8 py-4 font-semibold shadow-lg;
+    @apply sunset-gradient text-amber-foreground hover:scale-[1.05] transition-all duration-500 rounded-2xl px-8 py-4 font-semibold shadow-lg;
+  }
+
+  .btn-luxury {
+    @apply royal-gradient text-indigo-foreground hover:scale-[1.05] transition-all duration-500 rounded-2xl px-8 py-4 font-semibold shadow-lg;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-foreground hover:bg-muted hover:scale-105 transition-all duration-300 rounded-xl px-6 py-3;
+    @apply bg-transparent text-foreground hover:glass-gradient hover:scale-[1.02] transition-all duration-300 rounded-2xl px-6 py-3 border border-border/30;
   }
 
   /* Card styles */
   .card-premium {
-    @apply card-gradient border border-border/50 rounded-2xl p-8 backdrop-blur-sm hover:border-primary/30 hover:shadow-colorful transition-all duration-300 hover:scale-[1.02];
+    @apply card-gradient border border-border/30 rounded-3xl p-8 backdrop-blur-sm hover:border-primary/20 hover:shadow-luxury transition-all duration-500 hover:scale-[1.02];
   }
 
   .stats-card {
-    @apply text-center p-8 rounded-2xl border-2 border-primary/20 bg-card/50 backdrop-blur-sm hover:border-primary/60 transition-all duration-300 hover:glow-colorful hover:scale-105;
+    @apply text-center p-8 rounded-3xl border-2 border-primary/10 glass-gradient backdrop-blur-xl hover:border-primary/30 transition-all duration-500 hover:glow-premium hover:scale-[1.05];
   }
 
   /* Navigation styles */

@@ -38,6 +38,30 @@ export default {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
+				accent: {
+					DEFAULT: 'hsl(var(--accent))',
+					foreground: 'hsl(var(--accent-foreground))'
+				},
+				violet: {
+					DEFAULT: 'hsl(var(--violet))',
+					foreground: 'hsl(var(--violet-foreground))'
+				},
+				emerald: {
+					DEFAULT: 'hsl(var(--emerald))',
+					foreground: 'hsl(var(--emerald-foreground))'
+				},
+				rose: {
+					DEFAULT: 'hsl(var(--rose))',
+					foreground: 'hsl(var(--rose-foreground))'
+				},
+				amber: {
+					DEFAULT: 'hsl(var(--amber))',
+					foreground: 'hsl(var(--amber-foreground))'
+				},
+				indigo: {
+					DEFAULT: 'hsl(var(--indigo))',
+					foreground: 'hsl(var(--indigo-foreground))'
+				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
@@ -46,29 +70,17 @@ export default {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'
 				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				info: {
+					DEFAULT: 'hsl(var(--info))',
+					foreground: 'hsl(var(--info-foreground))'
+				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
-				},
-				orange: {
-					DEFAULT: 'hsl(var(--orange))',
-					foreground: 'hsl(var(--orange-foreground))'
-				},
-				pink: {
-					DEFAULT: 'hsl(var(--pink))',
-					foreground: 'hsl(var(--pink-foreground))'
-				},
-				green: {
-					DEFAULT: 'hsl(var(--green))',
-					foreground: 'hsl(var(--green-foreground))'
-				},
-				yellow: {
-					DEFAULT: 'hsl(var(--yellow))',
-					foreground: 'hsl(var(--yellow-foreground))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -133,10 +145,10 @@ export default {
 				},
 				'glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 20px hsl(217 91% 60% / 0.3)'
+						boxShadow: '0 0 30px hsl(250 84% 54% / 0.4)'
 					},
 					'50%': {
-						boxShadow: '0 0 40px hsl(217 91% 60% / 0.5)'
+						boxShadow: '0 0 60px hsl(250 84% 54% / 0.6)'
 					}
 				},
 				'float': {
@@ -227,10 +239,13 @@ export default {
 			},
 			backgroundImage: {
 				'hero-gradient': 'var(--hero-gradient)',
+				'premium-gradient': 'var(--premium-gradient)',
+				'ocean-gradient': 'var(--ocean-gradient)',
+				'sunset-gradient': 'var(--sunset-gradient)',
+				'aurora-gradient': 'var(--aurora-gradient)',
+				'royal-gradient': 'var(--royal-gradient)',
 				'card-gradient': 'var(--card-gradient)',
-				'button-gradient': 'var(--button-gradient)',
-				'accent-gradient': 'var(--accent-gradient)',
-				'warm-gradient': 'var(--warm-gradient)',
+				'glass-gradient': 'var(--glass-gradient)',
 				'text-gradient': 'var(--text-gradient)'
 			}
 		}
