@@ -301,6 +301,11 @@ const Admin = () => {
                         <div 
                           key={subIndex}
                           className="flex items-center space-x-3 p-2 text-sm text-gray-400 hover:text-white hover:bg-gray-700/30 rounded-lg cursor-pointer transition-all duration-200"
+                          onClick={() => {
+                            if (subItem.label === "Edit My Profile") {
+                              window.location.href = "/edit-profile";
+                            }
+                          }}
                         >
                           <subItem.icon className="h-4 w-4 text-gray-500" />
                           <span>{subItem.label}</span>
