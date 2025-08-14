@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-// Import payment logos
-import paymentOptionsWhite from '@/assets/payment-options-white.png';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -195,31 +193,28 @@ const Navigation = () => {
               <div className="hidden md:flex items-center space-x-3">
                 <a 
                   href="/donation"
-                  className="group relative flex items-center space-x-4 px-8 py-4 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 border-2 border-gray-100 hover:border-primary/30"
+                  className="group relative flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:via-blue-500 hover:to-emerald-500 transition-all duration-500 shadow-lg hover:shadow-2xl transform hover:scale-110 hover:-translate-y-1 border border-white/20"
                 >
                   {/* Animated glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-green-400 to-purple-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500 -z-10"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-500 rounded-xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500 -z-10"></div>
                   
-                  {/* Payment icons container */}
-                  <div className="flex items-center space-x-3">
+                  {/* Payment icons */}
+                  <div className="relative">
                     <img 
-                      src={paymentOptionsWhite} 
-                      alt="Secure Payment Options - Visa, MasterCard, Maestro, Discover, PayPal" 
-                      className="h-12 w-auto object-contain"
+                      src="/lovable-uploads/6c6e5574-a79c-4491-9b27-f19a22d00a2c.png" 
+                      alt="Secure Payment" 
+                      className="h-7 w-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
                   
                   {/* Text with icon */}
-                  <div className="flex flex-col items-start">
-                    <span className="font-bold text-lg text-gray-800 tracking-wide">PAY NOW</span>
-                    <span className="text-xs text-gray-500">Multiple Options</span>
+                  <div className="flex items-center space-x-2">
+                    <span className="font-bold text-lg tracking-wide">PAY NOW</span>
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                   </div>
                   
-                  {/* Arrow and sparkle */}
-                  <div className="flex items-center">
-                    <div className="text-primary text-xl">→</div>
-                    <div className="text-yellow-400 animate-pulse ml-1">✨</div>
-                  </div>
+                  {/* Sparkle effect */}
+                  <div className="absolute top-1 right-1 text-yellow-300 animate-pulse">✨</div>
                 </a>
               </div>
 
@@ -248,33 +243,25 @@ const Navigation = () => {
               {/* Mobile Payment Option */}
               <a 
                 href="/donation"
-                className="group relative flex flex-col items-center justify-center space-y-3 p-6 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border-2 border-gray-100 hover:border-primary/30"
+                className="group relative flex items-center justify-center space-x-4 p-6 bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-600 text-white rounded-2xl hover:from-purple-600 hover:via-blue-500 hover:to-emerald-500 transition-all duration-500 shadow-xl hover:shadow-2xl transform hover:scale-105 border border-white/20"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {/* Animated glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-green-400 to-purple-400 rounded-3xl blur-lg opacity-0 group-hover:opacity-20 transition-opacity duration-500 -z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500 -z-10"></div>
                 
-                {/* Header */}
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-800 mb-1">SECURE PAYMENT</div>
-                  <div className="text-sm text-gray-500">Multiple Payment Methods Available</div>
+                <img 
+                  src="/lovable-uploads/6c6e5574-a79c-4491-9b27-f19a22d00a2c.png" 
+                  alt="Secure Payment" 
+                  className="h-10 w-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="flex flex-col items-center">
+                  <span className="text-xl font-bold tracking-wide">SECURE PAYMENT</span>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <span className="text-sm opacity-90">Multiple Options Available</span>
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  </div>
                 </div>
-                
-                {/* Payment options image */}
-                <div className="flex items-center justify-center">
-                  <img 
-                    src={paymentOptionsWhite} 
-                    alt="Secure Payment Options - Visa, MasterCard, Maestro, Discover, PayPal" 
-                    className="h-16 w-auto object-contain"
-                  />
-                </div>
-                
-                {/* CTA */}
-                <div className="flex items-center space-x-2 text-primary font-semibold">
-                  <span>TAP TO PAY</span>
-                  <div className="text-xl">→</div>
-                  <div className="text-yellow-400 animate-pulse">✨</div>
-                </div>
+                <div className="absolute top-2 right-2 text-yellow-300 animate-pulse">✨</div>
               </a>
 
               {/* Quick Stats */}
