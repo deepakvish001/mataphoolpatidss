@@ -304,6 +304,8 @@ const Admin = () => {
                           onClick={() => {
                             if (subItem.label === "Edit My Profile") {
                               window.location.href = "/edit-profile";
+                            } else if (subItem.label === "Change Login Password") {
+                              window.location.href = "/change-password";
                             }
                           }}
                         >
