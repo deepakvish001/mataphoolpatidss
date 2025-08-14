@@ -27,6 +27,7 @@ import AddMissionContent from "@/components/admin/AddMissionContent";
 import AddDirectorMessageContent from "@/components/admin/AddDirectorMessageContent";
 import EnquiryContent from "@/components/admin/EnquiryContent";
 import ContactUsContent from "@/components/admin/ContactUsContent";
+import StudentRegistrationContent from "@/components/admin/StudentRegistrationContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -57,6 +58,7 @@ const Admin = () => {
     if (path === '/admin/add-director-message') return 'add-director-message';
     if (path === '/admin/enquiry') return 'enquiry';
     if (path === '/admin/contact-us') return 'contact-us';
+    if (path === '/admin/student-registration') return 'student-registration';
     return 'dashboard';
   };
 
@@ -357,6 +359,8 @@ const Admin = () => {
                               navigate('/admin/enquiry');
                             } else if (subItem.label === "Contact Us") {
                               navigate('/admin/contact-us');
+                            } else if (subItem.label === "Student Registration") {
+                              navigate('/admin/student-registration');
                             }
                           }}
                         >
@@ -400,7 +404,8 @@ const Admin = () => {
                 currentView === 'add-mission' ? 'Add Our Mission' : 
                 currentView === 'add-director-message' ? 'Add Director Message' : 
                 currentView === 'enquiry' ? 'My All Enquiry' : 
-               currentView === 'contact-us' ? 'My All Contacts' : 'Dashboard'}
+                currentView === 'contact-us' ? 'My All Contacts' : 
+               currentView === 'student-registration' ? 'Student Registration' : 'Dashboard'}
             </h1>
             <p className="text-gray-600 font-medium mt-1">
               {currentView === 'dashboard' ? 'Control panel' : 
@@ -422,7 +427,8 @@ const Admin = () => {
                 currentView === 'add-mission' ? 'Manage organization mission' : 
                 currentView === 'add-director-message' ? 'Manage director messages' : 
                 currentView === 'enquiry' ? 'View and manage enquiries' : 
-               currentView === 'contact-us' ? 'View and manage contacts' : 'Control panel'}
+                currentView === 'contact-us' ? 'View and manage contacts' : 
+               currentView === 'student-registration' ? 'Register new students' : 'Control panel'}
             </p>
           </div>
           <div className="flex items-center space-x-6">
@@ -481,6 +487,7 @@ const Admin = () => {
             <Route path="/add-director-message" element={<AddDirectorMessageContent />} />
             <Route path="/enquiry" element={<EnquiryContent />} />
             <Route path="/contact-us" element={<ContactUsContent />} />
+            <Route path="/student-registration" element={<StudentRegistrationContent />} />
           </Routes>
         </div>
 
