@@ -41,6 +41,7 @@ import StudentAdmitCardReportContent from "@/components/admin/StudentAdmitCardRe
 import GenerateStudentAdmitCardContent from "@/components/admin/GenerateStudentAdmitCardContent";
 import UploadStudentContentContent from "@/components/admin/UploadStudentContentContent";
 import CourseSubjectContent from "@/components/admin/CourseSubjectContent";
+import AlotNumberContent from "@/components/admin/AlotNumberContent";
 
 const Admin = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -85,6 +86,7 @@ const Admin = () => {
     if (path === '/admin/generate-student-admit-card') return 'generate-student-admit-card';
     if (path === '/admin/upload-student-content') return 'upload-student-content';
     if (path === '/admin/course-subject') return 'course-subject';
+    if (path === '/admin/alot-number') return 'alot-number';
     return 'dashboard';
   };
 
@@ -413,6 +415,8 @@ const Admin = () => {
                               navigate('/admin/upload-student-content');
                             } else if (subItem.label === "Course Subject") {
                               navigate('/admin/course-subject');
+                            } else if (subItem.label === "Alot Number") {
+                              navigate('/admin/alot-number');
                             }
                           }}
                         >
@@ -560,6 +564,7 @@ const Admin = () => {
             <Route path="/generate-student-admit-card" element={<GenerateStudentAdmitCardContent />} />
             <Route path="/upload-student-content" element={<UploadStudentContentContent />} />
             <Route path="/course-subject" element={<CourseSubjectContent />} />
+            <Route path="/alot-number" element={<AlotNumberContent />} />
           </Routes>
         </div>
 
