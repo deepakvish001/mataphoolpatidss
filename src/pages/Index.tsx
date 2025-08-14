@@ -2,6 +2,7 @@ import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import ModiQuote from '@/components/ModiQuote';
 import MissionCourses from '@/components/MissionCourses';
+import GovernmentSchemes from '@/components/GovernmentSchemes';
 import Stats from '@/components/Stats';
 import About from '@/components/About';
 import Services from '@/components/Services';
@@ -19,6 +20,7 @@ const Index = () => {
         <Hero />
         <ModiQuote />
         <MissionCourses />
+        <GovernmentSchemes />
         <Stats />
         <About />
         <Services />
