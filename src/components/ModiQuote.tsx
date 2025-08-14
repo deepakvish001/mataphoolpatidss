@@ -1,4 +1,5 @@
 import React from 'react';
+import modiPhoto from '@/assets/modi-official-photo.jpg';
 
 const ModiQuote = () => {
   return (
@@ -8,7 +9,7 @@ const ModiQuote = () => {
           {/* Modi Photo */}
           <div className="flex-shrink-0">
             <img 
-              src="/lovable-uploads/bc858178-be73-4208-b835-0f7a26a93e3e.png" 
+              src={modiPhoto} 
               alt="PM Shri Narendra Modi"
               className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white/20 shadow-2xl"
             />
