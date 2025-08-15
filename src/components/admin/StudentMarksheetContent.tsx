@@ -345,15 +345,16 @@ const StudentMarksheetContent = () => {
             <div ref={marksheetRef} className="relative bg-gradient-to-br from-white via-blue-50/30 to-purple-50/20 p-12 min-h-[800px]">
               
               {/* Elegant Border Design */}
-              <div className="absolute inset-4 border-4 border-double border-blue-800/40 rounded-lg">
-                <div className="absolute inset-2 border border-orange-300/50 rounded-md"></div>
+              <div className="absolute inset-4 border-4 border-double border-gradient-to-r from-blue-800 via-purple-600 to-blue-800 rounded-lg opacity-60">
+                <div className="absolute inset-2 border-2 border-amber-300/40 rounded-md"></div>
+                <div className="absolute inset-1 border border-blue-200/30 rounded-md"></div>
               </div>
               
               {/* Decorative Corner Elements */}
-              <div className="absolute top-8 left-8 w-16 h-16 border-l-4 border-t-4 border-blue-800/60 rounded-tl-lg"></div>
-              <div className="absolute top-8 right-8 w-16 h-16 border-r-4 border-t-4 border-blue-800/60 rounded-tr-lg"></div>
-              <div className="absolute bottom-8 left-8 w-16 h-16 border-l-4 border-b-4 border-blue-800/60 rounded-bl-lg"></div>
-              <div className="absolute bottom-8 right-8 w-16 h-16 border-r-4 border-b-4 border-blue-800/60 rounded-br-lg"></div>
+              <div className="absolute top-8 left-8 w-20 h-20 border-l-4 border-t-4 border-blue-800/80 rounded-tl-xl"></div>
+              <div className="absolute top-8 right-8 w-20 h-20 border-r-4 border-t-4 border-blue-800/80 rounded-tr-xl"></div>
+              <div className="absolute bottom-8 left-8 w-20 h-20 border-l-4 border-b-4 border-blue-800/80 rounded-bl-xl"></div>
+              <div className="absolute bottom-8 right-8 w-20 h-20 border-r-4 border-b-4 border-blue-800/80 rounded-br-xl"></div>
 
               {/* Watermark */}
               <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
@@ -470,83 +471,85 @@ const StudentMarksheetContent = () => {
                     <div className="mt-2 mx-auto w-24 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600"></div>
                   </div>
                   
-                  <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+                  <div className="bg-white rounded-xl shadow-xl border-2 border-gray-100 overflow-hidden">
                     <table className="w-full">
                       <thead>
-                        <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Subject</th>
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Max. Theory</th>
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Max. Practical</th>
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Obtained Theory</th>
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Obtained Practical</th>
+                        <tr className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 text-white">
+                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Subject</th>
+                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Max. Theory</th>
+                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Max. Practical</th>
+                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Obtained Theory</th>
+                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Obtained Practical</th>
                         </tr>
                       </thead>
                       <tbody className="text-sm">
                         {courseSubjects.map((subject, index) => (
-                          <tr key={subject.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                            <td className="px-4 py-3 text-center font-medium text-gray-800">{subject.subject}</td>
-                            <td className="px-4 py-3 text-center">{subject.theory_marks}</td>
-                            <td className="px-4 py-3 text-center">{subject.practical_marks}</td>
-                            <td className="px-4 py-3 text-center font-semibold text-blue-600">
+                          <tr key={subject.id} className={`transition-colors hover:bg-blue-50/50 ${
+                            index % 2 === 0 ? "bg-gray-50/70" : "bg-white"
+                          }`}>
+                            <td className="px-6 py-4 text-center font-semibold text-gray-800 border-r border-gray-100">{subject.subject}</td>
+                            <td className="px-6 py-4 text-center font-medium border-r border-gray-100">{subject.theory_marks}</td>
+                            <td className="px-6 py-4 text-center font-medium border-r border-gray-100">{subject.practical_marks}</td>
+                            <td className="px-6 py-4 text-center font-bold text-blue-600 text-lg border-r border-gray-100">
                               {Math.round(parseInt(subject.theory_marks || "0") * 0.75)}
                             </td>
-                            <td className="px-4 py-3 text-center font-semibold text-purple-600">
+                            <td className="px-6 py-4 text-center font-bold text-purple-600 text-lg">
                               {Math.round(parseInt(subject.practical_marks || "0") * 0.8)}
                             </td>
                           </tr>
                         ))}
                         
                         {/* Summary Rows */}
-                        <tr className="bg-blue-100 border-t-2 border-blue-300">
-                          <td className="px-4 py-3 text-center font-bold text-blue-800">TOTAL MARKS</td>
-                          <td className="px-4 py-3 text-center font-bold text-blue-700">
+                        <tr className="bg-gradient-to-r from-blue-100 to-blue-200 border-t-4 border-blue-400">
+                          <td className="px-6 py-4 text-center font-bold text-blue-900 text-lg border-r border-blue-300">TOTAL MARKS</td>
+                          <td className="px-6 py-4 text-center font-bold text-blue-800 text-lg border-r border-blue-300">
                             {courseSubjects.reduce((sum, s) => sum + parseInt(s.theory_marks || "0"), 0)}
                           </td>
-                          <td className="px-4 py-3 text-center font-bold text-blue-700">
+                          <td className="px-6 py-4 text-center font-bold text-blue-800 text-lg border-r border-blue-300">
                             {courseSubjects.reduce((sum, s) => sum + parseInt(s.practical_marks || "0"), 0)}
                           </td>
-                          <td className="px-4 py-3 text-center font-bold text-green-600 text-lg">
+                          <td className="px-6 py-4 text-center font-bold text-green-600 text-xl border-r border-blue-300">
                             {marksheetData?.obtained_marks || 0}
                           </td>
-                          <td className="px-4 py-3 text-center font-bold text-green-600">
+                          <td className="px-6 py-4 text-center font-bold text-green-600 text-xl">
                             {courseSubjects.reduce((sum, s) => sum + Math.round(parseInt(s.practical_marks || "0") * 0.8), 0)}
                           </td>
                         </tr>
                         
-                        <tr className="bg-purple-100">
-                          <td className="px-4 py-3 text-center font-bold text-purple-800">GRAND TOTAL</td>
-                          <td className="px-4 py-3 text-center font-bold text-purple-700 text-lg">
+                        <tr className="bg-gradient-to-r from-purple-100 to-purple-200 border-t-2 border-purple-300">
+                          <td className="px-6 py-4 text-center font-bold text-purple-900 text-lg border-r border-purple-300">GRAND TOTAL</td>
+                          <td className="px-6 py-4 text-center font-bold text-purple-800 text-xl border-r border-purple-300">
                             {marksheetData?.total_marks || 0}
                           </td>
-                          <td className="px-4 py-3 text-center"></td>
-                          <td className="px-4 py-3 text-center font-bold text-green-600 text-lg">
+                          <td className="px-6 py-4 text-center border-r border-purple-300"></td>
+                          <td className="px-6 py-4 text-center font-bold text-green-600 text-xl border-r border-purple-300">
                             {marksheetData?.obtained_marks || 0}
                           </td>
-                          <td className="px-4 py-3 text-center"></td>
+                          <td className="px-6 py-4 text-center"></td>
                         </tr>
                         
-                        <tr className="bg-gradient-to-r from-green-100 to-blue-100">
-                          <td className="px-4 py-4 text-center font-bold text-gray-800 text-lg">RESULT</td>
-                          <td className="px-4 py-4 text-center">
-                            <div className="text-red-600 font-bold text-xl">
+                        <tr className="bg-gradient-to-r from-amber-100 via-green-100 to-blue-100 border-t-4 border-amber-400">
+                          <td className="px-6 py-5 text-center font-bold text-gray-900 text-xl border-r border-amber-300">RESULT</td>
+                          <td className="px-6 py-5 text-center border-r border-amber-300">
+                            <div className="text-red-600 font-bold text-2xl drop-shadow-sm">
                               {marksheetData?.percentage || 0}%
                             </div>
                           </td>
-                          <td className="px-4 py-4 text-center">
-                            <div className="text-green-600 font-bold text-xl">
+                          <td className="px-6 py-5 text-center border-r border-amber-300">
+                            <div className="text-green-600 font-bold text-2xl drop-shadow-sm">
                               {marksheetData?.grade || "N/A"}
                             </div>
                           </td>
-                          <td className="px-4 py-4 text-center">
-                            <div className={`font-bold text-lg px-3 py-1 rounded-full ${
+                          <td className="px-6 py-5 text-center border-r border-amber-300">
+                            <div className={`font-bold text-lg px-4 py-2 rounded-full shadow-lg ${
                               marksheetData?.result_status === 'pass' 
-                                ? 'bg-green-200 text-green-800' 
-                                : 'bg-red-200 text-red-800'
+                                ? 'bg-gradient-to-r from-green-200 to-green-300 text-green-900 border-2 border-green-400' 
+                                : 'bg-gradient-to-r from-red-200 to-red-300 text-red-900 border-2 border-red-400'
                             }`}>
                               {marksheetData?.result_status?.toUpperCase() || "PENDING"}
                             </div>
                           </td>
-                          <td className="px-4 py-4 text-center"></td>
+                          <td className="px-6 py-5 text-center"></td>
                         </tr>
                       </tbody>
                     </table>
