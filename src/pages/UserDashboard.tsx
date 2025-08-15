@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { EmptyState } from '@/components/ui/empty-state';
 import { 
   User, 
   BookOpen,
@@ -26,7 +27,9 @@ import {
   BarChart3,
   Zap,
   Timer,
-  Brain
+  Brain,
+  Plus,
+  Search
 } from 'lucide-react';
 import { useRealtimeProfile } from '@/hooks/useRealtimeProfile';
 import { useRealtimeUserData } from '@/hooks/useRealtimeUserData';
@@ -173,43 +176,43 @@ const UserDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Enhanced Welcome Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary via-primary/90 to-primary/80 p-8 text-white">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-24 -translate-x-24"></div>
+    <div className="space-y-6 lg:space-y-8 animate-fade-in px-2 sm:px-4 lg:px-6">
+      {/* Enhanced Welcome Header - Mobile Responsive */}
+      <div className="relative overflow-hidden rounded-xl lg:rounded-2xl bg-gradient-to-r from-primary via-primary/90 to-primary/80 p-4 sm:p-6 lg:p-8 text-white">
+        <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-white/10 rounded-full -translate-y-16 sm:-translate-y-24 lg:-translate-y-32 translate-x-16 sm:translate-x-24 lg:translate-x-32"></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-36 sm:h-36 lg:w-48 lg:h-48 bg-white/5 rounded-full translate-y-12 sm:translate-y-18 lg:translate-y-24 -translate-x-12 sm:-translate-x-18 lg:-translate-x-24"></div>
         <div className="relative z-10">
-          <div className="flex items-center space-x-4 mb-4">
-            <Avatar className="h-16 w-16 border-4 border-white/20">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 mb-4">
+            <Avatar className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 border-4 border-white/20">
               <AvatarImage src={profile?.avatar_url} />
-              <AvatarFallback className="text-lg bg-white/20">
+              <AvatarFallback className="text-sm sm:text-base lg:text-lg bg-white/20">
                 {getInitials(profile?.full_name)}
               </AvatarFallback>
             </Avatar>
-            <div>
-              <h1 className="text-3xl font-bold">Welcome back, {profile?.full_name?.split(' ')[0] || 'Student'}! 👋</h1>
-              <p className="text-white/80 text-lg">Ready to continue your learning journey?</p>
+            <div className="text-center sm:text-left">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">Welcome back, {profile?.full_name?.split(' ')[0] || 'Student'}! 👋</h1>
+              <p className="text-white/80 text-sm sm:text-base lg:text-lg">Ready to continue your learning journey?</p>
             </div>
           </div>
-            <div className="flex items-center space-x-6 text-sm">
+          <div className="flex flex-wrap justify-center sm:justify-start items-center gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm">
             <div className="flex items-center space-x-2">
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
               <span>Level {Math.floor((userStats?.total_study_hours || 0) / 10) + 1} Learner</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Trophy className="h-4 w-4" />
+              <Trophy className="h-3 w-3 sm:h-4 sm:w-4" />
               <span>{achievements.filter(a => a.unlocked).length} Achievements</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Timer className="h-4 w-4" />
+              <Timer className="h-3 w-3 sm:h-4 sm:w-4" />
               <span>{userStats?.total_study_hours || 0} hours learned</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Quick Actions Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Enhanced Quick Actions Grid - Mobile Responsive */}
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
         {quickActions.map((action, index) => {
           const Icon = action.icon;
           return (
@@ -245,8 +248,8 @@ const UserDashboard: React.FC = () => {
         })}
       </div>
 
-      {/* Enhanced Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Enhanced Statistics - Mobile Responsive */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
@@ -286,50 +289,47 @@ const UserDashboard: React.FC = () => {
           <div className="space-y-6">
             {currentCourses.length > 0 ? (
               currentCourses.map((course, index) => (
-              <div key={index} className="p-6 bg-gradient-to-br from-muted/30 to-muted/10 rounded-xl hover:shadow-md transition-all duration-300">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2">{course.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-1">
-                      Next: {course.nextLesson}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Instructor: {course.instructor} • {course.timeLeft} remaining
-                    </p>
+                <div key={index} className="p-6 bg-gradient-to-br from-muted/30 to-muted/10 rounded-xl hover:shadow-md transition-all duration-300">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg mb-2">{course.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-1">
+                        Next: {course.nextLesson}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Instructor: {course.instructor} • {course.timeLeft} remaining
+                      </p>
+                    </div>
+                    <Badge variant="outline">{course.completedLessons}/{course.totalLessons} lessons</Badge>
                   </div>
-                  <Badge variant="outline">{course.completedLessons}/{course.totalLessons} lessons</Badge>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Progress</span>
-                    <span className="font-medium">{course.progress}%</span>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Progress</span>
+                      <span className="font-medium">{course.progress}%</span>
+                    </div>
+                    <Progress value={course.progress} className="h-3" />
                   </div>
-                  <Progress value={course.progress} className="h-3" />
+                  <div className="flex items-center justify-between mt-4">
+                    <Button size="sm" className="bg-gradient-to-r from-primary to-primary/90">
+                      <PlayCircle className="h-4 w-4 mr-2" />
+                      Continue Learning
+                    </Button>
+                    <Button size="sm" variant="ghost">
+                      <BarChart3 className="h-4 w-4 mr-2" />
+                      View Details
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between mt-4">
-                  <Button size="sm" className="bg-gradient-to-r from-primary to-primary/90">
-                    <PlayCircle className="h-4 w-4 mr-2" />
-                    Continue Learning
-                  </Button>
-                  <Button size="sm" variant="ghost">
-                    <BarChart3 className="h-4 w-4 mr-2" />
-                    View Details
-                  </Button>
-                </div>
-              </div>
-            ))
+              ))
             ) : (
-              <div className="text-center py-12">
-                <BookOpen className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No Active Courses</h3>
-                <p className="text-muted-foreground mb-6">Start your learning journey by enrolling in a course</p>
-                <Link to="/user/courses">
-                  <Button className="bg-gradient-to-r from-primary to-primary/90">
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    Browse Courses
-                  </Button>
-                </Link>
-              </div>
+              <EmptyState
+                icon={BookOpen}
+                title="No Active Courses"
+                description="Start your learning journey by enrolling in a course. Browse our extensive catalog and find the perfect course for your goals."
+                actionLabel="Browse Courses"
+                actionHref="/user/courses"
+                className="border-primary/20"
+              />
             )}
           </div>
         </CardContent>
@@ -392,32 +392,35 @@ const UserDashboard: React.FC = () => {
             <div className="space-y-4">
               {recentActivity.length > 0 ? (
                 recentActivity.map((activity, index) => {
-                const Icon = activity.icon;
-                return (
-                  <div key={index} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-muted/50 transition-all duration-300">
-                    <div className={`p-2 rounded-full ${
-                      activity.type === 'success' ? 'bg-green-50' :
-                      activity.type === 'warning' ? 'bg-orange-50' : 'bg-blue-50'
-                    }`}>
-                      <Icon className={`h-4 w-4 ${
-                        activity.type === 'success' ? 'text-green-600' :
-                        activity.type === 'warning' ? 'text-orange-600' : 'text-blue-600'
-                      }`} />
+                  const Icon = activity.icon;
+                  return (
+                    <div key={index} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-muted/50 transition-all duration-300">
+                      <div className={`p-2 rounded-full ${
+                        activity.type === 'success' ? 'bg-green-50' :
+                        activity.type === 'warning' ? 'bg-orange-50' : 'bg-blue-50'
+                      }`}>
+                        <Icon className={`h-4 w-4 ${
+                          activity.type === 'success' ? 'text-green-600' :
+                          activity.type === 'warning' ? 'text-orange-600' : 'text-blue-600'
+                        }`} />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium">{activity.title}</h4>
+                        <p className="text-sm text-muted-foreground">{activity.description}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-medium">{activity.title}</h4>
-                      <p className="text-sm text-muted-foreground">{activity.description}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
-                    </div>
-                  </div>
-                );
+                  );
                 })
               ) : (
-                <div className="text-center py-8">
-                  <Activity className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
-                  <h3 className="font-medium mb-1">No Recent Activity</h3>
-                  <p className="text-sm text-muted-foreground">Your activities will appear here</p>
-                </div>
+                <EmptyState
+                  icon={Activity}
+                  title="No Recent Activity"
+                  description="Your learning activities and achievements will appear here as you engage with courses and assignments."
+                  actionLabel="Start Learning"
+                  actionHref="/user/courses"
+                  className="py-8"
+                />
               )}
             </div>
           </CardContent>
