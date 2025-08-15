@@ -20,7 +20,14 @@ interface StudentProfile {
 }
 
 const StudentApprovalContent = () => {
-  const { data: students, loading, update } = useOptimisticCrud<StudentProfile>({
+  const { 
+    data: students, 
+    loading, 
+    update,
+    delete: deleteItem,
+    create,
+    refresh 
+  } = useOptimisticCrud<StudentProfile>({
     tableName: 'student_profiles',
     orderBy: { column: 'created_at', ascending: false }
   });

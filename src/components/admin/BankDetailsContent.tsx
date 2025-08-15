@@ -57,6 +57,11 @@ const BankDetailsContent = () => {
   };
 
   const handleSubmit = async () => {
+    if (editingBank) {
+      await handleUpdate();
+      return;
+    }
+
     if (!formData.bankName.trim() || !formData.accountNumber.trim() || !formData.branchName.trim() || 
         !formData.ifscCode.trim() || !formData.micrCode.trim()) {
       toast.error("Please fill in all required fields");
@@ -66,47 +71,47 @@ const BankDetailsContent = () => {
     const bankPhotoUrl = formData.bankPhoto ? URL.createObjectURL(formData.bankPhoto) : "";
 
     try {
-      if (editingBank) {
-        // Update existing bank detail
-        await update(editingBank.id, {
-          bank_name: formData.bankName.trim(),
-          account_number: formData.accountNumber.trim(),
-          branch_name: formData.branchName.trim(),
-          ifsc_code: formData.ifscCode.trim(),
-          micr_code: formData.micrCode.trim(),
-          bank_photo_url: formData.bankPhoto ? bankPhotoUrl : editingBank.bank_photo_url
-        });
-        toast.success("Bank details updated successfully!");
-        setEditingBank(null);
-      } else {
-        // Create new bank detail
-        const newBankDetail = {
-          bank_name: formData.bankName.trim(),
-          account_number: formData.accountNumber.trim(),
-          branch_name: formData.branchName.trim(),
-          ifsc_code: formData.ifscCode.trim(),
-          micr_code: formData.micrCode.trim(),
-          bank_photo_url: bankPhotoUrl
-        };
-        await create(newBankDetail);
-        toast.success("Bank details added successfully!");
-      }
-      
-      // Reset form
-      setFormData({
-        bankName: "",
-        accountNumber: "",
-        branchName: "",
-        ifscCode: "",
-        micrCode: "",
-        bankPhoto: null
-      });
-
-      // Reset file input
-      const fileInput = document.getElementById('bank-photo-file') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
+      const newBankDetail = {
+        bank_name: formData.bankName.trim(),
+        account_number: formData.accountNumber.trim(),
+        branch_name: formData.branchName.trim(),
+        ifsc_code: formData.ifscCode.trim(),
+        micr_code: formData.micrCode.trim(),
+        bank_photo_url: bankPhotoUrl
+      };
+      await create(newBankDetail);
+      toast.success("Bank details added successfully!");
+      handleReset();
     } catch (error) {
-      toast.error(editingBank ? "Failed to update bank details" : "Failed to add bank details");
+      toast.error("Failed to add bank details");
+    }
+  };
+
+  const handleUpdate = async () => {
+    if (!editingBank) return;
+    
+    if (!formData.bankName.trim() || !formData.accountNumber.trim() || !formData.branchName.trim() || 
+        !formData.ifscCode.trim() || !formData.micrCode.trim()) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    const bankPhotoUrl = formData.bankPhoto ? URL.createObjectURL(formData.bankPhoto) : editingBank.bank_photo_url;
+
+    try {
+      await update(editingBank.id, {
+        bank_name: formData.bankName.trim(),
+        account_number: formData.accountNumber.trim(),
+        branch_name: formData.branchName.trim(),
+        ifsc_code: formData.ifscCode.trim(),
+        micr_code: formData.micrCode.trim(),
+        bank_photo_url: bankPhotoUrl
+      });
+      toast.success("Bank details updated successfully!");
+      setEditingBank(null);
+      handleReset();
+    } catch (error) {
+      toast.error("Failed to update bank details");
     }
   };
 
@@ -132,9 +137,15 @@ const BankDetailsContent = () => {
       bankPhoto: null
     });
     setEditingBank(null);
+    
+    // Reset file input
+    const fileInput = document.getElementById('bank-photo-file') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
   };
 
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this bank detail?")) return;
+    
     try {
       await deleteItem(id);
       toast.success("Bank details deleted successfully!");
@@ -273,6 +284,15 @@ const BankDetailsContent = () => {
               >
                 {editingBank ? "Update" : "Submit Now"}
               </Button>
+              {editingBank && (
+                <Button
+                  onClick={handleReset}
+                  variant="outline"
+                  className="border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3"
+                >
+                  Cancel
+                </Button>
+              )}
               <Button
                 onClick={handleReset}
                 className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"

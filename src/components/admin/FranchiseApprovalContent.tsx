@@ -26,7 +26,14 @@ interface FranchiseRegistration {
 }
 
 const FranchiseApprovalContent = () => {
-  const { data: franchiseData, loading, update } = useOptimisticCrud<FranchiseRegistration>({
+  const { 
+    data: franchiseData, 
+    loading, 
+    update,
+    delete: deleteItem,
+    create,
+    refresh 
+  } = useOptimisticCrud<FranchiseRegistration>({
     tableName: 'franchise_registrations',
     orderBy: { column: 'created_at', ascending: false }
   });
