@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import securePaymentWhite from '@/assets/secure-payment-white.png';
 
 const Navigation = () => {
-  const { user, userRole, signOut } = useAuth();
+  const { user, userRole, session, signOut } = useAuth();
   const { profile } = useRealtimeProfile();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -201,8 +201,8 @@ const Navigation = () => {
             {/* Right Actions - Enhanced with Auth */}
             <div className="flex items-center space-x-4">
               
-              {/* Authentication Section */}
-              {user ? (
+              {/* Authentication Section - Show only Login when not authenticated */}
+              {user && session ? (
                 <div className="hidden md:flex items-center space-x-3">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>

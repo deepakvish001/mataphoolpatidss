@@ -36,6 +36,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
+  // Force clear any existing state on app start
+  useEffect(() => {
+    console.log('Clearing any existing auth state on app start');
+    setUser(null);
+    setSession(null);
+    setUserRole(null);
+  }, []);
+
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -169,42 +177,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     try {
-      console.log('Signing out user...');
+      console.log('Force clearing all authentication data...');
       
       // Clear all auth state immediately
       setUser(null);
       setSession(null);
       setUserRole(null);
       
-      // Clear Supabase session
-      await supabase.auth.signOut();
+      // Clear Supabase session with all scopes
+      await supabase.auth.signOut({ scope: 'global' });
       
-      // Clear any remaining local storage
+      // Clear all storage
       localStorage.clear();
       sessionStorage.clear();
       
-      toast({
-        title: "Logged out",
-        description: "You have been successfully logged out."
+      // Clear specific Supabase keys that might persist
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('sb-') || key.includes('supabase')) {
+          localStorage.removeItem(key);
+        }
       });
       
-      console.log('User signed out successfully');
+      console.log('All authentication data cleared');
       
-      // Force page reload to ensure clean state
+      // Force page reload to ensure completely clean state
       window.location.href = '/';
     } catch (error: any) {
       console.error('Sign out error:', error);
-      // Even if there's an error, clear the state
+      // Force clear even on error
       setUser(null);
       setSession(null);
       setUserRole(null);
       localStorage.clear();
-      
-      toast({
-        title: "Logout Error", 
-        description: error.message,
-        variant: "destructive"
-      });
+      sessionStorage.clear();
+      window.location.href = '/';
     }
   };
 
