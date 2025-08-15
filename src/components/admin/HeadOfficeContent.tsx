@@ -55,6 +55,13 @@ const HeadOfficeContent = () => {
     orderBy: { column: 'created_at', ascending: false }
   });
 
+  // Debug logging
+  console.log('HeadOffice Component State:', { 
+    loading, 
+    dataLength: headOffices.length, 
+    hasData: headOffices.length > 0 
+  });
+
   useAdminRealTime({
     tableName: 'head_offices'
   });
