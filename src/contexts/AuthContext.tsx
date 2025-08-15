@@ -170,13 +170,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = async () => {
     try {
       console.log('Signing out user...');
-      await supabase.auth.signOut();
+      
+      // Clear all auth state immediately
       setUser(null);
       setSession(null);
       setUserRole(null);
       
-      // Clear any local storage if needed
-      localStorage.removeItem('supabase.auth.token');
+      // Clear Supabase session
+      await supabase.auth.signOut();
+      
+      // Clear any remaining local storage
+      localStorage.clear();
+      sessionStorage.clear();
       
       toast({
         title: "Logged out",
@@ -184,10 +189,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       
       console.log('User signed out successfully');
+      
+      // Force page reload to ensure clean state
+      window.location.href = '/';
     } catch (error: any) {
       console.error('Sign out error:', error);
+      // Even if there's an error, clear the state
+      setUser(null);
+      setSession(null);
+      setUserRole(null);
+      localStorage.clear();
+      
       toast({
-        title: "Logout Error",
+        title: "Logout Error", 
         description: error.message,
         variant: "destructive"
       });
