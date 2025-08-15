@@ -3,70 +3,83 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MapPin, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { MapPin, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface StateMaster {
+  id: string;
+  city_id: number;
+  city_name: string;
+  created_date?: string;
+}
 
 const StateMasterContent = () => {
-  const { toast } = useToast();
-  const [stateName, setStateName] = useState("");
-  
-  const [states, setStates] = useState([
-    {
-      cityid: 16,
-      cityname: "Uttar Pradesh",
-      createddate: ""
-    },
-    {
-      cityid: 17,
-      cityname: "Bihar", 
-      createddate: ""
-    },
-    {
-      cityid: 18,
-      cityname: "Madhya Pradesh",
-      createddate: ""
-    }
-  ]);
+  const {
+    data: states,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<StateMaster>({ tableName: 'state_master' });
 
-  const handleSave = () => {
+  useAdminRealTime({
+    tableName: 'state_master',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
+  const [stateName, setStateName] = useState("");
+
+  const handleSave = async () => {
     if (!stateName.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a state name",
-        variant: "destructive"
-      });
+      toast.error("Please enter a state name");
       return;
     }
 
+    const maxCityId = states.length > 0 ? Math.max(...states.map(s => s.city_id)) : 0;
     const newState = {
-      cityid: Math.max(...states.map(s => s.cityid)) + 1,
-      cityname: stateName,
-      createddate: new Date().toLocaleDateString()
+      city_id: maxCityId + 1,
+      city_name: stateName,
+      created_date: new Date().toLocaleDateString()
     };
 
-    setStates(prev => [...prev, newState]);
-    
-    toast({
-      title: "Success",
-      description: "State added successfully!",
-      variant: "default"
-    });
-
-    setStateName("");
+    try {
+      await create(newState);
+      setStateName("");
+      toast.success("State added successfully!");
+    } catch (error) {
+      toast.error("Failed to add state");
+    }
   };
 
   const handleReset = () => {
     setStateName("");
   };
 
-  const handleDelete = (cityid: number) => {
-    setStates(prev => prev.filter(state => state.cityid !== cityid));
-    toast({
-      title: "Success",
-      description: "State deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("State deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete state");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading states...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -121,6 +134,7 @@ const StateMasterContent = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-red-800 hover:bg-red-800">
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">cityid</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">cityname</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">createddate</TableHead>
@@ -128,36 +142,34 @@ const StateMasterContent = () => {
             </TableHeader>
             <TableBody>
               {states.map((state, index) => (
-                <TableRow key={state.cityid} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                <TableRow key={state.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
                   <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(state.cityid)}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <span className="text-sm text-gray-700 font-medium ml-2">
-                        {state.cityid}
-                      </span>
+                    <div className="flex space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(state.id)}
+                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {state.cityname}
+                    {state.city_id}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {state.createddate || "-"}
+                    {state.city_name}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                    {state.created_date || "-"}
                   </TableCell>
                 </TableRow>
               ))}

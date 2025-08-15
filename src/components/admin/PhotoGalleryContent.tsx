@@ -3,23 +3,37 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Image, Upload, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Image, Upload, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface PhotoGallery {
+  id: string;
+  title: string;
+  image_url?: string;
+}
 
 const PhotoGalleryContent = () => {
-  const { toast } = useToast();
+  const {
+    data: galleryItems,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<PhotoGallery>({ tableName: 'photo_gallery' });
+
+  useAdminRealTime({
+    tableName: 'photo_gallery',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [formData, setFormData] = useState({
     title: "",
     photo: null as File | null
   });
-
-  const [galleryItems, setGalleryItems] = useState([
-    {
-      id: 1,
-      title: "hhj",
-      imageUrl: "/lovable-uploads/e0268324-767d-4546-ae7a-82269bfbe1d4.png"
-    }
-  ]);
 
   const handleInputChange = (field: string, value: string | File | null) => {
     setFormData(prev => ({
@@ -35,52 +49,59 @@ const PhotoGalleryContent = () => {
     }
   };
 
-  const handleUpload = () => {
-    if (!formData.title.trim() || !formData.photo) {
-      toast({
-        title: "Error",
-        description: "Please fill in the title and select a photo",
-        variant: "destructive"
-      });
+  const handleUpload = async () => {
+    if (!formData.title.trim()) {
+      toast.error("Please enter a title");
       return;
     }
 
-    // Create a URL for the uploaded file (in a real app, this would be uploaded to a server)
-    const imageUrl = URL.createObjectURL(formData.photo);
+    const imageUrl = formData.photo ? URL.createObjectURL(formData.photo) : "";
 
     const newGalleryItem = {
-      id: Date.now(),
       title: formData.title,
-      imageUrl: imageUrl
+      image_url: imageUrl
     };
 
-    setGalleryItems(prev => [...prev, newGalleryItem]);
-    
-    toast({
-      title: "Success",
-      description: "Photo uploaded to gallery successfully!",
-      variant: "default"
-    });
+    try {
+      await create(newGalleryItem);
+      
+      // Reset form
+      setFormData({
+        title: "",
+        photo: null
+      });
 
-    // Reset form
-    setFormData({
-      title: "",
-      photo: null
-    });
-
-    // Reset file input
-    const fileInput = document.getElementById('gallery-file') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+      // Reset file input
+      const fileInput = document.getElementById('gallery-file') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      
+      toast.success("Photo uploaded to gallery successfully!");
+    } catch (error) {
+      toast.error("Failed to upload photo");
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setGalleryItems(prev => prev.filter(item => item.id !== id));
-    toast({
-      title: "Success",
-      description: "Photo deleted from gallery successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Photo deleted from gallery successfully!");
+    } catch (error) {
+      toast.error("Failed to delete photo");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading photo gallery...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -182,11 +203,17 @@ const PhotoGalleryContent = () => {
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4">
                     <div className="flex justify-center">
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        className="w-24 h-16 object-cover rounded border border-gray-200"
-                      />
+                      {item.image_url ? (
+                        <img
+                          src={item.image_url}
+                          alt={item.title}
+                          className="w-24 h-16 object-cover rounded border border-gray-200"
+                        />
+                      ) : (
+                        <div className="w-24 h-16 bg-gray-200 border border-gray-200 rounded flex items-center justify-center">
+                          <span className="text-xs text-gray-500">No Image</span>
+                        </div>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>

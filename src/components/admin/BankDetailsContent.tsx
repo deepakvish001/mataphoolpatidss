@@ -3,11 +3,37 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { CreditCard, Upload, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { CreditCard, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface BankDetails {
+  id: string;
+  bank_name: string;
+  account_number: string;
+  branch_name: string;
+  ifsc_code: string;
+  micr_code: string;
+  bank_photo_url?: string;
+}
 
 const BankDetailsContent = () => {
-  const { toast } = useToast();
+  const {
+    data: bankDetails,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<BankDetails>({ tableName: 'bank_details' });
+
+  useAdminRealTime({
+    tableName: 'bank_details',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [formData, setFormData] = useState({
     bankName: "",
     accountNumber: "",
@@ -16,18 +42,6 @@ const BankDetailsContent = () => {
     micrCode: "",
     bankPhoto: null as File | null
   });
-
-  const [bankDetails, setBankDetails] = useState([
-    {
-      id: 1,
-      bankName: "fug",
-      accountNumber: "213435346475486658",
-      branchName: "gcdhfkyg",
-      ifscCode: "srghsdrt132",
-      micrCode: "gfdtyte213",
-      bankPhotoUrl: "/lovable-uploads/70be4d5c-e30d-404e-8355-5e5bbc2f1bbf.png"
-    }
-  ]);
 
   const handleInputChange = (field: string, value: string | File | null) => {
     setFormData(prev => ({
@@ -43,60 +57,68 @@ const BankDetailsContent = () => {
     }
   };
 
-  const handleSubmit = () => {
-    if (!formData.bankName.trim() || !formData.accountNumber.trim() || !formData.branchName.trim() || !formData.ifscCode.trim() || !formData.micrCode.trim()) {
-      toast({
-        title: "Error",
-        description: "Please fill in all required fields",
-        variant: "destructive"
-      });
+  const handleSubmit = async () => {
+    if (!formData.bankName.trim() || !formData.accountNumber.trim() || !formData.branchName.trim() || 
+        !formData.ifscCode.trim() || !formData.micrCode.trim()) {
+      toast.error("Please fill in all required fields");
       return;
     }
 
-    // Create a URL for the uploaded file (in a real app, this would be uploaded to a server)
     const bankPhotoUrl = formData.bankPhoto ? URL.createObjectURL(formData.bankPhoto) : "";
 
     const newBankDetail = {
-      id: Date.now(),
-      bankName: formData.bankName,
-      accountNumber: formData.accountNumber,
-      branchName: formData.branchName,
-      ifscCode: formData.ifscCode,
-      micrCode: formData.micrCode,
-      bankPhotoUrl: bankPhotoUrl
+      bank_name: formData.bankName,
+      account_number: formData.accountNumber,
+      branch_name: formData.branchName,
+      ifsc_code: formData.ifscCode,
+      micr_code: formData.micrCode,
+      bank_photo_url: bankPhotoUrl
     };
 
-    setBankDetails(prev => [...prev, newBankDetail]);
-    
-    toast({
-      title: "Success",
-      description: "Bank details added successfully!",
-      variant: "default"
-    });
+    try {
+      await create(newBankDetail);
+      
+      // Reset form
+      setFormData({
+        bankName: "",
+        accountNumber: "",
+        branchName: "",
+        ifscCode: "",
+        micrCode: "",
+        bankPhoto: null
+      });
 
-    // Reset form
-    setFormData({
-      bankName: "",
-      accountNumber: "",
-      branchName: "",
-      ifscCode: "",
-      micrCode: "",
-      bankPhoto: null
-    });
-
-    // Reset file input
-    const fileInput = document.getElementById('bank-photo-file') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+      // Reset file input
+      const fileInput = document.getElementById('bank-photo-file') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      
+      toast.success("Bank details added successfully!");
+    } catch (error) {
+      toast.error("Failed to add bank details");
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setBankDetails(prev => prev.filter(detail => detail.id !== id));
-    toast({
-      title: "Success",
-      description: "Bank details deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Bank details deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete bank details");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading bank details...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -226,6 +248,7 @@ const BankDetailsContent = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Bank Name</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Account Number</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Branch Name</TableHead>
@@ -238,49 +261,53 @@ const BankDetailsContent = () => {
               {bankDetails.map((detail, index) => (
                 <TableRow key={detail.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
                   <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(detail.id)}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <span className="text-sm text-gray-700 font-medium ml-2">
-                        {detail.bankName}
-                      </span>
+                    <div className="flex space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(detail.id)}
+                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.accountNumber}
+                    {detail.bank_name}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.branchName}
+                    {detail.account_number}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.ifscCode}
+                    {detail.branch_name}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.micrCode}
+                    {detail.ifsc_code}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                    {detail.micr_code}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4">
-                    {detail.bankPhotoUrl && (
+                    {detail.bank_photo_url ? (
                       <div className="flex justify-center">
                         <img
-                          src={detail.bankPhotoUrl}
+                          src={detail.bank_photo_url}
                           alt="Bank photo"
                           className="w-16 h-10 object-cover rounded border-2 border-gray-400"
                         />
+                      </div>
+                    ) : (
+                      <div className="flex justify-center">
+                        <div className="w-16 h-10 bg-gray-200 border-2 border-gray-400 rounded flex items-center justify-center">
+                          <span className="text-xs text-gray-500">No Photo</span>
+                        </div>
                       </div>
                     )}
                   </TableCell>

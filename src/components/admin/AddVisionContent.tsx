@@ -3,21 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Eye, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Eye, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface Vision {
+  id: string;
+  content: string;
+  image?: string;
+}
 
 const AddVisionContent = () => {
-  const { toast } = useToast();
+  const {
+    data: visions,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<Vision>({ tableName: 'visions' });
+
+  useAdminRealTime({
+    tableName: 'visions',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [content, setContent] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
-  
-  const [visions, setVisions] = useState([
-    {
-      id: 1,
-      content: "Our focus is primarily............ * To be Education centric * To be technology driven * To be people focused * To be innovative, adaptive and creative * To attain excellence",
-      image: "vision-image.jpg"
-    }
-  ]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -26,45 +40,53 @@ const AddVisionContent = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!content.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter content",
-        variant: "destructive"
-      });
+      toast.error("Please enter content");
       return;
     }
 
     const newVision = {
-      id: Math.max(...visions.map(v => v.id)) + 1,
       content,
       image: selectedPhoto ? selectedPhoto.name : "No image"
     };
 
-    setVisions(prev => [...prev, newVision]);
-    
-    toast({
-      title: "Success",
-      description: "Vision added successfully!",
-      variant: "default"
-    });
-
-    setContent("");
-    setSelectedPhoto(null);
-    // Reset file input
-    const fileInput = document.getElementById('visionPhotoInput') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+    try {
+      await create(newVision);
+      
+      setContent("");
+      setSelectedPhoto(null);
+      // Reset file input
+      const fileInput = document.getElementById('visionPhotoInput') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      
+      toast.success("Vision added successfully!");
+    } catch (error) {
+      toast.error("Failed to add vision");
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setVisions(prev => prev.filter(vision => vision.id !== id));
-    toast({
-      title: "Success",
-      description: "Vision deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Vision deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete vision");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading visions...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">

@@ -3,21 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Target, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Target, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface Mission {
+  id: string;
+  content: string;
+  image?: string;
+}
 
 const AddMissionContent = () => {
-  const { toast } = useToast();
+  const {
+    data: missions,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<Mission>({ tableName: 'missions' });
+
+  useAdminRealTime({
+    tableName: 'missions',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [content, setContent] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
-  
-  const [missions, setMissions] = useState([
-    {
-      id: 1,
-      content: "Our mission is to provide quality education and training to empower individuals with the skills and knowledge needed to succeed in today's competitive world.",
-      image: "mission-image.jpg"
-    }
-  ]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -26,45 +40,53 @@ const AddMissionContent = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!content.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter content",
-        variant: "destructive"
-      });
+      toast.error("Please enter content");
       return;
     }
 
     const newMission = {
-      id: Math.max(...missions.map(m => m.id)) + 1,
       content,
       image: selectedPhoto ? selectedPhoto.name : "No image"
     };
 
-    setMissions(prev => [...prev, newMission]);
-    
-    toast({
-      title: "Success",
-      description: "Mission added successfully!",
-      variant: "default"
-    });
-
-    setContent("");
-    setSelectedPhoto(null);
-    // Reset file input
-    const fileInput = document.getElementById('missionPhotoInput') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+    try {
+      await create(newMission);
+      
+      setContent("");
+      setSelectedPhoto(null);
+      // Reset file input
+      const fileInput = document.getElementById('missionPhotoInput') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      
+      toast.success("Mission added successfully!");
+    } catch (error) {
+      toast.error("Failed to add mission");
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setMissions(prev => prev.filter(mission => mission.id !== id));
-    toast({
-      title: "Success",
-      description: "Mission deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Mission deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete mission");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading missions...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">

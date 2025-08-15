@@ -57,7 +57,19 @@ export const GlobalCrudProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       'user_assignments',
       'user_stats',
       'profiles',
-      'user_roles'
+      'user_roles',
+      'menu_content',
+      'photo_gallery',
+      'bank_details',
+      'state_master',
+      'district_master',
+      'course_categories',
+      'news',
+      'visions',
+      'missions',
+      'director_messages',
+      'contact_us',
+      'enquiries'
     ];
 
     const channels: any[] = [];

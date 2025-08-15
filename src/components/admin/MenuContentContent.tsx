@@ -1,33 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Menu, Upload, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Menu, Upload, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface MenuContent {
+  id: string;
+  course: string;
+  upload_file_title: string;
+  course_file?: string;
+  date: string;
+  notes?: string;
+}
 
 const MenuContentContent = () => {
-  const { toast } = useToast();
+  const {
+    data: menuItems,
+    loading,
+    create,
+    update,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<MenuContent>({ tableName: 'menu_content' });
+
+  useAdminRealTime({
+    tableName: 'menu_content',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [formData, setFormData] = useState({
     course: "",
     uploadFileTitle: "",
     uploadFile: null as File | null,
-    date: "14/08/2025",
+    date: new Date().toLocaleDateString('en-GB'),
     writeNote: ""
   });
-
-  const [menuItems, setMenuItems] = useState([
-    {
-      id: 2,
-      course: "PGDCA",
-      uploadFileName: "Post Graduate Diploma in Computer Application",
-      courseFile: "~/Offer_pic/",
-      date: "27/12/2021",
-      notes: ""
-    }
-  ]);
 
   const courses = [
     "PGDCA",
@@ -52,55 +67,63 @@ const MenuContentContent = () => {
     }
   };
 
-  const handleUpload = () => {
-    if (!formData.course || !formData.uploadFileTitle.trim() || !formData.uploadFile) {
-      toast({
-        title: "Error",
-        description: "Please fill in all required fields and select a file",
-        variant: "destructive"
-      });
+  const handleUpload = async () => {
+    if (!formData.course || !formData.uploadFileTitle.trim()) {
+      toast.error("Please fill in all required fields");
       return;
     }
 
     const newMenuItem = {
-      id: Date.now(),
       course: formData.course,
-      uploadFileName: formData.uploadFileTitle,
-      courseFile: `~/${formData.uploadFile.name}`,
+      upload_file_title: formData.uploadFileTitle,
+      course_file: formData.uploadFile ? formData.uploadFile.name : "",
       date: formData.date,
       notes: formData.writeNote
     };
 
-    setMenuItems(prev => [...prev, newMenuItem]);
-    
-    toast({
-      title: "Success",
-      description: "Menu content uploaded successfully!",
-      variant: "default"
-    });
+    try {
+      await create(newMenuItem);
+      
+      // Reset form
+      setFormData({
+        course: "",
+        uploadFileTitle: "",
+        uploadFile: null,
+        date: new Date().toLocaleDateString('en-GB'),
+        writeNote: ""
+      });
 
-    // Reset form
-    setFormData({
-      course: "",
-      uploadFileTitle: "",
-      uploadFile: null,
-      date: "14/08/2025",
-      writeNote: ""
-    });
-
-    // Reset file input
-    const fileInput = document.getElementById('menu-file') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+      // Reset file input
+      const fileInput = document.getElementById('menu-file') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      
+      toast.success("Menu content uploaded successfully!");
+    } catch (error) {
+      toast.error("Failed to upload menu content");
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setMenuItems(prev => prev.filter(item => item.id !== id));
-    toast({
-      title: "Success",
-      description: "Menu item deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Menu item deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete menu item");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading menu content...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -222,7 +245,7 @@ const MenuContentContent = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">id</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Upload_file_name</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">course_file</TableHead>
@@ -234,37 +257,32 @@ const MenuContentContent = () => {
               {menuItems.map((item, index) => (
                 <TableRow key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
                   <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(item.id)}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <span className="text-sm text-gray-700 font-medium ml-2">
-                        {item.id}
-                      </span>
+                    <div className="flex space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(item.id)}
+                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {item.course}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {item.uploadFileName}
+                    {item.upload_file_title}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {item.courseFile}
+                    {item.course_file || "-"}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {item.date}

@@ -3,82 +3,77 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BookOpen, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { BookOpen, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface CourseCategory {
+  id: string;
+  category_id: number;
+  course_category: string;
+}
 
 const AddCourseCategoryContent = () => {
-  const { toast } = useToast();
-  const [courseCategory, setCourseCategory] = useState("");
-  
-  const [categories, setCategories] = useState([
-    {
-      id: 2,
-      courseCategory: "3 Month"
-    },
-    {
-      id: 3,
-      courseCategory: "6 Months"
-    },
-    {
-      id: 4,
-      courseCategory: "12 Month"
-    },
-    {
-      id: 5,
-      courseCategory: "18 Month"
-    },
-    {
-      id: 6,
-      courseCategory: "24 Month"
-    },
-    {
-      id: 8,
-      courseCategory: "3 month"
-    },
-    {
-      id: 9,
-      courseCategory: "1 Year"
-    },
-    {
-      id: 11,
-      courseCategory: "12 Months"
-    }
-  ]);
+  const {
+    data: categories,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<CourseCategory>({ tableName: 'course_categories' });
 
-  const handleUpload = () => {
+  useAdminRealTime({
+    tableName: 'course_categories',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
+  const [courseCategory, setCourseCategory] = useState("");
+
+  const handleUpload = async () => {
     if (!courseCategory.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a course category",
-        variant: "destructive"
-      });
+      toast.error("Please enter a course category");
       return;
     }
 
+    const maxCategoryId = categories.length > 0 ? Math.max(...categories.map(c => c.category_id)) : 0;
     const newCategory = {
-      id: Math.max(...categories.map(c => c.id)) + 1,
-      courseCategory: courseCategory
+      category_id: maxCategoryId + 1,
+      course_category: courseCategory
     };
 
-    setCategories(prev => [...prev, newCategory]);
-    
-    toast({
-      title: "Success",
-      description: "Course category added successfully!",
-      variant: "default"
-    });
-
-    setCourseCategory("");
+    try {
+      await create(newCategory);
+      setCourseCategory("");
+      toast.success("Course category added successfully!");
+    } catch (error) {
+      toast.error("Failed to add course category");
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setCategories(prev => prev.filter(category => category.id !== id));
-    toast({
-      title: "Success",
-      description: "Course category deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Course category deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete course category");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading course categories...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -127,6 +122,7 @@ const AddCourseCategoryContent = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-blue-600 hover:bg-blue-600">
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">id</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course Category</TableHead>
               </TableRow>
@@ -135,31 +131,29 @@ const AddCourseCategoryContent = () => {
               {categories.map((category, index) => (
                 <TableRow key={category.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
                   <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(category.id)}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <span className="text-sm text-gray-700 font-medium ml-2">
-                        {category.id}
-                      </span>
+                    <div className="flex space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(category.id)}
+                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {category.courseCategory}
+                    {category.category_id}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                    {category.course_category}
                   </TableCell>
                 </TableRow>
               ))}

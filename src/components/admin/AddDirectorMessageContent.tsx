@@ -3,21 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MessageSquare, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { MessageSquare, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface DirectorMessage {
+  id: string;
+  message: string;
+  photo?: string;
+}
 
 const AddDirectorMessageContent = () => {
-  const { toast } = useToast();
+  const {
+    data: messages,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<DirectorMessage>({ tableName: 'director_messages' });
+
+  useAdminRealTime({
+    tableName: 'director_messages',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [directorMessage, setDirectorMessage] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
-  
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      message: "We as B.Soft Computer and technical Institute family started our journey in the field of computer education since 7th Nov 2002 as a double room institution having infrastructure of 5 celron computers with a vision to serve the citizen of Azamgarh in Information technology as at that time there was a major technological phase change going on in all over the world and the threat of year 2000 was also ahead and eastern part of up specially purvanchal lacks information very much. one can say that IT in these eastern up is just is in its womb phase . . Now today due to our hard work and team sprite we have developed into highly infrastructure institute over more than 35 computer having space over 5000 sqft having different branches in different blocks of Azamgarh as well as in others cities too and our development is going on . We have affiliation with CCC course from Nielit. We as B.Soft family are very thankful to the people of Azamgarh as well as other cities ti show their belief in us With Thanks & Regards *Director Minhajuddin Kausar",
-      photo: "director-photo.jpg"
-    }
-  ]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -26,45 +40,53 @@ const AddDirectorMessageContent = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!directorMessage.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter director message",
-        variant: "destructive"
-      });
+      toast.error("Please enter director message");
       return;
     }
 
     const newMessage = {
-      id: Math.max(...messages.map(m => m.id)) + 1,
       message: directorMessage,
       photo: selectedPhoto ? selectedPhoto.name : "No photo"
     };
 
-    setMessages(prev => [...prev, newMessage]);
-    
-    toast({
-      title: "Success",
-      description: "Director message added successfully!",
-      variant: "default"
-    });
-
-    setDirectorMessage("");
-    setSelectedPhoto(null);
-    // Reset file input
-    const fileInput = document.getElementById('directorPhotoInput') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+    try {
+      await create(newMessage);
+      
+      setDirectorMessage("");
+      setSelectedPhoto(null);
+      // Reset file input
+      const fileInput = document.getElementById('directorPhotoInput') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      
+      toast.success("Director message added successfully!");
+    } catch (error) {
+      toast.error("Failed to add director message");
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setMessages(prev => prev.filter(message => message.id !== id));
-    toast({
-      title: "Success",
-      description: "Director message deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Director message deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete director message");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading director messages...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">

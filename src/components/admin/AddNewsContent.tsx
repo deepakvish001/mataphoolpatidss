@@ -4,24 +4,39 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Newspaper, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Newspaper, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface News {
+  id: string;
+  news_id: number;
+  news_title: string;
+  news_description: string;
+  news_date: string;
+  photo?: string;
+}
 
 const AddNewsContent = () => {
-  const { toast } = useToast();
+  const {
+    data: news,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<News>({ tableName: 'news' });
+
+  useAdminRealTime({
+    tableName: 'news',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [newsTitle, setNewsTitle] = useState("");
   const [newsDetails, setNewsDetails] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  
-  const [news, setNews] = useState([
-    {
-      newsId: 23,
-      newsTitle: "WELCOME TO B. SOFT",
-      newsDescription: "B.Soft Computer and Technical Institute",
-      newsDate: "May 1 2021 12:00AM",
-      photo: "image.jpg"
-    }
-  ]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -30,30 +45,23 @@ const AddNewsContent = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!newsTitle.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a news title",
-        variant: "destructive"
-      });
+      toast.error("Please enter a news title");
       return;
     }
 
     if (!newsDetails.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter news details",
-        variant: "destructive"
-      });
+      toast.error("Please enter news details");
       return;
     }
 
+    const maxNewsId = news.length > 0 ? Math.max(...news.map(n => n.news_id)) : 0;
     const newNews = {
-      newsId: Math.max(...news.map(n => n.newsId)) + 1,
-      newsTitle,
-      newsDescription: newsDetails,
-      newsDate: new Date().toLocaleString("en-US", {
+      news_id: maxNewsId + 1,
+      news_title: newsTitle,
+      news_description: newsDetails,
+      news_date: new Date().toLocaleString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -64,30 +72,43 @@ const AddNewsContent = () => {
       photo: selectedImage ? selectedImage.name : "No file"
     };
 
-    setNews(prev => [...prev, newNews]);
-    
-    toast({
-      title: "Success",
-      description: "News added successfully!",
-      variant: "default"
-    });
-
-    setNewsTitle("");
-    setNewsDetails("");
-    setSelectedImage(null);
-    // Reset file input
-    const fileInput = document.getElementById('imageInput') as HTMLInputElement;
-    if (fileInput) fileInput.value = '';
+    try {
+      await create(newNews);
+      
+      setNewsTitle("");
+      setNewsDetails("");
+      setSelectedImage(null);
+      // Reset file input
+      const fileInput = document.getElementById('imageInput') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+      
+      toast.success("News added successfully!");
+    } catch (error) {
+      toast.error("Failed to add news");
+    }
   };
 
-  const handleDelete = (newsId: number) => {
-    setNews(prev => prev.filter(item => item.newsId !== newsId));
-    toast({
-      title: "Success",
-      description: "News deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("News deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete news");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading news...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -180,18 +201,18 @@ const AddNewsContent = () => {
             </TableHeader>
             <TableBody>
               {news.map((item, index) => (
-                <TableRow key={item.newsId} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                <TableRow key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {item.newsId}
+                    {item.news_id}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {item.newsTitle}
+                    {item.news_title}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {item.newsDescription}
+                    {item.news_description}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {item.newsDate}
+                    {item.news_date}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4">
                     <div className="w-8 h-8 bg-gray-200 border-2 border-gray-400 mx-auto rounded flex items-center justify-center">
@@ -202,7 +223,7 @@ const AddNewsContent = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleDelete(item.newsId)}
+                      onClick={() => handleDelete(item.id)}
                       className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
                     >
                       <Trash2 className="h-4 w-4" />

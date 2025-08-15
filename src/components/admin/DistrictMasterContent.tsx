@@ -4,76 +4,37 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { MapPin, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface DistrictMaster {
+  id: string;
+  site_id: number;
+  city_id: number;
+  site_name: string;
+  created_date?: string;
+}
 
 const DistrictMasterContent = () => {
-  const { toast } = useToast();
+  const {
+    data: districts,
+    loading,
+    create,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<DistrictMaster>({ tableName: 'district_master' });
+
+  useAdminRealTime({
+    tableName: 'district_master',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [selectedState, setSelectedState] = useState("");
   const [districtName, setDistrictName] = useState("");
-  
-  const [districts, setDistricts] = useState([
-    {
-      siteid: 10,
-      cityid: 16,
-      sitename: "Azamgarh",
-      createddate: ""
-    },
-    {
-      siteid: 11,
-      cityid: 16,
-      sitename: "Mau",
-      createddate: ""
-    },
-    {
-      siteid: 12,
-      cityid: 16,
-      sitename: "BALIYA",
-      createddate: ""
-    },
-    {
-      siteid: 13,
-      cityid: 16,
-      sitename: "AMBEDAKAR NAGAR",
-      createddate: ""
-    },
-    {
-      siteid: 14,
-      cityid: 16,
-      sitename: "Deoria",
-      createddate: ""
-    },
-    {
-      siteid: 15,
-      cityid: 16,
-      sitename: "Faizabad",
-      createddate: ""
-    },
-    {
-      siteid: 16,
-      cityid: 16,
-      sitename: "Faizabad",
-      createddate: ""
-    },
-    {
-      siteid: 17,
-      cityid: 16,
-      sitename: "Sant Ravidas Nagar",
-      createddate: ""
-    },
-    {
-      siteid: 18,
-      cityid: 16,
-      sitename: "VARANASI",
-      createddate: ""
-    },
-    {
-      siteid: 19,
-      cityid: 16,
-      sitename: "VARANASI",
-      createddate: ""
-    }
-  ]);
 
   const states = [
     { value: "16", label: "Uttar Pradesh" },
@@ -81,42 +42,33 @@ const DistrictMasterContent = () => {
     { value: "18", label: "Madhya Pradesh" }
   ];
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!selectedState) {
-      toast({
-        title: "Error",
-        description: "Please select a state",
-        variant: "destructive"
-      });
+      toast.error("Please select a state");
       return;
     }
 
     if (!districtName.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a district name",
-        variant: "destructive"
-      });
+      toast.error("Please enter a district name");
       return;
     }
 
+    const maxSiteId = districts.length > 0 ? Math.max(...districts.map(d => d.site_id)) : 0;
     const newDistrict = {
-      siteid: Math.max(...districts.map(d => d.siteid)) + 1,
-      cityid: parseInt(selectedState),
-      sitename: districtName,
-      createddate: new Date().toLocaleDateString()
+      site_id: maxSiteId + 1,
+      city_id: parseInt(selectedState),
+      site_name: districtName,
+      created_date: new Date().toLocaleDateString()
     };
 
-    setDistricts(prev => [...prev, newDistrict]);
-    
-    toast({
-      title: "Success",
-      description: "District added successfully!",
-      variant: "default"
-    });
-
-    setSelectedState("");
-    setDistrictName("");
+    try {
+      await create(newDistrict);
+      setSelectedState("");
+      setDistrictName("");
+      toast.success("District added successfully!");
+    } catch (error) {
+      toast.error("Failed to add district");
+    }
   };
 
   const handleReset = () => {
@@ -124,14 +76,27 @@ const DistrictMasterContent = () => {
     setDistrictName("");
   };
 
-  const handleDelete = (siteid: number) => {
-    setDistricts(prev => prev.filter(district => district.siteid !== siteid));
-    toast({
-      title: "Success",
-      description: "District deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("District deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete district");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading districts...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -205,6 +170,7 @@ const DistrictMasterContent = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-red-800 hover:bg-red-800">
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">siteid</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">cityid</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">sitename</TableHead>
@@ -213,39 +179,37 @@ const DistrictMasterContent = () => {
             </TableHeader>
             <TableBody>
               {districts.map((district, index) => (
-                <TableRow key={district.siteid} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                <TableRow key={district.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
                   <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(district.siteid)}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <span className="text-sm text-gray-700 font-medium ml-2">
-                        {district.siteid}
-                      </span>
+                    <div className="flex space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(district.id)}
+                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {district.cityid}
+                    {district.site_id}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {district.sitename}
+                    {district.city_id}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {district.createddate || "-"}
+                    {district.site_name}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                    {district.created_date || "-"}
                   </TableCell>
                 </TableRow>
               ))}
@@ -257,7 +221,7 @@ const DistrictMasterContent = () => {
       {/* Pagination */}
       <div className="flex justify-center">
         <div className="bg-yellow-400 px-4 py-2 rounded text-gray-800 font-medium">
-          12
+          {Math.ceil(districts.length / 10)}
         </div>
       </div>
     </div>

@@ -2,133 +2,59 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { MessageCircle, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { MessageCircle, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface Enquiry {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  state: string;
+  city?: string;
+  organization?: string;
+  address?: string;
+}
 
 const EnquiryContent = () => {
-  const { toast } = useToast();
-  
-  const [enquiries, setEnquiries] = useState([
-    {
-      id: 1,
-      firstName: "minhajuddin",
-      lastName: "Kausar",
-      email: "a@gfmail.com",
-      phone: "9415834947",
-      state: "uttarpradesh",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 2,
-      firstName: "VINEET",
-      lastName: "PANDEY",
-      email: "vineetpand66@gmail.com",
-      phone: "7458002780",
-      state: "UTTARPARADESH",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 3,
-      firstName: "1",
-      lastName: "1",
-      email: "1",
-      phone: "1",
-      state: "1",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 4,
-      firstName: "1",
-      lastName: "1",
-      email: "1",
-      phone: "1",
-      state: "1",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 5,
-      firstName: "1",
-      lastName: "1",
-      email: "1",
-      phone: "1",
-      state: "1",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 6,
-      firstName: "1",
-      lastName: "1",
-      email: "1",
-      phone: "1",
-      state: "1",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 7,
-      firstName: "8lboShqP",
-      lastName: "1",
-      email: "1",
-      phone: "1",
-      state: "1",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 8,
-      firstName: "-1 OR 2+51-51-1=0+0+0+1 --",
-      lastName: "1",
-      email: "1",
-      phone: "1",
-      state: "1",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 9,
-      firstName: "-1 OR 2+911-911-1=0+0+0+1",
-      lastName: "1",
-      email: "1",
-      phone: "1",
-      state: "1",
-      city: "",
-      organization: "",
-      address: ""
-    },
-    {
-      id: 10,
-      firstName: "-1' OR 2+373-373-1=0+0+0+1 --",
-      lastName: "1",
-      email: "1",
-      phone: "1",
-      state: "1",
-      city: "",
-      organization: "",
-      address: ""
-    }
-  ]);
+  const {
+    data: enquiries,
+    loading,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<Enquiry>({ tableName: 'enquiries' });
 
-  const handleDelete = (id: number) => {
-    setEnquiries(prev => prev.filter(enquiry => enquiry.id !== id));
-    toast({
-      title: "Success",
-      description: "Enquiry deleted successfully!",
-      variant: "default"
-    });
+  useAdminRealTime({
+    tableName: 'enquiries',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Enquiry deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete enquiry");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading enquiries...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -172,12 +98,12 @@ const EnquiryContent = () => {
                         <span className="ml-1">Delete</span>
                       </Button>
                       <span className="text-sm text-gray-700 font-medium ml-2">
-                        {enquiry.firstName}
+                        {enquiry.first_name}
                       </span>
                     </div>
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {enquiry.lastName}
+                    {enquiry.last_name}
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
                     {enquiry.email}
@@ -207,7 +133,7 @@ const EnquiryContent = () => {
       {/* Pagination */}
       <div className="flex justify-center">
         <div className="bg-blue-600 px-4 py-2 rounded text-white font-medium">
-          12345678910...
+          {Math.ceil(enquiries.length / 10) || 1}
         </div>
       </div>
     </div>
