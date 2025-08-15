@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { AdminPresenceIndicator } from "@/components/admin/AdminPresenceIndicator";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -81,8 +82,13 @@ const StudentApprovalContent = () => {
   return (
     <div className="w-full max-w-none bg-white">
       {/* Header */}
-      <div className="bg-gray-400 px-4 py-3 mb-4 border border-gray-500">
+      <div className="bg-gray-400 px-4 py-3 mb-4 border border-gray-500 flex items-center justify-between">
         <h1 className="text-lg font-medium text-gray-800">Student Approval</h1>
+        <AdminPresenceIndicator 
+          currentSection="student-approval" 
+          showSectionUsers={true}
+          showOnlineCount={true}
+        />
       </div>
 
       {/* Action Buttons */}

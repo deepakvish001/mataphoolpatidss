@@ -8,6 +8,7 @@ import { Award, Edit, Trash2, Loader2, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { AdminPresenceIndicator } from "@/components/admin/AdminPresenceIndicator";
 
 interface CertificateManagement {
   id: string;
@@ -177,12 +178,18 @@ const CertificateManagementContent = () => {
       {/* Add Certificate Form */}
       <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
         <CardHeader className="p-8 border-b border-gray-100">
-          <CardTitle className="text-2xl font-bold text-yellow-600 flex items-center space-x-3">
-            <div className="p-2 bg-yellow-500 rounded-lg">
-              <Award className="h-6 w-6 text-white" />
-            </div>
-            <span>Certificate Management</span>
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-2xl font-bold text-yellow-600 flex items-center space-x-3">
+              <div className="p-2 bg-yellow-500 rounded-lg">
+                <Award className="h-6 w-6 text-white" />
+              </div>
+              <span>Certificate Management</span>
+            </CardTitle>
+            <AdminPresenceIndicator 
+              currentSection="certificate-management" 
+              showSectionUsers={true}
+            />
+          </div>
         </CardHeader>
         
         <CardContent className="p-8">
