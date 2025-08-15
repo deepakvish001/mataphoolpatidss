@@ -561,14 +561,34 @@ const Admin = () => {
             
             {/* Back to User Home Button */}
             {!sidebarCollapsed && (
-              <div className="mt-6 pt-4 border-t border-gray-700/50">
+              <div className="mt-8 px-2">
                 <Button
                   onClick={handleBackToHome}
-                  variant="outline"
-                  className="w-full bg-gradient-to-r from-green-600/20 to-blue-600/20 border-green-500/30 text-green-400 hover:bg-green-600/30 hover:text-white transition-all duration-200"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-0 group"
                 >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to User Home
+                  <div className="flex items-center justify-center space-x-3">
+                    <div className="p-1 bg-white/20 rounded-lg group-hover:bg-white/30 transition-colors duration-300">
+                      <Home className="h-5 w-5" />
+                    </div>
+                    <span className="text-sm font-bold tracking-wide">Back to User Home</span>
+                    <ArrowLeft className="h-4 w-4 opacity-70 group-hover:opacity-100 group-hover:-translate-x-1 transition-all duration-300" />
+                  </div>
+                </Button>
+              </div>
+            )}
+            
+            {/* Collapsed sidebar home button */}
+            {sidebarCollapsed && (
+              <div className="mt-4 px-2">
+                <Button
+                  onClick={handleBackToHome}
+                  className="w-full h-12 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-0 flex items-center justify-center group relative"
+                >
+                  <Home className="h-6 w-6" />
+                  <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50 pointer-events-none">
+                    Back to User Home
+                    <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-gray-800 rotate-45"></div>
+                  </div>
                 </Button>
               </div>
             )}
