@@ -39,17 +39,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     console.log('Setting up authentication with session persistence...');
     
+    let isSubscribed = true; // Prevent state updates if component unmounts
+    
     // Set up auth state listener for real-time session management
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        if (!isSubscribed) return; // Prevent updates if unmounted
+        
         console.log('Auth state change:', event, session ? `session exists for user: ${session.user.email}` : 'no session');
         
-        // Only update state for actual auth events, not initialization
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user role after setting user state
           try {
             const { data } = await supabase
               .from('user_roles')
@@ -58,18 +60,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               .maybeSingle();
             
             console.log('User role fetched:', data?.role || 'user');
-            setUserRole(data?.role || 'user');
+            if (isSubscribed) {
+              setUserRole(data?.role || 'user');
+            }
           } catch (error) {
             console.error('Error fetching user role:', error);
-            setUserRole('user');
+            if (isSubscribed) {
+              setUserRole('user');
+            }
           }
         } else {
-          setUserRole(null);
+          if (isSubscribed) {
+            setUserRole(null);
+          }
         }
         
-        // CRITICAL: Always set loading to false after processing auth state change
-        console.log('Auth state processing complete, setting loading to false');
-        setLoading(false);
+        // CRITICAL: Always set loading to false - this is the key fix
+        if (isSubscribed) {
+          console.log('🎯 Setting loading to FALSE after auth state change');
+          setLoading(false);
+        }
       }
     );
 
@@ -105,15 +115,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setSession(null);
         setUser(null);
         setUserRole(null);
-      } finally {
-        // Always set loading to false, regardless of success or error
-        setLoading(false);
-        console.log('Authentication initialization complete');
-      }
-    };
+        } finally {
+          // CRITICAL: Always set loading to false, regardless of success or error
+          if (isSubscribed) {
+            console.log('🎯 Setting loading to FALSE after initialization');
+            setLoading(false);
+          }
+          console.log('Authentication initialization complete');
+        }
+      };
     
     initializeAuth();
-    return () => subscription.unsubscribe();
+
+    return () => {
+      isSubscribed = false; // Prevent state updates after unmount
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signUp = async (email: string, password: string, fullName?: string) => {
