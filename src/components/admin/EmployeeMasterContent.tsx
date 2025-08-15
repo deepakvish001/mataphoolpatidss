@@ -90,6 +90,11 @@ const EmployeeMasterContent = () => {
   };
 
   const handleSubmit = async () => {
+    if (editingEmployee) {
+      await handleUpdate();
+      return;
+    }
+
     if (!formData.fullName.trim() || !formData.contactNo.trim() || !formData.emailId.trim()) {
       toast.error("Please fill in all required fields");
       return;
@@ -123,7 +128,69 @@ const EmployeeMasterContent = () => {
     }
   };
 
+  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
+
+  const handleEdit = (employee: Employee) => {
+    setEditingEmployee(employee);
+    setFormData({
+      employeeId: employee.employee_id,
+      employeePassword: employee.employee_password,
+      fullName: employee.full_name,
+      fatherName: employee.father_name || "",
+      contactNo: employee.contact_no,
+      emailId: employee.email_id,
+      country: employee.country || "India",
+      state: employee.state || "",
+      district: employee.district || "",
+      address: employee.address || "",
+      otherDetails: employee.other_details || "",
+      pincode: employee.pincode || "",
+      salary: employee.salary || "",
+      registrationDate: employee.registration_date || "",
+      photoUpload: null
+    });
+  };
+
+  const handleUpdate = async () => {
+    if (!editingEmployee) return;
+    
+    if (!formData.fullName.trim() || !formData.contactNo.trim() || !formData.emailId.trim()) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    const updatedEmployee = {
+      employee_id: formData.employeeId,
+      employee_password: formData.employeePassword,
+      full_name: formData.fullName,
+      father_name: formData.fatherName,
+      contact_no: formData.contactNo,
+      email_id: formData.emailId,
+      country: formData.country,
+      state: formData.state,
+      district: formData.district,
+      address: formData.address,
+      other_details: formData.otherDetails,
+      pincode: formData.pincode,
+      salary: formData.salary,
+      registration_date: formData.registrationDate,
+      photo_url: formData.photoUpload ? formData.photoUpload.name : null,
+      status: 'active'
+    };
+
+    try {
+      await update(editingEmployee.id, updatedEmployee);
+      setEditingEmployee(null);
+      handleReset();
+      toast.success("Employee updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update employee");
+    }
+  };
+
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this employee?")) return;
+    
     try {
       await deleteItem(id);
       toast.success("Employee deleted successfully!");
@@ -151,6 +218,7 @@ const EmployeeMasterContent = () => {
       registrationDate: "",
       photoUpload: null
     });
+    setEditingEmployee(null);
 
     // Reset file input
     const fileInput = document.getElementById('employee-photo-file') as HTMLInputElement;
@@ -409,22 +477,22 @@ const EmployeeMasterContent = () => {
             </div>
           </div>
 
-          {/* Submit and Reset Buttons */}
-          <div className="flex space-x-4 pt-8">
-            <Button
-              onClick={handleSubmit}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              Submit
-            </Button>
-            <Button
-              variant="outline"
-              onClick={handleReset}
-              className="border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              Reset
-            </Button>
-          </div>
+            {/* Submit and Reset Buttons */}
+            <div className="flex space-x-4 pt-8">
+              <Button
+                onClick={handleSubmit}
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                {editingEmployee ? "Update" : "Submit"}
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleReset}
+                className="border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                Reset
+              </Button>
+            </div>
         </CardContent>
       </Card>
 
@@ -451,6 +519,7 @@ const EmployeeMasterContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(employee)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />

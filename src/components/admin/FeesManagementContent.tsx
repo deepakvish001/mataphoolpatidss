@@ -55,7 +55,64 @@ const FeesManagementContent = () => {
   const [amountDue, setAmountDue] = useState("");
   const [status, setStatus] = useState("Paided");
 
+  const [editingReceipt, setEditingReceipt] = useState<FeesReceipt | null>(null);
+
+  const handleEdit = (receipt: FeesReceipt) => {
+    setEditingReceipt(receipt);
+    setReceiptNo(receipt.receipt_no);
+    setFranchiseName(receipt.franchise_name);
+    setFranchiseId(receipt.franchise_id);
+    setDate(receipt.receipt_date);
+    setCourse(receipt.course);
+    setStudent(receipt.student);
+    setStudentId(receipt.student_id);
+    setTotalFee(receipt.total_fee.toString());
+    setAmountPaid(receipt.amount_paid.toString());
+    setPaymentDetails(receipt.payment_details || "");
+    setAmountDue(receipt.amount_due.toString());
+    setStatus(receipt.status);
+  };
+
+  const handleUpdate = async () => {
+    if (!editingReceipt) return;
+    
+    if (!receiptNo || !franchiseName || !franchiseId || !date || !course || !student || !studentId || !totalFee || !amountPaid) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    try {
+      const calculatedAmountDue = parseFloat(totalFee) - parseFloat(amountPaid);
+      
+      await update(editingReceipt.id, {
+        receipt_no: receiptNo,
+        franchise_name: franchiseName,
+        franchise_id: franchiseId,
+        receipt_date: date,
+        course,
+        student,
+        student_id: studentId,
+        total_fee: parseFloat(totalFee),
+        amount_paid: parseFloat(amountPaid),
+        payment_details: paymentDetails,
+        amount_due: calculatedAmountDue,
+        status
+      });
+
+      setEditingReceipt(null);
+      handleReset();
+      toast.success("Fees receipt updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update fees receipt");
+    }
+  };
+
   const handleAdd = async () => {
+    if (editingReceipt) {
+      await handleUpdate();
+      return;
+    }
+
     if (!receiptNo || !franchiseName || !franchiseId || !date || !course || !student || !studentId || !totalFee || !amountPaid) {
       toast.error("Please fill in all required fields");
       return;
@@ -79,24 +136,27 @@ const FeesManagementContent = () => {
         status
       });
 
-      // Reset form
-      setReceiptNo(`ReceiptNo ${feesReceipts.length + 2}`);
-      setFranchiseName("");
-      setFranchiseId("");
-      setDate("");
-      setCourse("");
-      setStudent("");
-      setStudentId("");
-      setTotalFee("");
-      setAmountPaid("");
-      setPaymentDetails("");
-      setAmountDue("");
-      setStatus("Paided");
-
+      handleReset();
       toast.success("Fees receipt added successfully!");
     } catch (error) {
       toast.error("Failed to add fees receipt");
     }
+  };
+
+  const handleReset = () => {
+    setReceiptNo(`ReceiptNo ${feesReceipts.length + 2}`);
+    setFranchiseName("");
+    setFranchiseId("");
+    setDate("");
+    setCourse("");
+    setStudent("");
+    setStudentId("");
+    setTotalFee("");
+    setAmountPaid("");
+    setPaymentDetails("");
+    setAmountDue("");
+    setStatus("Paided");
+    setEditingReceipt(null);
   };
 
   const handlePrint = () => {
@@ -344,7 +404,13 @@ const FeesManagementContent = () => {
                 onClick={handleAdd}
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-base font-medium"
               >
-                ADD
+                {editingReceipt ? "UPDATE" : "ADD"}
+              </Button>
+              <Button 
+                onClick={handleReset}
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-base font-medium"
+              >
+                RESET
               </Button>
               <Button 
                 onClick={handlePrint}
@@ -383,6 +449,7 @@ const FeesManagementContent = () => {
                           <Button
                             variant="ghost"
                             size="sm"
+                            onClick={() => handleEdit(receipt)}
                             className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                           >
                             <Edit className="h-4 w-4" />
