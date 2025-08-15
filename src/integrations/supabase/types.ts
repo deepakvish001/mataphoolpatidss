@@ -132,6 +132,60 @@ export type Database = {
         }
         Relationships: []
       }
+      head_offices: {
+        Row: {
+          address: string
+          city: string | null
+          country: string | null
+          created_at: string
+          created_by: string | null
+          email: string
+          id: string
+          is_primary: boolean | null
+          name: string | null
+          phone: string
+          postal_code: string | null
+          state: string | null
+          status: string | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address: string
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          created_by?: string | null
+          email: string
+          id?: string
+          is_primary?: boolean | null
+          name?: string | null
+          phone: string
+          postal_code?: string | null
+          state?: string | null
+          status?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string
+          id?: string
+          is_primary?: boolean | null
+          name?: string | null
+          phone?: string
+          postal_code?: string | null
+          state?: string | null
+          status?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           created_at: string
