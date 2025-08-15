@@ -135,7 +135,10 @@ const StudentMarksheetContent = () => {
   };
 
   const generatePDF = async () => {
-    if (!marksheetRef.current) return;
+    if (!marksheetRef.current) {
+      toast.error("Certificate template not found");
+      return;
+    }
 
     const missing = checkMissingData();
     if (missing.length > 0) {
@@ -144,117 +147,93 @@ const StudentMarksheetContent = () => {
     }
 
     try {
-      toast.loading("Generating High-Quality Certificate PDF...", { id: "pdf-gen" });
+      toast.loading("Generating Certificate PDF...", { id: "pdf-gen" });
       
-      // Calculate optimal dimensions for better subject table handling
-      const subjectCount = courseSubjects.length;
-      const baseHeight = 1123; // A4 base height
-      const additionalHeight = Math.max(0, (subjectCount - 4) * 30); // Extra height for more subjects
-      
-      // Set dynamic height for the certificate element
       const certElement = marksheetRef.current;
-      const originalMinHeight = certElement.style.minHeight;
-      certElement.style.minHeight = `${baseHeight + additionalHeight}px`;
       
-      // Wait for layout to settle
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Ensure element is visible and styled properly
+      certElement.style.display = 'block';
+      certElement.style.visibility = 'visible';
+      certElement.style.position = 'relative';
+      certElement.style.transform = 'none';
+      
+      // Wait for fonts and layout
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Capture at ultra-high quality for crisp text and better subject handling
+      console.log('Capturing element:', certElement);
+      console.log('Element dimensions:', {
+        width: certElement.offsetWidth,
+        height: certElement.offsetHeight,
+        scrollWidth: certElement.scrollWidth,
+        scrollHeight: certElement.scrollHeight
+      });
+
+      // Capture with simple, reliable settings
       const canvas = await html2canvas(certElement, {
-        scale: 4, // Ultra high quality
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        logging: false,
-        imageTimeout: 15000,
-        removeContainer: true,
+        logging: true, // Enable logging to debug
+        imageTimeout: 10000,
+        removeContainer: false,
         scrollX: 0,
         scrollY: 0,
-        width: 794, // Fixed A4 width
-        height: baseHeight + additionalHeight,
-        foreignObjectRendering: true
+        ignoreElements: (element) => {
+          // Ignore any overlay elements
+          return element.classList?.contains('absolute') && element.classList?.contains('opacity-3');
+        }
       });
 
-      // Restore original height
-      certElement.style.minHeight = originalMinHeight;
+      console.log('Canvas captured:', {
+        width: canvas.width,
+        height: canvas.height
+      });
+
+      if (canvas.width === 0 || canvas.height === 0) {
+        throw new Error('Canvas capture failed - no content captured');
+      }
 
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
-        format: 'a4',
-        compress: true
+        format: 'a4'
       });
 
       const pdfWidth = 210;
       const pdfHeight = 297;
-      const margin = 0; // No margins for full page
 
-      // Calculate optimal scaling to fit content properly
-      const canvasAspectRatio = canvas.height / canvas.width;
-      const pdfAspectRatio = pdfHeight / pdfWidth;
+      // Calculate scaling to fit A4
+      const canvasRatio = canvas.height / canvas.width;
+      let imgWidth = pdfWidth;
+      let imgHeight = imgWidth * canvasRatio;
 
-      let imgWidth = pdfWidth - (2 * margin);
-      let imgHeight = imgWidth * canvasAspectRatio;
-
-      // If content is too tall for one page, use smart pagination
-      if (imgHeight > pdfHeight - (2 * margin)) {
-        // Calculate how many pages we need
-        const totalPages = Math.ceil(imgHeight / (pdfHeight - (2 * margin)));
-        const pageHeight = pdfHeight - (2 * margin);
-        
-        for (let page = 0; page < totalPages; page++) {
-          if (page > 0) pdf.addPage();
-          
-          // Calculate the slice of canvas for this page
-          const startY = (page * pageHeight / imgHeight) * canvas.height;
-          const endY = Math.min(((page + 1) * pageHeight / imgHeight) * canvas.height, canvas.height);
-          const sliceHeight = endY - startY;
-          
-          // Create a temporary canvas for this page slice
-          const pageCanvas = document.createElement('canvas');
-          pageCanvas.width = canvas.width;
-          pageCanvas.height = sliceHeight;
-          
-          const ctx = pageCanvas.getContext('2d');
-          if (ctx) {
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-            
-            // Draw the slice
-            ctx.drawImage(
-              canvas,
-              0, startY, canvas.width, sliceHeight,
-              0, 0, pageCanvas.width, pageCanvas.height
-            );
-            
-            const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
-            const currentPageHeight = (sliceHeight / canvas.height) * imgHeight;
-            
-            pdf.addImage(
-              pageImgData, 
-              'JPEG', 
-              margin, 
-              margin, 
-              imgWidth, 
-              Math.min(currentPageHeight, pageHeight),
-              undefined, 
-              'FAST'
-            );
-          }
-        }
-      } else {
-        // Single page - fit perfectly
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight, undefined, 'FAST');
+      // If too tall, scale down to fit
+      if (imgHeight > pdfHeight) {
+        imgHeight = pdfHeight;
+        imgWidth = imgHeight / canvasRatio;
       }
 
-      // Enhanced PDF metadata
+      // Center the image
+      const x = (pdfWidth - imgWidth) / 2;
+      const y = (pdfHeight - imgHeight) / 2;
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.9);
+      
+      console.log('Adding image to PDF:', {
+        imgWidth,
+        imgHeight,
+        x,
+        y
+      });
+
+      pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
+
+      // Add metadata
       pdf.setProperties({
-        title: `${selectedStudent?.full_name} - Official Course Certificate`,
-        subject: `Professional Certificate - ${selectedStudent?.course_name}`,
-        author: 'B.SOFT Computer & Technical Institute',
-        keywords: 'certificate, diploma, course completion, marksheet, academic',
-        creator: 'B.SOFT Institute Certificate System v2.0'
+        title: `${selectedStudent?.full_name} - Certificate`,
+        subject: `Certificate - ${selectedStudent?.course_name}`,
+        author: 'B.SOFT Computer & Technical Institute'
       });
 
       const currentDate = new Date().toISOString().split('T')[0];
@@ -263,10 +242,10 @@ const StudentMarksheetContent = () => {
       
       pdf.save(fileName);
 
-      toast.success("High-Quality Certificate PDF Generated Successfully!", { id: "pdf-gen" });
+      toast.success("Certificate PDF Generated Successfully!", { id: "pdf-gen" });
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error("Failed to generate certificate PDF. Please try again.", { id: "pdf-gen" });
+      toast.error(`Failed to generate PDF: ${error.message}`, { id: "pdf-gen" });
     }
   };
 
