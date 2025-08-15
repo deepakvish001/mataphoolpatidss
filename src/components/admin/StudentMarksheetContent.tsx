@@ -160,7 +160,7 @@ const StudentMarksheetContent = () => {
 
       const element = marksheetRef.current;
 
-      // High-DPI capture for crisp text; stable settings to avoid blank pages
+      // High-DPI capture for crisp text
       const canvas = await html2canvas(element, {
         scale: Math.min(3, window.devicePixelRatio * 2),
         useCORS: true,
@@ -179,92 +179,85 @@ const StudentMarksheetContent = () => {
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
       const pdfWidth = 210;
       const pdfHeight = 297;
-
-      // Content margins
-      const margin = 10; // mm for image placement (content area)
-      const borderOuter = 5; // mm decorative border offset from edges
+      const margin = 10; // mm
 
       // Compute usable page size (accounting for margins)
       const usableWidthMm = pdfWidth - margin * 2;
       const usableHeightMm = pdfHeight - margin * 2;
 
-      // Compute page height in canvas pixels to slice clean A4 pages (scaled to usable area)
+      // Calculate how much content fits on each page
       const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
 
-      // Compute row-aware page breaks to avoid splitting subject rows
+      // Smart page breaks - avoid cutting sections
       const cssWidth = element.scrollWidth || element.clientWidth || 1;
-      const ratio = canvas.width / cssWidth; // canvas px per CSS px
+      const ratio = canvas.width / cssWidth;
       const yBreaks: number[] = [0];
-      let lastBreak = 0;
 
-      if (tableRef.current) {
-        const elemRect = element.getBoundingClientRect();
-        const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
-        for (let i = 0; i < rows.length; i++) {
-          const r = rows[i].getBoundingClientRect();
-          const rowBottomPx = Math.round((r.bottom - elemRect.top) * ratio);
-          if (rowBottomPx - lastBreak > pageHeightPx && i > 0) {
-            const prevBottom = rows[i - 1].getBoundingClientRect().bottom;
-            const prevBottomPx = Math.max(lastBreak + 1, Math.round((prevBottom - elemRect.top) * ratio));
-            yBreaks.push(prevBottomPx);
-            lastBreak = prevBottomPx;
+      // Find safe break points (avoid cutting table rows and sections)
+      let currentY = 0;
+      while (currentY + pageHeightPx < canvas.height) {
+        let nextBreak = currentY + pageHeightPx;
+        
+        // Try to find a better break point within the last 20% of the page
+        const searchStart = currentY + Math.round(pageHeightPx * 0.8);
+        const searchEnd = Math.min(nextBreak, canvas.height);
+        
+        // Look for table row boundaries if table exists
+        if (tableRef.current) {
+          const elemRect = element.getBoundingClientRect();
+          const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
+          
+          for (const row of rows) {
+            const rowRect = row.getBoundingClientRect();
+            const rowBottomPx = Math.round((rowRect.bottom - elemRect.top) * ratio);
+            
+            // If this row end is in our search area, use it as break point
+            if (rowBottomPx >= searchStart && rowBottomPx <= searchEnd) {
+              nextBreak = rowBottomPx;
+              break;
+            }
           }
         }
+        
+        yBreaks.push(nextBreak);
+        currentY = nextBreak;
       }
 
-      // Fallback fill to ensure we cover the whole canvas height
+      // Add final page if needed
       if (yBreaks[yBreaks.length - 1] !== canvas.height) {
-        let next = yBreaks[yBreaks.length - 1];
-        while (next + pageHeightPx < canvas.height) {
-          next += pageHeightPx;
-          yBreaks.push(next);
-        }
-        if (yBreaks[yBreaks.length - 1] !== canvas.height) yBreaks.push(canvas.height);
+        yBreaks.push(canvas.height);
       }
 
-      const drawPageFrame = () => {
-        // Draw a decorative border on every page so the frame is fixed across pages
-        // Outer deep border
-        pdf.setDrawColor(40, 55, 120); // indigo-like
-        pdf.setLineWidth(0.6);
-        pdf.rect(borderOuter, borderOuter, pdfWidth - borderOuter * 2, pdfHeight - borderOuter * 2);
-        // Middle golden border
-        pdf.setDrawColor(200, 150, 30);
-        pdf.setLineWidth(0.4);
-        pdf.rect(borderOuter + 2, borderOuter + 2, pdfWidth - (borderOuter + 2) * 2, pdfHeight - (borderOuter + 2) * 2);
-        // Inner soft border
-        pdf.setDrawColor(130, 160, 220);
-        pdf.setLineWidth(0.3);
-        pdf.rect(borderOuter + 4, borderOuter + 4, pdfWidth - (borderOuter + 4) * 2, pdfHeight - (borderOuter + 4) * 2);
-      };
-
-      // Render each slice as a page with margins
+      // Render each page slice
       for (let i = 0; i < yBreaks.length - 1; i++) {
         if (i > 0) pdf.addPage();
+        
         const sliceTop = yBreaks[i];
         const sliceHeight = yBreaks[i + 1] - sliceTop;
 
+        // Create canvas for this page slice
         const pageCanvas = document.createElement('canvas');
         pageCanvas.width = canvas.width;
         pageCanvas.height = sliceHeight;
         const ctx = pageCanvas.getContext('2d');
         if (!ctx) throw new Error('2D context not available');
 
+        // Fill with white background and draw the slice
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
         ctx.drawImage(canvas, 0, sliceTop, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
 
+        // Add to PDF
         const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
         const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
         pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
 
-        // Draw page border after adding image so it's on top
-        drawPageFrame();
-
-        // Optional: Page number (helps verify multipage output visually)
-        pdf.setTextColor(100);
-        pdf.setFontSize(9);
-        pdf.text(`${i + 1}/${yBreaks.length - 1}`, pdfWidth - 20, pdfHeight - 8, { align: 'right' });
+        // Add page number (subtle, bottom right)
+        if (yBreaks.length > 2) { // Only if multi-page
+          pdf.setTextColor(120, 120, 120);
+          pdf.setFontSize(8);
+          pdf.text(`Page ${i + 1} of ${yBreaks.length - 1}`, pdfWidth - 15, pdfHeight - 5, { align: 'right' });
+        }
       }
 
       const currentDate = new Date().toISOString().split('T')[0];
