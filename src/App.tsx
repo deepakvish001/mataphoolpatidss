@@ -31,67 +31,51 @@ function App() {
         <Sonner />
         <BrowserRouter>
           <AuthProvider>
-            <AppContent />
+            <div className="min-h-screen bg-background font-sans antialiased">
+              <Navigation />
+              <Routes>
+                {/* Public routes */}
+                <Route path="/" element={<Index />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/donation" element={<Donation />} />
+                <Route path="/partners" element={<Partners />} />
+                <Route path="/rashtiya-gram-swaraj-abhiyan" element={<RashtriyaGramSwarajAbhiyan />} />
+                <Route path="/nsqf" element={<NSQF />} />
+                <Route path="/aaioe" element={<AAIOE />} />
+                <Route path="/entrepreneurship-development" element={<EntrepreneurshipDevelopment />} />
+                
+                {/* Auth routes */}
+                <Route 
+                  path="/login" 
+                  element={
+                    <AuthGuard requireAuth={false}>
+                      <Login />
+                    </AuthGuard>
+                  } 
+                />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
+                
+                {/* Protected routes */}
+                <Route 
+                  path="/admin/*" 
+                  element={
+                    <AuthGuard requireAuth={true} requireRole="admin">
+                      <Admin />
+                    </AuthGuard>
+                  } 
+                />
+                
+                {/* 404 */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );
 }
-
-// Separate component to handle conditional navigation
-const AppContent = () => {
-  return (
-    <div className="min-h-screen bg-background font-sans antialiased">
-      <Routes>
-        {/* Public routes with navigation */}
-        <Route path="/" element={<LayoutWithNavigation><Index /></LayoutWithNavigation>} />
-        <Route path="/about" element={<LayoutWithNavigation><About /></LayoutWithNavigation>} />
-        <Route path="/contact" element={<LayoutWithNavigation><ContactUs /></LayoutWithNavigation>} />
-        <Route path="/donation" element={<LayoutWithNavigation><Donation /></LayoutWithNavigation>} />
-        <Route path="/partners" element={<LayoutWithNavigation><Partners /></LayoutWithNavigation>} />
-        <Route path="/rashtiya-gram-swaraj-abhiyan" element={<LayoutWithNavigation><RashtriyaGramSwarajAbhiyan /></LayoutWithNavigation>} />
-        <Route path="/nsqf" element={<LayoutWithNavigation><NSQF /></LayoutWithNavigation>} />
-        <Route path="/aaioe" element={<LayoutWithNavigation><AAIOE /></LayoutWithNavigation>} />
-        <Route path="/entrepreneurship-development" element={<LayoutWithNavigation><EntrepreneurshipDevelopment /></LayoutWithNavigation>} />
-        
-        {/* Auth routes without navigation */}
-        <Route 
-          path="/login" 
-          element={
-            <AuthGuard requireAuth={false}>
-              <Login />
-            </AuthGuard>
-          } 
-        />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        
-        {/* Admin routes without navigation */}
-        <Route 
-          path="/admin/*" 
-          element={
-            <AuthGuard requireAuth={true} requireRole="admin">
-              <Admin />
-            </AuthGuard>
-          } 
-        />
-        
-        {/* 404 with navigation */}
-        <Route path="*" element={<LayoutWithNavigation><NotFound /></LayoutWithNavigation>} />
-      </Routes>
-    </div>
-  );
-};
-
-// Layout wrapper for pages that need navigation
-const LayoutWithNavigation = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      <Navigation />
-      {children}
-    </>
-  );
-};
 
 export default App;
