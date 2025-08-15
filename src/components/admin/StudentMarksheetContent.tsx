@@ -249,81 +249,61 @@ const StudentMarksheetContent = () => {
         }
       }
 
-      // Create intelligent page breaks
+      // Create intelligent page breaks (no overflow beyond page height)
       let currentY = 0;
       while (currentY + pageHeightPx < canvas.height) {
-        let nextBreak = currentY + pageHeightPx;
+        const nextBreak = currentY + pageHeightPx;
         let bestBreak = nextBreak;
-        
-        // Check if any critical section would be split
+
+        // Prefer section boundaries within last 30% of the page, not exceeding nextBreak
+        const sectionCandidates: number[] = [];
         for (const section of sectionBounds) {
-          // If section starts in current page but extends beyond, move entire section to next page
-          if (section.critical && 
-              section.top >= currentY && 
-              section.top < nextBreak && 
-              section.bottom > nextBreak) {
-            
-            // Check if section fits entirely on next page
-            if (section.bottom - section.top <= pageHeightPx) {
-              bestBreak = Math.max(currentY + Math.round(pageHeightPx * 0.3), section.top);
-              break;
+          const boundary = section.bottom;
+          if (boundary >= currentY + Math.round(pageHeightPx * 0.7) && boundary <= nextBreak) {
+            sectionCandidates.push(boundary);
+          }
+          // Avoid splitting critical section: if it would cross the break, move break before section if possible
+          if (section.critical && section.top >= currentY && section.top < nextBreak && section.bottom > nextBreak) {
+            if (section.top - currentY >= Math.round(pageHeightPx * 0.5)) {
+              sectionCandidates.push(section.top);
             }
           }
-          
-          // Find good break points at section boundaries
-          if (section.bottom >= currentY + Math.round(pageHeightPx * 0.7) && 
-              section.bottom <= currentY + Math.round(pageHeightPx * 1.1)) {
-            bestBreak = section.bottom;
-          }
         }
-
-        // Table row-aware breaks for academic performance table
-        if (bestBreak === nextBreak && tableRef.current) {
+        if (sectionCandidates.length > 0) {
+          bestBreak = Math.max(...sectionCandidates); // choose the latest boundary within page
+        } else if (tableRef.current) {
+          // Try table row boundaries within last 20% of page
           const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
           const searchStart = currentY + Math.round(pageHeightPx * 0.8);
-          
+          let candidate = 0;
           for (const row of rows) {
             const rowRect = row.getBoundingClientRect();
             const rowBottomPx = Math.round((rowRect.bottom - elemRect.top) * ratio);
-            
-            if (rowBottomPx >= searchStart && rowBottomPx <= nextBreak + Math.round(pageHeightPx * 0.1)) {
-              bestBreak = rowBottomPx;
-              break;
+            if (rowBottomPx >= searchStart && rowBottomPx <= nextBreak) {
+              candidate = Math.max(candidate, rowBottomPx);
             }
           }
+          if (candidate > 0) bestBreak = candidate;
         }
-        
-        // Ensure progress
-        if (bestBreak <= currentY) {
-          bestBreak = Math.min(currentY + pageHeightPx, canvas.height);
-        }
-        
+
+        // Ensure progress and clamp to page
+        bestBreak = Math.max(bestBreak, currentY + Math.round(pageHeightPx * 0.5));
+        bestBreak = Math.min(bestBreak, nextBreak);
+
         yBreaks.push(bestBreak);
         currentY = bestBreak;
       }
 
-      // Add final page
+      // Add final page exactly at canvas.height
       if (yBreaks[yBreaks.length - 1] !== canvas.height) {
         yBreaks.push(canvas.height);
       }
 
-      // Function to draw certificate border on each page
+      // Function to draw certificate border on each page (single border)
       const drawCertificateBorder = () => {
-        // Triple border design matching the original certificate
-        // Outer indigo border (matching the certificate design)
         pdf.setDrawColor(55, 65, 130); // indigo-800
         pdf.setLineWidth(0.8);
         pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
-        
-        // Middle golden border
-        pdf.setDrawColor(245, 158, 11); // amber-400  
-        pdf.setLineWidth(0.5);
-        pdf.rect(7, 7, pdfWidth - 14, pdfHeight - 14);
-        
-        // Inner light border
-        pdf.setDrawColor(165, 180, 252); // indigo-300
-        pdf.setLineWidth(0.3);
-        pdf.rect(9, 9, pdfWidth - 18, pdfHeight - 18);
       };
 
       // Render each page slice with borders
@@ -348,7 +328,8 @@ const StudentMarksheetContent = () => {
         // Add content to PDF
         const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
         const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
-        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
+        const clampedHeightMm = Math.min(heightMm, usableHeightMm);
+        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, clampedHeightMm, undefined, 'FAST');
 
         // Draw border on every page
         drawCertificateBorder();
