@@ -55,6 +55,42 @@ export type Database = {
           },
         ]
       }
+      bank_details: {
+        Row: {
+          account_number: string
+          bank_name: string
+          bank_photo_url: string | null
+          branch_name: string
+          created_at: string
+          id: string
+          ifsc_code: string
+          micr_code: string
+          updated_at: string
+        }
+        Insert: {
+          account_number: string
+          bank_name: string
+          bank_photo_url?: string | null
+          branch_name: string
+          created_at?: string
+          id?: string
+          ifsc_code: string
+          micr_code: string
+          updated_at?: string
+        }
+        Update: {
+          account_number?: string
+          bank_name?: string
+          bank_photo_url?: string | null
+          branch_name?: string
+          created_at?: string
+          id?: string
+          ifsc_code?: string
+          micr_code?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       certificates: {
         Row: {
           certificate_number: string
@@ -96,6 +132,60 @@ export type Database = {
           },
         ]
       }
+      contact_us: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      course_categories: {
+        Row: {
+          category_id: number
+          course_category: string
+          created_at: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          category_id: number
+          course_category: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: number
+          course_category?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           created_at: string
@@ -128,6 +218,102 @@ export type Database = {
           status?: string | null
           title?: string
           total_lessons?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      director_messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          photo: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          photo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          photo?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      district_master: {
+        Row: {
+          city_id: number
+          created_at: string
+          created_date: string | null
+          id: string
+          site_id: number
+          site_name: string
+          updated_at: string
+        }
+        Insert: {
+          city_id: number
+          created_at?: string
+          created_date?: string | null
+          id?: string
+          site_id: number
+          site_name: string
+          updated_at?: string
+        }
+        Update: {
+          city_id?: number
+          created_at?: string
+          created_date?: string | null
+          id?: string
+          site_id?: number
+          site_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      enquiries: {
+        Row: {
+          address: string | null
+          city: string | null
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          organization: string | null
+          phone: string
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          organization?: string | null
+          phone: string
+          state: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          organization?: string | null
+          phone?: string
+          state?: string
           updated_at?: string
         }
         Relationships: []
@@ -186,6 +372,96 @@ export type Database = {
         }
         Relationships: []
       }
+      menu_content: {
+        Row: {
+          course: string
+          course_file: string | null
+          created_at: string
+          date: string
+          id: string
+          notes: string | null
+          updated_at: string
+          upload_file_title: string
+        }
+        Insert: {
+          course: string
+          course_file?: string | null
+          created_at?: string
+          date: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+          upload_file_title: string
+        }
+        Update: {
+          course?: string
+          course_file?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+          upload_file_title?: string
+        }
+        Relationships: []
+      }
+      missions: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          image: string | null
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      news: {
+        Row: {
+          created_at: string
+          id: string
+          news_date: string
+          news_description: string
+          news_id: number
+          news_title: string
+          photo: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          news_date: string
+          news_description: string
+          news_id: number
+          news_title: string
+          photo?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          news_date?: string
+          news_description?: string
+          news_id?: number
+          news_title?: string
+          photo?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           created_at: string
@@ -219,6 +495,30 @@ export type Database = {
         }
         Relationships: []
       }
+      photo_gallery: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -246,6 +546,33 @@ export type Database = {
           phone?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      state_master: {
+        Row: {
+          city_id: number
+          city_name: string
+          created_at: string
+          created_date: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          city_id: number
+          city_name: string
+          created_at?: string
+          created_date?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          city_id?: number
+          city_name?: string
+          created_at?: string
+          created_date?: string | null
+          id?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -436,6 +763,30 @@ export type Database = {
           total_study_hours?: number | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      visions: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          image: string | null
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
