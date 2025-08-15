@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import {
@@ -23,6 +24,7 @@ import {
 
 const UserProfileNav = () => {
   const { user, profile, userRole, signOut } = useAuth();
+  const navigate = useNavigate();
 
   if (!user) return null;
 
@@ -56,6 +58,10 @@ const UserProfileNav = () => {
 
   const handleSignOut = async () => {
     await signOut();
+  };
+
+  const handleAdminClick = () => {
+    navigate('/admin');
   };
 
   return (
@@ -126,7 +132,10 @@ const UserProfileNav = () => {
           <>
             <DropdownMenuSeparator className="my-1 mx-1" />
             <div className="px-1 py-1">
-              <DropdownMenuItem className="cursor-pointer p-2 rounded-md hover:bg-muted/50 transition-colors text-sm">
+              <DropdownMenuItem 
+                className="cursor-pointer p-2 rounded-md hover:bg-muted/50 transition-colors text-sm"
+                onClick={handleAdminClick}
+              >
                 <Shield className="h-4 w-4 mr-2 text-orange-500" />
                 <span>Admin</span>
               </DropdownMenuItem>
