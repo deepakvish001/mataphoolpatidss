@@ -4,67 +4,62 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { BookOpen, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { BookOpen, Edit, Trash2, Plus, RefreshCw, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+interface Course {
+  id: string;
+  course_name: string;
+  course_sort_name: string;
+  duration: string;
+  fees: string;
+  category: string;
+  status: 'active' | 'inactive';
+  created_at: string;
+  updated_at: string;
+}
 
 const CourseMasterContent = () => {
-  const { toast } = useToast();
-  const [courseCategory, setCourseCategory] = useState("");
-  const [courseName, setCourseName] = useState("");
-  const [courseSortName, setCourseSortName] = useState("");
-  const [courseDuration, setCourseDuration] = useState("");
-  const [fees, setFees] = useState("");
-  
-  const [courses, setCourses] = useState([
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingCourse, setEditingCourse] = useState<Course | null>(null);
+  const [formData, setFormData] = useState({
+    courseCategory: "",
+    courseName: "",
+    courseSortName: "",
+    courseDuration: "",
+    fees: "",
+    status: "active" as "active" | "inactive"
+  });
+  const [formLoading, setFormLoading] = useState(false);
+
+  // Static data for now since courses table doesn't exist yet
+  const [courses, setCourses] = useState<Course[]>([
     {
-      id: 17,
-      courseName: "Diploma in Computer Hardware and Networking",
-      courseSortName: "DCHN",
-      courseDuration: "12 months",
+      id: "17",
+      course_name: "Diploma in Computer Hardware and Networking",
+      course_sort_name: "DCHN",
+      duration: "12 months",
       fees: "15000",
-      category: "12 Month"
+      category: "12 Month",
+      status: "active",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     },
     {
-      id: 18,
-      courseName: "Advance Diploma In Computer Application(ADCA)",
-      courseSortName: "ADCA",
-      courseDuration: "12",
+      id: "18",
+      course_name: "Advance Diploma In Computer Application(ADCA)",
+      course_sort_name: "ADCA",
+      duration: "12",
       fees: "4800",
-      category: "12 Month"
-    },
-    {
-      id: 20,
-      courseName: "Typing Hindi and English",
-      courseSortName: "Typing H&E",
-      courseDuration: "3 Months",
-      fees: "2800",
-      category: "3 Month"
-    },
-    {
-      id: 24,
-      courseName: "COC",
-      courseSortName: "COMPUTER OPRETING COURSE",
-      courseDuration: "90 DAYS",
-      fees: "3000",
-      category: "3 Month"
-    },
-    {
-      id: 25,
-      courseName: "OFFICE MANAGEMENT COURSE",
-      courseSortName: "OMC",
-      courseDuration: "6 MONTH",
-      fees: "3000",
-      category: "6 Month"
-    },
-    {
-      id: 30,
-      courseName: "Post Graduate Diploma In Computer Application (PGDCA)",
-      courseSortName: "PGDCA",
-      courseDuration: "12 Month",
-      fees: "15000",
-      category: "1 Year"
+      category: "12 Month",
+      status: "active",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
   ]);
+  const [loading, setLoading] = useState(false);
 
   const courseCategories = [
     { value: "3-month", label: "3 Month" },
@@ -73,221 +68,240 @@ const CourseMasterContent = () => {
     { value: "1-year", label: "1 Year" }
   ];
 
-  const handleSave = () => {
-    if (!courseCategory) {
-      toast({
-        title: "Error",
-        description: "Please select a course category",
-        variant: "destructive"
-      });
-      return;
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const resetForm = () => {
+    setFormData({
+      courseCategory: "",
+      courseName: "",
+      courseSortName: "",
+      courseDuration: "",
+      fees: "",
+      status: "active"
+    });
+    setEditingCourse(null);
+  };
+
+  const openEditDialog = (course: Course) => {
+    setEditingCourse(course);
+    setFormData({
+      courseCategory: course.category,
+      courseName: course.course_name,
+      courseSortName: course.course_sort_name,
+      courseDuration: course.duration,
+      fees: course.fees,
+      status: course.status
+    });
+    setIsDialogOpen(true);
+  };
+
+  const validateForm = () => {
+    if (!formData.courseCategory) {
+      toast.error("Please select a course category");
+      return false;
     }
-
-    if (!courseName.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a course name",
-        variant: "destructive"
-      });
-      return;
+    if (!formData.courseName.trim()) {
+      toast.error("Course name is required");
+      return false;
     }
-
-    if (!courseSortName.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a course sort name",
-        variant: "destructive"
-      });
-      return;
+    if (!formData.courseSortName.trim()) {
+      toast.error("Course sort name is required");
+      return false;
     }
-
-    if (!courseDuration.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter course duration",
-        variant: "destructive"
-      });
-      return;
+    if (!formData.courseDuration.trim()) {
+      toast.error("Course duration is required");
+      return false;
     }
-
-    if (!fees.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter fees",
-        variant: "destructive"
-      });
-      return;
+    if (!formData.fees.trim()) {
+      toast.error("Fees is required");
+      return false;
     }
+    return true;
+  };
 
-    const newCourse = {
-      id: Math.max(...courses.map(c => c.id)) + 1,
-      courseName,
-      courseSortName,
-      courseDuration,
-      fees,
-      category: courseCategories.find(cat => cat.value === courseCategory)?.label || courseCategory
-    };
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
 
-    setCourses(prev => [...prev, newCourse]);
+    setFormLoading(true);
+    try {
+      const courseData: Course = {
+        id: editingCourse?.id || `course-${Date.now()}`,
+        course_name: formData.courseName,
+        course_sort_name: formData.courseSortName,
+        duration: formData.courseDuration,
+        fees: formData.fees,
+        category: courseCategories.find(cat => cat.value === formData.courseCategory)?.label || formData.courseCategory,
+        status: formData.status,
+        created_at: editingCourse?.created_at || new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      if (editingCourse) {
+        setCourses(prev => prev.map(course => 
+          course.id === editingCourse.id ? courseData : course
+        ));
+        toast.success("🎉 Course updated instantly!");
+      } else {
+        setCourses(prev => [courseData, ...prev]);
+        toast.success("🎉 Course added instantly!");
+      }
+
+      setIsDialogOpen(false);
+      resetForm();
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("⚠️ Are you sure you want to delete this course?")) return;
     
-    toast({
-      title: "Success",
-      description: "Course added successfully!",
-      variant: "default"
-    });
-
-    setCourseCategory("");
-    setCourseName("");
-    setCourseSortName("");
-    setCourseDuration("");
-    setFees("");
-  };
-
-  const handleReset = () => {
-    setCourseCategory("");
-    setCourseName("");
-    setCourseSortName("");
-    setCourseDuration("");
-    setFees("");
-  };
-
-  const handleDelete = (id: number) => {
     setCourses(prev => prev.filter(course => course.id !== id));
-    toast({
-      title: "Success",
-      description: "Course deleted successfully!",
-      variant: "default"
-    });
+    toast.success("🗑️ Course deleted instantly!");
   };
 
-  return (
-    <div className="space-y-8">
-      {/* Course Master Form */}
+  const refresh = () => {
+    toast.success("Data refreshed!");
+  };
+
+  if (loading) {
+    return (
       <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100 bg-gray-400">
-          <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-            <div className="p-2 bg-blue-500 rounded-lg">
-              <BookOpen className="h-6 w-6 text-white" />
-            </div>
-            <span>Course Master</span>
-          </CardTitle>
-        </CardHeader>
-        
-        <CardContent className="p-8">
-          <div className="space-y-6">
-            {/* Course Category */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Course Category
-              </label>
-              <Select value={courseCategory} onValueChange={setCourseCategory}>
-                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white">
-                  <SelectValue placeholder="---------------Select---------------" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-300 rounded shadow-lg z-50">
-                  {courseCategories.map((category) => (
-                    <SelectItem key={category.value} value={category.value} className="text-gray-700 hover:bg-gray-100">
-                      {category.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Enter Course Name */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Enter Course Name
-              </label>
-              <Input
-                value={courseName}
-                onChange={(e) => setCourseName(e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
-                placeholder="Enter course name"
-              />
-            </div>
-
-            {/* Enter Course Sort Name */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Enter Course Sort Name
-              </label>
-              <Input
-                value={courseSortName}
-                onChange={(e) => setCourseSortName(e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
-                placeholder="Enter course sort name"
-              />
-            </div>
-
-            {/* Course Duration */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Course Duration
-              </label>
-              <Input
-                value={courseDuration}
-                onChange={(e) => setCourseDuration(e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
-                placeholder="Enter course duration"
-              />
-            </div>
-
-            {/* Fees */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Fees
-              </label>
-              <Input
-                value={fees}
-                onChange={(e) => setFees(e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
-                placeholder="Enter fees"
-              />
-            </div>
-
-            {/* Save and Reset Buttons */}
-            <div className="flex space-x-4 pt-4">
-              <Button
-                onClick={handleSave}
-                className="bg-gradient-to-r from-cyan-600 to-cyan-700 hover:from-cyan-700 hover:to-cyan-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                Save
-              </Button>
-              <Button
-                onClick={handleReset}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                Reset
-              </Button>
-            </div>
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading course data...</p>
           </div>
         </CardContent>
       </Card>
+    );
+  }
 
-      {/* Courses Table */}
-      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">id</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course_Name</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course_Sort_Name</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course_Duration</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Fees</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Category</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {courses.map((course, index) => (
-                <TableRow key={course.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                  <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex items-center space-x-2">
+  return (
+    <div className="space-y-8">
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardHeader className="p-8 border-b border-gray-100">
+          <div className="flex justify-between items-center">
+            <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
+              <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
+                <BookOpen className="h-6 w-6 text-white" />
+              </div>
+              <span>Course Master</span>
+            </CardTitle>
+            <div className="flex space-x-3">
+              <Button onClick={refresh} variant="outline" size="sm">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh
+              </Button>
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button onClick={resetForm} className="bg-gradient-to-r from-green-600 to-green-700">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Course
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle>{editingCourse ? "Edit Course" : "Add New Course"}</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 mt-4">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Course Category *</label>
+                      <Select value={formData.courseCategory} onValueChange={(value) => handleInputChange('courseCategory', value)}>
+                        <SelectTrigger disabled={formLoading}>
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {courseCategories.map((category) => (
+                            <SelectItem key={category.value} value={category.value}>
+                              {category.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Course Name *</label>
+                      <Input
+                        value={formData.courseName}
+                        onChange={(e) => handleInputChange('courseName', e.target.value)}
+                        placeholder="Enter course name"
+                        disabled={formLoading}
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-700">Course Sort Name *</label>
+                        <Input
+                          value={formData.courseSortName}
+                          onChange={(e) => handleInputChange('courseSortName', e.target.value)}
+                          placeholder="Enter short name"
+                          disabled={formLoading}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700">Duration *</label>
+                        <Input
+                          value={formData.courseDuration}
+                          onChange={(e) => handleInputChange('courseDuration', e.target.value)}
+                          placeholder="Enter duration"
+                          disabled={formLoading}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Fees *</label>
+                      <Input
+                        value={formData.fees}
+                        onChange={(e) => handleInputChange('fees', e.target.value)}
+                        placeholder="Enter fees amount"
+                        disabled={formLoading}
+                      />
+                    </div>
+                    <div className="flex justify-end space-x-3 pt-4">
+                      <Button variant="outline" onClick={() => setIsDialogOpen(false)} disabled={formLoading}>
+                        Cancel
+                      </Button>
+                      <Button onClick={handleSubmit} disabled={formLoading}>
+                        {formLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                        {editingCourse ? "Update" : "Create"} Course
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-8">
+          <div className="mb-4">
+            <p className="text-sm text-muted-foreground">Total courses: {courses.length}</p>
+          </div>
+          
+          <div className="border rounded-lg overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-blue-600 hover:bg-blue-600">
+                  <TableHead className="text-white font-bold">Actions</TableHead>
+                  <TableHead className="text-white font-bold">Course Name</TableHead>
+                  <TableHead className="text-white font-bold">Short Name</TableHead>
+                  <TableHead className="text-white font-bold">Duration</TableHead>
+                  <TableHead className="text-white font-bold">Fees</TableHead>
+                  <TableHead className="text-white font-bold">Category</TableHead>
+                  <TableHead className="text-white font-bold">Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {courses.map((course, index) => (
+                  <TableRow key={course.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <TableCell className="p-4">
                       <div className="flex space-x-2">
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => openEditDialog(course)}
                           className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                         >
                           <Edit className="h-4 w-4" />
@@ -301,30 +315,22 @@ const CourseMasterContent = () => {
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
-                      <span className="text-sm text-gray-700 font-medium ml-2">
-                        {course.id}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {course.courseName}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {course.courseSortName}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {course.courseDuration}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {course.fees}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {course.category}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                    </TableCell>
+                    <TableCell className="p-4 font-medium">{course.course_name}</TableCell>
+                    <TableCell className="p-4 font-medium">{course.course_sort_name}</TableCell>
+                    <TableCell className="p-4">{course.duration}</TableCell>
+                    <TableCell className="p-4">₹{course.fees}</TableCell>
+                    <TableCell className="p-4">{course.category}</TableCell>
+                    <TableCell className="p-4">
+                      <Badge className={course.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
+                        {course.status}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>
