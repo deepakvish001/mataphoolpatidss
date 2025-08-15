@@ -906,6 +906,39 @@ export type Database = {
         }
         Relationships: []
       }
+      student_data: {
+        Row: {
+          course_category: string
+          created_at: string
+          details: string
+          id: string
+          photo_url: string | null
+          publish_date: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          course_category: string
+          created_at?: string
+          details: string
+          id?: string
+          photo_url?: string | null
+          publish_date: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          course_category?: string
+          created_at?: string
+          details?: string
+          id?: string
+          photo_url?: string | null
+          publish_date?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       student_profiles: {
         Row: {
           city: string | null

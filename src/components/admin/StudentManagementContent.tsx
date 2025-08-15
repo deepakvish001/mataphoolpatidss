@@ -1,152 +1,59 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Edit } from "lucide-react";
+import { Edit, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useGlobalCrud } from "@/contexts/GlobalCrudContext";
-import { useButtonDetection } from "@/hooks/useButtonDetection";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface StudentProfile {
+  id: string;
+  full_name: string;
+  email: string;
+  phone?: string;
+  course_name?: string;
+  status?: string;
+  city?: string;
+  state?: string;
+  enrollment_date?: string;
+}
 
 const StudentManagementContent = () => {
-  const { toast } = useToast();
-  const { lastEvent, isConnected } = useGlobalCrud();
-  useButtonDetection('student_profiles');
-  
+  const {
+    data: studentProfiles,
+    loading,
+    create,
+    update,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<StudentProfile>({ 
+    tableName: 'student_profiles',
+    orderBy: { column: 'enrollment_date', ascending: false }
+  });
+
+  useAdminRealTime({
+    tableName: 'student_profiles'
+  });
   const [selectedFranchise, setSelectedFranchise] = useState("");
 
-  // Sample student data based on the screenshots
-  const [students, setStudents] = useState([
-    {
-      sNo: 1,
-      applicantName: "Mr./श्री Vivek",
-      fatherName: "Mr./श्री गगगजग",
-      memberName: "Mrs./श्रीमती gytytgfgff",
-      gender: "Male",
-      dateOfBirth: "03/05/1990",
-      district: "Hardoi",
-      courseName: "Diploma in Computer Application (DCA)",
-      courseFees: "14500",
-      franchiseCenterName: "Institute of Computer Training Centre, Numaish Chauraha, Hardoi",
-      qualification: "B.A.",
-      franchiseId: "UP/HDI/ICTC/0002",
-      aadharNumber: "543456456646565654",
-      studentId: "TCI/HDI/ADCA/1",
-      studentPassword: "58741",
-      photo: "~/Offer_pic/P.jpg",
-      signature: "~/Offer_pic/S.jpg",
-      thumbImpression: "~/Offer_pic/T.jpg"
-    },
-    {
-      sNo: 2,
-      applicantName: "Mr./श्री VIVEK YADAV",
-      fatherName: "Mr./श्री NA",
-      memberName: "Mrs./श्रीमती NA",
-      gender: "Male",
-      dateOfBirth: "12/07/2020",
-      district: "Azamgarh",
-      courseName: "Diploma in Computer Application",
-      courseFees: "6000",
-      franchiseCenterName: "Ravi Kumar Gupta",
-      qualification: "Other",
-      franchiseId: "SM11101",
-      aadharNumber: "343546546534355645",
-      studentId: "",
-      studentPassword: "",
-      photo: "~/Offer_pic/599-5990202_rm-clipart copy.jpg",
-      signature: "",
-      thumbImpression: ""
-    },
-    {
-      sNo: 3,
-      applicantName: "Mr./ Aurangzeb Ahmad",
-      fatherName: "Mr./ Ajaj Ahmad",
-      memberName: "Mrs./ Farzana",
-      gender: "Male",
-      dateOfBirth: "09/07/1998",
-      district: "",
-      courseName: "Diploma in Computer Hardware and Networking",
-      courseFees: "15000",
-      franchiseCenterName: "",
-      qualification: "10th Pass",
-      franchiseId: "SM11101",
-      aadharNumber: "539177029237",
-      studentId: "",
-      studentPassword: "",
-      photo: "~/Offer_pic/",
-      signature: "~/Offer_pic/",
-      thumbImpression: "~/Offer_pic/"
-    },
-    {
-      sNo: 4,
-      applicantName: "Mr./श्री VIVEK YADAV",
-      fatherName: "Mr./श्री NA",
-      memberName: "Mrs./श्रीमती NA",
-      gender: "Male",
-      dateOfBirth: "12/07/2020",
-      district: "Azamgarh",
-      courseName: "Diploma in Computer Application",
-      courseFees: "6000",
-      franchiseCenterName: "Ravi Kumar Gupta",
-      qualification: "Other",
-      franchiseId: "SM11101",
-      aadharNumber: "343546546534355645",
-      studentId: "",
-      studentPassword: "",
-      photo: "~/Offer_pic/599-5990202_rm-clipart copy.jpg",
-      signature: "",
-      thumbImpression: ""
-    },
-    {
-      sNo: 5,
-      applicantName: "Mr./श्री sanjay",
-      fatherName: "Mr./श्री rajkumar",
-      memberName: "Mrs./श्रीमती manorama",
-      gender: "Male",
-      dateOfBirth: "10/06/1996",
-      district: "Azamgarh",
-      courseName: "Diploma in Computer Application",
-      courseFees: "6000",
-      franchiseCenterName: "Ravi Kumar Gupta",
-      qualification: "10th Pass",
-      franchiseId: "SM11101",
-      aadharNumber: "539177029237",
-      studentId: "",
-      studentPassword: "",
-      photo: "~/Offer_pic/CaptureNN.JPG",
-      signature: "",
-      thumbImpression: ""
-    }
-  ]);
 
-  // Listen to global CRUD events for real-time updates
-  useEffect(() => {
-    if (lastEvent && lastEvent.table === 'student_profiles') {
-      // In a real implementation, this would update the students list
-      // For now, we'll just show a notification since we're using sample data
-      if (lastEvent.operation === 'INSERT') {
-        toast({
-          title: "New Student Added",
-          description: "A new student has been added to the system",
-          variant: "default"
-        });
-      } else if (lastEvent.operation === 'UPDATE') {
-        toast({
-          title: "Student Updated",
-          description: "Student information has been updated",
-          variant: "default"
-        });
-      }
-    }
-  }, [lastEvent, toast]);
-
-  const handleEdit = (studentId: number) => {
-    toast({
-      title: "Edit Student",
-      description: `Opening edit form for student ${studentId}`,
-      variant: "default"
-    });
+  const handleEdit = (studentId: string) => {
+    toast.success(`Opening edit form for student ${studentId}`);
   };
 
-  const totalRecords = students.length;
+  if (loading) {
+    return (
+      <div className="w-full max-w-none bg-white flex items-center justify-center min-h-[400px]">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <p className="text-gray-600">Loading student management...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const totalRecords = studentProfiles.length;
 
   return (
     <div className="w-full max-w-none bg-white">
@@ -202,36 +109,36 @@ const StudentManagementContent = () => {
               </tr>
             </thead>
             <tbody>
-              {students.map((student, index) => (
-                <tr key={student.sNo} className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs text-center">{student.sNo}</td>
+              {studentProfiles.map((student, index) => (
+                <tr key={student.id} className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs text-center">{index + 1}</td>
                   <td className="border-2 border-gray-600 px-2 py-2 text-center">
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleEdit(student.sNo)}
+                      onClick={() => handleEdit(student.id)}
                       className="p-1 h-8 w-8 text-green-600 hover:text-green-800 hover:bg-green-50"
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
                   </td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.applicantName}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.fatherName}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.memberName}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.gender}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.dateOfBirth}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.district}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.courseName}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.courseFees}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.franchiseCenterName}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.qualification}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.franchiseId}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.aadharNumber}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.studentId}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.studentPassword}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.photo}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.signature}</td>
-                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.thumbImpression}</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.full_name}</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.city || "-"}</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">{student.course_name || "-"}</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
+                  <td className="border-2 border-gray-600 px-2 py-2 text-xs">-</td>
                 </tr>
               ))}
             </tbody>
