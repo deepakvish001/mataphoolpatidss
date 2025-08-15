@@ -1,178 +1,65 @@
 import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+interface FranchiseRegistration {
+  id: string;
+  institute_full_name: string;
+  institute_sort_name: string;
+  centre_head_name: string;
+  email: string;
+  mobile_number: string;
+  state_name: string;
+  district_name: string;
+  postal_address: string;
+  pin_code: string;
+  approval_status: string;
+  status: string;
+  date_of_registration: string;
+  franchise_type: string;
+  year_of_establishment: string;
+  created_at: string;
+  updated_at: string;
+}
 
 const FranchiseApprovalContent = () => {
-  const franchiseData = [
-    {
-      id: 1,
-      approved: false,
-      franchiseId: "SM11101",
-      password: "58741",
-      state: "Uttar Pradesh",
-      district: "fdfsdf",
-      address: "daligarij faizabad road",
-      nameOfInstitute: "Bina Soft Educational and Welfare Society",
-      establishment: "Bina Soft Educational and Welfare Society",
-      postOffice: "332",
-      pincode: "226020",
-      postalAdd: "daligarij faizabad road",
-      mobileNo: "+91+91727578196",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 2,
-      approved: false,
-      franchiseId: "UP/AZAMGARH/A.SOFT/0002",
-      password: "35352",
-      state: "Uttar Pradesh",
-      district: "Azamgarh",
-      address: "AZAMGARH",
-      nameOfInstitute: "A.SOFT COMPUTER INFO-TECH INSTITUTE",
-      establishment: "2010",
-      postOffice: "276138",
-      pincode: "276138",
-      postalAdd: "VILL & POST-MALTARI AZAMGARH (UP)",
-      mobileNo: "+918115919153",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 3,
-      approved: false,
-      franchiseId: "UP/AZAMGARH/A.SOFT/0003",
-      password: "35353",
-      state: "Uttar Pradesh",
-      district: "Azamgarh",
-      address: "AZAMGARH",
-      nameOfInstitute: "A.SOFT COMPUTER INFO-TECH INSTITUTE",
-      establishment: "2010",
-      postOffice: "276138",
-      pincode: "276138",
-      postalAdd: "VILL & POST-MALTARI AZAMGARH (UP)",
-      mobileNo: "+918115919153",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 4,
-      approved: false,
-      franchiseId: "AMH/UP/A.SOFT/0004",
-      password: "35354",
-      state: "Uttar Pradesh",
-      district: "Azamgarh",
-      address: "AZAMGARH",
-      nameOfInstitute: "A.SOFT COMPUTER INFO-TECH INSTITUTE",
-      establishment: "2011",
-      postOffice: "276138",
-      pincode: "276138",
-      postalAdd: "VILL,& POST-MALTARI AZAMGARH UP",
-      mobileNo: "+918115919153, 9454868605",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 5,
-      approved: false,
-      franchiseId: "AMH/UP/A.SOFT/0005",
-      password: "35355",
-      state: "Uttar Pradesh",
-      district: "Azamgarh",
-      address: "AZAMGARH",
-      nameOfInstitute: "A.SOFT COMPUTER INFO-TECH INSTITUTE",
-      establishment: "2011",
-      postOffice: "276138",
-      pincode: "276138",
-      postalAdd: "VILL,& POST-MALTARI AZAMGARH UP",
-      mobileNo: "+918115919153, 9454868605",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 6,
-      approved: false,
-      franchiseId: "UP/AMH/A.soft/0006",
-      password: "35356",
-      state: "Uttar Pradesh",
-      district: "Azamgarh",
-      address: "Azamgarh",
-      nameOfInstitute: "A.soft Computer Info-Tech Institute",
-      establishment: "2011",
-      postOffice: "276238",
-      pincode: "276238",
-      postalAdd: "Vill & Post ,- Maltari Azamgarh",
-      mobileNo: "+918115919153 , 9454868605",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 7,
-      approved: true,
-      franchiseId: "UP/AZM/B.Soft/0007",
-      password: "35357",
-      state: "Uttar Pradesh",
-      district: "Azamgarh",
-      address: "Jiyanpur",
-      nameOfInstitute: "B.Soft Computer & Technical Institute",
-      establishment: "B.Soft Computer & Technical Institute",
-      postOffice: "276138",
-      pincode: "276138",
-      postalAdd: "Basupar Bankat Jiyanpur",
-      mobileNo: "+91+91+91919795337194",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 8,
-      approved: false,
-      franchiseId: "IxbfYeaa/lxbfYeaa/lxbfYeaa/0008",
-      password: "35358",
-      state: "0",
-      district: "0",
-      address: "San Francisco",
-      nameOfInstitute: "lxbfYeaa",
-      establishment: "Select One",
-      postOffice: "94102",
-      pincode: "94102",
-      postalAdd: "3137 Laguna Street",
-      mobileNo: "+91987-65-4329",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 9,
-      approved: false,
-      franchiseId: "lxbfYeaa/lxbfYeaa/lxbfYeaa/0009",
-      password: "35359",
-      state: "0",
-      district: "0",
-      address: "San Francisco",
-      nameOfInstitute: "lxbfYeaa",
-      establishment: "Select One",
-      postOffice: "94102",
-      pincode: "94102",
-      postalAdd: "3137 Laguna Street",
-      mobileNo: "+91987-65-4329",
-      dateReg: "",
-      approvedStatus: ""
-    },
-    {
-      id: 10,
-      approved: false,
-      franchiseId: "lxbfYeaa/lxbfYeaa/lxbfYeaa/00010",
-      password: "353510",
-      state: "0",
-      district: "0",
-      address: "San Francisco",
-      nameOfInstitute: "lxbfYeaa",
-      establishment: "Select One",
-      postOffice: "94102",
-      pincode: "94102",
-      postalAdd: "3137 Laguna Street",
-      mobileNo: "+91987-65-4329",
-      dateReg: "",
-      approvedStatus: ""
+  const { data: franchiseData, loading, update } = useOptimisticCrud<FranchiseRegistration>({
+    tableName: 'franchise_registrations',
+    orderBy: { column: 'created_at', ascending: false }
+  });
+
+  // Enable real-time updates
+  useAdminRealTime({
+    tableName: 'franchise_registrations'
+  });
+
+  const handleApprovalToggle = async (franchise: FranchiseRegistration) => {
+    try {
+      const newApprovalStatus = franchise.approval_status === 'approved' ? 'pending' : 'approved';
+      await update(franchise.id, {
+        ...franchise,
+        approval_status: newApprovalStatus,
+        status: newApprovalStatus === 'approved' ? 'active' : 'pending'
+      });
+      toast.success(`Franchise ${newApprovalStatus === 'approved' ? 'approved' : 'marked as pending'} successfully!`);
+    } catch (error) {
+      toast.error('Failed to update franchise approval status');
     }
-  ];
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="flex items-center space-x-2">
+          <Loader2 className="h-6 w-6 animate-spin" />
+          <span>Loading franchise registrations...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -184,49 +71,80 @@ const FranchiseApprovalContent = () => {
         <table className="w-full border-collapse border-2 border-gray-400">
           <thead>
             <tr className="bg-blue-600 text-white">
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[80px]">Approved</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[200px]">Franchise_id</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Password</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[80px]">Actions</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[200px]">Institute Name</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[150px]">Centre Head</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[150px]">Email</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[120px]">Mobile</th>
               <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">State</th>
               <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">District</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[120px]">Address</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[200px]">Name of Institute</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[150px]">Estibilishment</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Post Office</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Pincode</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[150px]">Postal Add</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[150px]">Mobile No.</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Date_Reg</th>
-              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Approved</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[150px]">Address</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[80px]">Pincode</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Franchise Type</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Establishment</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Registration Date</th>
+              <th className="border-2 border-gray-400 px-2 py-3 text-left font-semibold min-w-[100px]">Status</th>
             </tr>
           </thead>
           <tbody>
-            {franchiseData.map((franchise, index) => (
-              <tr key={franchise.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                <td className="border-2 border-gray-400 px-2 py-3 text-center">
-                  <Checkbox checked={franchise.approved} />
+            {franchiseData.length === 0 ? (
+              <tr>
+                <td colSpan={13} className="border-2 border-gray-400 px-4 py-8 text-center text-gray-500">
+                  No franchise registrations found
                 </td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.franchiseId}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.password}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.state}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.district}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.address}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.nameOfInstitute}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.establishment}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.postOffice}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.pincode}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.postalAdd}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.mobileNo}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.dateReg}</td>
-                <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.approvedStatus}</td>
               </tr>
-            ))}
+            ) : (
+              franchiseData.map((franchise, index) => (
+                <tr key={franchise.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                  <td className="border-2 border-gray-400 px-2 py-3 text-center">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        checked={franchise.approval_status === 'approved'} 
+                        onCheckedChange={() => handleApprovalToggle(franchise)}
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleApprovalToggle(franchise)}
+                        className="text-xs"
+                      >
+                        {franchise.approval_status === 'approved' ? 'Revoke' : 'Approve'}
+                      </Button>
+                    </div>
+                  </td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.institute_full_name}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.centre_head_name}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.email}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.mobile_number}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.state_name}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.district_name}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.postal_address}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.pin_code}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.franchise_type}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">{franchise.year_of_establishment}</td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">
+                    {new Date(franchise.date_of_registration).toLocaleDateString()}
+                  </td>
+                  <td className="border-2 border-gray-400 px-2 py-3 font-medium text-sm">
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      franchise.approval_status === 'approved' 
+                        ? 'bg-green-100 text-green-800' 
+                        : franchise.approval_status === 'rejected'
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {franchise.approval_status}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
       
-      <div className="mt-4 text-sm text-muted-foreground">
-        12345678910...
+      <div className="mt-4 text-sm text-gray-600">
+        Total Registrations: {franchiseData.length}
       </div>
     </div>
   );
