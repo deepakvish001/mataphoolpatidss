@@ -84,6 +84,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } catch (error) {
       console.error('Error in fetchUserData:', error);
+    } finally {
+      // Only set loading to false after user data fetch is complete
+      setLoading(false);
     }
   };
 
@@ -108,9 +111,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else {
           setProfile(null);
           setUserRole(null);
+          setLoading(false);
         }
-
-        setLoading(false);
       }
     );
 
@@ -127,9 +129,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             fetchUserData(session.user.id);
           }
         }, 0);
+      } else {
+        setLoading(false);
       }
-      
-      setLoading(false);
     });
 
     return () => {
