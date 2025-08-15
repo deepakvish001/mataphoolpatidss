@@ -134,9 +134,21 @@ export const useRealtimeUserData = () => {
           .from('user_stats')
           .select('*')
           .eq('user_id', user.id)
-          .single();
+          .maybeSingle();
 
-        if (statsData) setUserStats(statsData);
+        if (statsData) {
+          setUserStats(statsData);
+        } else {
+          // Create default stats if none exist
+          setUserStats({
+            total_courses: 0,
+            completed_courses: 0,
+            certificates_earned: 0,
+            study_streak_days: 1,
+            total_study_hours: 0,
+            last_activity: new Date().toISOString()
+          });
+        }
 
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -236,7 +248,7 @@ export const useRealtimeUserData = () => {
           .from('user_stats')
           .select('*')
           .eq('user_id', user.id)
-          .single()
+          .maybeSingle()
           .then(({ data }) => {
             if (data) setUserStats(data);
           });

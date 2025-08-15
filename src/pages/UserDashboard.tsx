@@ -131,8 +131,8 @@ const UserDashboard: React.FC = () => {
     }
   ];
 
-  // Use real notifications data with fallback
-  const recentActivity = notifications.length > 0 ? notifications.map(notification => ({
+  // Use real notifications data
+  const recentActivity = notifications.map(notification => ({
     title: notification.title,
     description: notification.message,
     time: new Date(notification.created_at).toLocaleDateString(),
@@ -140,25 +140,10 @@ const UserDashboard: React.FC = () => {
           notification.type === 'warning' ? AlertCircle : 
           notification.type === 'error' ? AlertCircle : Brain,
     type: notification.type
-  })) : [
-    {
-      title: 'Welcome to MPDS!',
-      description: 'Start your learning journey with us',
-      time: 'Today',
-      icon: Star,
-      type: 'info'
-    },
-    {
-      title: 'Explore Courses',
-      description: 'Check out our available courses',
-      time: 'Today',
-      icon: BookOpen,
-      type: 'info'
-    }
-  ];
+  }));
 
   // Use real course data
-  const currentCourses = activeCourses.length > 0 ? activeCourses.map(course => ({
+  const currentCourses = activeCourses.map(course => ({
     title: course.courses?.title || 'Course',
     progress: course.progress,
     totalLessons: course.courses?.total_lessons || 0,
@@ -166,17 +151,7 @@ const UserDashboard: React.FC = () => {
     nextLesson: 'Continue Learning',
     instructor: course.courses?.instructor || 'Instructor',
     timeLeft: `${course.courses?.duration_weeks || 1} weeks`
-  })) : [
-    {
-      title: 'No Active Courses',
-      progress: 0,
-      totalLessons: 0,
-      completedLessons: 0,
-      nextLesson: 'Enroll in a course to start learning',
-      instructor: '',
-      timeLeft: ''
-    }
-  ];
+  }));
 
   const achievements = [
     { title: 'First Course Complete', icon: Trophy, unlocked: (userStats?.completed_courses || 0) >= 1 },
@@ -298,7 +273,8 @@ const UserDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            {currentCourses.map((course, index) => (
+            {currentCourses.length > 0 ? (
+              currentCourses.map((course, index) => (
               <div key={index} className="p-6 bg-gradient-to-br from-muted/30 to-muted/10 rounded-xl hover:shadow-md transition-all duration-300">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
@@ -330,7 +306,20 @@ const UserDashboard: React.FC = () => {
                   </Button>
                 </div>
               </div>
-            ))}
+            ))
+            ) : (
+              <div className="text-center py-12">
+                <BookOpen className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+                <h3 className="text-lg font-semibold mb-2">No Active Courses</h3>
+                <p className="text-muted-foreground mb-6">Start your learning journey by enrolling in a course</p>
+                <Link to="/user/courses">
+                  <Button className="bg-gradient-to-r from-primary to-primary/90">
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    Browse Courses
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -390,7 +379,8 @@ const UserDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {recentActivity.map((activity, index) => {
+              {recentActivity.length > 0 ? (
+                recentActivity.map((activity, index) => {
                 const Icon = activity.icon;
                 return (
                   <div key={index} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-muted/50 transition-all duration-300">
@@ -410,7 +400,14 @@ const UserDashboard: React.FC = () => {
                     </div>
                   </div>
                 );
-              })}
+                })
+              ) : (
+                <div className="text-center py-8">
+                  <Activity className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
+                  <h3 className="font-medium mb-1">No Recent Activity</h3>
+                  <p className="text-sm text-muted-foreground">Your activities will appear here</p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
