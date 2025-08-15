@@ -19,6 +19,7 @@ const AddCourseCategoryContent = () => {
     data: categories,
     loading,
     create,
+    update,
     delete: deleteItem,
     refresh
   } = useOptimisticCrud<CourseCategory>({ tableName: 'course_categories' });
@@ -28,6 +29,7 @@ const AddCourseCategoryContent = () => {
   });
 
   const [courseCategory, setCourseCategory] = useState("");
+  const [editingCategory, setEditingCategory] = useState<CourseCategory | null>(null);
 
   const handleUpload = async () => {
     if (!courseCategory.trim()) {
@@ -35,19 +37,39 @@ const AddCourseCategoryContent = () => {
       return;
     }
 
-    const maxCategoryId = categories.length > 0 ? Math.max(...categories.map(c => c.category_id)) : 0;
-    const newCategory = {
-      category_id: maxCategoryId + 1,
-      course_category: courseCategory
-    };
-
     try {
-      await create(newCategory);
+      if (editingCategory) {
+        // Update existing category
+        await update(editingCategory.id, {
+          course_category: courseCategory.trim()
+        });
+        toast.success("Course category updated successfully!");
+        setEditingCategory(null);
+      } else {
+        // Create new category
+        const maxCategoryId = categories.length > 0 ? Math.max(...categories.map(c => c.category_id)) : 0;
+        const newCategory = {
+          category_id: maxCategoryId + 1,
+          course_category: courseCategory.trim()
+        };
+        await create(newCategory);
+        toast.success("Course category added successfully!");
+      }
+      
       setCourseCategory("");
-      toast.success("Course category added successfully!");
     } catch (error) {
-      toast.error("Failed to add course category");
+      toast.error(editingCategory ? "Failed to update course category" : "Failed to add course category");
     }
+  };
+
+  const handleEdit = (category: CourseCategory) => {
+    setEditingCategory(category);
+    setCourseCategory(category.course_category);
+  };
+
+  const handleReset = () => {
+    setCourseCategory("");
+    setEditingCategory(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -106,7 +128,7 @@ const AddCourseCategoryContent = () => {
                 onClick={handleUpload}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Upload
+                {editingCategory ? "Update" : "Upload"}
               </Button>
             </div>
           </div>
@@ -132,6 +154,7 @@ const AddCourseCategoryContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(category)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />

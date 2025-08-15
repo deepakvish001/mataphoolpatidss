@@ -19,8 +19,8 @@ const AddVisionContent = () => {
     data: visions,
     loading,
     create,
-    delete: deleteItem,
-    refresh
+    update,
+    delete: deleteItem
   } = useOptimisticCrud<Vision>({ tableName: 'visions' });
 
   useAdminRealTime({
@@ -29,6 +29,7 @@ const AddVisionContent = () => {
 
   const [content, setContent] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
+  const [editingVision, setEditingVision] = useState<Vision | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -39,28 +40,49 @@ const AddVisionContent = () => {
 
   const handleUpload = async () => {
     if (!content.trim()) {
-      toast.error("Please enter content");
+      toast.error("Please enter vision content");
       return;
     }
 
-    const newVision = {
-      content,
-      image: selectedPhoto ? selectedPhoto.name : "No image"
-    };
-
     try {
-      await create(newVision);
+      if (editingVision) {
+        // Update existing vision
+        await update(editingVision.id, {
+          content: content.trim(),
+          image: selectedPhoto ? selectedPhoto.name : editingVision.image
+        });
+        toast.success("Vision updated successfully!");
+        setEditingVision(null);
+      } else {
+        // Create new vision
+        const newVision = {
+          content: content.trim(),
+          image: selectedPhoto ? selectedPhoto.name : "No image"
+        };
+        await create(newVision);
+        toast.success("Vision added successfully!");
+      }
       
       setContent("");
       setSelectedPhoto(null);
       // Reset file input
       const fileInput = document.getElementById('visionPhotoInput') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
-      
-      toast.success("Vision added successfully!");
     } catch (error) {
-      toast.error("Failed to add vision");
+      toast.error(editingVision ? "Failed to update vision" : "Failed to add vision");
     }
+  };
+
+  const handleEdit = (vision: Vision) => {
+    setEditingVision(vision);
+    setContent(vision.content);
+    setSelectedPhoto(null); // Reset photo selection
+  };
+
+  const handleReset = () => {
+    setContent("");
+    setSelectedPhoto(null);
+    setEditingVision(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -90,8 +112,8 @@ const AddVisionContent = () => {
       {/* Add Vision Form */}
       <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
         <CardHeader className="p-8 border-b border-gray-100">
-          <CardTitle className="text-2xl font-bold text-blue-600 flex items-center space-x-3">
-            <div className="p-2 bg-blue-500 rounded-lg">
+          <CardTitle className="text-2xl font-bold text-green-600 flex items-center space-x-3">
+            <div className="p-2 bg-green-500 rounded-lg">
               <Eye className="h-6 w-6 text-white" />
             </div>
             <span>Add Our Vision</span>
@@ -108,7 +130,7 @@ const AddVisionContent = () => {
               <Textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="min-h-[120px] border-gray-400 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white resize-vertical"
+                className="min-h-[120px] border-gray-400 focus:border-green-500 focus:ring-green-500/20 rounded text-gray-700 font-medium bg-white resize-vertical"
                 placeholder="Enter vision content"
               />
             </div>
@@ -139,13 +161,19 @@ const AddVisionContent = () => {
               </div>
             </div>
 
-            {/* Upload Button */}
-            <div className="pt-4">
+            {/* Upload and Reset Buttons */}
+            <div className="flex space-x-4 pt-4">
               <Button
                 onClick={handleUpload}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+                className="bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Upload
+                {editingVision ? "Update" : "Upload"}
+              </Button>
+              <Button
+                onClick={handleReset}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                Reset
               </Button>
             </div>
           </div>
@@ -157,20 +185,21 @@ const AddVisionContent = () => {
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="bg-blue-600 hover:bg-blue-600">
+              <TableRow className="bg-green-600 hover:bg-green-600">
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Our Vision</TableHead>
                 <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">IMAGE</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {visions.map((vision, index) => (
-                <TableRow key={vision.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                <TableRow key={vision.id} className={index % 2 === 0 ? "bg-green-50" : "bg-white"}>
                   <TableCell className="border-2 border-gray-600 p-4">
                     <div className="flex items-start space-x-2">
                       <div className="flex space-x-2">
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => handleEdit(vision)}
                           className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                         >
                           <Edit className="h-4 w-4" />

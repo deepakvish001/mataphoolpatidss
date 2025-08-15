@@ -19,8 +19,8 @@ const AddMissionContent = () => {
     data: missions,
     loading,
     create,
-    delete: deleteItem,
-    refresh
+    update,
+    delete: deleteItem
   } = useOptimisticCrud<Mission>({ tableName: 'missions' });
 
   useAdminRealTime({
@@ -29,6 +29,7 @@ const AddMissionContent = () => {
 
   const [content, setContent] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
+  const [editingMission, setEditingMission] = useState<Mission | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -39,28 +40,49 @@ const AddMissionContent = () => {
 
   const handleUpload = async () => {
     if (!content.trim()) {
-      toast.error("Please enter content");
+      toast.error("Please enter mission content");
       return;
     }
 
-    const newMission = {
-      content,
-      image: selectedPhoto ? selectedPhoto.name : "No image"
-    };
-
     try {
-      await create(newMission);
+      if (editingMission) {
+        // Update existing mission
+        await update(editingMission.id, {
+          content: content.trim(),
+          image: selectedPhoto ? selectedPhoto.name : editingMission.image
+        });
+        toast.success("Mission updated successfully!");
+        setEditingMission(null);
+      } else {
+        // Create new mission
+        const newMission = {
+          content: content.trim(),
+          image: selectedPhoto ? selectedPhoto.name : "No image"
+        };
+        await create(newMission);
+        toast.success("Mission added successfully!");
+      }
       
       setContent("");
       setSelectedPhoto(null);
       // Reset file input
       const fileInput = document.getElementById('missionPhotoInput') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
-      
-      toast.success("Mission added successfully!");
     } catch (error) {
-      toast.error("Failed to add mission");
+      toast.error(editingMission ? "Failed to update mission" : "Failed to add mission");
     }
+  };
+
+  const handleEdit = (mission: Mission) => {
+    setEditingMission(mission);
+    setContent(mission.content);
+    setSelectedPhoto(null); // Reset photo selection
+  };
+
+  const handleReset = () => {
+    setContent("");
+    setSelectedPhoto(null);
+    setEditingMission(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -139,13 +161,19 @@ const AddMissionContent = () => {
               </div>
             </div>
 
-            {/* Upload Button */}
-            <div className="pt-4">
+            {/* Upload and Reset Buttons */}
+            <div className="flex space-x-4 pt-4">
               <Button
                 onClick={handleUpload}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Upload
+                {editingMission ? "Update" : "Upload"}
+              </Button>
+              <Button
+                onClick={handleReset}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                Reset
               </Button>
             </div>
           </div>
@@ -171,6 +199,7 @@ const AddMissionContent = () => {
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => handleEdit(mission)}
                           className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                         >
                           <Edit className="h-4 w-4" />

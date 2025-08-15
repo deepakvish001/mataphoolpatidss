@@ -20,6 +20,7 @@ const StateMasterContent = () => {
     data: states,
     loading,
     create,
+    update,
     delete: deleteItem,
     refresh
   } = useOptimisticCrud<StateMaster>({ tableName: 'state_master' });
@@ -29,6 +30,7 @@ const StateMasterContent = () => {
   });
 
   const [stateName, setStateName] = useState("");
+  const [editingState, setEditingState] = useState<StateMaster | null>(null);
 
   const handleSave = async () => {
     if (!stateName.trim()) {
@@ -36,24 +38,40 @@ const StateMasterContent = () => {
       return;
     }
 
-    const maxCityId = states.length > 0 ? Math.max(...states.map(s => s.city_id)) : 0;
-    const newState = {
-      city_id: maxCityId + 1,
-      city_name: stateName,
-      created_date: new Date().toLocaleDateString()
-    };
-
     try {
-      await create(newState);
+      if (editingState) {
+        // Update existing state
+        await update(editingState.id, {
+          city_name: stateName.trim(),
+        });
+        toast.success("State updated successfully!");
+        setEditingState(null);
+      } else {
+        // Create new state
+        const maxCityId = states.length > 0 ? Math.max(...states.map(s => s.city_id)) : 0;
+        const newState = {
+          city_id: maxCityId + 1,
+          city_name: stateName.trim(),
+          created_date: new Date().toLocaleDateString()
+        };
+        await create(newState);
+        toast.success("State added successfully!");
+      }
+      
       setStateName("");
-      toast.success("State added successfully!");
     } catch (error) {
-      toast.error("Failed to add state");
+      toast.error(editingState ? "Failed to update state" : "Failed to add state");
     }
   };
 
   const handleReset = () => {
     setStateName("");
+    setEditingState(null);
+  };
+
+  const handleEdit = (state: StateMaster) => {
+    setEditingState(state);
+    setStateName(state.city_name);
   };
 
   const handleDelete = async (id: string) => {
@@ -112,7 +130,7 @@ const StateMasterContent = () => {
                 onClick={handleSave}
                 className="bg-gradient-to-r from-cyan-600 to-cyan-700 hover:from-cyan-700 hover:to-cyan-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Save
+                {editingState ? "Update" : "Save"}
               </Button>
               <Button
                 onClick={handleReset}
@@ -145,6 +163,7 @@ const StateMasterContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(state)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />
