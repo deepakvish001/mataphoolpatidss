@@ -345,20 +345,30 @@ const StudentMarksheetContent = () => {
                 {/* Header with Logo and Institution Name */}
                 <div className="text-center mb-8">
                   <div className="flex items-center justify-center mb-6">
-                    {/* Enhanced Logo */}
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 border-4 border-gold-400 flex items-center justify-center shadow-2xl">
-                      <div className="text-center">
-                        <div className="text-sm font-bold text-white leading-tight font-elegant">B</div>
-                        <div className="text-xs text-white leading-none">SOFT</div>
-                        <div className="text-xs text-white leading-none font-light">Institute</div>
-                      </div>
-                    </div>
+              {/* Enhanced 3D Logo with Glow */}
+              <div className="relative w-28 h-28 mb-2">
+                {/* Glow effect */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-orange-400 to-blue-600 blur-lg opacity-60"></div>
+                {/* Main logo */}
+                <div className="relative w-full h-full rounded-full bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 border-4 border-white shadow-2xl flex items-center justify-center">
+                  <div className="text-center transform hover:scale-105 transition-transform">
+                    <div className="text-xl font-bold text-white leading-tight font-elegant drop-shadow-lg">B</div>
+                    <div className="text-sm text-white leading-none font-bold">SOFT</div>
+                    <div className="text-xs text-orange-100 leading-none font-light">Institute</div>
+                  </div>
+                </div>
+                {/* Decorative ring */}
+                <div className="absolute -top-2 -left-2 w-32 h-32 rounded-full border-2 border-orange-300/40"></div>
+              </div>
                   </div>
 
-                  {/* Institution Header */}
-                  <h1 className="text-4xl font-elegant font-bold text-blue-800 mb-3 tracking-wide">
+                  {/* Institution Header with Enhanced Typography */}
+                  <h1 className="text-5xl font-elegant font-bold bg-gradient-to-r from-orange-600 via-red-600 to-purple-700 bg-clip-text text-transparent mb-3 tracking-wide drop-shadow-sm">
                     B.SOFT COMPUTER & TECHNICAL INSTITUTE
                   </h1>
+                  <div className="text-lg font-certificate text-gray-600 italic tracking-widest mb-4">
+                    Excellence in Technical Education Since 2011
+                  </div>
                   
                   <div className="space-y-1 text-sm text-gray-700 mb-6">
                     <div>
@@ -375,15 +385,32 @@ const StudentMarksheetContent = () => {
                     </div>
                   </div>
 
-                  {/* Certificate Title */}
-                  <div className="mb-8">
-                    <div className="text-purple-600 font-certificate text-lg tracking-wide mb-2 italic">
-                      Certificate of Course Completion
+                  {/* Enhanced Certificate Title with Decorative Elements */}
+                  <div className="mb-8 relative">
+                    {/* Decorative stars */}
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 flex space-x-4 text-orange-400">
+                      <div className="text-2xl">✦</div>
+                      <div className="text-lg">★</div>
+                      <div className="text-2xl">✦</div>
                     </div>
-                    <h2 className="text-3xl font-elegant font-bold text-red-600 tracking-wider">
-                      DIPLOMA CERTIFICATE-CUM-MARKS SHEET
-                    </h2>
-                    <div className="mt-4 mx-auto w-32 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+                    
+                    <div className="bg-gradient-to-r from-orange-50 via-white to-purple-50 p-6 rounded-xl border-2 border-orange-200/50 shadow-inner">
+                      <div className="text-orange-600 font-certificate text-xl tracking-wide mb-3 italic font-bold">
+                        Certificate of Course Completion
+                      </div>
+                      <h2 className="text-4xl font-elegant font-bold bg-gradient-to-r from-red-600 via-purple-600 to-blue-700 bg-clip-text text-transparent tracking-wider leading-tight">
+                        DIPLOMA CERTIFICATE-CUM-MARKS SHEET
+                      </h2>
+                      
+                      {/* Decorative underline */}
+                      <div className="mt-6 flex justify-center">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-orange-400"></div>
+                          <div className="w-8 h-1 bg-gradient-to-r from-orange-400 via-red-500 to-purple-600 rounded-full"></div>
+                          <div className="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-transparent"></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -411,16 +438,24 @@ const StudentMarksheetContent = () => {
                   </div>
                 </div>
 
-                {/* Certificate Text */}
+                {/* Enhanced Certificate Text with Ornamental Design */}
                 <div className="mb-8 text-center font-certificate text-lg leading-relaxed">
-                  <div className="bg-blue-50/50 p-6 rounded-lg border border-blue-200/50">
-                    <p className="mb-4">
-                      This is to certify that <span className="font-bold text-blue-800 text-xl underline decoration-blue-600/30 decoration-2">
+                  <div className="relative bg-gradient-to-br from-orange-50/80 via-white to-blue-50/60 p-8 rounded-2xl border-2 border-orange-200/60 shadow-inner">
+                    {/* Decorative corner flourishes */}
+                    <div className="absolute top-4 left-4 text-orange-300 text-2xl">❋</div>
+                    <div className="absolute top-4 right-4 text-orange-300 text-2xl">❋</div>
+                    <div className="absolute bottom-4 left-4 text-orange-300 text-2xl">❋</div>
+                    <div className="absolute bottom-4 right-4 text-orange-300 text-2xl">❋</div>
+                    
+                    <p className="mb-6 text-gray-800">
+                      This is to certify that 
+                      <span className="block mt-3 mb-3 font-bold text-2xl bg-gradient-to-r from-orange-600 via-red-600 to-purple-700 bg-clip-text text-transparent border-b-3 border-orange-300/50 pb-2">
                         {selectedStudent?.full_name || "___________________"}
                       </span>
                     </p>
-                    <p className="mb-4">
-                      Son/Daughter of Mr./Mrs. <span className="border-b-2 border-blue-300 inline-block w-48 h-6 align-bottom mx-2"></span>
+                    <p className="mb-6 text-gray-700">
+                      Son/Daughter of Mr./Mrs. 
+                      <span className="border-b-2 border-orange-300 inline-block w-48 h-6 align-bottom mx-2 bg-orange-50/50"></span>
                     </p>
                     <p className="mb-4">
                       has successfully completed the <span className="font-bold text-purple-700 text-xl">
@@ -441,125 +476,135 @@ const StudentMarksheetContent = () => {
                   </div>
                 </div>
 
-                {/* Academic Performance Table */}
+                {/* Enhanced Academic Performance Table with Premium Design */}
                 <div className="mb-8">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-elegant font-bold text-blue-800 tracking-wider">ACADEMIC PERFORMANCE</h3>
-                    <div className="mt-2 mx-auto w-24 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600"></div>
+                  <div className="text-center mb-8">
+                    <h3 className="text-3xl font-elegant font-bold bg-gradient-to-r from-orange-600 via-red-600 to-purple-700 bg-clip-text text-transparent tracking-wider">
+                      ACADEMIC PERFORMANCE RECORD
+                    </h3>
+                    <div className="mt-4 flex justify-center">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-orange-400"></div>
+                        <div className="w-8 h-1 bg-gradient-to-r from-orange-400 via-red-500 to-purple-600 rounded-full"></div>
+                        <div className="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-transparent"></div>
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-2xl border-2 border-orange-200/50 overflow-hidden">
                     <table className="w-full">
                       <thead>
-                        <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Subject</th>
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Max. Theory</th>
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Max. Practical</th>
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Obtained Theory</th>
-                          <th className="px-4 py-3 text-sm font-semibold text-center">Obtained Practical</th>
+                        <tr className="bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 text-white">
+                          <th className="px-6 py-4 text-lg font-bold text-center">Subject</th>
+                          <th className="px-6 py-4 text-lg font-bold text-center">Max. Theory</th>
+                          <th className="px-6 py-4 text-lg font-bold text-center">Max. Practical</th>
+                          <th className="px-6 py-4 text-lg font-bold text-center">Theory Marks</th>
+                          <th className="px-6 py-4 text-lg font-bold text-center">Practical Marks</th>
                         </tr>
                       </thead>
-                      <tbody className="text-sm">
+                      <tbody className="text-base">
                         {courseSubjects.map((subject, index) => (
-                          <tr key={subject.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                            <td className="px-4 py-3 text-center font-medium text-gray-800">{subject.subject}</td>
-                            <td className="px-4 py-3 text-center">{subject.theory_marks}</td>
-                            <td className="px-4 py-3 text-center">{subject.practical_marks}</td>
-                            <td className="px-4 py-3 text-center font-semibold text-blue-600">
+                          <tr key={subject.id} className={index % 2 === 0 ? "bg-gradient-to-r from-orange-50/30 to-transparent" : "bg-white"}>
+                            <td className="px-6 py-4 text-center font-bold text-gray-900 text-lg">{subject.subject}</td>
+                            <td className="px-6 py-4 text-center text-gray-800 font-medium">{subject.theory_marks}</td>
+                            <td className="px-6 py-4 text-center text-gray-800 font-medium">{subject.practical_marks}</td>
+                            <td className="px-6 py-4 text-center font-bold text-orange-700 text-lg">
                               {Math.round(parseInt(subject.theory_marks || "0") * 0.75)}
                             </td>
-                            <td className="px-4 py-3 text-center font-semibold text-purple-600">
+                            <td className="px-6 py-4 text-center font-bold text-purple-700 text-lg">
                               {Math.round(parseInt(subject.practical_marks || "0") * 0.8)}
                             </td>
                           </tr>
                         ))}
                         
-                        {/* Summary Rows */}
-                        <tr className="bg-blue-100 border-t-2 border-blue-300">
-                          <td className="px-4 py-3 text-center font-bold text-blue-800">TOTAL MARKS</td>
-                          <td className="px-4 py-3 text-center font-bold text-blue-700">
+                        {/* Enhanced Summary Rows */}
+                        <tr className="bg-gradient-to-r from-orange-100 to-blue-100 border-t-4 border-orange-300">
+                          <td className="px-6 py-4 text-center font-bold text-orange-800 text-xl">TOTAL MARKS</td>
+                          <td className="px-6 py-4 text-center font-bold text-orange-700 text-lg">
                             {courseSubjects.reduce((sum, s) => sum + parseInt(s.theory_marks || "0"), 0)}
                           </td>
-                          <td className="px-4 py-3 text-center font-bold text-blue-700">
+                          <td className="px-6 py-4 text-center font-bold text-orange-700 text-lg">
                             {courseSubjects.reduce((sum, s) => sum + parseInt(s.practical_marks || "0"), 0)}
                           </td>
-                          <td className="px-4 py-3 text-center font-bold text-green-600 text-lg">
+                          <td className="px-6 py-4 text-center font-bold text-green-600 text-xl">
                             {marksheetData?.obtained_marks || 0}
                           </td>
-                          <td className="px-4 py-3 text-center font-bold text-green-600">
+                          <td className="px-6 py-4 text-center font-bold text-green-600 text-xl">
                             {courseSubjects.reduce((sum, s) => sum + Math.round(parseInt(s.practical_marks || "0") * 0.8), 0)}
                           </td>
                         </tr>
                         
-                        <tr className="bg-purple-100">
-                          <td className="px-4 py-3 text-center font-bold text-purple-800">GRAND TOTAL</td>
-                          <td className="px-4 py-3 text-center font-bold text-purple-700 text-lg">
+                        <tr className="bg-gradient-to-r from-purple-100 to-blue-100">
+                          <td className="px-6 py-4 text-center font-bold text-purple-800 text-xl">GRAND TOTAL</td>
+                          <td className="px-6 py-4 text-center font-bold text-purple-700 text-xl">
                             {marksheetData?.total_marks || 0}
                           </td>
-                          <td className="px-4 py-3 text-center"></td>
-                          <td className="px-4 py-3 text-center font-bold text-green-600 text-lg">
+                          <td className="px-6 py-4 text-center"></td>
+                          <td className="px-6 py-4 text-center font-bold text-emerald-600 text-2xl">
                             {marksheetData?.obtained_marks || 0}
                           </td>
-                          <td className="px-4 py-3 text-center"></td>
+                          <td className="px-6 py-4 text-center"></td>
                         </tr>
                         
-                        <tr className="bg-gradient-to-r from-green-100 to-blue-100">
-                          <td className="px-4 py-4 text-center font-bold text-gray-800 text-lg">RESULT</td>
-                          <td className="px-4 py-4 text-center">
-                            <div className="text-red-600 font-bold text-xl">
+                        <tr className="bg-gradient-to-r from-emerald-100 via-blue-100 to-purple-100">
+                          <td className="px-6 py-6 text-center font-bold text-gray-800 text-2xl">FINAL RESULT</td>
+                          <td className="px-6 py-6 text-center">
+                            <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full font-bold text-xl shadow-lg">
                               {marksheetData?.percentage || 0}%
                             </div>
                           </td>
-                          <td className="px-4 py-4 text-center">
-                            <div className="text-green-600 font-bold text-xl">
+                          <td className="px-6 py-6 text-center">
+                            <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full font-bold text-xl shadow-lg">
                               {marksheetData?.grade || "N/A"}
                             </div>
                           </td>
-                          <td className="px-4 py-4 text-center">
-                            <div className={`font-bold text-lg px-3 py-1 rounded-full ${
+                          <td className="px-6 py-6 text-center">
+                            <div className={`font-bold text-xl px-6 py-2 rounded-full shadow-lg ${
                               marksheetData?.result_status === 'pass' 
-                                ? 'bg-green-200 text-green-800' 
-                                : 'bg-red-200 text-red-800'
+                                ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white' 
+                                : 'bg-gradient-to-r from-red-500 to-red-600 text-white'
                             }`}>
                               {marksheetData?.result_status?.toUpperCase() || "PENDING"}
                             </div>
                           </td>
-                          <td className="px-4 py-4 text-center"></td>
+                          <td className="px-6 py-6 text-center"></td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
 
-                {/* Grading System and Signatures */}
+                {/* Enhanced Grading System and Information */}
                 <div className="grid grid-cols-2 gap-12 mb-8">
-                  {/* Grading Legend */}
-                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                    <h4 className="font-bold text-blue-800 mb-4 text-lg">GRADING SYSTEM</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="font-medium">Distinction (A+):</span>
-                        <span className="text-green-600 font-bold">85% & Above</span>
+                  {/* Premium Grading Legend */}
+                  <div className="bg-gradient-to-br from-orange-50 via-white to-purple-50 p-8 rounded-2xl border-2 border-orange-200/50 shadow-xl">
+                    <h4 className="font-bold bg-gradient-to-r from-orange-600 to-purple-700 bg-clip-text text-transparent mb-6 text-2xl text-center">
+                      GRADING SYSTEM
+                    </h4>
+                    <div className="space-y-3 text-base">
+                      <div className="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border border-green-200">
+                        <span className="font-bold text-gray-800">Distinction (A+):</span>
+                        <span className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-full font-bold text-sm">85% & Above</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium">First Class (A):</span>
-                        <span className="text-blue-600 font-bold">75% - 84%</span>
+                      <div className="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border border-blue-200">
+                        <span className="font-bold text-gray-800">First Class (A):</span>
+                        <span className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-full font-bold text-sm">75% - 84%</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium">Second Class (B):</span>
-                        <span className="text-purple-600 font-bold">65% - 74%</span>
+                      <div className="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border border-purple-200">
+                        <span className="font-bold text-gray-800">Second Class (B):</span>
+                        <span className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-3 py-1 rounded-full font-bold text-sm">65% - 74%</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium">Third Class (C):</span>
-                        <span className="text-orange-600 font-bold">55% - 64%</span>
+                      <div className="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border border-orange-200">
+                        <span className="font-bold text-gray-800">Third Class (C):</span>
+                        <span className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1 rounded-full font-bold text-sm">55% - 64%</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium">Pass (D):</span>
-                        <span className="text-yellow-600 font-bold">50% - 54%</span>
+                      <div className="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border border-yellow-200">
+                        <span className="font-bold text-gray-800">Pass (D):</span>
+                        <span className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-3 py-1 rounded-full font-bold text-sm">50% - 54%</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium">Fail (F):</span>
-                        <span className="text-red-600 font-bold">Below 50%</span>
+                      <div className="flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border border-red-200">
+                        <span className="font-bold text-gray-800">Fail (F):</span>
+                        <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1 rounded-full font-bold text-sm">Below 50%</span>
                       </div>
                     </div>
                   </div>
