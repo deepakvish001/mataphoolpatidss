@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthGuard } from "@/components/auth/AuthGuard";
+import { RequireAuth, RequireAdmin } from "@/middleware/AuthMiddleware";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import RashtriyaGramSwarajAbhiyan from "./pages/RashtriyaGramSwarajAbhiyan";
@@ -50,33 +51,33 @@ const App = () => (
             <Route 
               path="/user/dashboard" 
               element={
-                <AuthGuard>
+                <RequireAuth>
                   <UserDashboard />
-                </AuthGuard>
+                </RequireAuth>
               } 
             />
             <Route 
               path="/user/profile" 
               element={
-                <AuthGuard>
+                <RequireAuth>
                   <UserProfile />
-                </AuthGuard>
+                </RequireAuth>
               } 
             />
             <Route 
               path="/admin/profile" 
               element={
-                <AuthGuard requiredRole="admin">
+                <RequireAdmin>
                   <AdminProfile />
-                </AuthGuard>
+                </RequireAdmin>
               } 
             />
             <Route 
               path="/admin/*" 
               element={
-                <AuthGuard requiredRole="admin">
+                <RequireAdmin>
                   <Admin />
-                </AuthGuard>
+                </RequireAdmin>
               } 
             />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

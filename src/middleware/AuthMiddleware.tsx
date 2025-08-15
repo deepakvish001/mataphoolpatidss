@@ -5,22 +5,25 @@ import { Loader2, Shield, AlertTriangle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
-type AppRole = 'admin' | 'moderator' | 'user';
-
-interface AuthGuardProps {
+interface AuthMiddlewareProps {
   children: React.ReactNode;
-  requiredRole?: AppRole;
-  redirectTo?: string;
+  requireAuth?: boolean;
+  requireRole?: 'admin' | 'moderator' | 'user';
+  fallbackPath?: string;
+  showAccessDenied?: boolean;
 }
 
-export const AuthGuard: React.FC<AuthGuardProps> = ({
+export const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({
   children,
-  requiredRole,
-  redirectTo = '/user-login'
+  requireAuth = true,
+  requireRole,
+  fallbackPath = '/user-login',
+  showAccessDenied = true
 }) => {
   const { user, userRole, loading, hasRole } = useAuth();
   const location = useLocation();
 
+  // Show loading state
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5">
@@ -32,11 +35,17 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
     );
   }
 
-  if (!user) {
-    return <Navigate to={redirectTo} state={{ from: location }} replace />;
+  // Check authentication requirement
+  if (requireAuth && !user) {
+    return <Navigate to={fallbackPath} state={{ from: location }} replace />;
   }
 
-  if (requiredRole && !hasRole(requiredRole)) {
+  // Check role requirement
+  if (requireRole && user && !hasRole(requireRole)) {
+    if (!showAccessDenied) {
+      return <Navigate to={fallbackPath} state={{ from: location }} replace />;
+    }
+
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-destructive/5 via-background to-destructive/10 p-4">
         <Card className="w-full max-w-md shadow-lg border-destructive/20">
@@ -44,7 +53,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
             <div className="text-center space-y-6">
               {/* Icon */}
               <div className="flex justify-center">
-                {requiredRole === 'admin' ? (
+                {requireRole === 'admin' ? (
                   <Shield className="h-16 w-16 text-destructive" />
                 ) : (
                   <AlertTriangle className="h-16 w-16 text-destructive" />
@@ -57,10 +66,12 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
                 <p className="text-muted-foreground">
                   You don't have permission to access this area.
                 </p>
-                <div className="text-sm text-muted-foreground bg-destructive/5 p-3 rounded-md border border-destructive/20">
-                  <p><strong>Required Role:</strong> {requiredRole}</p>
-                  <p><strong>Your Role:</strong> {userRole || 'none'}</p>
-                </div>
+                {requireRole && (
+                  <div className="text-sm text-muted-foreground bg-destructive/5 p-3 rounded-md border border-destructive/20">
+                    <p><strong>Required Role:</strong> {requireRole}</p>
+                    <p><strong>Your Role:</strong> {userRole || 'none'}</p>
+                  </div>
+                )}
               </div>
               
               {/* Action Buttons */}
@@ -73,7 +84,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
                     Go to User Dashboard
                   </Button>
                 )}
-                {userRole === 'admin' && requiredRole !== 'admin' && (
+                {userRole === 'admin' && requireRole !== 'admin' && (
                   <Button 
                     onClick={() => window.location.href = '/admin/dashboard'} 
                     className="w-full"
@@ -103,5 +114,31 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
     );
   }
 
+  // All checks passed, render children
   return <>{children}</>;
 };
+
+// Helper components for common use cases
+export const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <AuthMiddleware requireAuth={true}>
+    {children}
+  </AuthMiddleware>
+);
+
+export const RequireAdmin: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <AuthMiddleware requireAuth={true} requireRole="admin" fallbackPath="/admin-login">
+    {children}
+  </AuthMiddleware>
+);
+
+export const RequireUser: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <AuthMiddleware requireAuth={true} requireRole="user" fallbackPath="/user-login">
+    {children}
+  </AuthMiddleware>
+);
+
+export const RequireModerator: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <AuthMiddleware requireAuth={true} requireRole="moderator" fallbackPath="/user-login">
+    {children}
+  </AuthMiddleware>
+);
