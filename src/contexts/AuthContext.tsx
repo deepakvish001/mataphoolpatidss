@@ -36,38 +36,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Force clear any existing state and sessions on app initialization
   useEffect(() => {
-    const clearAllSessions = async () => {
-      console.log('Force clearing all existing sessions...');
-      
-      // Clear all storage first
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      // Clear Supabase session with global scope
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch (e) {
-        console.log('Session already cleared or error:', e);
-      }
-      
-      // Ensure state is clean
-      setUser(null);
-      setSession(null);
-      setUserRole(null);
-      
-      console.log('All sessions forcefully cleared');
-    };
+    console.log('Setting up authentication with session persistence...');
     
-    clearAllSessions();
-  }, []);
-
-  useEffect(() => {
-    // Set up auth state listener
+    // Set up auth state listener for real-time session management
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state change:', event, session ? 'session exists' : 'no session');
+        console.log('Auth state change:', event, session ? `session exists for user: ${session.user.email}` : 'no session');
+        
+        // Only update state for actual auth events, not initialization
         setSession(session);
         setUser(session?.user ?? null);
         
@@ -94,7 +71,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     );
 
-    // Check for existing session
+    // Check for existing session on app start
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       console.log('Initial session check:', session ? `session exists for user: ${session.user.email}` : 'no session');
       setSession(session);
@@ -118,7 +95,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       setLoading(false);
     });
-
     return () => subscription.unsubscribe();
   }, []);
 
