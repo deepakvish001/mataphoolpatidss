@@ -23,6 +23,7 @@ const BankDetailsContent = () => {
     data: bankDetails,
     loading,
     create,
+    update,
     delete: deleteItem,
     refresh
   } = useOptimisticCrud<BankDetails>({ tableName: 'bank_details' });
@@ -39,6 +40,7 @@ const BankDetailsContent = () => {
     micrCode: "",
     bankPhoto: null as File | null
   });
+  const [editingBank, setEditingBank] = useState<BankDetails | null>(null);
 
   const handleInputChange = (field: string, value: string | File | null) => {
     setFormData(prev => ({
@@ -63,17 +65,32 @@ const BankDetailsContent = () => {
 
     const bankPhotoUrl = formData.bankPhoto ? URL.createObjectURL(formData.bankPhoto) : "";
 
-    const newBankDetail = {
-      bank_name: formData.bankName,
-      account_number: formData.accountNumber,
-      branch_name: formData.branchName,
-      ifsc_code: formData.ifscCode,
-      micr_code: formData.micrCode,
-      bank_photo_url: bankPhotoUrl
-    };
-
     try {
-      await create(newBankDetail);
+      if (editingBank) {
+        // Update existing bank detail
+        await update(editingBank.id, {
+          bank_name: formData.bankName.trim(),
+          account_number: formData.accountNumber.trim(),
+          branch_name: formData.branchName.trim(),
+          ifsc_code: formData.ifscCode.trim(),
+          micr_code: formData.micrCode.trim(),
+          bank_photo_url: formData.bankPhoto ? bankPhotoUrl : editingBank.bank_photo_url
+        });
+        toast.success("Bank details updated successfully!");
+        setEditingBank(null);
+      } else {
+        // Create new bank detail
+        const newBankDetail = {
+          bank_name: formData.bankName.trim(),
+          account_number: formData.accountNumber.trim(),
+          branch_name: formData.branchName.trim(),
+          ifsc_code: formData.ifscCode.trim(),
+          micr_code: formData.micrCode.trim(),
+          bank_photo_url: bankPhotoUrl
+        };
+        await create(newBankDetail);
+        toast.success("Bank details added successfully!");
+      }
       
       // Reset form
       setFormData({
@@ -88,11 +105,33 @@ const BankDetailsContent = () => {
       // Reset file input
       const fileInput = document.getElementById('bank-photo-file') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
-      
-      toast.success("Bank details added successfully!");
     } catch (error) {
-      toast.error("Failed to add bank details");
+      toast.error(editingBank ? "Failed to update bank details" : "Failed to add bank details");
     }
+  };
+
+  const handleEdit = (bank: BankDetails) => {
+    setEditingBank(bank);
+    setFormData({
+      bankName: bank.bank_name,
+      accountNumber: bank.account_number,
+      branchName: bank.branch_name,
+      ifscCode: bank.ifsc_code,
+      micrCode: bank.micr_code,
+      bankPhoto: null // Reset photo selection
+    });
+  };
+
+  const handleReset = () => {
+    setFormData({
+      bankName: "",
+      accountNumber: "",
+      branchName: "",
+      ifscCode: "",
+      micrCode: "",
+      bankPhoto: null
+    });
+    setEditingBank(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -226,13 +265,19 @@ const BankDetailsContent = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div className="pt-4">
+            {/* Submit and Reset Buttons */}
+            <div className="flex space-x-4 pt-4">
               <Button
                 onClick={handleSubmit}
                 className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Submit Now
+                {editingBank ? "Update" : "Submit Now"}
+              </Button>
+              <Button
+                onClick={handleReset}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                Reset
               </Button>
             </div>
           </div>
@@ -262,6 +307,7 @@ const BankDetailsContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(detail)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />

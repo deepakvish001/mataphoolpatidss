@@ -36,6 +36,7 @@ const OpeningBalanceContent = () => {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
+  const [editingBalance, setEditingBalance] = useState<OpeningBalance | null>(null);
 
   const handleSubmit = async () => {
     if (!amount || !date || !description.trim()) {
@@ -43,23 +44,33 @@ const OpeningBalanceContent = () => {
       return;
     }
 
-    const openingBalanceData = {
-      amount: parseFloat(amount),
-      entry_date: date,
-      description: description
-    };
-
     try {
-      await create(openingBalanceData);
+      if (editingBalance) {
+        // Update existing balance
+        await update(editingBalance.id, {
+          amount: parseFloat(amount),
+          entry_date: date,
+          description: description.trim()
+        });
+        toast.success("Opening balance updated successfully!");
+        setEditingBalance(null);
+      } else {
+        // Create new balance
+        const openingBalanceData = {
+          amount: parseFloat(amount),
+          entry_date: date,
+          description: description.trim()
+        };
+        await create(openingBalanceData);
+        toast.success("Opening balance added successfully!");
+      }
       
       // Reset form
       setAmount("");
       setDate("");
       setDescription("");
-      
-      toast.success("Opening balance added successfully!");
     } catch (error) {
-      toast.error("Failed to add opening balance");
+      toast.error(editingBalance ? "Failed to update opening balance" : "Failed to add opening balance");
     }
   };
 
@@ -67,6 +78,14 @@ const OpeningBalanceContent = () => {
     setAmount("");
     setDate("");
     setDescription("");
+    setEditingBalance(null);
+  };
+
+  const handleEdit = (balance: OpeningBalance) => {
+    setEditingBalance(balance);
+    setAmount(balance.amount.toString());
+    setDate(balance.entry_date);
+    setDescription(balance.description);
   };
 
   const handleDelete = async (id: string) => {
@@ -165,7 +184,7 @@ const OpeningBalanceContent = () => {
                   onClick={handleSubmit}
                   className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-base font-medium"
                 >
-                  SUBMIT
+                  {editingBalance ? "UPDATE" : "SUBMIT"}
                 </Button>
                 <Button 
                   onClick={handleReset}
@@ -198,6 +217,7 @@ const OpeningBalanceContent = () => {
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => handleEdit(balance)}
                           className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                         >
                           <Edit className="h-4 w-4" />

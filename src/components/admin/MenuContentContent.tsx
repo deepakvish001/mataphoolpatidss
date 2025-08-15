@@ -40,6 +40,7 @@ const MenuContentContent = () => {
     date: new Date().toLocaleDateString('en-GB'),
     writeNote: ""
   });
+  const [editingItem, setEditingItem] = useState<MenuContent | null>(null);
 
   const courses = [
     "PGDCA",
@@ -70,16 +71,30 @@ const MenuContentContent = () => {
       return;
     }
 
-    const newMenuItem = {
-      course: formData.course,
-      upload_file_title: formData.uploadFileTitle,
-      course_file: formData.uploadFile ? formData.uploadFile.name : "",
-      date: formData.date,
-      notes: formData.writeNote
-    };
-
     try {
-      await create(newMenuItem);
+      if (editingItem) {
+        // Update existing item
+        await update(editingItem.id, {
+          course: formData.course,
+          upload_file_title: formData.uploadFileTitle.trim(),
+          course_file: formData.uploadFile ? formData.uploadFile.name : editingItem.course_file,
+          date: formData.date,
+          notes: formData.writeNote
+        });
+        toast.success("Menu content updated successfully!");
+        setEditingItem(null);
+      } else {
+        // Create new item
+        const newMenuItem = {
+          course: formData.course,
+          upload_file_title: formData.uploadFileTitle.trim(),
+          course_file: formData.uploadFile ? formData.uploadFile.name : "",
+          date: formData.date,
+          notes: formData.writeNote
+        };
+        await create(newMenuItem);
+        toast.success("Menu content uploaded successfully!");
+      }
       
       // Reset form
       setFormData({
@@ -93,11 +108,31 @@ const MenuContentContent = () => {
       // Reset file input
       const fileInput = document.getElementById('menu-file') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
-      
-      toast.success("Menu content uploaded successfully!");
     } catch (error) {
-      toast.error("Failed to upload menu content");
+      toast.error(editingItem ? "Failed to update menu content" : "Failed to upload menu content");
     }
+  };
+
+  const handleEdit = (item: MenuContent) => {
+    setEditingItem(item);
+    setFormData({
+      course: item.course,
+      uploadFileTitle: item.upload_file_title,
+      uploadFile: null, // Reset file selection
+      date: item.date,
+      writeNote: item.notes || ""
+    });
+  };
+
+  const handleReset = () => {
+    setFormData({
+      course: "",
+      uploadFileTitle: "",
+      uploadFile: null,
+      date: new Date().toLocaleDateString('en-GB'),
+      writeNote: ""
+    });
+    setEditingItem(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -222,14 +257,20 @@ const MenuContentContent = () => {
               />
             </div>
 
-            {/* Upload Button */}
-            <div className="pt-4">
+            {/* Upload and Reset Buttons */}
+            <div className="flex space-x-4 pt-4">
               <Button
                 onClick={handleUpload}
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
                 <Upload className="h-5 w-5 mr-2" />
-                Upload Now
+                {editingItem ? "Update Now" : "Upload Now"}
+              </Button>
+              <Button
+                onClick={handleReset}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                Reset
               </Button>
             </div>
           </div>
@@ -258,6 +299,7 @@ const MenuContentContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(item)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />
