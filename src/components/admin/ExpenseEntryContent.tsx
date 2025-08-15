@@ -255,6 +255,15 @@ const ExpenseEntryContent = () => {
               >
                 {editingExpense ? "UPDATE" : "SUBMIT"}
               </Button>
+              {editingExpense && (
+                <Button 
+                  onClick={handleReset}
+                  variant="outline"
+                  className="border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3"
+                >
+                  Cancel
+                </Button>
+              )}
               <Button 
                 onClick={handleReset}
                 variant="outline"

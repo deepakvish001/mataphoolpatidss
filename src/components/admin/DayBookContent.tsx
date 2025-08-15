@@ -202,6 +202,10 @@ const DayBookContent = () => {
                           <Button
                             variant="ghost"
                             size="sm"
+                            onClick={() => {
+                              // Could implement edit functionality here
+                              toast.info("Edit functionality can be added if needed");
+                            }}
                             className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                           >
                             <Edit className="h-4 w-4" />

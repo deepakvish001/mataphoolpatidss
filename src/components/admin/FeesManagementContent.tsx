@@ -406,6 +406,15 @@ const FeesManagementContent = () => {
               >
                 {editingReceipt ? "UPDATE" : "ADD"}
               </Button>
+              {editingReceipt && (
+                <Button 
+                  onClick={handleReset}
+                  variant="outline"
+                  className="border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3"
+                >
+                  Cancel
+                </Button>
+              )}
               <Button 
                 onClick={handleReset}
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-base font-medium"
