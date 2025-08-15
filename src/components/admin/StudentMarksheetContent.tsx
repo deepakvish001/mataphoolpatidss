@@ -55,6 +55,9 @@ const StudentMarksheetContent = () => {
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const marksheetRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
 
   const checkMissingData = () => {
     const missing: string[] = [];
@@ -176,9 +179,14 @@ const StudentMarksheetContent = () => {
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
       const pdfWidth = 210;
       const pdfHeight = 297;
+      const margin = 10; // mm
 
-      // Compute page height in canvas pixels to slice clean A4 pages
-      const pageHeightPx = Math.round((canvas.width * pdfHeight) / pdfWidth);
+      // Compute usable page size (accounting for margins)
+      const usableWidthMm = pdfWidth - margin * 2;
+      const usableHeightMm = pdfHeight - margin * 2;
+
+      // Compute page height in canvas pixels to slice clean A4 pages (scaled to usable area)
+      const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
 
       const totalPages = Math.max(1, Math.ceil(canvas.height / pageHeightPx));
       let y = 0;
@@ -198,8 +206,13 @@ const StudentMarksheetContent = () => {
         ctx.drawImage(canvas, 0, y, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
 
         const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
-        // Full-bleed A4
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+        // Add with margins to avoid edge clipping and keep consistent look
+        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, usableHeightMm, undefined, 'FAST');
+
+        // Optional elegant border per page
+        pdf.setDrawColor(90, 90, 140);
+        pdf.setLineWidth(0.4);
+        pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
 
         y += sliceHeight;
       }
