@@ -17,6 +17,7 @@ export function useOptimisticCrud<T extends { id: string }>(options: OptimisticC
 
   // Load initial data
   const loadData = useCallback(async () => {
+    console.log(`🔄 Loading data for ${options.tableName}...`);
     try {
       setLoading(true);
       let query = (supabase as any).from(options.tableName).select('*');
@@ -44,6 +45,7 @@ export function useOptimisticCrud<T extends { id: string }>(options: OptimisticC
       toast.error(`Failed to load ${options.tableName} data`);
       setData([]);
     } finally {
+      console.log(`✅ Finished loading ${options.tableName} - setting loading to false`);
       setLoading(false);
     }
   }, [options.tableName, options.orderBy]);
