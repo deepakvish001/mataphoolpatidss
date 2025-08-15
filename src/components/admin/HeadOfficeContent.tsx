@@ -85,12 +85,22 @@ const HeadOfficeContent = () => {
     }
   };
 
-  // Real-time subscription
+  // Real-time subscription with instant updates
   useEffect(() => {
     loadHeadOffices();
 
+    // Enable real-time for the table if not already enabled
+    const enableRealtime = async () => {
+      try {
+        await supabase.from('head_offices').select('*').limit(1);
+      } catch (error) {
+        console.log('Realtime may not be enabled for head_offices table');
+      }
+    };
+    enableRealtime();
+
     const channel = supabase
-      .channel('head-office-changes')
+      .channel('head-office-realtime-changes')
       .on(
         'postgres_changes',
         {
@@ -99,27 +109,68 @@ const HeadOfficeContent = () => {
           table: 'head_offices'
         },
         (payload: any) => {
-          console.log('Head office change:', payload);
+          console.log('Real-time head office change:', payload);
           
-          if (payload.eventType === 'INSERT') {
-            setHeadOffices(prev => [payload.new, ...prev]);
-            toast.success("New head office added!");
-          } else if (payload.eventType === 'UPDATE') {
-            setHeadOffices(prev => 
-              prev.map(office => 
-                office.id === payload.new.id ? payload.new : office
-              )
-            );
-            toast.success("Head office updated!");
-          } else if (payload.eventType === 'DELETE') {
-            setHeadOffices(prev => 
-              prev.filter(office => office.id !== payload.old.id)
-            );
-            toast.success("Head office removed!");
+          // Instant UI updates without waiting
+          switch (payload.eventType) {
+            case 'INSERT':
+              setHeadOffices(prev => {
+                // Prevent duplicates and sort correctly
+                const exists = prev.some(office => office.id === payload.new.id);
+                if (exists) return prev;
+                
+                const newList = [payload.new, ...prev].sort((a, b) => {
+                  // Primary offices first, then by creation date
+                  if (a.is_primary && !b.is_primary) return -1;
+                  if (!a.is_primary && b.is_primary) return 1;
+                  return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+                });
+                
+                toast.success("✅ New head office added instantly!", {
+                  duration: 2000,
+                  style: { background: '#10B981', color: 'white' }
+                });
+                return newList;
+              });
+              break;
+              
+            case 'UPDATE':
+              setHeadOffices(prev => {
+                const updated = prev.map(office => 
+                  office.id === payload.new.id ? { ...office, ...payload.new } : office
+                ).sort((a, b) => {
+                  // Re-sort after update
+                  if (a.is_primary && !b.is_primary) return -1;
+                  if (!a.is_primary && b.is_primary) return 1;
+                  return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+                });
+                
+                toast.success("⚡ Head office updated instantly!", {
+                  duration: 2000,
+                  style: { background: '#3B82F6', color: 'white' }
+                });
+                return updated;
+              });
+              break;
+              
+            case 'DELETE':
+              setHeadOffices(prev => {
+                const filtered = prev.filter(office => office.id !== payload.old.id);
+                toast.success("🗑️ Head office removed instantly!", {
+                  duration: 2000,
+                  style: { background: '#EF4444', color: 'white' }
+                });
+                return filtered;
+              });
+              break;
           }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          console.log('✅ Real-time subscription active for head offices');
+        }
+      });
 
     return () => {
       supabase.removeChannel(channel);
@@ -203,6 +254,13 @@ const HeadOfficeContent = () => {
     if (!validateForm()) return;
 
     setFormLoading(true);
+    
+    // Show instant loading feedback
+    const loadingToast = toast.loading(
+      editingOffice ? "⚡ Updating head office..." : "⚡ Adding head office...",
+      { style: { background: '#3B82F6', color: 'white' } }
+    );
+
     try {
       const officeData = {
         name: formData.name || null,
@@ -236,7 +294,13 @@ const HeadOfficeContent = () => {
           .eq('id', editingOffice.id);
 
         if (error) throw error;
-        toast.success("Head office updated successfully!");
+        
+        // Dismiss loading toast and show success
+        toast.dismiss(loadingToast);
+        toast.success("🎉 Head office updated successfully!", {
+          duration: 3000,
+          style: { background: '#10B981', color: 'white' }
+        });
       } else {
         // Create new head office
         const { error } = await (supabase as any)
@@ -247,21 +311,35 @@ const HeadOfficeContent = () => {
           });
 
         if (error) throw error;
-        toast.success("Head office added successfully!");
+        
+        // Dismiss loading toast and show success
+        toast.dismiss(loadingToast);
+        toast.success("🎉 Head office added successfully!", {
+          duration: 3000,
+          style: { background: '#10B981', color: 'white' }
+        });
       }
 
       setIsDialogOpen(false);
       resetForm();
     } catch (error: any) {
       console.error('Error saving head office:', error);
-      toast.error(error.message || "Failed to save head office data");
+      toast.dismiss(loadingToast);
+      toast.error(`❌ ${error.message || "Failed to save head office data"}`, {
+        duration: 4000,
+        style: { background: '#EF4444', color: 'white' }
+      });
     } finally {
       setFormLoading(false);
     }
   };
 
   const handleDelete = async (officeId: string) => {
-    if (!confirm("Are you sure you want to delete this head office?")) return;
+    if (!confirm("⚠️ Are you sure you want to delete this head office? This action cannot be undone.")) return;
+
+    const loadingToast = toast.loading("🗑️ Deleting head office...", {
+      style: { background: '#EF4444', color: 'white' }
+    });
 
     try {
       const { error } = await (supabase as any)
@@ -270,15 +348,29 @@ const HeadOfficeContent = () => {
         .eq('id', officeId);
 
       if (error) throw error;
-      toast.success("Head office deleted successfully!");
+      
+      toast.dismiss(loadingToast);
+      toast.success("🗑️ Head office deleted successfully!", {
+        duration: 3000,
+        style: { background: '#EF4444', color: 'white' }
+      });
     } catch (error: any) {
       console.error('Error deleting head office:', error);
-      toast.error("Failed to delete head office");
+      toast.dismiss(loadingToast);
+      toast.error(`❌ Failed to delete head office: ${error.message}`, {
+        duration: 4000,
+        style: { background: '#EF4444', color: 'white' }
+      });
     }
   };
 
   const handleStatusToggle = async (officeId: string, currentStatus: string) => {
     const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+    const emoji = newStatus === 'active' ? '✅' : '⏸️';
+    
+    const loadingToast = toast.loading(`${emoji} Updating status to ${newStatus}...`, {
+      style: { background: '#3B82F6', color: 'white' }
+    });
     
     try {
       const { error } = await (supabase as any)
@@ -290,10 +382,22 @@ const HeadOfficeContent = () => {
         .eq('id', officeId);
 
       if (error) throw error;
-      toast.success(`Head office status updated to ${newStatus}`);
+      
+      toast.dismiss(loadingToast);
+      toast.success(`${emoji} Head office status updated to ${newStatus}!`, {
+        duration: 2000,
+        style: { 
+          background: newStatus === 'active' ? '#10B981' : '#F59E0B', 
+          color: 'white' 
+        }
+      });
     } catch (error: any) {
       console.error('Error updating status:', error);
-      toast.error("Failed to update head office status");
+      toast.dismiss(loadingToast);
+      toast.error(`❌ Failed to update status: ${error.message}`, {
+        duration: 4000,
+        style: { background: '#EF4444', color: 'white' }
+      });
     }
   };
 
@@ -556,133 +660,190 @@ const HeadOfficeContent = () => {
         </CardContent>
       </Card>
 
-      {/* Head Office List Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      {/* Head Office Management Table */}
+      <Card className="shadow-2xl border-0 bg-gradient-to-br from-white to-gray-50/30 backdrop-blur-sm">
         <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-blue-600 hover:bg-blue-600">
-                  <TableHead className="text-white font-bold text-center py-4">Office Details</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4">Contact Info</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4">Location</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4">Status</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredOffices.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-gray-500">
-                      No head offices found
-                    </TableCell>
+          {filteredOffices.length === 0 ? (
+            <div className="text-center py-16 px-8">
+              <Building2 className="h-20 w-20 text-gray-300 mx-auto mb-6" />
+              <h3 className="text-xl font-semibold text-gray-700 mb-3">No head offices found</h3>
+              <p className="text-gray-500 text-lg">
+                {searchTerm || statusFilter !== "all" 
+                  ? "Try adjusting your search or filters" 
+                  : "Add your first head office to get started"
+                }
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto border-2 border-gray-200 rounded-lg">
+              <Table className="w-full min-w-[1200px]">
+                <TableHeader>
+                  <TableRow className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-b-2 border-blue-300">
+                    <TableHead className="font-bold text-white text-base py-5 px-6 border-r border-blue-300 min-w-[300px]">
+                      Office Details
+                    </TableHead>
+                    <TableHead className="font-bold text-white text-base py-5 px-6 border-r border-blue-300 min-w-[250px]">
+                      Contact Information
+                    </TableHead>
+                    <TableHead className="font-bold text-white text-base py-5 px-6 border-r border-blue-300 min-w-[200px]">
+                      Location
+                    </TableHead>
+                    <TableHead className="font-bold text-white text-base py-5 px-6 border-r border-blue-300 min-w-[150px]">
+                      Status
+                    </TableHead>
+                    <TableHead className="font-bold text-white text-base py-5 px-6 min-w-[200px]">
+                      Actions
+                    </TableHead>
                   </TableRow>
-                ) : (
-                  filteredOffices.map((office, index) => (
-                    <TableRow key={office.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                      <TableCell className="p-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center space-x-2">
-                            {office.is_primary && (
-                              <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                            )}
-                            <span className="font-semibold text-gray-800">
-                              {office.name || "Unnamed Office"}
-                            </span>
-                          </div>
-                          <div className="flex items-start space-x-2">
-                            <MapPin className="h-4 w-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-gray-600 leading-relaxed">
-                              {office.address}
-                            </span>
-                          </div>
-                          {office.website && (
-                            <div className="flex items-center space-x-2">
-                              <Globe className="h-4 w-4 text-gray-500" />
-                              <a 
-                                href={office.website.startsWith('http') ? office.website : `https://${office.website}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm text-blue-600 hover:underline"
-                              >
-                                {office.website}
-                              </a>
+                </TableHeader>
+                <TableBody className="bg-white">
+                  {filteredOffices.map((office, index) => (
+                    <TableRow 
+                      key={office.id} 
+                      className={`
+                        border-b-2 border-gray-200
+                        hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 
+                        transition-all duration-300
+                        ${index % 2 === 0 ? 'bg-gray-50/70' : 'bg-white'}
+                        hover:shadow-lg hover:scale-[1.001]
+                      `}
+                    >
+                      <TableCell className="py-5 px-6 border-r-2 border-gray-200">
+                        <div className="space-y-3">
+                          <div className="flex items-center space-x-3">
+                            <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
+                              <Building2 className="h-5 w-5 text-white" />
                             </div>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell className="p-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center space-x-2">
-                            <Phone className="h-4 w-4 text-gray-500" />
-                            <span className="text-sm text-gray-700">{office.phone}</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Mail className="h-4 w-4 text-gray-500" />
-                            <span className="text-sm text-gray-700">{office.email}</span>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="p-4 text-center">
-                        <div className="text-sm text-gray-700">
-                          {office.city && office.state ? (
-                            <>
-                              <div>{office.city}</div>
-                              <div className="text-gray-500">{office.state}</div>
-                              {office.postal_code && (
-                                <div className="text-gray-500">{office.postal_code}</div>
+                            <div>
+                              <div className="flex items-center space-x-2">
+                                <span className="font-bold text-gray-900 text-lg">
+                                  {office.name || "Unnamed Office"}
+                                </span>
+                                {office.is_primary && (
+                                  <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1 animate-pulse">
+                                    <Star className="h-3 w-3 mr-1 fill-current" />
+                                    PRIMARY
+                                  </Badge>
+                                )}
+                              </div>
+                              <div className="flex items-start space-x-2 mt-2">
+                                <MapPin className="h-4 w-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                                <span className="text-sm text-gray-700 leading-relaxed font-medium">
+                                  {office.address}
+                                </span>
+                              </div>
+                              {office.website && (
+                                <div className="flex items-center space-x-2 mt-2">
+                                  <div className="p-1 bg-purple-100 rounded-full">
+                                    <Globe className="h-3 w-3 text-purple-600" />
+                                  </div>
+                                  <a 
+                                    href={office.website.startsWith('http') ? office.website : `https://${office.website}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm text-blue-600 hover:underline font-medium hover:text-blue-800"
+                                  >
+                                    {office.website}
+                                  </a>
+                                </div>
                               )}
-                            </>
-                          ) : (
-                            <span className="text-gray-400">Not specified</span>
-                          )}
+                            </div>
+                          </div>
                         </div>
                       </TableCell>
-                      <TableCell className="p-4 text-center">
+                      <TableCell className="py-5 px-6 border-r-2 border-gray-200">
+                        <div className="space-y-3">
+                          <div className="flex items-center space-x-3">
+                            <div className="p-2 bg-green-100 rounded-full">
+                              <Phone className="h-4 w-4 text-green-600" />
+                            </div>
+                            <span className="text-gray-900 font-semibold text-base">{office.phone}</span>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className="p-2 bg-blue-100 rounded-full">
+                              <Mail className="h-4 w-4 text-blue-600" />
+                            </div>
+                            <span className="text-gray-900 font-semibold text-sm">{office.email}</span>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-5 px-6 border-r-2 border-gray-200">
                         <div className="space-y-2">
-                          {getStatusBadge(office.status)}
-                          {office.is_primary && (
-                            <Badge className="bg-yellow-100 text-yellow-800">Primary</Badge>
-                          )}
+                          <div className="text-sm text-gray-800 font-semibold">
+                            {office.city && office.state ? (
+                              <>
+                                <div className="text-base text-gray-900">{office.city}</div>
+                                <div className="text-gray-600">{office.state}</div>
+                                {office.postal_code && (
+                                  <Badge variant="outline" className="text-xs mt-1">
+                                    PIN: {office.postal_code}
+                                  </Badge>
+                                )}
+                              </>
+                            ) : (
+                              <span className="text-gray-400 italic">Not specified</span>
+                            )}
+                          </div>
                         </div>
                       </TableCell>
-                      <TableCell className="p-4">
-                        <div className="flex space-x-2 justify-center">
+                      <TableCell className="py-5 px-6 border-r-2 border-gray-200">
+                        <div className="space-y-3 text-center">
                           <Button
+                            variant="ghost"
                             size="sm"
-                            variant="outline"
-                            onClick={() => openEditDialog(office)}
-                            className="text-blue-600 hover:text-blue-700"
-                          >
-                            <Edit className="h-3 w-3" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
                             onClick={() => handleStatusToggle(office.id, office.status)}
-                            className={office.status === 'active' 
-                              ? "text-orange-600 hover:text-orange-700" 
-                              : "text-green-600 hover:text-green-700"
-                            }
+                            className="p-0 h-auto hover:scale-110 transition-transform"
                           >
-                            {office.status === 'active' ? 'Deactivate' : 'Activate'}
+                            {office.status === 'active' ? (
+                              <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 text-sm hover:from-green-600 hover:to-green-700 cursor-pointer">
+                                ✅ ACTIVE
+                              </Badge>
+                            ) : (
+                              <Badge className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-4 py-2 text-sm hover:from-gray-500 hover:to-gray-600 cursor-pointer">
+                                ⏸️ INACTIVE
+                              </Badge>
+                            )}
+                          </Button>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-5 px-6">
+                        <div className="flex items-center justify-center space-x-3">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => openEditDialog(office)}
+                            className="p-3 text-blue-600 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-lg"
+                          >
+                            <Edit className="h-5 w-5" />
                           </Button>
                           <Button
+                            variant="ghost"
                             size="sm"
-                            variant="outline"
-                            onClick={() => handleDelete(office.id)}
-                            className="text-red-600 hover:text-red-700"
+                            onClick={() => handleStatusToggle(office.id, office.status)}
+                            className={`p-3 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-lg ${
+                              office.status === 'active' 
+                                ? "text-orange-600 hover:text-white hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-600" 
+                                : "text-green-600 hover:text-white hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600"
+                            }`}
                           >
-                            <Trash2 className="h-3 w-3" />
+                            {office.status === 'active' ? '⏸️' : '▶️'}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(office.id)}
+                            className="p-3 text-red-600 hover:text-white hover:bg-gradient-to-r hover:from-red-500 hover:to-red-600 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-lg"
+                          >
+                            <Trash2 className="h-5 w-5" />
                           </Button>
                         </div>
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </CardContent>
       </Card>
 
