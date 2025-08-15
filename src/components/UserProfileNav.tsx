@@ -74,21 +74,25 @@ const UserProfileNav = () => {
         </Button>
       </DropdownMenuTrigger>
       
-      <DropdownMenuContent align="end" className="w-64">
-        <DropdownMenuLabel className="flex items-center space-x-3 p-3">
-          <Avatar className="h-12 w-12">
+      <DropdownMenuContent 
+        align="end" 
+        className="w-80 bg-background/95 backdrop-blur-xl border border-border/50 shadow-2xl z-[9999] p-2"
+        sideOffset={8}
+      >
+        <DropdownMenuLabel className="flex items-center space-x-3 p-4 bg-muted/30 rounded-xl m-1">
+          <Avatar className="h-14 w-14 border-2 border-primary/20">
             <AvatarImage src={profile?.avatar_url || ''} alt={displayName} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
+            <AvatarFallback className="bg-primary text-primary-foreground text-lg font-bold">
               {initials}
             </AvatarFallback>
           </Avatar>
-          <div className="flex flex-col">
-            <span className="font-medium text-foreground">{displayName}</span>
-            <span className="text-sm text-muted-foreground">{user.email}</span>
+          <div className="flex flex-col min-w-0 flex-1">
+            <span className="font-semibold text-foreground text-base truncate">{displayName}</span>
+            <span className="text-sm text-muted-foreground truncate">{user.email}</span>
             {userRole && (
               <Badge 
                 variant="secondary" 
-                className={`text-xs w-fit mt-1 ${getRoleBadgeColor(userRole.role)}`}
+                className={`text-xs w-fit mt-2 px-2 py-1 ${getRoleBadgeColor(userRole.role)}`}
               >
                 <Shield className="h-3 w-3 mr-1" />
                 {userRole.role.charAt(0).toUpperCase() + userRole.role.slice(1)}
@@ -97,47 +101,51 @@ const UserProfileNav = () => {
           </div>
         </DropdownMenuLabel>
         
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuItem className="cursor-pointer">
-          <User className="h-4 w-4 mr-3" />
-          <span>Profile Settings</span>
-        </DropdownMenuItem>
-        
-        <DropdownMenuItem className="cursor-pointer">
-          <BookOpen className="h-4 w-4 mr-3" />
-          <span>My Courses</span>
-        </DropdownMenuItem>
-        
-        <DropdownMenuItem className="cursor-pointer">
-          <Award className="h-4 w-4 mr-3" />
-          <span>Certificates</span>
-        </DropdownMenuItem>
-        
-        <DropdownMenuItem className="cursor-pointer">
-          <Settings className="h-4 w-4 mr-3" />
-          <span>Account Settings</span>
-        </DropdownMenuItem>
+        <div className="px-1 py-2 space-y-1">
+          <DropdownMenuItem className="cursor-pointer p-3 rounded-lg hover:bg-muted/50 transition-colors">
+            <User className="h-4 w-4 mr-3 text-primary" />
+            <span className="font-medium">Profile Settings</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem className="cursor-pointer p-3 rounded-lg hover:bg-muted/50 transition-colors">
+            <BookOpen className="h-4 w-4 mr-3 text-primary" />
+            <span className="font-medium">My Courses</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem className="cursor-pointer p-3 rounded-lg hover:bg-muted/50 transition-colors">
+            <Award className="h-4 w-4 mr-3 text-primary" />
+            <span className="font-medium">Certificates</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem className="cursor-pointer p-3 rounded-lg hover:bg-muted/50 transition-colors">
+            <Settings className="h-4 w-4 mr-3 text-primary" />
+            <span className="font-medium">Account Settings</span>
+          </DropdownMenuItem>
+        </div>
         
         {userRole?.role === 'admin' && (
           <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
-              <Shield className="h-4 w-4 mr-3" />
-              <span>Admin Dashboard</span>
-            </DropdownMenuItem>
+            <DropdownMenuSeparator className="my-2 mx-2" />
+            <div className="px-1 py-2">
+              <DropdownMenuItem className="cursor-pointer p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                <Shield className="h-4 w-4 mr-3 text-orange-500" />
+                <span className="font-medium">Admin Dashboard</span>
+              </DropdownMenuItem>
+            </div>
           </>
         )}
         
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="my-2 mx-2" />
         
-        <DropdownMenuItem 
-          className="cursor-pointer text-destructive focus:text-destructive"
-          onClick={handleSignOut}
-        >
-          <LogOut className="h-4 w-4 mr-3" />
-          <span>Sign Out</span>
-        </DropdownMenuItem>
+        <div className="px-1 py-2">
+          <DropdownMenuItem 
+            className="cursor-pointer p-3 rounded-lg text-destructive hover:text-destructive hover:bg-destructive/10 transition-colors"
+            onClick={handleSignOut}
+          >
+            <LogOut className="h-4 w-4 mr-3" />
+            <span className="font-medium">Sign Out</span>
+          </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
