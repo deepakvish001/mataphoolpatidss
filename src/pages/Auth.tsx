@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,7 +12,8 @@ import { Eye, EyeOff, Loader2, Shield, Lock, Mail, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Auth: React.FC = () => {
-  const { user, signIn, signUp, resetPassword, loading } = useAuth();
+  const { user, userRole, signIn, signUp, resetPassword, loading } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
   
   const [isLoading, setIsLoading] = useState(false);
@@ -36,9 +37,24 @@ const Auth: React.FC = () => {
   // Password Reset form
   const [resetEmail, setResetEmail] = useState('');
 
-  // Redirect if already authenticated
-  if (user && !loading) {
-    return <Navigate to="/admin/dashboard" replace />;
+  // Handle role-based redirection after authentication
+  useEffect(() => {
+    if (user && userRole && !loading) {
+      if (userRole === 'admin') {
+        navigate('/admin/dashboard', { replace: true });
+      } else {
+        navigate('/user/dashboard', { replace: true });
+      }
+    }
+  }, [user, userRole, loading, navigate]);
+
+  // Don't redirect immediately - let the role-based effect handle it
+  if (user && !loading && !userRole) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
   }
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -48,7 +64,7 @@ const Auth: React.FC = () => {
     const { error } = await signIn(signInData.email, signInData.password);
     
     if (!error) {
-      // Navigation will happen automatically via AuthContext
+      // Role-based navigation will happen via useEffect
     }
     
     setIsLoading(false);

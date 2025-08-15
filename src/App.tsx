@@ -48,6 +48,19 @@ const App = () => (
                 </AuthGuard>
               } 
             />
+            <Route 
+              path="/user/*" 
+              element={
+                <AuthGuard requiredRole="user">
+                  <div className="min-h-screen flex items-center justify-center">
+                    <div className="text-center space-y-4">
+                      <h1 className="text-2xl font-bold">User Dashboard</h1>
+                      <p className="text-muted-foreground">Welcome to your user dashboard!</p>
+                    </div>
+                  </div>
+                </AuthGuard>
+              } 
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
