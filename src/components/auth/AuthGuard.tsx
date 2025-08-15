@@ -20,6 +20,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
   const location = useLocation();
 
   if (loading) {
+    console.log('AuthGuard: Still loading auth state...');
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -34,6 +35,8 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
     console.log('AuthGuard: No user found, redirecting to:', redirectTo);
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
+
+  console.log('AuthGuard: User authenticated:', user.email, 'Role:', userRole);
 
   if (requiredRole && !hasRole(requiredRole)) {
     console.log('AuthGuard: Access denied. Required:', requiredRole, 'User role:', userRole);

@@ -74,6 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Check for existing session on app start - this is critical for refresh
     const initializeAuth = async () => {
+      console.log('Starting auth initialization...');
       try {
         const { data: { session } } = await supabase.auth.getSession();
         console.log('Initial session check:', session ? `session exists for user: ${session.user.email}` : 'no session');
