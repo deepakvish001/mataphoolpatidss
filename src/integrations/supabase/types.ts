@@ -14,6 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
+      alot_numbers: {
+        Row: {
+          center_code: string | null
+          center_name: string | null
+          course_examination_date: string | null
+          course_name: string
+          created_at: string
+          director_signature_url: string | null
+          id: string
+          issue_date: string | null
+          obtain_practical_marks: string | null
+          obtain_theory_marks: string | null
+          place: string | null
+          practical_max_marks: string | null
+          student_father_name: string | null
+          student_id: string
+          student_mother_name: string | null
+          student_name: string | null
+          student_photo_url: string | null
+          theory_max_marks: string | null
+          updated_at: string
+        }
+        Insert: {
+          center_code?: string | null
+          center_name?: string | null
+          course_examination_date?: string | null
+          course_name: string
+          created_at?: string
+          director_signature_url?: string | null
+          id?: string
+          issue_date?: string | null
+          obtain_practical_marks?: string | null
+          obtain_theory_marks?: string | null
+          place?: string | null
+          practical_max_marks?: string | null
+          student_father_name?: string | null
+          student_id: string
+          student_mother_name?: string | null
+          student_name?: string | null
+          student_photo_url?: string | null
+          theory_max_marks?: string | null
+          updated_at?: string
+        }
+        Update: {
+          center_code?: string | null
+          center_name?: string | null
+          course_examination_date?: string | null
+          course_name?: string
+          created_at?: string
+          director_signature_url?: string | null
+          id?: string
+          issue_date?: string | null
+          obtain_practical_marks?: string | null
+          obtain_theory_marks?: string | null
+          place?: string | null
+          practical_max_marks?: string | null
+          student_father_name?: string | null
+          student_id?: string
+          student_mother_name?: string | null
+          student_name?: string | null
+          student_photo_url?: string | null
+          theory_max_marks?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       assignments: {
         Row: {
           course_id: string
@@ -131,6 +197,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      class_fees: {
+        Row: {
+          board_university: string | null
+          course_name: string
+          course_type: string
+          created_at: string
+          duration: string | null
+          fees_entry: string
+          id: string
+          student_cv: string | null
+          updated_at: string
+        }
+        Insert: {
+          board_university?: string | null
+          course_name: string
+          course_type: string
+          created_at?: string
+          duration?: string | null
+          fees_entry: string
+          id?: string
+          student_cv?: string | null
+          updated_at?: string
+        }
+        Update: {
+          board_university?: string | null
+          course_name?: string
+          course_type?: string
+          created_at?: string
+          duration?: string | null
+          fees_entry?: string
+          id?: string
+          student_cv?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       competition_courses: {
         Row: {
@@ -482,6 +584,42 @@ export type Database = {
           organization?: string | null
           phone?: string
           state?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      expense_entries: {
+        Row: {
+          created_at: string
+          description: string | null
+          expense_date: string
+          expense_name: string
+          given_to: string
+          id: string
+          quantity: string
+          service_name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          expense_date: string
+          expense_name: string
+          given_to: string
+          id?: string
+          quantity: string
+          service_name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          expense_date?: string
+          expense_name?: string
+          given_to?: string
+          id?: string
+          quantity?: string
+          service_name?: string
           updated_at?: string
         }
         Relationships: []
