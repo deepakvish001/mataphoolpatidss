@@ -144,21 +144,39 @@ const StudentMarksheetContent = () => {
     }
 
     try {
-      toast.loading("Generating Full A4 Certificate PDF...", { id: "pdf-gen" });
+      toast.loading("Generating High-Quality Certificate PDF...", { id: "pdf-gen" });
       
-      // Ensure layout fully rendered
-      await new Promise(resolve => setTimeout(resolve, 400));
+      // Calculate optimal dimensions for better subject table handling
+      const subjectCount = courseSubjects.length;
+      const baseHeight = 1123; // A4 base height
+      const additionalHeight = Math.max(0, (subjectCount - 4) * 30); // Extra height for more subjects
+      
+      // Set dynamic height for the certificate element
+      const certElement = marksheetRef.current;
+      const originalMinHeight = certElement.style.minHeight;
+      certElement.style.minHeight = `${baseHeight + additionalHeight}px`;
+      
+      // Wait for layout to settle
+      await new Promise(resolve => setTimeout(resolve, 500));
 
-      // Capture the certificate at high DPI without forcing size (prevents cropping)
-      const canvas = await html2canvas(marksheetRef.current, {
-        scale: Math.min(3, window.devicePixelRatio * 2),
+      // Capture at ultra-high quality for crisp text and better subject handling
+      const canvas = await html2canvas(certElement, {
+        scale: 4, // Ultra high quality
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
-        imageTimeout: 10000,
-        removeContainer: true
+        imageTimeout: 15000,
+        removeContainer: true,
+        scrollX: 0,
+        scrollY: 0,
+        width: 794, // Fixed A4 width
+        height: baseHeight + additionalHeight,
+        foreignObjectRendering: true
       });
+
+      // Restore original height
+      certElement.style.minHeight = originalMinHeight;
 
       const pdf = new jsPDF({
         orientation: 'portrait',
@@ -169,58 +187,83 @@ const StudentMarksheetContent = () => {
 
       const pdfWidth = 210;
       const pdfHeight = 297;
+      const margin = 0; // No margins for full page
 
-      // Calculate page height in canvas pixels for perfect A4 slicing at full width
-      const a4Ratio = pdfHeight / pdfWidth; // ~1.414
-      const pageHeightPx = Math.round(canvas.width * a4Ratio);
+      // Calculate optimal scaling to fit content properly
+      const canvasAspectRatio = canvas.height / canvas.width;
+      const pdfAspectRatio = pdfHeight / pdfWidth;
 
-      // If the canvas height fits into one A4 page slice, render single page filling the sheet
-      if (canvas.height <= pageHeightPx) {
-        const imgData = canvas.toDataURL('image/jpeg', 0.98);
-        // Fill entire page (no margins). Our template keeps A4 ratio so no distortion.
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
-      } else {
-        // Multi-page: slice the tall canvas into A4-height chunks
-        let y = 0;
-        let pageIndex = 0;
-        while (y < canvas.height) {
-          const sliceHeight = Math.min(pageHeightPx, canvas.height - y);
+      let imgWidth = pdfWidth - (2 * margin);
+      let imgHeight = imgWidth * canvasAspectRatio;
+
+      // If content is too tall for one page, use smart pagination
+      if (imgHeight > pdfHeight - (2 * margin)) {
+        // Calculate how many pages we need
+        const totalPages = Math.ceil(imgHeight / (pdfHeight - (2 * margin)));
+        const pageHeight = pdfHeight - (2 * margin);
+        
+        for (let page = 0; page < totalPages; page++) {
+          if (page > 0) pdf.addPage();
+          
+          // Calculate the slice of canvas for this page
+          const startY = (page * pageHeight / imgHeight) * canvas.height;
+          const endY = Math.min(((page + 1) * pageHeight / imgHeight) * canvas.height, canvas.height);
+          const sliceHeight = endY - startY;
+          
+          // Create a temporary canvas for this page slice
           const pageCanvas = document.createElement('canvas');
           pageCanvas.width = canvas.width;
           pageCanvas.height = sliceHeight;
+          
           const ctx = pageCanvas.getContext('2d');
           if (ctx) {
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+            
+            // Draw the slice
             ctx.drawImage(
               canvas,
-              0, y, canvas.width, sliceHeight,
+              0, startY, canvas.width, sliceHeight,
               0, 0, pageCanvas.width, pageCanvas.height
             );
-            const pageImg = pageCanvas.toDataURL('image/jpeg', 0.98);
-            if (pageIndex > 0) pdf.addPage();
-            // Maintain aspect ratio based on width
-            const pageImgHeightMm = (sliceHeight / pageHeightPx) * pdfHeight;
-            pdf.addImage(pageImg, 'JPEG', 0, 0, pdfWidth, pageImgHeightMm, undefined, 'FAST');
+            
+            const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+            const currentPageHeight = (sliceHeight / canvas.height) * imgHeight;
+            
+            pdf.addImage(
+              pageImgData, 
+              'JPEG', 
+              margin, 
+              margin, 
+              imgWidth, 
+              Math.min(currentPageHeight, pageHeight),
+              undefined, 
+              'FAST'
+            );
           }
-          y += sliceHeight;
-          pageIndex += 1;
         }
+      } else {
+        // Single page - fit perfectly
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight, undefined, 'FAST');
       }
 
+      // Enhanced PDF metadata
       pdf.setProperties({
         title: `${selectedStudent?.full_name} - Official Course Certificate`,
         subject: `Professional Certificate - ${selectedStudent?.course_name}`,
         author: 'B.SOFT Computer & Technical Institute',
-        keywords: 'certificate, diploma, course completion, A4, professional',
-        creator: 'B.SOFT Institute Certificate System'
+        keywords: 'certificate, diploma, course completion, marksheet, academic',
+        creator: 'B.SOFT Institute Certificate System v2.0'
       });
 
       const currentDate = new Date().toISOString().split('T')[0];
-      const fileName = `${selectedStudent?.full_name?.replace(/[^a-zA-Z0-9]/g, '_')}_Certificate_${currentDate}.pdf`;
+      const sanitizedName = selectedStudent?.full_name?.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_') || 'Student';
+      const fileName = `${sanitizedName}_Certificate_${currentDate}.pdf`;
+      
       pdf.save(fileName);
 
-      toast.success("Full A4 Certificate PDF Generated Successfully!", { id: "pdf-gen" });
+      toast.success("High-Quality Certificate PDF Generated Successfully!", { id: "pdf-gen" });
     } catch (error) {
       console.error('PDF generation error:', error);
       toast.error("Failed to generate certificate PDF. Please try again.", { id: "pdf-gen" });
@@ -459,7 +502,7 @@ const StudentMarksheetContent = () => {
                   </div>
                 </div>
 
-                {/* Academic Performance Table - More Compact */}
+                {/* Academic Performance Table - Dynamic for Multiple Subjects */}
                 <div className="mb-3">
                   <h3 className="text-base font-bold text-blue-800 text-center mb-2">ACADEMIC PERFORMANCE</h3>
                   
@@ -467,37 +510,42 @@ const StudentMarksheetContent = () => {
                     <table className="w-full text-xs">
                       <thead>
                         <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                          <th className="px-1 py-1.5 text-center font-bold text-xs">Subject</th>
-                          <th className="px-1 py-1.5 text-center font-bold text-xs">Max Theory</th>
-                          <th className="px-1 py-1.5 text-center font-bold text-xs">Max Practical</th>
-                          <th className="px-1 py-1.5 text-center font-bold text-xs">Obt. Theory</th>
+                          <th className="px-1 py-1.5 text-center font-bold text-xs border-r border-blue-500">Subject</th>
+                          <th className="px-1 py-1.5 text-center font-bold text-xs border-r border-blue-500">Max Theory</th>
+                          <th className="px-1 py-1.5 text-center font-bold text-xs border-r border-blue-500">Max Practical</th>
+                          <th className="px-1 py-1.5 text-center font-bold text-xs border-r border-blue-500">Obt. Theory</th>
                           <th className="px-1 py-1.5 text-center font-bold text-xs">Obt. Practical</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {courseSubjects.slice(0, 4).map((subject, index) => (
+                        {courseSubjects.map((subject, index) => (
                           <tr key={subject.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                            <td className="px-1 py-0.5 text-center font-medium text-xs">{subject.subject}</td>
-                            <td className="px-1 py-0.5 text-center text-xs">{subject.theory_marks}</td>
-                            <td className="px-1 py-0.5 text-center text-xs">{subject.practical_marks}</td>
-                            <td className="px-1 py-0.5 text-center font-bold text-blue-600 text-xs">
+                            <td className="px-1 py-1 text-left font-medium text-xs border-r border-gray-200 max-w-[120px] break-words">
+                              {subject.subject}
+                            </td>
+                            <td className="px-1 py-1 text-center text-xs border-r border-gray-200">{subject.theory_marks}</td>
+                            <td className="px-1 py-1 text-center text-xs border-r border-gray-200">{subject.practical_marks}</td>
+                            <td className="px-1 py-1 text-center font-bold text-blue-600 text-xs border-r border-gray-200">
                               {Math.round(parseInt(subject.theory_marks || "0") * 0.75)}
                             </td>
-                            <td className="px-1 py-0.5 text-center font-bold text-purple-600 text-xs">
+                            <td className="px-1 py-1 text-center font-bold text-purple-600 text-xs">
                               {Math.round(parseInt(subject.practical_marks || "0") * 0.8)}
                             </td>
                           </tr>
                         ))}
                         
+                        {/* Summary Row */}
                         <tr className="bg-gradient-to-r from-green-100 to-blue-100 border-t-2 border-blue-400">
-                          <td className="px-1 py-1.5 text-center font-bold text-gray-800 text-xs">RESULT</td>
-                          <td className="px-1 py-1.5 text-center font-bold text-red-600 text-xs">
+                          <td className="px-1 py-1.5 text-center font-bold text-gray-800 text-xs border-r border-blue-300">
+                            OVERALL RESULT
+                          </td>
+                          <td className="px-1 py-1.5 text-center font-bold text-red-600 text-xs border-r border-blue-300">
                             {marksheetData?.percentage || 0}%
                           </td>
-                          <td className="px-1 py-1.5 text-center font-bold text-green-600 text-xs">
-                            {marksheetData?.grade || "N/A"}
+                          <td className="px-1 py-1.5 text-center font-bold text-green-600 text-xs border-r border-blue-300">
+                            Grade: {marksheetData?.grade || "N/A"}
                           </td>
-                          <td className="px-1 py-1.5 text-center">
+                          <td className="px-1 py-1.5 text-center border-r border-blue-300">
                             <div className={`font-bold text-xs px-1 py-0.5 rounded ${
                               marksheetData?.result_status === 'pass' 
                                 ? 'bg-green-200 text-green-800' 
@@ -507,12 +555,23 @@ const StudentMarksheetContent = () => {
                             </div>
                           </td>
                           <td className="px-1 py-1.5 text-center font-bold text-green-600 text-xs">
-                            {marksheetData?.obtained_marks || 0}
+                            Total: {marksheetData?.obtained_marks || 0}
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
+                  
+                  {/* Subject Count Info */}
+                  {courseSubjects.length > 6 && (
+                    <div className="mt-2 text-center">
+                      <div className="inline-block bg-blue-50 border border-blue-200 rounded px-3 py-1">
+                        <span className="text-xs text-blue-700 font-medium">
+                          Showing all {courseSubjects.length} subjects • Multi-page certificate
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Footer Section - Ultra Compact */}
