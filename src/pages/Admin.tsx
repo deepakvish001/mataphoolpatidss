@@ -72,6 +72,11 @@ import PaymentSectionContent from "@/components/admin/PaymentSectionContent";
 import PaymentReportingContent from "@/components/admin/PaymentReportingContent";
 import StudentEditingContent from "@/components/admin/StudentEditingContent";
 import StudentManagementRealTime from "@/components/admin/StudentManagementRealTime";
+import CertificateManagementContent from "@/components/admin/CertificateManagementContent";
+import MarksheetManagementContent from "@/components/admin/MarksheetManagementContent";
+import AttendanceManagementContent from "@/components/admin/AttendanceManagementContent";
+import PaymentModeManagementContent from "@/components/admin/PaymentModeManagementContent";
+import AdminProfileManagementContent from "@/components/admin/AdminProfileManagementContent";
 import AdminFooter from "@/components/admin/AdminFooter";
 
 const Admin = () => {
@@ -160,6 +165,11 @@ const Admin = () => {
     if (path === '/admin/payment-section') return 'payment-section';
     if (path === '/admin/payment-reporting') return 'payment-reporting';
     if (path === '/admin/student-editing') return 'student-editing';
+    if (path === '/admin/certificate-management') return 'certificate-management';
+    if (path === '/admin/marksheet-management') return 'marksheet-management';
+    if (path === '/admin/attendance-management') return 'attendance-management';
+    if (path === '/admin/payment-mode-management') return 'payment-mode-management';
+    if (path === '/admin/admin-profile-management') return 'admin-profile-management';
     return 'dashboard';
   };
 
@@ -192,6 +202,7 @@ const Admin = () => {
     hasSubmenu: true,
     submenuItems: [
       { label: "Edit My Profile", icon: User },
+      { label: "Admin Profile Management", icon: Shield },
       { label: "Change Login Password", icon: Key },
       { label: "Video", icon: Video }
     ]
@@ -252,6 +263,8 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-yellow-400",
     submenuItems: [
+      { label: "Certificate Management", icon: Award },
+      { label: "Marksheet Management", icon: FileText },
       { label: "Alot Number", icon: Hash },
       { label: "Ready Markseet", icon: FileCheck },
       { label: "Report", icon: FileText },
@@ -264,6 +277,7 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-red-400",
     submenuItems: [
+      { label: "Attendance Management", icon: Clock },
       { label: "Student Attandance", icon: Clock },
       { label: "Student Att. Report", icon: BarChart }
     ]
@@ -319,6 +333,7 @@ const Admin = () => {
     hasSubmenu: true,
     color: "text-rose-400",
     submenuItems: [
+      { label: "Payment Mode Management", icon: Settings },
       { label: "Payment Section", icon: CreditCard },
       { label: "Reporting", icon: BarChart },
       { label: "Student_Editing", icon: Edit }
@@ -429,6 +444,8 @@ const Admin = () => {
                           onClick={() => {
                             if (subItem.label === "Edit My Profile") {
                               navigate('/admin/edit-profile');
+                            } else if (subItem.label === "Admin Profile Management") {
+                              navigate('/admin/admin-profile-management');
                             } else if (subItem.label === "Change Login Password") {
                               navigate('/admin/change-password');
                             } else if (subItem.label === "Video") {
@@ -495,6 +512,10 @@ const Admin = () => {
                               navigate('/admin/upload-student-content');
                             } else if (subItem.label === "Course Subject") {
                               navigate('/admin/course-subject');
+                            } else if (subItem.label === "Certificate Management") {
+                              navigate('/admin/certificate-management');
+                            } else if (subItem.label === "Marksheet Management") {
+                              navigate('/admin/marksheet-management');
                             } else if (subItem.label === "Alot Number") {
                               navigate('/admin/alot-number');
                             } else if (subItem.label === "Ready Markseet") {
@@ -505,6 +526,8 @@ const Admin = () => {
                               navigate('/admin/edit-crt');
                             } else if (subItem.label === "Student Markseet") {
                               navigate('/admin/student-marksheet');
+                            } else if (subItem.label === "Attendance Management") {
+                              navigate('/admin/attendance-management');
                             } else if (subItem.label === "Student Attandance") {
                               navigate('/admin/student-attendance');
                             } else if (subItem.label === "Student Att. Report") {
@@ -545,6 +568,8 @@ const Admin = () => {
                               navigate('/admin/make-franchise-certificate');
                             } else if (subItem.label === "Generate Franchise Certificate") {
                               navigate('/admin/generate-franchise-certificate');
+                            } else if (subItem.label === "Payment Mode Management") {
+                              navigate('/admin/payment-mode-management');
                             } else if (subItem.label === "Payment Section") {
                               navigate('/admin/payment-section');
                             } else if (subItem.label === "Reporting") {
@@ -761,6 +786,11 @@ const Admin = () => {
             <Route path="/payment-section" element={<PaymentSectionContent />} />
             <Route path="/payment-reporting" element={<PaymentReportingContent />} />
             <Route path="/student-editing" element={<StudentEditingContent />} />
+            <Route path="/certificate-management" element={<CertificateManagementContent />} />
+            <Route path="/marksheet-management" element={<MarksheetManagementContent />} />
+            <Route path="/attendance-management" element={<AttendanceManagementContent />} />
+            <Route path="/payment-mode-management" element={<PaymentModeManagementContent />} />
+            <Route path="/admin-profile-management" element={<AdminProfileManagementContent />} />
           </Routes>
         </div>
 
