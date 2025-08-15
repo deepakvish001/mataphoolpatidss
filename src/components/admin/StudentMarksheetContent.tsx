@@ -303,24 +303,7 @@ const StudentMarksheetContent = () => {
         yBreaks.push(canvas.height);
       }
 
-      // Function to draw complete page border exactly as shown in portal
-      const drawCompletePageBorder = () => {
-        // Match the portal's decorative border design
-        // Outer indigo border
-        pdf.setDrawColor(55, 65, 130); // indigo-800
-        pdf.setLineWidth(0.8);
-        pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
-        
-        // Inner amber border
-        pdf.setDrawColor(245, 158, 11); // amber-400  
-        pdf.setLineWidth(0.4);
-        pdf.rect(7, 7, pdfWidth - 14, pdfHeight - 14);
-        
-        // Innermost light border
-        pdf.setDrawColor(165, 180, 252); // indigo-300
-        pdf.setLineWidth(0.2);
-        pdf.rect(9, 9, pdfWidth - 18, pdfHeight - 18);
-      };
+      // No additional PDF borders - use only the template borders from html2canvas capture
 
       // Render each page slice with borders
       for (let i = 0; i < yBreaks.length - 1; i++) {
@@ -347,8 +330,7 @@ const StudentMarksheetContent = () => {
         const clampedHeightMm = Math.min(heightMm, usableHeightMm);
         pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, clampedHeightMm, undefined, 'FAST');
 
-        // Draw complete page border on every page to match portal exactly
-        drawCompletePageBorder();
+        // Template borders are already captured in the image - no additional borders needed
 
         // Add page number if multi-page
         if (yBreaks.length > 2) {
