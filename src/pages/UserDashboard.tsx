@@ -29,15 +29,34 @@ import {
   Brain
 } from 'lucide-react';
 import { useRealtimeProfile } from '@/hooks/useRealtimeProfile';
+import { useRealtimeUserData } from '@/hooks/useRealtimeUserData';
 
 const UserDashboard: React.FC = () => {
   const { user, userRole } = useAuth();
-  const { profile, loading } = useRealtimeProfile();
+  const { profile, loading: profileLoading } = useRealtimeProfile();
+  const { 
+    userCourses, 
+    userAssignments, 
+    certificates, 
+    notifications, 
+    userStats, 
+    loading: dataLoading,
+    unreadNotificationsCount
+  } = useRealtimeUserData();
 
   const getInitials = (name?: string) => {
     if (!name) return 'U';
     return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   };
+
+  const loading = profileLoading || dataLoading;
+
+  // Calculate real-time data
+  const activeCourses = userCourses.filter(course => course.status === 'active');
+  const pendingAssignments = userAssignments.filter(assignment => assignment.status === 'pending');
+  const averageProgress = activeCourses.length > 0 
+    ? Math.round(activeCourses.reduce((sum, course) => sum + course.progress, 0) / activeCourses.length)
+    : 0;
 
   const quickActions = [
     {
@@ -47,8 +66,8 @@ const UserDashboard: React.FC = () => {
       href: '/user/courses',
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100',
-      progress: 75,
-      badge: 'In Progress'
+      progress: averageProgress,
+      badge: activeCourses.length > 0 ? 'In Progress' : 'Start Learning'
     },
     {
       title: 'View Certificates',
@@ -58,7 +77,7 @@ const UserDashboard: React.FC = () => {
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-gradient-to-br from-purple-50 to-purple-100',
       progress: null,
-      badge: '2 Available'
+      badge: `${certificates.length} Available`
     },
     {
       title: 'Schedule',
@@ -77,15 +96,15 @@ const UserDashboard: React.FC = () => {
       href: '/user/assignments',
       color: 'from-orange-500 to-orange-600',
       bgColor: 'bg-gradient-to-br from-orange-50 to-orange-100',
-      progress: 60,
-      badge: '3 Pending'
+      progress: pendingAssignments.length > 0 ? 60 : 100,
+      badge: `${pendingAssignments.length} Pending`
     }
   ];
 
   const stats = [
     {
       title: 'Learning Progress',
-      value: '75%',
+      value: `${averageProgress}%`,
       change: '+12%',
       trend: 'up',
       icon: TrendingUp,
@@ -93,8 +112,8 @@ const UserDashboard: React.FC = () => {
       bgColor: 'bg-blue-50'
     },
     {
-      title: 'Goals Achieved',
-      value: '8/10',
+      title: 'Courses Completed',
+      value: `${userStats?.completed_courses || 0}/${userStats?.total_courses || 0}`,
       change: '+2',
       trend: 'up',
       icon: Target,
@@ -103,7 +122,7 @@ const UserDashboard: React.FC = () => {
     },
     {
       title: 'Study Streak',
-      value: '15 days',
+      value: `${userStats?.study_streak_days || 0} days`,
       change: '+5',
       trend: 'up',
       icon: Zap,
@@ -112,64 +131,59 @@ const UserDashboard: React.FC = () => {
     }
   ];
 
-  const recentActivity = [
+  // Use real notifications data with fallback
+  const recentActivity = notifications.length > 0 ? notifications.map(notification => ({
+    title: notification.title,
+    description: notification.message,
+    time: new Date(notification.created_at).toLocaleDateString(),
+    icon: notification.type === 'success' ? CheckCircle : 
+          notification.type === 'warning' ? AlertCircle : 
+          notification.type === 'error' ? AlertCircle : Brain,
+    type: notification.type
+  })) : [
     {
-      title: 'Completed Module: Advanced Excel',
-      description: 'Successfully finished data analysis techniques',
-      time: '2 hours ago',
-      icon: CheckCircle,
-      type: 'success'
-    },
-    {
-      title: 'Assignment Due Soon',
-      description: 'PowerPoint presentation due in 2 days',
-      time: '1 day ago',
-      icon: AlertCircle,
-      type: 'warning'
-    },
-    {
-      title: 'New Certificate Available',
-      description: 'Your Basic Computer Course certificate is ready',
-      time: '3 days ago',
-      icon: Award,
+      title: 'Welcome to MPDS!',
+      description: 'Start your learning journey with us',
+      time: 'Today',
+      icon: Star,
       type: 'info'
     },
     {
-      title: 'Course Recommendation',
-      description: 'Based on your progress, try Advanced Programming',
-      time: '5 days ago',
-      icon: Brain,
+      title: 'Explore Courses',
+      description: 'Check out our available courses',
+      time: 'Today',
+      icon: BookOpen,
       type: 'info'
     }
   ];
 
-  const currentCourses = [
+  // Use real course data
+  const currentCourses = activeCourses.length > 0 ? activeCourses.map(course => ({
+    title: course.courses?.title || 'Course',
+    progress: course.progress,
+    totalLessons: course.courses?.total_lessons || 0,
+    completedLessons: course.completed_lessons,
+    nextLesson: 'Continue Learning',
+    instructor: course.courses?.instructor || 'Instructor',
+    timeLeft: `${course.courses?.duration_weeks || 1} weeks`
+  })) : [
     {
-      title: 'Advanced Computer Skills',
-      progress: 75,
-      totalLessons: 24,
-      completedLessons: 18,
-      nextLesson: 'Data Analysis with Excel',
-      instructor: 'Dr. Smith',
-      timeLeft: '2 weeks'
-    },
-    {
-      title: 'Digital Marketing Basics',
-      progress: 40,
-      totalLessons: 16,
-      completedLessons: 6,
-      nextLesson: 'Social Media Strategy',
-      instructor: 'Prof. Johnson',
-      timeLeft: '3 weeks'
+      title: 'No Active Courses',
+      progress: 0,
+      totalLessons: 0,
+      completedLessons: 0,
+      nextLesson: 'Enroll in a course to start learning',
+      instructor: '',
+      timeLeft: ''
     }
   ];
 
   const achievements = [
-    { title: 'First Course Complete', icon: Trophy, unlocked: true },
-    { title: 'Perfect Attendance', icon: Star, unlocked: true },
-    { title: 'Quick Learner', icon: Zap, unlocked: true },
-    { title: 'Knowledge Master', icon: Brain, unlocked: false },
-    { title: 'Graduation Ready', icon: GraduationCap, unlocked: false }
+    { title: 'First Course Complete', icon: Trophy, unlocked: (userStats?.completed_courses || 0) >= 1 },
+    { title: 'Perfect Attendance', icon: Star, unlocked: (userStats?.study_streak_days || 0) >= 7 },
+    { title: 'Quick Learner', icon: Zap, unlocked: (userStats?.total_study_hours || 0) >= 10 },
+    { title: 'Knowledge Master', icon: Brain, unlocked: (userStats?.completed_courses || 0) >= 3 },
+    { title: 'Graduation Ready', icon: GraduationCap, unlocked: (userStats?.certificates_earned || 0) >= 1 }
   ];
 
   return (
@@ -191,18 +205,18 @@ const UserDashboard: React.FC = () => {
               <p className="text-white/80 text-lg">Ready to continue your learning journey?</p>
             </div>
           </div>
-          <div className="flex items-center space-x-6 text-sm">
+            <div className="flex items-center space-x-6 text-sm">
             <div className="flex items-center space-x-2">
               <Sparkles className="h-4 w-4" />
-              <span>Level 5 Learner</span>
+              <span>Level {Math.floor((userStats?.total_study_hours || 0) / 10) + 1} Learner</span>
             </div>
             <div className="flex items-center space-x-2">
               <Trophy className="h-4 w-4" />
-              <span>3 Achievements</span>
+              <span>{achievements.filter(a => a.unlocked).length} Achievements</span>
             </div>
             <div className="flex items-center space-x-2">
               <Timer className="h-4 w-4" />
-              <span>48 hours learned</span>
+              <span>{userStats?.total_study_hours || 0} hours learned</span>
             </div>
           </div>
         </div>

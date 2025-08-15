@@ -21,10 +21,12 @@ import {
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useRealtimeProfile } from '@/hooks/useRealtimeProfile';
+import { useRealtimeUserData } from '@/hooks/useRealtimeUserData';
 
 export const UserHeader = () => {
   const { user, userRole, signOut } = useAuth();
   const { profile } = useRealtimeProfile();
+  const { unreadNotificationsCount } = useRealtimeUserData();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -66,11 +68,18 @@ export const UserHeader = () => {
         {/* Right side - Notifications and User menu */}
         <div className="flex items-center space-x-3">
           {/* Notifications */}
-          <Button variant="ghost" size="sm" className="relative">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="relative"
+            onClick={() => navigate('/user/notifications')}
+          >
             <Bell className="h-4 w-4" />
-            <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 text-xs p-0 flex items-center justify-center">
-              3
-            </Badge>
+            {unreadNotificationsCount > 0 && (
+              <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 text-xs p-0 flex items-center justify-center">
+                {unreadNotificationsCount}
+              </Badge>
+            )}
           </Button>
 
           {/* User Menu */}
