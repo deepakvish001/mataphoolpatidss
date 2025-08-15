@@ -150,55 +150,70 @@ const StudentMarksheetContent = () => {
     }
 
     try {
-      toast.loading("Creating Professional Certificate...", { id: "pdf-gen" });
+      toast.loading("Creating Premium Professional Certificate...", { id: "pdf-gen" });
 
-      // Ensure layout and webfonts are fully ready
+      // Wait for all assets to load completely
       if ((document as any).fonts?.ready) {
         await (document as any).fonts.ready;
       }
-      await new Promise((resolve) => setTimeout(resolve, 400));
+      
+      // Additional wait for layout stabilization
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
       const element = marksheetRef.current;
 
-      // High-DPI capture for crisp text; stable settings to avoid blank pages
+      // Ultra-high quality capture with optimized settings
       const canvas = await html2canvas(element, {
-        scale: Math.min(3, window.devicePixelRatio * 2),
+        scale: 4, // Ultra high DPI for crisp text
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
-        imageTimeout: 12000,
+        imageTimeout: 15000,
         scrollX: 0,
         scrollY: 0,
+        foreignObjectRendering: true, // Better text rendering
+        removeContainer: false,
       });
 
       if (canvas.width === 0 || canvas.height === 0) {
         throw new Error('Captured canvas has zero size');
       }
 
-      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+      // Premium PDF settings
+      const pdf = new jsPDF({ 
+        orientation: 'portrait', 
+        unit: 'mm', 
+        format: 'a4', 
+        compress: false, // Better quality
+        precision: 16 // Higher precision
+      });
+      
       const pdfWidth = 210;
       const pdfHeight = 297;
-      const margin = 10; // mm
+      const margin = 8; // Elegant margins
 
-      // Compute usable page size (accounting for margins)
       const usableWidthMm = pdfWidth - margin * 2;
       const usableHeightMm = pdfHeight - margin * 2;
 
-      // Compute page height in canvas pixels to slice clean A4 pages (scaled to usable area)
+      // Smart page height calculation for optimal breaks
       const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
 
-      // Compute row-aware page breaks to avoid splitting subject rows
-      const ratio = canvas.width / element.clientWidth; // canvas px per CSS px
+      // Intelligent page breaks to avoid cutting important content
+      const ratio = canvas.width / element.clientWidth;
       const yBreaks: number[] = [0];
       let lastBreak = 0;
 
+      // Find natural break points (after table rows, sections)
       if (tableRef.current) {
         const elemRect = element.getBoundingClientRect();
         const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
+        
         for (let i = 0; i < rows.length; i++) {
           const r = rows[i].getBoundingClientRect();
           const rowBottomPx = Math.round((r.bottom - elemRect.top) * ratio);
+          
+          // If this row would exceed page height, break before it
           if (rowBottomPx - lastBreak > pageHeightPx && i > 0) {
             const prevBottom = rows[i - 1].getBoundingClientRect().bottom;
             const prevBottomPx = Math.max(lastBreak + 1, Math.round((prevBottom - elemRect.top) * ratio));
@@ -208,50 +223,88 @@ const StudentMarksheetContent = () => {
         }
       }
 
+      // Fill remaining content with optimal page sizes
       if (yBreaks[yBreaks.length - 1] !== canvas.height) {
-        // Fill remaining pages if needed
         let next = yBreaks[yBreaks.length - 1];
         while (next + pageHeightPx < canvas.height) {
           next += pageHeightPx;
           yBreaks.push(next);
         }
-        if (yBreaks[yBreaks.length - 1] !== canvas.height) yBreaks.push(canvas.height);
+        if (yBreaks[yBreaks.length - 1] !== canvas.height) {
+          yBreaks.push(canvas.height);
+        }
       }
 
-      // Render each slice as a page with margins
+      // Generate premium pages with enhanced quality
       for (let i = 0; i < yBreaks.length - 1; i++) {
         if (i > 0) pdf.addPage();
+        
         const sliceTop = yBreaks[i];
         const sliceHeight = yBreaks[i + 1] - sliceTop;
 
+        // Create high-quality page canvas
         const pageCanvas = document.createElement('canvas');
         pageCanvas.width = canvas.width;
         pageCanvas.height = sliceHeight;
         const ctx = pageCanvas.getContext('2d');
         if (!ctx) throw new Error('2D context not available');
 
+        // Premium white background
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        
+        // High-quality image drawing
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
         ctx.drawImage(canvas, 0, sliceTop, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
 
-        const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+        // Premium JPEG quality
+        const imgData = pageCanvas.toDataURL('image/jpeg', 0.98);
         const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
-        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
+        
+        // Add image with perfect scaling
+        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'SLOW');
 
-        // Optional border for aesthetics
-        pdf.setDrawColor(90, 90, 140);
-        pdf.setLineWidth(0.4);
-        pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
+        // Add premium border frame
+        pdf.setDrawColor(70, 80, 150); // Professional blue
+        pdf.setLineWidth(0.5);
+        pdf.rect(4, 4, pdfWidth - 8, pdfHeight - 8);
+        
+        // Inner elegant border
+        pdf.setDrawColor(200, 180, 100); // Gold accent
+        pdf.setLineWidth(0.3);
+        pdf.rect(6, 6, pdfWidth - 12, pdfHeight - 12);
+
+        // Add page number for multi-page certificates
+        if (yBreaks.length > 2) {
+          pdf.setFontSize(8);
+          pdf.setTextColor(100, 100, 100);
+          pdf.text(`Page ${i + 1} of ${yBreaks.length - 1}`, pdfWidth - 25, pdfHeight - 5);
+        }
       }
 
+      // Enhanced PDF metadata
+      pdf.setProperties({
+        title: `${selectedStudent?.full_name} - Official Diploma Certificate`,
+        subject: `Professional Certificate - ${selectedStudent?.course_name}`,
+        author: 'B.SOFT Computer & Technical Institute',
+        keywords: 'certificate, diploma, course completion, professional, academic excellence',
+        creator: 'B.SOFT Institute Premium Certificate System v3.0'
+      });
+
+      // Generate premium filename
       const currentDate = new Date().toISOString().split('T')[0];
-      const sanitizedName = selectedStudent?.full_name?.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_') || 'Student';
-      const fileName = `${sanitizedName}_Certificate_${currentDate}.pdf`;
+      const sanitizedName = selectedStudent?.full_name
+        ?.replace(/[^a-zA-Z0-9\s]/g, '')
+        .trim()
+        .replace(/\s+/g, '_') || 'Student';
+      const fileName = `${sanitizedName}_Premium_Certificate_${currentDate}.pdf`;
+      
       pdf.save(fileName);
 
-      toast.success("Professional Certificate Generated!", { id: "pdf-gen" });
+      toast.success("Premium Professional Certificate Generated Successfully! 🎓", { id: "pdf-gen" });
     } catch (error: any) {
-      console.error('PDF error:', error);
+      console.error('PDF generation error:', error);
       toast.error(`Failed to generate certificate: ${error?.message || 'Unknown error'}`, { id: "pdf-gen" });
     }
   };
