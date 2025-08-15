@@ -62,6 +62,7 @@ const App = () => (
                     <ErrorBoundary>
                       <UserLayout>
                         <Routes>
+                          <Route index element={<UserDashboard />} />
                           <Route path="dashboard" element={<UserDashboard />} />
                           <Route path="profile" element={<UserProfile />} />
                         </Routes>
