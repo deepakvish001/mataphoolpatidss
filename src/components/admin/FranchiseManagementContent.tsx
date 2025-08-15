@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { toast } from "sonner";
 
 interface Franchise {
@@ -36,10 +37,13 @@ const FranchiseManagementContent = () => {
   });
   const [formLoading, setFormLoading] = useState(false);
 
-  const { data: franchises, loading, create, update, delete: deleteFranchise, refresh } = useOptimisticCrud<Franchise>({
+  const { data: franchises, loading, create, update, delete: deleteFranchise } = useOptimisticCrud<Franchise>({
     tableName: 'franchises',
-    orderBy: { column: 'created_at', ascending: false },
-    realTimeChannel: 'franchise-realtime'
+    orderBy: { column: 'created_at', ascending: false }
+  });
+
+  useAdminRealTime({
+    tableName: 'franchises'
   });
 
   const handleInputChange = (field: string, value: string) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,11 +7,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { useGlobalCrud } from "@/contexts/GlobalCrudContext";
-import { useButtonDetection } from "@/hooks/useButtonDetection";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { 
   Building2, 
   Edit, 
@@ -46,10 +44,21 @@ interface HeadOffice {
 }
 
 const HeadOfficeContent = () => {
-  const { user } = useAuth();
-  const { lastEvent } = useGlobalCrud();
-  const [headOffices, setHeadOffices] = useState<HeadOffice[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: headOffices,
+    loading,
+    create,
+    update,
+    delete: deleteItem
+  } = useOptimisticCrud<HeadOffice>({ 
+    tableName: 'head_offices',
+    orderBy: { column: 'created_at', ascending: false }
+  });
+
+  useAdminRealTime({
+    tableName: 'head_offices'
+  });
+
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -68,98 +77,6 @@ const HeadOfficeContent = () => {
     status: "active" as "active" | "inactive"
   });
   const [formLoading, setFormLoading] = useState(false);
-
-  // Enable button detection for head_offices table
-  useButtonDetection('head_offices');
-
-  // Load head offices data
-  const loadHeadOffices = async () => {
-    try {
-      const { data, error } = await (supabase as any)
-        .from('head_offices')
-        .select('*')
-        .order('is_primary', { ascending: false })
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setHeadOffices(data || []);
-    } catch (error: any) {
-      console.error('Error loading head offices:', error);
-      toast.error("Failed to load head office data");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Real-time subscription with instant updates
-  useEffect(() => {
-    loadHeadOffices();
-
-    const channel = supabase
-      .channel('head-office-realtime-instant')
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'head_offices'
-      }, (payload: any) => {
-        console.log('🚀 Head office instant real-time change:', payload);
-        
-        // Instant UI updates with no delays
-        switch (payload.eventType) {
-          case 'INSERT':
-            setHeadOffices(prev => {
-              const exists = prev.some(office => office.id === payload.new.id);
-              if (exists) return prev;
-              
-              const newList = [payload.new, ...prev].sort((a, b) => {
-                if (a.is_primary && !b.is_primary) return -1;
-                if (!a.is_primary && b.is_primary) return 1;
-                return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-              });
-              
-              return newList;
-            });
-            console.log('✅ Office added instantly to UI');
-            break;
-            
-          case 'UPDATE':
-            setHeadOffices(prev => {
-              return prev.map(office => 
-                office.id === payload.new.id ? { ...office, ...payload.new } : office
-              ).sort((a, b) => {
-                if (a.is_primary && !b.is_primary) return -1;
-                if (!a.is_primary && b.is_primary) return 1;
-                return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-              });
-            });
-            console.log('⚡ Office updated instantly in UI');
-            break;
-            
-          case 'DELETE':
-            setHeadOffices(prev => prev.filter(office => office.id !== payload.old.id));
-            console.log('🗑️ Office removed instantly from UI');
-            break;
-        }
-      })
-      .subscribe((status) => {
-        if (status === 'SUBSCRIBED') {
-          console.log('🚀 Head office instant real-time active');
-        }
-      });
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  // React to global CRUD events for additional reliability
-  useEffect(() => {
-    if (lastEvent && lastEvent.table === 'head_offices') {
-      console.log('🔄 Global CRUD event for head_offices:', lastEvent);
-      // The real-time subscription above should handle the update,
-      // but this provides an additional safety net
-    }
-  }, [lastEvent]);
 
   // Filter head offices
   const filteredOffices = headOffices.filter(office => {
@@ -238,12 +155,6 @@ const HeadOfficeContent = () => {
     if (!validateForm()) return;
 
     setFormLoading(true);
-    
-    // Show instant loading feedback
-    const loadingToast = toast.loading(
-      editingOffice ? "⚡ Updating head office..." : "⚡ Adding head office...",
-      { style: { background: '#3B82F6', color: 'white' } }
-    );
 
     try {
       const officeData = {
@@ -257,131 +168,45 @@ const HeadOfficeContent = () => {
         postal_code: formData.postalCode || null,
         country: formData.country,
         is_primary: formData.isPrimary,
-        status: formData.status,
-        updated_at: new Date().toISOString(),
-        ...(editingOffice ? {} : { created_by: user?.id })
+        status: formData.status
       };
 
-      // If setting as primary, unset all other primary offices first
-      if (formData.isPrimary) {
-        await (supabase as any)
-          .from('head_offices')
-          .update({ is_primary: false })
-          .neq('id', editingOffice?.id || '');
-      }
-
       if (editingOffice) {
-        // Update existing head office
-        const { error } = await (supabase as any)
-          .from('head_offices')
-          .update(officeData)
-          .eq('id', editingOffice.id);
-
-        if (error) throw error;
-        
-        // Dismiss loading toast and show success
-        toast.dismiss(loadingToast);
-        toast.success("🎉 Head office updated successfully!", {
-          duration: 3000,
-          style: { background: '#10B981', color: 'white' }
-        });
+        await update(editingOffice.id, officeData);
+        toast.success("Head office updated successfully!");
       } else {
-        // Create new head office
-        const { error } = await (supabase as any)
-          .from('head_offices')
-          .insert({
-            ...officeData,
-            created_at: new Date().toISOString()
-          });
-
-        if (error) throw error;
-        
-        // Dismiss loading toast and show success
-        toast.dismiss(loadingToast);
-        toast.success("🎉 Head office added successfully!", {
-          duration: 3000,
-          style: { background: '#10B981', color: 'white' }
-        });
+        await create(officeData);
+        toast.success("Head office added successfully!");
       }
 
       setIsDialogOpen(false);
       resetForm();
     } catch (error: any) {
-      console.error('Error saving head office:', error);
-      toast.dismiss(loadingToast);
-      toast.error(`❌ ${error.message || "Failed to save head office data"}`, {
-        duration: 4000,
-        style: { background: '#EF4444', color: 'white' }
-      });
+      toast.error(`Failed to save head office: ${error.message}`);
     } finally {
       setFormLoading(false);
     }
   };
 
   const handleDelete = async (officeId: string) => {
-    if (!confirm("⚠️ Are you sure you want to delete this head office? This action cannot be undone.")) return;
-
-    const loadingToast = toast.loading("🗑️ Deleting head office...", {
-      style: { background: '#EF4444', color: 'white' }
-    });
+    if (!confirm("⚠️ Are you sure you want to delete this head office?")) return;
 
     try {
-      const { error } = await (supabase as any)
-        .from('head_offices')
-        .delete()
-        .eq('id', officeId);
-
-      if (error) throw error;
-      
-      toast.dismiss(loadingToast);
-      toast.success("🗑️ Head office deleted successfully!", {
-        duration: 3000,
-        style: { background: '#EF4444', color: 'white' }
-      });
+      await deleteItem(officeId);
+      toast.success("Head office deleted successfully!");
     } catch (error: any) {
-      console.error('Error deleting head office:', error);
-      toast.dismiss(loadingToast);
-      toast.error(`❌ Failed to delete head office: ${error.message}`, {
-        duration: 4000,
-        style: { background: '#EF4444', color: 'white' }
-      });
+      toast.error(`Failed to delete head office: ${error.message}`);
     }
   };
 
   const handleStatusToggle = async (officeId: string, currentStatus: string) => {
     const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-    const emoji = newStatus === 'active' ? '✅' : '⏸️';
-    
-    const loadingToast = toast.loading(`${emoji} Updating status to ${newStatus}...`, {
-      style: { background: '#3B82F6', color: 'white' }
-    });
     
     try {
-      const { error } = await (supabase as any)
-        .from('head_offices')
-        .update({ 
-          status: newStatus,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', officeId);
-
-      if (error) throw error;
-      
-      toast.dismiss(loadingToast);
-      toast.success(`${emoji} Head office status updated to ${newStatus}!`, {
-        duration: 2000,
-        style: { 
-          background: newStatus === 'active' ? '#10B981' : '#F59E0B', 
-          color: 'white' 
-        }
-      });
+      await update(officeId, { status: newStatus });
+      toast.success(`Head office status updated to ${newStatus}!`);
     } catch (error: any) {
-      console.error('Error updating status:', error);
-      toast.dismiss(loadingToast);
-      toast.error(`❌ Failed to update status: ${error.message}`, {
-        duration: 4000,
-        style: { background: '#EF4444', color: 'white' }
-      });
+      toast.error(`Failed to update status: ${error.message}`);
     }
   };
 
