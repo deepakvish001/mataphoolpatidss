@@ -45,6 +45,8 @@ interface CourseSubject {
 }
 
 const StudentMarksheetContent = () => {
+  console.log("StudentMarksheetContent component is loading - v2.0");
+  
   const [searchValue, setSearchValue] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(null);
   const [marksheetData, setMarksheetData] = useState<MarksheetData | null>(null);
@@ -53,8 +55,6 @@ const StudentMarksheetContent = () => {
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const marksheetRef = useRef<HTMLDivElement>(null);
-
-  const missingDataFields: string[] = [];
 
   const checkMissingData = () => {
     const missing: string[] = [];
