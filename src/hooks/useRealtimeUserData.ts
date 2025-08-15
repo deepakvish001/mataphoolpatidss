@@ -74,70 +74,94 @@ export const useRealtimeUserData = () => {
 
     const fetchAllData = async () => {
       try {
-        // Fetch user courses
-        const { data: coursesData } = await supabase
-          .from('user_courses')
-          .select(`
-            *,
-            courses:course_id (
-              title,
-              instructor,
-              total_lessons,
-              duration_weeks
-            )
-          `)
-          .eq('user_id', user.id);
+        setLoading(true);
+        
+        // Fetch all data in parallel for better performance
+        const [coursesResult, assignmentsResult, certificatesResult, notificationsResult, statsResult] = await Promise.all([
+          // Fetch user courses
+          supabase
+            .from('user_courses')
+            .select(`
+              *,
+              courses:course_id (
+                title,
+                instructor,
+                total_lessons,
+                duration_weeks
+              )
+            `)
+            .eq('user_id', user.id),
 
-        if (coursesData) setUserCourses(coursesData);
+          // Fetch user assignments  
+          supabase
+            .from('user_assignments')
+            .select(`
+              *,
+              assignments:assignment_id (
+                title,
+                description,
+                due_date,
+                course_id
+              )
+            `)
+            .eq('user_id', user.id),
 
-        // Fetch user assignments
-        const { data: assignmentsData } = await supabase
-          .from('user_assignments')
-          .select(`
-            *,
-            assignments:assignment_id (
-              title,
-              description,
-              due_date,
-              course_id
-            )
-          `)
-          .eq('user_id', user.id);
+          // Fetch certificates
+          supabase
+            .from('certificates')
+            .select(`
+              *,
+              courses:course_id (
+                title
+              )
+            `)
+            .eq('user_id', user.id),
 
-        if (assignmentsData) setUserAssignments(assignmentsData);
+          // Fetch notifications
+          supabase
+            .from('notifications')
+            .select('*')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false })
+            .limit(10),
 
-        // Fetch certificates
-        const { data: certificatesData } = await supabase
-          .from('certificates')
-          .select(`
-            *,
-            courses:course_id (
-              title
-            )
-          `)
-          .eq('user_id', user.id);
+          // Fetch user stats
+          supabase
+            .from('user_stats')
+            .select('*')
+            .eq('user_id', user.id)
+            .maybeSingle()
+        ]);
 
-        if (certificatesData) setCertificates(certificatesData);
+        // Handle results with error checking
+        if (coursesResult.error) {
+          console.error('Error fetching courses:', coursesResult.error);
+        } else if (coursesResult.data) {
+          setUserCourses(coursesResult.data);
+        }
 
-        // Fetch notifications
-        const { data: notificationsData } = await supabase
-          .from('notifications')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false })
-          .limit(10);
+        if (assignmentsResult.error) {
+          console.error('Error fetching assignments:', assignmentsResult.error);
+        } else if (assignmentsResult.data) {
+          setUserAssignments(assignmentsResult.data);
+        }
 
-        if (notificationsData) setNotifications(notificationsData);
+        if (certificatesResult.error) {
+          console.error('Error fetching certificates:', certificatesResult.error);
+        } else if (certificatesResult.data) {
+          setCertificates(certificatesResult.data);
+        }
 
-        // Fetch user stats
-        const { data: statsData } = await supabase
-          .from('user_stats')
-          .select('*')
-          .eq('user_id', user.id)
-          .maybeSingle();
+        if (notificationsResult.error) {
+          console.error('Error fetching notifications:', notificationsResult.error);
+        } else if (notificationsResult.data) {
+          setNotifications(notificationsResult.data);
+        }
 
-        if (statsData) {
-          setUserStats(statsData);
+        if (statsResult.error) {
+          console.error('Error fetching stats:', statsResult.error);
+        } else if (statsResult.data) {
+          setUserStats(statsResult.data);
         } else {
           // Create default stats if none exist
           setUserStats({
@@ -266,32 +290,42 @@ export const useRealtimeUserData = () => {
   const markNotificationAsRead = async (notificationId: string) => {
     if (!user) return;
 
-    const { error } = await supabase
-      .from('notifications')
-      .update({ is_read: true })
-      .eq('id', notificationId)
-      .eq('user_id', user.id);
+    try {
+      const { error } = await supabase
+        .from('notifications')
+        .update({ is_read: true })
+        .eq('id', notificationId)
+        .eq('user_id', user.id);
 
-    if (error) {
-      console.error('Error marking notification as read:', error);
+      if (error) {
+        console.error('Error marking notification as read:', error);
+        throw error;
+      }
+    } catch (error) {
+      console.error('Failed to mark notification as read:', error);
     }
   };
 
   const updateCourseProgress = async (courseId: string, progress: number, completedLessons: number) => {
     if (!user) return;
 
-    const { error } = await supabase
-      .from('user_courses')
-      .update({ 
-        progress, 
-        completed_lessons: completedLessons,
-        status: progress === 100 ? 'completed' : 'active'
-      })
-      .eq('user_id', user.id)
-      .eq('course_id', courseId);
+    try {
+      const { error } = await supabase
+        .from('user_courses')
+        .update({ 
+          progress, 
+          completed_lessons: completedLessons,
+          status: progress === 100 ? 'completed' : 'active'
+        })
+        .eq('user_id', user.id)
+        .eq('course_id', courseId);
 
-    if (error) {
-      console.error('Error updating course progress:', error);
+      if (error) {
+        console.error('Error updating course progress:', error);
+        throw error;
+      }
+    } catch (error) {
+      console.error('Failed to update course progress:', error);
     }
   };
 
