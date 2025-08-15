@@ -26,12 +26,23 @@ export function useOptimisticCrud<T extends { id: string }>(options: OptimisticC
       }
 
       const { data: result, error } = await query;
-      if (error) throw error;
+      if (error) {
+        console.error(`Error loading ${options.tableName}:`, error);
+        // Check if it's an authentication or permission error
+        if (error.message?.includes('JWT') || error.message?.includes('auth') || error.message?.includes('permission')) {
+          toast.error(`Authentication required to access ${options.tableName} data`);
+        } else {
+          toast.error(`Failed to load ${options.tableName} data: ${error.message}`);
+        }
+        setData([]);
+        return;
+      }
       
       setData(result || []);
     } catch (error: any) {
       console.error(`Error loading ${options.tableName}:`, error);
       toast.error(`Failed to load ${options.tableName} data`);
+      setData([]);
     } finally {
       setLoading(false);
     }
