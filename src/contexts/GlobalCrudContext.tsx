@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -13,6 +13,7 @@ interface GlobalCrudContextType {
   lastEvent: CrudEvent | null;
   triggerRefresh: (table: string) => void;
   isConnected: boolean;
+  refreshData: () => void;
 }
 
 const GlobalCrudContext = createContext<GlobalCrudContextType | undefined>(undefined);
@@ -28,9 +29,24 @@ export const useGlobalCrud = () => {
 export const GlobalCrudProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [lastEvent, setLastEvent] = useState<CrudEvent | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
-  useEffect(() => {
-    console.log('🔄 Starting global CRUD monitoring...');
+  // Force refresh all data
+  const refreshData = useCallback(() => {
+    const event: CrudEvent = {
+      table: 'all',
+      operation: 'UPDATE',
+      timestamp: Date.now()
+    };
+    setLastEvent(event);
+    toast.success('🔄 Data refreshed across all components', { 
+      duration: 2000,
+      position: 'bottom-right'
+    });
+  }, []);
+
+  const setupRealTimeConnection = useCallback(() => {
+    console.log(`🔄 Setting up real-time connection (attempt ${retryCount + 1})`);
     
     // Monitor all tables for real-time changes
     const tables = [
@@ -42,14 +58,17 @@ export const GlobalCrudProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       'notifications',
       'user_courses',
       'user_assignments',
-      'user_stats'
+      'user_stats',
+      'profiles'
     ];
 
     const channels: any[] = [];
+    let connectedCount = 0;
 
     tables.forEach(table => {
+      const channelName = `global-${table}-${Date.now()}`;
       const channel = supabase
-        .channel(`global-${table}-changes`)
+        .channel(channelName)
         .on('postgres_changes', {
           event: '*',
           schema: 'public',
@@ -65,64 +84,70 @@ export const GlobalCrudProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           console.log(`🔄 Global CRUD Event: ${event.operation} on ${event.table}`, event.data);
           setLastEvent(event);
           
-          // Show subtle notification for background updates
-          if (event.operation === 'INSERT') {
-            toast.success(`✨ New ${table.replace('_', ' ')} added`, { 
-              duration: 2000,
-              position: 'bottom-right'
-            });
-          } else if (event.operation === 'UPDATE') {
-            toast.success(`⚡ ${table.replace('_', ' ')} updated`, { 
-              duration: 2000,
-              position: 'bottom-right'
-            });
-          } else if (event.operation === 'DELETE') {
-            toast.success(`🗑️ ${table.replace('_', ' ')} removed`, { 
-              duration: 2000,
-              position: 'bottom-right'
-            });
-          }
+          // Show notification
+          const emoji = event.operation === 'INSERT' ? '✨' : event.operation === 'UPDATE' ? '⚡' : '🗑️';
+          const action = event.operation === 'INSERT' ? 'added' : event.operation === 'UPDATE' ? 'updated' : 'removed';
+          
+          toast.success(`${emoji} ${table.replace('_', ' ')} ${action}`, { 
+            duration: 2000,
+            position: 'bottom-right'
+          });
         })
         .subscribe((status) => {
+          console.log(`📡 ${table} subscription status:`, status);
           if (status === 'SUBSCRIBED') {
-            console.log(`✅ Global monitoring active for ${table}`);
+            connectedCount++;
+            console.log(`✅ Connected to ${table} (${connectedCount}/${tables.length})`);
+            
+            if (connectedCount === tables.length) {
+              setIsConnected(true);
+              setRetryCount(0);
+              toast.success('🌐 Real-time sync active for all tables', { 
+                duration: 3000,
+                position: 'bottom-right'
+              });
+            }
+          } else if (status === 'CLOSED' || status === 'CHANNEL_ERROR') {
+            setIsConnected(false);
+            console.log(`❌ ${table} connection failed:`, status);
+            
+            // Retry connection with exponential backoff
+            if (retryCount < 3) {
+              const retryDelay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
+              setTimeout(() => {
+                setRetryCount(prev => prev + 1);
+              }, retryDelay);
+            }
           }
         });
 
       channels.push(channel);
     });
 
-    // Monitor connection status
-    const connectionChannel = supabase
-      .channel('global-connection-status')
-      .subscribe((status) => {
-        setIsConnected(status === 'SUBSCRIBED');
-        if (status === 'SUBSCRIBED') {
-          console.log('🌐 Global CRUD monitoring connected');
-          toast.success('🌐 Real-time sync active', { 
-            duration: 3000,
-            position: 'bottom-right'
-          });
-        } else if (status === 'CLOSED') {
-          console.log('❌ Global CRUD monitoring disconnected');
-          toast.error('❌ Real-time sync disconnected', { 
-            duration: 3000,
-            position: 'bottom-right'
-          });
-        }
-      });
+    return channels;
+  }, [retryCount]);
 
-    channels.push(connectionChannel);
+  useEffect(() => {
+    const channels = setupRealTimeConnection();
+
+    // Fallback polling mechanism if real-time fails
+    const pollInterval = setInterval(() => {
+      if (!isConnected) {
+        console.log('🔄 Real-time not connected, triggering polling refresh');
+        refreshData();
+      }
+    }, 5000); // Poll every 5 seconds if real-time is down
 
     return () => {
       console.log('🛑 Cleaning up global CRUD monitoring');
       channels.forEach(channel => {
         supabase.removeChannel(channel);
       });
+      clearInterval(pollInterval);
     };
-  }, []);
+  }, [setupRealTimeConnection, isConnected, refreshData]);
 
-  const triggerRefresh = (table: string) => {
+  const triggerRefresh = useCallback((table: string) => {
     const event: CrudEvent = {
       table,
       operation: 'UPDATE',
@@ -130,13 +155,14 @@ export const GlobalCrudProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     };
     setLastEvent(event);
     console.log(`🔄 Manual refresh triggered for ${table}`);
-  };
+  }, []);
 
   return (
     <GlobalCrudContext.Provider value={{
       lastEvent,
       triggerRefresh,
-      isConnected
+      isConnected,
+      refreshData
     }}>
       {children}
     </GlobalCrudContext.Provider>

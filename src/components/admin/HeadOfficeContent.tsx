@@ -85,20 +85,22 @@ const HeadOfficeContent = () => {
     }
   };
 
-  // Real-time subscription with automatic background refresh
+  // Enhanced real-time subscription with polling fallback
   useEffect(() => {
     loadHeadOffices();
 
+    let pollInterval: NodeJS.Timeout;
+
     const channel = supabase
-      .channel('head-office-auto-refresh')
+      .channel(`head-office-realtime-${Date.now()}`)
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
         table: 'head_offices'
       }, (payload: any) => {
-        console.log('Head office real-time change:', payload);
+        console.log('✅ Head office real-time change detected:', payload);
         
-        // Automatic background refresh without user interaction
+        // Immediate UI updates
         switch (payload.eventType) {
           case 'INSERT':
             setHeadOffices(prev => {
@@ -114,6 +116,7 @@ const HeadOfficeContent = () => {
               return newList;
             });
             break;
+            
             
           case 'UPDATE':
             setHeadOffices(prev => {
@@ -133,13 +136,24 @@ const HeadOfficeContent = () => {
         }
       })
       .subscribe((status) => {
+        console.log('📡 Head office subscription status:', status);
         if (status === 'SUBSCRIBED') {
-          console.log('✅ Head office auto-refresh active');
+          console.log('✅ Head office real-time connected');
+          // Clear any existing polling
+          if (pollInterval) clearInterval(pollInterval);
+        } else if (status === 'CLOSED' || status === 'CHANNEL_ERROR') {
+          console.log('❌ Head office real-time failed, starting polling fallback');
+          // Start polling as fallback
+          pollInterval = setInterval(() => {
+            console.log('🔄 Polling head offices data');
+            loadHeadOffices();
+          }, 3000);
         }
       });
 
     return () => {
       supabase.removeChannel(channel);
+      if (pollInterval) clearInterval(pollInterval);
     };
   }, []);
 
@@ -399,6 +413,15 @@ const HeadOfficeContent = () => {
               <span>Head Office Management</span>
             </CardTitle>
             <div className="flex space-x-3">
+              <Button
+                onClick={loadHeadOffices}
+                variant="outline"
+                size="sm"
+                className="flex items-center space-x-2"
+              >
+                <RefreshCw className="h-4 w-4" />
+                <span>Refresh</span>
+              </Button>
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
                   <Button 
