@@ -150,162 +150,98 @@ const StudentMarksheetContent = () => {
     }
 
     try {
-      toast.loading("Creating Premium Professional Certificate...", { id: "pdf-gen" });
-
-      // Wait for all assets to load completely
-      if ((document as any).fonts?.ready) {
-        await (document as any).fonts.ready;
-      }
-      
-      // Additional wait for layout stabilization
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      toast.loading("Creating Certificate PDF...", { id: "pdf-gen" });
 
       const element = marksheetRef.current;
+      
+      console.log('PDF Generation Started');
+      console.log('Element dimensions:', {
+        width: element.offsetWidth,
+        height: element.offsetHeight,
+        scrollWidth: element.scrollWidth,
+        scrollHeight: element.scrollHeight
+      });
 
-      // Ultra-high quality capture with optimized settings
+      // Wait for layout to settle
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Simple, reliable canvas capture
       const canvas = await html2canvas(element, {
-        scale: 4, // Ultra high DPI for crisp text
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        logging: false,
-        imageTimeout: 15000,
+        logging: true,
+        imageTimeout: 10000,
         scrollX: 0,
         scrollY: 0,
-        foreignObjectRendering: true, // Better text rendering
-        removeContainer: false,
+        width: element.scrollWidth,
+        height: element.scrollHeight
+      });
+
+      console.log('Canvas captured:', {
+        width: canvas.width,
+        height: canvas.height,
+        dataURL: canvas.toDataURL('image/jpeg', 0.1).substring(0, 50) + '...'
       });
 
       if (canvas.width === 0 || canvas.height === 0) {
-        throw new Error('Captured canvas has zero size');
+        throw new Error('Canvas has zero dimensions');
       }
 
-      // Premium PDF settings
-      const pdf = new jsPDF({ 
-        orientation: 'portrait', 
-        unit: 'mm', 
-        format: 'a4', 
-        compress: false, // Better quality
-        precision: 16 // Higher precision
-      });
+      // Create PDF with simple settings
+      const pdf = new jsPDF('portrait', 'mm', 'a4');
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const margin = 10;
+
+      // Calculate image dimensions to fit page
+      const maxWidth = pageWidth - (margin * 2);
+      const maxHeight = pageHeight - (margin * 2);
       
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-      const margin = 8; // Elegant margins
+      const aspectRatio = canvas.height / canvas.width;
+      let imgWidth = maxWidth;
+      let imgHeight = imgWidth * aspectRatio;
 
-      const usableWidthMm = pdfWidth - margin * 2;
-      const usableHeightMm = pdfHeight - margin * 2;
-
-      // Smart page height calculation for optimal breaks
-      const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
-
-      // Intelligent page breaks to avoid cutting important content
-      const ratio = canvas.width / element.clientWidth;
-      const yBreaks: number[] = [0];
-      let lastBreak = 0;
-
-      // Find natural break points (after table rows, sections)
-      if (tableRef.current) {
-        const elemRect = element.getBoundingClientRect();
-        const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
-        
-        for (let i = 0; i < rows.length; i++) {
-          const r = rows[i].getBoundingClientRect();
-          const rowBottomPx = Math.round((r.bottom - elemRect.top) * ratio);
-          
-          // If this row would exceed page height, break before it
-          if (rowBottomPx - lastBreak > pageHeightPx && i > 0) {
-            const prevBottom = rows[i - 1].getBoundingClientRect().bottom;
-            const prevBottomPx = Math.max(lastBreak + 1, Math.round((prevBottom - elemRect.top) * ratio));
-            yBreaks.push(prevBottomPx);
-            lastBreak = prevBottomPx;
-          }
-        }
+      // If image is too tall, scale it down
+      if (imgHeight > maxHeight) {
+        imgHeight = maxHeight;
+        imgWidth = imgHeight / aspectRatio;
       }
 
-      // Fill remaining content with optimal page sizes
-      if (yBreaks[yBreaks.length - 1] !== canvas.height) {
-        let next = yBreaks[yBreaks.length - 1];
-        while (next + pageHeightPx < canvas.height) {
-          next += pageHeightPx;
-          yBreaks.push(next);
-        }
-        if (yBreaks[yBreaks.length - 1] !== canvas.height) {
-          yBreaks.push(canvas.height);
-        }
-      }
+      // Center the image on the page
+      const x = margin + (maxWidth - imgWidth) / 2;
+      const y = margin + (maxHeight - imgHeight) / 2;
 
-      // Generate premium pages with enhanced quality
-      for (let i = 0; i < yBreaks.length - 1; i++) {
-        if (i > 0) pdf.addPage();
-        
-        const sliceTop = yBreaks[i];
-        const sliceHeight = yBreaks[i + 1] - sliceTop;
-
-        // Create high-quality page canvas
-        const pageCanvas = document.createElement('canvas');
-        pageCanvas.width = canvas.width;
-        pageCanvas.height = sliceHeight;
-        const ctx = pageCanvas.getContext('2d');
-        if (!ctx) throw new Error('2D context not available');
-
-        // Premium white background
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-        
-        // High-quality image drawing
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(canvas, 0, sliceTop, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
-
-        // Premium JPEG quality
-        const imgData = pageCanvas.toDataURL('image/jpeg', 0.98);
-        const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
-        
-        // Add image with perfect scaling
-        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'SLOW');
-
-        // Add premium border frame
-        pdf.setDrawColor(70, 80, 150); // Professional blue
-        pdf.setLineWidth(0.5);
-        pdf.rect(4, 4, pdfWidth - 8, pdfHeight - 8);
-        
-        // Inner elegant border
-        pdf.setDrawColor(200, 180, 100); // Gold accent
-        pdf.setLineWidth(0.3);
-        pdf.rect(6, 6, pdfWidth - 12, pdfHeight - 12);
-
-        // Add page number for multi-page certificates
-        if (yBreaks.length > 2) {
-          pdf.setFontSize(8);
-          pdf.setTextColor(100, 100, 100);
-          pdf.text(`Page ${i + 1} of ${yBreaks.length - 1}`, pdfWidth - 25, pdfHeight - 5);
-        }
-      }
-
-      // Enhanced PDF metadata
-      pdf.setProperties({
-        title: `${selectedStudent?.full_name} - Official Diploma Certificate`,
-        subject: `Professional Certificate - ${selectedStudent?.course_name}`,
-        author: 'B.SOFT Computer & Technical Institute',
-        keywords: 'certificate, diploma, course completion, professional, academic excellence',
-        creator: 'B.SOFT Institute Premium Certificate System v3.0'
+      console.log('Adding image to PDF:', {
+        x, y, imgWidth, imgHeight,
+        pageWidth, pageHeight
       });
 
-      // Generate premium filename
+      // Convert canvas to image and add to PDF
+      const imgData = canvas.toDataURL('image/jpeg', 0.9);
+      pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
+
+      // Add a simple border
+      pdf.setDrawColor(0, 0, 0);
+      pdf.setLineWidth(0.5);
+      pdf.rect(margin, margin, maxWidth, maxHeight);
+
+      // Generate filename
       const currentDate = new Date().toISOString().split('T')[0];
       const sanitizedName = selectedStudent?.full_name
         ?.replace(/[^a-zA-Z0-9\s]/g, '')
         .trim()
         .replace(/\s+/g, '_') || 'Student';
-      const fileName = `${sanitizedName}_Premium_Certificate_${currentDate}.pdf`;
+      const fileName = `${sanitizedName}_Certificate_${currentDate}.pdf`;
       
+      console.log('Saving PDF as:', fileName);
       pdf.save(fileName);
 
-      toast.success("Premium Professional Certificate Generated Successfully! 🎓", { id: "pdf-gen" });
+      toast.success("Certificate PDF Generated Successfully! 📄", { id: "pdf-gen" });
     } catch (error: any) {
-      console.error('PDF generation error:', error);
-      toast.error(`Failed to generate certificate: ${error?.message || 'Unknown error'}`, { id: "pdf-gen" });
+      console.error('PDF generation failed:', error);
+      toast.error(`PDF generation failed: ${error?.message || 'Unknown error'}`, { id: "pdf-gen" });
     }
   };
 
