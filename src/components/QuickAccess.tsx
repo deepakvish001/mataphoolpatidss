@@ -7,7 +7,15 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 
 const QuickAccess: React.FC = () => {
-  const { user, userRole } = useAuth();
+  const auth = useAuth();
+  
+  // Safety check for auth context
+  if (!auth) {
+    console.log('QuickAccess: No auth context available');
+    return null;
+  }
+  
+  const { user, userRole } = auth;
 
   if (!user) return null;
 
