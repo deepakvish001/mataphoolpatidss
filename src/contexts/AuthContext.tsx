@@ -67,7 +67,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUserRole(null);
         }
         
-        // Always set loading to false after processing auth state
+        // CRITICAL: Always set loading to false after processing auth state change
+        console.log('Auth state processing complete, setting loading to false');
         setLoading(false);
       }
     );
