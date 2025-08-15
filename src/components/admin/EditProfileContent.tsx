@@ -6,9 +6,14 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Save, RefreshCw } from "lucide-react";
+import { useGlobalCrud } from "@/contexts/GlobalCrudContext";
+import { useButtonDetection } from "@/hooks/useButtonDetection";
 
 const EditProfileContent = () => {
   const { user, profile, updateProfile } = useAuth();
+  const { lastEvent, isConnected } = useGlobalCrud();
+  useButtonDetection('profiles');
+  
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -37,36 +42,17 @@ const EditProfileContent = () => {
     loadProfileData();
   }, [user, profile]);
 
-  // Real-time subscription to profile changes
+  // Listen to global CRUD events for instant updates
   useEffect(() => {
-    if (!user?.id) return;
-
-    const channel = supabase
-      .channel('profile-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'profiles',
-          filter: `user_id=eq.${user.id}`
-        },
-        (payload: any) => {
-          const updatedProfile = payload.new;
-          setFormData(prev => ({
-            ...prev,
-            fullName: updatedProfile.full_name || "",
-            phone: updatedProfile.phone || ""
-          }));
-          toast.success("Profile updated in real-time!");
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [user?.id]);
+    if (lastEvent && lastEvent.table === 'profiles' && lastEvent.data?.user_id === user?.id) {
+      const updatedProfile = lastEvent.data;
+      setFormData(prev => ({
+        ...prev,
+        fullName: updatedProfile.full_name || prev.fullName,
+        phone: updatedProfile.phone || prev.phone
+      }));
+    }
+  }, [lastEvent, user?.id]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({

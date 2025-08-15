@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -6,9 +6,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useGlobalCrud } from "@/contexts/GlobalCrudContext";
+import { useButtonDetection } from "@/hooks/useButtonDetection";
 
 const EmployeeMasterContent = () => {
   const { toast } = useToast();
+  const { lastEvent, isConnected } = useGlobalCrud();
+  useButtonDetection('employees');
+  
   const [formData, setFormData] = useState({
     employeeId: "EMP001210",
     employeePassword: "Bdcid001110",
@@ -70,6 +75,25 @@ const EmployeeMasterContent = () => {
       variant: "default"
     });
   };
+
+  // Listen to global CRUD events for real-time updates
+  useEffect(() => {
+    if (lastEvent && lastEvent.table === 'employees') {
+      if (lastEvent.operation === 'INSERT') {
+        toast({
+          title: "Employee Added",
+          description: "New employee has been successfully added",
+          variant: "default"
+        });
+      } else if (lastEvent.operation === 'UPDATE') {
+        toast({
+          title: "Employee Updated",
+          description: "Employee information has been updated",
+          variant: "default"
+        });
+      }
+    }
+  }, [lastEvent, toast]);
 
   const handleReset = () => {
     setFormData({

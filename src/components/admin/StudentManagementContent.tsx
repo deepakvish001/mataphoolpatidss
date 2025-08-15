@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Edit } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useGlobalCrud } from "@/contexts/GlobalCrudContext";
+import { useButtonDetection } from "@/hooks/useButtonDetection";
 
 const StudentManagementContent = () => {
   const { toast } = useToast();
+  const { lastEvent, isConnected } = useGlobalCrud();
+  useButtonDetection('student_profiles');
   
   const [selectedFranchise, setSelectedFranchise] = useState("");
 
   // Sample student data based on the screenshots
-  const [students] = useState([
+  const [students, setStudents] = useState([
     {
       sNo: 1,
       applicantName: "Mr./श्री Vivek",
@@ -112,6 +116,27 @@ const StudentManagementContent = () => {
       thumbImpression: ""
     }
   ]);
+
+  // Listen to global CRUD events for real-time updates
+  useEffect(() => {
+    if (lastEvent && lastEvent.table === 'student_profiles') {
+      // In a real implementation, this would update the students list
+      // For now, we'll just show a notification since we're using sample data
+      if (lastEvent.operation === 'INSERT') {
+        toast({
+          title: "New Student Added",
+          description: "A new student has been added to the system",
+          variant: "default"
+        });
+      } else if (lastEvent.operation === 'UPDATE') {
+        toast({
+          title: "Student Updated",
+          description: "Student information has been updated",
+          variant: "default"
+        });
+      }
+    }
+  }, [lastEvent, toast]);
 
   const handleEdit = (studentId: number) => {
     toast({
