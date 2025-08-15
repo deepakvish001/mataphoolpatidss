@@ -61,7 +61,7 @@ const UserProfileNav = () => {
   };
 
   const handleAdminClick = () => {
-    navigate('/admin');
+    navigate('/admin/dashboard');
   };
 
   return (
