@@ -188,13 +188,42 @@ const StudentMarksheetContent = () => {
       // Compute page height in canvas pixels to slice clean A4 pages (scaled to usable area)
       const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
 
-      const totalPages = Math.max(1, Math.ceil(canvas.height / pageHeightPx));
-      let y = 0;
+      // Compute row-aware page breaks to avoid splitting subject rows
+      const ratio = canvas.width / element.clientWidth; // canvas px per CSS px
+      const yBreaks: number[] = [0];
+      let lastBreak = 0;
 
-      for (let page = 0; page < totalPages; page++) {
-        if (page > 0) pdf.addPage();
+      if (tableRef.current) {
+        const elemRect = element.getBoundingClientRect();
+        const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
+        for (let i = 0; i < rows.length; i++) {
+          const r = rows[i].getBoundingClientRect();
+          const rowBottomPx = Math.round((r.bottom - elemRect.top) * ratio);
+          if (rowBottomPx - lastBreak > pageHeightPx && i > 0) {
+            const prevBottom = rows[i - 1].getBoundingClientRect().bottom;
+            const prevBottomPx = Math.max(lastBreak + 1, Math.round((prevBottom - elemRect.top) * ratio));
+            yBreaks.push(prevBottomPx);
+            lastBreak = prevBottomPx;
+          }
+        }
+      }
 
-        const sliceHeight = Math.min(pageHeightPx, canvas.height - y);
+      if (yBreaks[yBreaks.length - 1] !== canvas.height) {
+        // Fill remaining pages if needed
+        let next = yBreaks[yBreaks.length - 1];
+        while (next + pageHeightPx < canvas.height) {
+          next += pageHeightPx;
+          yBreaks.push(next);
+        }
+        if (yBreaks[yBreaks.length - 1] !== canvas.height) yBreaks.push(canvas.height);
+      }
+
+      // Render each slice as a page with margins
+      for (let i = 0; i < yBreaks.length - 1; i++) {
+        if (i > 0) pdf.addPage();
+        const sliceTop = yBreaks[i];
+        const sliceHeight = yBreaks[i + 1] - sliceTop;
+
         const pageCanvas = document.createElement('canvas');
         pageCanvas.width = canvas.width;
         pageCanvas.height = sliceHeight;
@@ -203,18 +232,16 @@ const StudentMarksheetContent = () => {
 
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-        ctx.drawImage(canvas, 0, y, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.drawImage(canvas, 0, sliceTop, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
 
         const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
-        // Add with margins to avoid edge clipping and keep consistent look
-        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, usableHeightMm, undefined, 'FAST');
+        const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
+        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
 
-        // Optional elegant border per page
+        // Optional border for aesthetics
         pdf.setDrawColor(90, 90, 140);
         pdf.setLineWidth(0.4);
         pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
-
-        y += sliceHeight;
       }
 
       const currentDate = new Date().toISOString().split('T')[0];
@@ -462,7 +489,7 @@ const StudentMarksheetContent = () => {
                 <div className="mb-3">
                   <h3 className="text-base font-bold text-blue-800 text-center mb-2">ACADEMIC PERFORMANCE</h3>
                   
-                  <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+                  <div ref={tableRef} className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
                     <table className="w-full text-xs">
                       <thead>
                         <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
