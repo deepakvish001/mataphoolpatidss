@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import AuthGuard from "@/components/AuthGuard";
 import Navigation from "@/components/Navigation";
@@ -23,6 +23,54 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const AppContent = () => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  return (
+    <div className="min-h-screen bg-background font-sans antialiased">
+      {!isAdminRoute && <Navigation />}
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<Index />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/donation" element={<Donation />} />
+        <Route path="/partners" element={<Partners />} />
+        <Route path="/rashtiya-gram-swaraj-abhiyan" element={<RashtriyaGramSwarajAbhiyan />} />
+        <Route path="/nsqf" element={<NSQF />} />
+        <Route path="/aaioe" element={<AAIOE />} />
+        <Route path="/entrepreneurship-development" element={<EntrepreneurshipDevelopment />} />
+        
+        {/* Auth routes */}
+        <Route 
+          path="/login" 
+          element={
+            <AuthGuard requireAuth={false}>
+              <Login />
+            </AuthGuard>
+          } 
+        />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        
+        {/* Protected routes */}
+        <Route 
+          path="/admin/*" 
+          element={
+            <AuthGuard requireAuth={true} requireRole="admin">
+              <Admin />
+            </AuthGuard>
+          } 
+        />
+        
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
+};
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -31,46 +79,7 @@ function App() {
         <Sonner />
         <BrowserRouter>
           <AuthProvider>
-            <div className="min-h-screen bg-background font-sans antialiased">
-              <Navigation />
-              <Routes>
-                {/* Public routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<ContactUs />} />
-                <Route path="/donation" element={<Donation />} />
-                <Route path="/partners" element={<Partners />} />
-                <Route path="/rashtiya-gram-swaraj-abhiyan" element={<RashtriyaGramSwarajAbhiyan />} />
-                <Route path="/nsqf" element={<NSQF />} />
-                <Route path="/aaioe" element={<AAIOE />} />
-                <Route path="/entrepreneurship-development" element={<EntrepreneurshipDevelopment />} />
-                
-                {/* Auth routes */}
-                <Route 
-                  path="/login" 
-                  element={
-                    <AuthGuard requireAuth={false}>
-                      <Login />
-                    </AuthGuard>
-                  } 
-                />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/unauthorized" element={<Unauthorized />} />
-                
-                {/* Protected routes */}
-                <Route 
-                  path="/admin/*" 
-                  element={
-                    <AuthGuard requireAuth={true} requireRole="admin">
-                      <Admin />
-                    </AuthGuard>
-                  } 
-                />
-                
-                {/* 404 */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
+            <AppContent />
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
