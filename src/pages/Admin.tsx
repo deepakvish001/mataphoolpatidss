@@ -71,6 +71,7 @@ import GenerateFranchiseCertificateContent from "@/components/admin/GenerateFran
 import PaymentSectionContent from "@/components/admin/PaymentSectionContent";
 import PaymentReportingContent from "@/components/admin/PaymentReportingContent";
 import StudentEditingContent from "@/components/admin/StudentEditingContent";
+import StudentManagementRealTime from "@/components/admin/StudentManagementRealTime";
 import AdminFooter from "@/components/admin/AdminFooter";
 
 const Admin = () => {
@@ -119,6 +120,7 @@ const Admin = () => {
     if (path === '/admin/student-registration') return 'student-registration';
     if (path === '/admin/student-approval') return 'student-approval';
     if (path === '/admin/student-management') return 'student-management';
+    if (path === '/admin/student-management-realtime') return 'student-management-realtime';
     if (path === '/admin/search-by-student-data') return 'search-by-student-data';
     if (path === '/admin/student-verification') return 'student-verification';
     if (path === '/admin/verification') return 'verification';
@@ -232,6 +234,7 @@ const Admin = () => {
       { label: "Student Registration", icon: UserPlus },
       { label: "Student Approval", icon: UserCheck },
       { label: "Student Management", icon: Users },
+      { label: "Real-Time Student Management", icon: Database },
       { label: "Search By Student Data", icon: Search },
       { label: "Student Verification", icon: Shield },
       { label: "Verification", icon: CheckCircle },
@@ -468,6 +471,8 @@ const Admin = () => {
                               navigate('/admin/student-approval');
                             } else if (subItem.label === "Student Management") {
                               navigate('/admin/student-management');
+                            } else if (subItem.label === "Real-Time Student Management") {
+                              navigate('/admin/student-management-realtime');
                             } else if (subItem.label === "Search By Student Data") {
                               navigate('/admin/search-by-student-data');
                             } else if (subItem.label === "Student Verification") {
@@ -716,6 +721,7 @@ const Admin = () => {
             <Route path="/student-registration" element={<StudentRegistrationContent />} />
             <Route path="/student-approval" element={<StudentApprovalContent />} />
             <Route path="/student-management" element={<StudentManagementContent />} />
+            <Route path="/student-management-realtime" element={<StudentManagementRealTime />} />
             <Route path="/search-by-student-data" element={<SearchByStudentDataContent />} />
             <Route path="/student-verification" element={<StudentVerificationContent />} />
             <Route path="/verification" element={<VerificationContent />} />
