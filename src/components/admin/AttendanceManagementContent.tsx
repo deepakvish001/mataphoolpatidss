@@ -432,12 +432,12 @@ const AttendanceManagementContent = () => {
               className="h-10 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
             />
             
-            <Select value={filterData.status} onValueChange={(value) => handleFilterChange('status', value)}>
+            <Select value={filterData.status} onValueChange={(value) => handleFilterChange('status', value === 'all' ? '' : value)}>
               <SelectTrigger className="h-10 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Status</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="present">Present</SelectItem>
                 <SelectItem value="absent">Absent</SelectItem>
                 <SelectItem value="late">Late</SelectItem>
