@@ -19,6 +19,7 @@ const PhotoGalleryContent = () => {
     data: galleryItems,
     loading,
     create,
+    update,
     delete: deleteItem,
     refresh
   } = useOptimisticCrud<PhotoGallery>({ tableName: 'photo_gallery' });
@@ -31,6 +32,7 @@ const PhotoGalleryContent = () => {
     title: "",
     photo: null as File | null
   });
+  const [editingItem, setEditingItem] = useState<PhotoGallery | null>(null);
 
   const handleInputChange = (field: string, value: string | File | null) => {
     setFormData(prev => ({

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Newspaper, Trash2, Loader2 } from "lucide-react";
+import { Newspaper, Edit, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
@@ -23,6 +23,7 @@ const AddNewsContent = () => {
     data: news,
     loading,
     create,
+    update,
     delete: deleteItem,
     refresh
   } = useOptimisticCrud<News>({ tableName: 'news' });
@@ -34,6 +35,7 @@ const AddNewsContent = () => {
   const [newsTitle, setNewsTitle] = useState("");
   const [newsDetails, setNewsDetails] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [editingNews, setEditingNews] = useState<News | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -53,24 +55,36 @@ const AddNewsContent = () => {
       return;
     }
 
-    const maxNewsId = news.length > 0 ? Math.max(...news.map(n => n.news_id)) : 0;
-    const newNews = {
-      news_id: maxNewsId + 1,
-      news_title: newsTitle,
-      news_description: newsDetails,
-      news_date: new Date().toLocaleString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true
-      }),
-      photo: selectedImage ? selectedImage.name : "No file"
-    };
-
     try {
-      await create(newNews);
+      if (editingNews) {
+        // Update existing news
+        await update(editingNews.id, {
+          news_title: newsTitle.trim(),
+          news_description: newsDetails.trim(),
+          photo: selectedImage ? selectedImage.name : editingNews.photo
+        });
+        toast.success("News updated successfully!");
+        setEditingNews(null);
+      } else {
+        // Create new news
+        const maxNewsId = news.length > 0 ? Math.max(...news.map(n => n.news_id)) : 0;
+        const newNews = {
+          news_id: maxNewsId + 1,
+          news_title: newsTitle.trim(),
+          news_description: newsDetails.trim(),
+          news_date: new Date().toLocaleString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true
+          }),
+          photo: selectedImage ? selectedImage.name : "No file"
+        };
+        await create(newNews);
+        toast.success("News added successfully!");
+      }
       
       setNewsTitle("");
       setNewsDetails("");
@@ -78,11 +92,23 @@ const AddNewsContent = () => {
       // Reset file input
       const fileInput = document.getElementById('imageInput') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
-      
-      toast.success("News added successfully!");
     } catch (error) {
-      toast.error("Failed to add news");
+      toast.error(editingNews ? "Failed to update news" : "Failed to add news");
     }
+  };
+
+  const handleEdit = (newsItem: News) => {
+    setEditingNews(newsItem);
+    setNewsTitle(newsItem.news_title);
+    setNewsDetails(newsItem.news_description);
+    setSelectedImage(null); // Reset image selection
+  };
+
+  const handleReset = () => {
+    setNewsTitle("");
+    setNewsDetails("");
+    setSelectedImage(null);
+    setEditingNews(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -169,13 +195,19 @@ const AddNewsContent = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div className="pt-4">
+            {/* Submit and Reset Buttons */}
+            <div className="flex space-x-4 pt-4">
               <Button
                 onClick={handleSubmit}
                 className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Submit Now
+                {editingNews ? "Update" : "Submit Now"}
+              </Button>
+              <Button
+                onClick={handleReset}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                Reset
               </Button>
             </div>
           </div>
@@ -217,15 +249,24 @@ const AddNewsContent = () => {
                     </div>
                   </TableCell>
                   <TableCell className="border-2 border-gray-600 text-center p-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(item.id)}
-                      className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                      <span className="ml-1">Delete</span>
-                    </Button>
+                    <div className="flex space-x-2 justify-center">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(item)}
+                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(item.id)}
+                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

@@ -31,6 +31,7 @@ const ExpenseMasterContent = () => {
 
   const [serviceName, setServiceName] = useState("");
   const [description, setDescription] = useState("");
+  const [editingExpense, setEditingExpense] = useState<ExpenseMaster | null>(null);
 
   const handleSubmit = async () => {
     if (!serviceName.trim()) {
@@ -39,21 +40,40 @@ const ExpenseMasterContent = () => {
     }
 
     try {
-      await create({
-        service_name: serviceName,
-        description: description || null
-      });
+      if (editingExpense) {
+        // Update existing expense
+        await update(editingExpense.id, {
+          service_name: serviceName.trim(),
+          description: description || null
+        });
+        toast.success("Expense service updated successfully!");
+        setEditingExpense(null);
+      } else {
+        // Create new expense
+        await create({
+          service_name: serviceName.trim(),
+          description: description || null
+        });
+        toast.success("Expense service added successfully!");
+      }
+      
       setServiceName("");
       setDescription("");
-      toast.success("Expense service added successfully!");
     } catch (error) {
-      toast.error("Failed to add expense service");
+      toast.error(editingExpense ? "Failed to update expense service" : "Failed to add expense service");
     }
   };
 
   const handleReset = () => {
     setServiceName("");
     setDescription("");
+    setEditingExpense(null);
+  };
+
+  const handleEdit = (expense: ExpenseMaster) => {
+    setEditingExpense(expense);
+    setServiceName(expense.service_name);
+    setDescription(expense.description || "");
   };
 
   const handleDelete = async (id: string) => {
@@ -160,6 +180,7 @@ const ExpenseMasterContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(expense)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />

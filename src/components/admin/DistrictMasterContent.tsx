@@ -22,6 +22,7 @@ const DistrictMasterContent = () => {
     data: districts,
     loading,
     create,
+    update,
     delete: deleteItem,
     refresh
   } = useOptimisticCrud<DistrictMaster>({ tableName: 'district_master' });
@@ -32,6 +33,7 @@ const DistrictMasterContent = () => {
 
   const [selectedState, setSelectedState] = useState("");
   const [districtName, setDistrictName] = useState("");
+  const [editingDistrict, setEditingDistrict] = useState<DistrictMaster | null>(null);
 
   const states = [
     { value: "16", label: "Uttar Pradesh" },
@@ -50,27 +52,45 @@ const DistrictMasterContent = () => {
       return;
     }
 
-    const maxSiteId = districts.length > 0 ? Math.max(...districts.map(d => d.site_id)) : 0;
-    const newDistrict = {
-      site_id: maxSiteId + 1,
-      city_id: parseInt(selectedState),
-      site_name: districtName,
-      created_date: new Date().toLocaleDateString()
-    };
-
     try {
-      await create(newDistrict);
+      if (editingDistrict) {
+        // Update existing district
+        await update(editingDistrict.id, {
+          city_id: parseInt(selectedState),
+          site_name: districtName.trim()
+        });
+        toast.success("District updated successfully!");
+        setEditingDistrict(null);
+      } else {
+        // Create new district
+        const maxSiteId = districts.length > 0 ? Math.max(...districts.map(d => d.site_id)) : 0;
+        const newDistrict = {
+          site_id: maxSiteId + 1,
+          city_id: parseInt(selectedState),
+          site_name: districtName.trim(),
+          created_date: new Date().toLocaleDateString()
+        };
+        await create(newDistrict);
+        toast.success("District added successfully!");
+      }
+      
       setSelectedState("");
       setDistrictName("");
-      toast.success("District added successfully!");
     } catch (error) {
-      toast.error("Failed to add district");
+      toast.error(editingDistrict ? "Failed to update district" : "Failed to add district");
     }
   };
 
   const handleReset = () => {
     setSelectedState("");
     setDistrictName("");
+    setEditingDistrict(null);
+  };
+
+  const handleEdit = (district: DistrictMaster) => {
+    setEditingDistrict(district);
+    setSelectedState(district.city_id.toString());
+    setDistrictName(district.site_name);
   };
 
   const handleDelete = async (id: string) => {
@@ -148,7 +168,7 @@ const DistrictMasterContent = () => {
                 onClick={handleSave}
                 className="bg-gradient-to-r from-cyan-600 to-cyan-700 hover:from-cyan-700 hover:to-cyan-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Save
+                {editingDistrict ? "Update" : "Save"}
               </Button>
               <Button
                 onClick={handleReset}
@@ -182,6 +202,7 @@ const DistrictMasterContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(district)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />
