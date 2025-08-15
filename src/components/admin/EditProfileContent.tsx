@@ -6,13 +6,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Save, RefreshCw } from "lucide-react";
-import { useGlobalCrud } from "@/contexts/GlobalCrudContext";
-import { useButtonDetection } from "@/hooks/useButtonDetection";
 
 const EditProfileContent = () => {
   const { user, profile, updateProfile } = useAuth();
-  const { lastEvent, isConnected } = useGlobalCrud();
-  useButtonDetection('profiles');
   
   const [formData, setFormData] = useState({
     fullName: "",
@@ -41,18 +37,6 @@ const EditProfileContent = () => {
 
     loadProfileData();
   }, [user, profile]);
-
-  // Listen to global CRUD events for instant updates
-  useEffect(() => {
-    if (lastEvent && lastEvent.table === 'profiles' && lastEvent.data?.user_id === user?.id) {
-      const updatedProfile = lastEvent.data;
-      setFormData(prev => ({
-        ...prev,
-        fullName: updatedProfile.full_name || prev.fullName,
-        phone: updatedProfile.phone || prev.phone
-      }));
-    }
-  }, [lastEvent, user?.id]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
