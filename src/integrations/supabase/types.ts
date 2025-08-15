@@ -132,6 +132,36 @@ export type Database = {
           },
         ]
       }
+      competition_courses: {
+        Row: {
+          created_at: string
+          date: string
+          description: string
+          file: string | null
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          description: string
+          file?: string | null
+          id?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          description?: string
+          file?: string | null
+          id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_us: {
         Row: {
           created_at: string
