@@ -147,90 +147,98 @@ const StudentMarksheetContent = () => {
       toast.loading("Generating Full A4 Certificate PDF...", { id: "pdf-gen" });
       
       // Wait for any final renders
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Ultra high quality canvas for full A4 certificate
+      // Capture certificate with optimal quality for A4
       const canvas = await html2canvas(marksheetRef.current, {
-        scale: 3, // High resolution for crisp A4 output
+        scale: 2, // Balanced scale for quality and performance
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        width: marksheetRef.current.scrollWidth,
-        height: marksheetRef.current.scrollHeight,
+        width: 794, // A4 width in pixels at 96 DPI
+        height: 1123, // A4 height in pixels at 96 DPI
         logging: false,
-        imageTimeout: 15000,
+        imageTimeout: 10000,
         removeContainer: true
       });
 
-      toast.loading("Creating Full A4 Size Professional Certificate PDF...", { id: "pdf-gen" });
+      toast.loading("Creating Full A4 Professional Certificate PDF...", { id: "pdf-gen" });
 
       // Create PDF with exact A4 dimensions
       const pdf = new jsPDF({
-        orientation: 'portrait', // A4 Portrait: 210 x 297 mm
+        orientation: 'portrait',
         unit: 'mm',
         format: 'a4',
-        compress: false // Maximum quality
+        compress: true
       });
       
       // A4 dimensions in mm
-      const pdfWidth = 210;  // A4 width
-      const pdfHeight = 297; // A4 height
+      const pdfWidth = 210;
+      const pdfHeight = 297;
       
-      // Convert canvas to image
-      const imgData = canvas.toDataURL('image/png', 1.0); // Maximum quality PNG
+      // Convert canvas to high-quality image
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
       
-      // Add image to fill entire A4 page (no margins)
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
+      // Calculate if we need single or multiple pages
+      const canvasRatio = canvas.height / canvas.width;
+      const a4Ratio = pdfHeight / pdfWidth;
       
-      // Check if content needs additional pages
-      const imgRatio = canvas.height / canvas.width;
-      const pdfRatio = pdfHeight / pdfWidth;
-      
-      if (imgRatio > pdfRatio) {
-        // Content is taller than A4 ratio, might need multiple pages
-        const totalContentHeight = pdfWidth * imgRatio;
-        const pagesNeeded = Math.ceil(totalContentHeight / pdfHeight);
+      if (canvasRatio <= a4Ratio) {
+        // Content fits in one page - scale to fill A4
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
+      } else {
+        // Content is too tall - split into multiple pages
+        const contentHeight = pdfWidth * canvasRatio;
+        const pagesNeeded = Math.ceil(contentHeight / pdfHeight);
         
-        if (pagesNeeded > 1) {
-          // Add additional pages for overflow content
-          for (let page = 1; page < pagesNeeded; page++) {
+        toast.loading(`Creating ${pagesNeeded}-page certificate PDF...`, { id: "pdf-gen" });
+        
+        for (let pageIndex = 0; pageIndex < pagesNeeded; pageIndex++) {
+          if (pageIndex > 0) {
             pdf.addPage();
-            
-            // Calculate the portion of content for this page
-            const sourceY = (canvas.height / pagesNeeded) * page;
-            const sourceHeight = canvas.height / pagesNeeded;
-            
-            // Create canvas section for this page
-            const pageCanvas = document.createElement('canvas');
-            pageCanvas.width = canvas.width;
-            pageCanvas.height = sourceHeight;
-            const pageCtx = pageCanvas.getContext('2d');
-            
-            // Draw the section
+          }
+          
+          // Calculate section of content for this page
+          const sectionHeight = canvas.height / pagesNeeded;
+          const sourceY = sectionHeight * pageIndex;
+          
+          // Create canvas for this page section
+          const pageCanvas = document.createElement('canvas');
+          pageCanvas.width = canvas.width;
+          pageCanvas.height = sectionHeight;
+          
+          const pageCtx = pageCanvas.getContext('2d');
+          if (pageCtx) {
+            // Fill with white background
             pageCtx.fillStyle = '#ffffff';
             pageCtx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-            pageCtx.drawImage(canvas, 0, sourceY, canvas.width, sourceHeight, 0, 0, canvas.width, sourceHeight);
             
-            const pageImgData = pageCanvas.toDataURL('image/png', 1.0);
+            // Draw the section from main canvas
+            pageCtx.drawImage(
+              canvas,
+              0, sourceY, canvas.width, sectionHeight,
+              0, 0, pageCanvas.width, pageCanvas.height
+            );
             
-            // Add to PDF filling entire page
-            pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
+            // Convert to image and add to PDF
+            const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+            pdf.addImage(pageImgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
           }
         }
       }
       
       // Enhanced metadata
       pdf.setProperties({
-        title: `${selectedStudent?.full_name} - Official Certificate`,
-        subject: `Professional Course Certificate - ${selectedStudent?.course_name}`,
+        title: `${selectedStudent?.full_name} - Official Course Certificate`,
+        subject: `Professional Certificate - ${selectedStudent?.course_name}`,
         author: 'B.SOFT Computer & Technical Institute',
-        keywords: 'official certificate, diploma, course completion, A4 certificate',
+        keywords: 'certificate, diploma, course completion, A4, professional',
         creator: 'B.SOFT Institute Certificate System'
       });
 
       // Generate filename with date
       const currentDate = new Date().toISOString().split('T')[0];
-      const fileName = `${selectedStudent?.full_name?.replace(/[^a-zA-Z0-9]/g, '_')}_Official_Certificate_${currentDate}.pdf`;
+      const fileName = `${selectedStudent?.full_name?.replace(/[^a-zA-Z0-9]/g, '_')}_Certificate_${currentDate}.pdf`;
       
       pdf.save(fileName);
       
@@ -373,309 +381,222 @@ const StudentMarksheetContent = () => {
       <div className="px-6 pb-6">
         <Card className="shadow-2xl border-0 bg-white overflow-hidden">
           <CardContent className="p-0">
-            <div ref={marksheetRef} className="relative bg-gradient-to-br from-white via-blue-50/30 to-purple-50/20 p-12 min-h-[800px]">
+            <div ref={marksheetRef} className="relative bg-white p-8 min-h-[1123px] w-[794px]" style={{ aspectRatio: '210/297' }}>
               
-              {/* Elegant Border Design */}
-              <div className="absolute inset-4 border-4 border-double border-gradient-to-r from-blue-800 via-purple-600 to-blue-800 rounded-lg opacity-60">
-                <div className="absolute inset-2 border-2 border-amber-300/40 rounded-md"></div>
-                <div className="absolute inset-1 border border-blue-200/30 rounded-md"></div>
+              {/* Professional Certificate Border */}
+              <div className="absolute inset-6 border-8 border-double border-blue-800 rounded-lg">
+                <div className="absolute inset-4 border-2 border-amber-400 rounded-md"></div>
+                <div className="absolute inset-2 border border-blue-300 rounded-sm"></div>
               </div>
               
-              {/* Decorative Corner Elements */}
-              <div className="absolute top-8 left-8 w-20 h-20 border-l-4 border-t-4 border-blue-800/80 rounded-tl-xl"></div>
-              <div className="absolute top-8 right-8 w-20 h-20 border-r-4 border-t-4 border-blue-800/80 rounded-tr-xl"></div>
-              <div className="absolute bottom-8 left-8 w-20 h-20 border-l-4 border-b-4 border-blue-800/80 rounded-bl-xl"></div>
-              <div className="absolute bottom-8 right-8 w-20 h-20 border-r-4 border-b-4 border-blue-800/80 rounded-br-xl"></div>
+              {/* Corner Decorations */}
+              <div className="absolute top-10 left-10 w-16 h-16 border-l-4 border-t-4 border-blue-800 rounded-tl-xl"></div>
+              <div className="absolute top-10 right-10 w-16 h-16 border-r-4 border-t-4 border-blue-800 rounded-tr-xl"></div>
+              <div className="absolute bottom-10 left-10 w-16 h-16 border-l-4 border-b-4 border-blue-800 rounded-bl-xl"></div>
+              <div className="absolute bottom-10 right-10 w-16 h-16 border-r-4 border-b-4 border-blue-800 rounded-br-xl"></div>
 
               {/* Watermark */}
               <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
-                <div className="transform rotate-45 text-9xl font-elegant text-blue-800">
-                  B.SOFT
-                </div>
+                <div className="transform rotate-45 text-8xl font-bold text-blue-800">B.SOFT</div>
               </div>
 
-              <div className="relative z-10">
-                {/* Header with Logo and Institution Name */}
-                <div className="text-center mb-8">
-                  <div className="flex items-center justify-center mb-6">
-                 {/* Enhanced Logo */}
-                    <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 border-4 border-amber-400 shadow-2xl flex items-center justify-center">
-                      <div className="absolute inset-1 rounded-full border-2 border-white/30"></div>
+              <div className="relative z-10 p-8">
+                {/* Header Section */}
+                <div className="text-center mb-6">
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 border-4 border-amber-400 shadow-xl flex items-center justify-center">
                       <div className="text-center">
                         <div className="text-lg font-bold text-white leading-tight">B</div>
-                        <div className="text-sm text-white leading-none font-medium">SOFT</div>
-                        <div className="text-xs text-white/90 leading-none font-light">Institute</div>
+                        <div className="text-sm text-white leading-none">SOFT</div>
+                        <div className="text-xs text-white/90 leading-none">Institute</div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Institution Header */}
-                  <h1 className="text-4xl font-elegant font-bold text-blue-800 mb-3 tracking-wide">
+                  <h1 className="text-3xl font-bold text-blue-800 mb-2">
                     B.SOFT COMPUTER & TECHNICAL INSTITUTE
                   </h1>
                   
-                  <div className="space-y-1 text-sm text-gray-700 mb-6">
-                    <div>
-                      <span className="font-medium">Registered NGO DARPAN ID: </span>
-                      <span className="text-red-600 font-bold">UP/2011/0044943</span>
-                    </div>
-                    <div>
-                      <span className="font-medium">Society Regd. No.: </span>
-                      <span className="text-red-600 font-bold">AZ-13610</span>
-                    </div>
-                    <div>
-                      <span className="font-medium">ISO 9001:2015 CERTIFIED No.: </span>
-                      <span className="text-red-600 font-bold">UQ-252016790</span>
-                    </div>
+                  <div className="text-xs text-gray-700 mb-4 space-y-1">
+                    <div><span className="font-medium">NGO DARPAN ID:</span> <span className="text-red-600 font-bold">UP/2011/0044943</span></div>
+                    <div><span className="font-medium">Society Regd. No.:</span> <span className="text-red-600 font-bold">AZ-13610</span></div>
+                    <div><span className="font-medium">ISO 9001:2015 CERTIFIED No.:</span> <span className="text-red-600 font-bold">UQ-252016790</span></div>
                   </div>
 
-                  {/* Certificate Title */}
-                  <div className="mb-8">
-                    <div className="text-purple-600 font-certificate text-lg tracking-wide mb-2 italic">
-                      Certificate of Course Completion
-                    </div>
-                    <h2 className="text-3xl font-elegant font-bold text-red-600 tracking-wider">
+                  <div className="mb-4">
+                    <h2 className="text-2xl font-bold text-red-600 tracking-wider">
                       DIPLOMA CERTIFICATE-CUM-MARKS SHEET
                     </h2>
-                    <div className="mt-4 mx-auto w-32 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+                    <div className="mt-2 mx-auto w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
                   </div>
                 </div>
 
-                {/* Student Photo and Details Section */}
-                <div className="flex justify-between items-start mb-8">
-                  <div className="flex-1">
-                    <div className="grid grid-cols-2 gap-8 text-sm">
-                      <div>
-                        <div className="font-certificate text-gray-700 mb-1">Enrollment Number:</div>
-                        <div className="font-bold text-blue-800 text-lg">{selectedStudent?.id || "Not Available"}</div>
-                      </div>
-                      <div>
-                        <div className="font-certificate text-gray-700 mb-1">Roll Number:</div>
-                        <div className="font-bold text-blue-800 text-lg">{marksheetData?.roll_number || "Not Available"}</div>
-                      </div>
+                {/* Student Details and Photo Row */}
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex-1 grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="font-medium text-gray-700">Enrollment No:</span>
+                      <div className="font-bold text-blue-800">{selectedStudent?.id?.slice(-8) || "Not Available"}</div>
+                    </div>
+                    <div>
+                      <span className="font-medium text-gray-700">Roll Number:</span>
+                      <div className="font-bold text-blue-800">{marksheetData?.roll_number || "Not Available"}</div>
                     </div>
                   </div>
                   
-                  {/* Student Photo */}
-                  <div className="w-32 h-40 border-4 border-gray-300 bg-gray-50 flex items-center justify-center shadow-lg rounded-lg">
-                    <div className="text-center text-gray-500">
-                      <div className="text-xs mb-1">STUDENT</div>
-                      <div className="text-xs">PHOTOGRAPH</div>
+                  <div className="w-24 h-32 border-2 border-gray-300 bg-gray-50 flex items-center justify-center shadow-md rounded">
+                    <div className="text-center text-gray-500 text-xs">
+                      <div>STUDENT</div>
+                      <div>PHOTO</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Certificate Text */}
-                <div className="mb-8 text-center font-certificate text-lg leading-relaxed">
-                  <div className="bg-blue-50/50 p-6 rounded-lg border border-blue-200/50">
-                    <p className="mb-4">
-                      This is to certify that <span className="font-bold text-blue-800 text-xl underline decoration-blue-600/30 decoration-2">
+                <div className="mb-4 text-center text-base leading-relaxed">
+                  <div className="bg-blue-50/50 p-4 rounded-lg border border-blue-200/50">
+                    <p className="mb-2">
+                      This is to certify that <span className="font-bold text-blue-800 text-lg underline decoration-blue-600/30">
                         {selectedStudent?.full_name || "___________________"}
                       </span>
                     </p>
-                    <p className="mb-4">
-                      Son/Daughter of Mr./Mrs. <span className="border-b-2 border-blue-300 inline-block w-48 h-6 align-bottom mx-2"></span>
+                    <p className="mb-2">
+                      Son/Daughter of Mr./Mrs. <span className="border-b border-blue-300 inline-block w-32 h-5 align-bottom mx-1"></span>
                     </p>
-                    <p className="mb-4">
-                      has successfully completed the <span className="font-bold text-purple-700 text-xl">
+                    <p className="mb-2">
+                      has successfully completed the <span className="font-bold text-purple-700 text-lg">
                         {selectedStudent?.course_name || "___________________"}
                       </span> course
                     </p>
-                    <p className="mb-4">
+                    <p className="mb-2">
                       conducted by <span className="font-bold text-blue-800">B.SOFT Computer & Technical Institute</span>
                     </p>
-                    <p className="mb-4">
-                      in the year <span className="font-bold text-red-600 text-xl">
+                    <p className="mb-2">
+                      in the year <span className="font-bold text-red-600 text-lg">
                         {marksheetData?.examination_date ? new Date(marksheetData.examination_date).getFullYear() : new Date().getFullYear()}
                       </span>
                     </p>
-                    <p className="text-gray-700">
+                    <p className="text-gray-700 text-sm">
                       Center Code: <span className="font-bold text-blue-800">BSOFT001</span>
                     </p>
                   </div>
                 </div>
 
-                {/* Academic Performance Table */}
-                <div className="mb-8">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-elegant font-bold text-blue-800 tracking-wider">ACADEMIC PERFORMANCE</h3>
-                    <div className="mt-2 mx-auto w-24 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600"></div>
-                  </div>
+                {/* Compact Academic Performance Table */}
+                <div className="mb-4">
+                  <h3 className="text-lg font-bold text-blue-800 text-center mb-3">ACADEMIC PERFORMANCE</h3>
                   
-                  <div className="bg-white rounded-xl shadow-xl border-2 border-gray-100 overflow-hidden">
-                    <table className="w-full">
+                  <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+                    <table className="w-full text-xs">
                       <thead>
-                        <tr className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 text-white">
-                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Subject</th>
-                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Max. Theory</th>
-                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Max. Practical</th>
-                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Obtained Theory</th>
-                          <th className="px-6 py-4 text-sm font-bold text-center tracking-wide">Obtained Practical</th>
+                        <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+                          <th className="px-2 py-2 text-center font-bold">Subject</th>
+                          <th className="px-2 py-2 text-center font-bold">Max Theory</th>
+                          <th className="px-2 py-2 text-center font-bold">Max Practical</th>
+                          <th className="px-2 py-2 text-center font-bold">Obtained Theory</th>
+                          <th className="px-2 py-2 text-center font-bold">Obtained Practical</th>
                         </tr>
                       </thead>
-                      <tbody className="text-sm">
-                        {courseSubjects.map((subject, index) => (
-                          <tr key={subject.id} className={`transition-colors hover:bg-blue-50/50 ${
-                            index % 2 === 0 ? "bg-gray-50/70" : "bg-white"
-                          }`}>
-                            <td className="px-6 py-4 text-center font-semibold text-gray-800 border-r border-gray-100">{subject.subject}</td>
-                            <td className="px-6 py-4 text-center font-medium border-r border-gray-100">{subject.theory_marks}</td>
-                            <td className="px-6 py-4 text-center font-medium border-r border-gray-100">{subject.practical_marks}</td>
-                            <td className="px-6 py-4 text-center font-bold text-blue-600 text-lg border-r border-gray-100">
+                      <tbody>
+                        {courseSubjects.slice(0, 5).map((subject, index) => (
+                          <tr key={subject.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+                            <td className="px-2 py-1 text-center font-medium">{subject.subject}</td>
+                            <td className="px-2 py-1 text-center">{subject.theory_marks}</td>
+                            <td className="px-2 py-1 text-center">{subject.practical_marks}</td>
+                            <td className="px-2 py-1 text-center font-bold text-blue-600">
                               {Math.round(parseInt(subject.theory_marks || "0") * 0.75)}
                             </td>
-                            <td className="px-6 py-4 text-center font-bold text-purple-600 text-lg">
+                            <td className="px-2 py-1 text-center font-bold text-purple-600">
                               {Math.round(parseInt(subject.practical_marks || "0") * 0.8)}
                             </td>
                           </tr>
                         ))}
                         
-                        {/* Summary Rows */}
-                        <tr className="bg-gradient-to-r from-blue-100 to-blue-200 border-t-4 border-blue-400">
-                          <td className="px-6 py-4 text-center font-bold text-blue-900 text-lg border-r border-blue-300">TOTAL MARKS</td>
-                          <td className="px-6 py-4 text-center font-bold text-blue-800 text-lg border-r border-blue-300">
-                            {courseSubjects.reduce((sum, s) => sum + parseInt(s.theory_marks || "0"), 0)}
+                        <tr className="bg-gradient-to-r from-green-100 to-blue-100 border-t-2 border-blue-400">
+                          <td className="px-2 py-2 text-center font-bold text-gray-800">RESULT</td>
+                          <td className="px-2 py-2 text-center font-bold text-red-600 text-sm">
+                            {marksheetData?.percentage || 0}%
                           </td>
-                          <td className="px-6 py-4 text-center font-bold text-blue-800 text-lg border-r border-blue-300">
-                            {courseSubjects.reduce((sum, s) => sum + parseInt(s.practical_marks || "0"), 0)}
+                          <td className="px-2 py-2 text-center font-bold text-green-600 text-sm">
+                            {marksheetData?.grade || "N/A"}
                           </td>
-                          <td className="px-6 py-4 text-center font-bold text-green-600 text-xl border-r border-blue-300">
-                            {marksheetData?.obtained_marks || 0}
-                          </td>
-                          <td className="px-6 py-4 text-center font-bold text-green-600 text-xl">
-                            {courseSubjects.reduce((sum, s) => sum + Math.round(parseInt(s.practical_marks || "0") * 0.8), 0)}
-                          </td>
-                        </tr>
-                        
-                        <tr className="bg-gradient-to-r from-purple-100 to-purple-200 border-t-2 border-purple-300">
-                          <td className="px-6 py-4 text-center font-bold text-purple-900 text-lg border-r border-purple-300">GRAND TOTAL</td>
-                          <td className="px-6 py-4 text-center font-bold text-purple-800 text-xl border-r border-purple-300">
-                            {marksheetData?.total_marks || 0}
-                          </td>
-                          <td className="px-6 py-4 text-center border-r border-purple-300"></td>
-                          <td className="px-6 py-4 text-center font-bold text-green-600 text-xl border-r border-purple-300">
-                            {marksheetData?.obtained_marks || 0}
-                          </td>
-                          <td className="px-6 py-4 text-center"></td>
-                        </tr>
-                        
-                        <tr className="bg-gradient-to-r from-amber-100 via-green-100 to-blue-100 border-t-4 border-amber-400">
-                          <td className="px-6 py-5 text-center font-bold text-gray-900 text-xl border-r border-amber-300">RESULT</td>
-                          <td className="px-6 py-5 text-center border-r border-amber-300">
-                            <div className="text-red-600 font-bold text-2xl drop-shadow-sm">
-                              {marksheetData?.percentage || 0}%
-                            </div>
-                          </td>
-                          <td className="px-6 py-5 text-center border-r border-amber-300">
-                            <div className="text-green-600 font-bold text-2xl drop-shadow-sm">
-                              {marksheetData?.grade || "N/A"}
-                            </div>
-                          </td>
-                          <td className="px-6 py-5 text-center border-r border-amber-300">
-                            <div className={`font-bold text-lg px-4 py-2 rounded-full shadow-lg ${
+                          <td className="px-2 py-2 text-center">
+                            <div className={`font-bold text-sm px-2 py-1 rounded-full ${
                               marksheetData?.result_status === 'pass' 
-                                ? 'bg-gradient-to-r from-green-200 to-green-300 text-green-900 border-2 border-green-400' 
-                                : 'bg-gradient-to-r from-red-200 to-red-300 text-red-900 border-2 border-red-400'
+                                ? 'bg-green-200 text-green-800' 
+                                : 'bg-red-200 text-red-800'
                             }`}>
                               {marksheetData?.result_status?.toUpperCase() || "PENDING"}
                             </div>
                           </td>
-                          <td className="px-6 py-5 text-center"></td>
+                          <td className="px-2 py-2 text-center font-bold text-green-600 text-sm">
+                            {marksheetData?.obtained_marks || 0}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
 
-                {/* Grading System and Signatures */}
-                <div className="grid grid-cols-2 gap-12 mb-8">
-                  {/* Grading Legend */}
-                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                    <h4 className="font-bold text-blue-800 mb-4 text-lg">GRADING SYSTEM</h4>
-                    <div className="space-y-2 text-sm">
+                {/* Footer Section - Compact */}
+                <div className="grid grid-cols-2 gap-6">
+                  {/* Grading System - Compact */}
+                  <div className="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                    <h4 className="font-bold text-blue-800 mb-2 text-sm">GRADING SYSTEM</h4>
+                    <div className="space-y-1 text-xs">
                       <div className="flex justify-between">
-                        <span className="font-medium">Distinction (A+):</span>
+                        <span>Distinction (A+):</span>
                         <span className="text-green-600 font-bold">85% & Above</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-medium">First Class (A):</span>
+                        <span>First Class (A):</span>
                         <span className="text-blue-600 font-bold">75% - 84%</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-medium">Second Class (B):</span>
+                        <span>Second Class (B):</span>
                         <span className="text-purple-600 font-bold">65% - 74%</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-medium">Third Class (C):</span>
-                        <span className="text-orange-600 font-bold">55% - 64%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium">Pass (D):</span>
-                        <span className="text-yellow-600 font-bold">50% - 54%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium">Fail (F):</span>
-                        <span className="text-red-600 font-bold">Below 50%</span>
+                        <span>Pass (D):</span>
+                        <span className="text-yellow-600 font-bold">50% - 64%</span>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Signatures Section */}
-                  <div className="text-center space-y-6">
+                  {/* Signatures and Details */}
+                  <div className="text-center space-y-3">
+                    <div className="text-xs">
+                      <div className="font-bold text-blue-800">Issue Date:</div>
+                      <div className="font-semibold">
+                        {marksheetData?.examination_date 
+                          ? new Date(marksheetData.examination_date).toLocaleDateString('en-GB')
+                          : new Date().toLocaleDateString('en-GB')
+                        }
+                      </div>
+                    </div>
+                    
                     <div>
-                      <div className="w-40 h-20 border-2 border-gray-300 bg-blue-50/30 mx-auto mb-3 flex items-center justify-center rounded-lg">
-                        <div className="text-xs text-gray-500 font-elegant">Digital Signature</div>
+                      <div className="w-32 h-16 border-2 border-gray-300 bg-blue-50/30 mx-auto mb-2 flex items-center justify-center rounded">
+                        <div className="text-xs text-gray-500 font-bold">Digital Signature</div>
                       </div>
-                      <div className="border-b-2 border-gray-400 w-40 mx-auto mb-2"></div>
-                      <div className="font-bold text-blue-800 text-sm">DIRECTOR/PRINCIPAL</div>
-                      <div className="text-xs text-gray-600 mt-1">B.SOFT Institute</div>
+                      <div className="border-b-2 border-gray-400 w-32 mx-auto mb-1"></div>
+                      <div className="font-bold text-blue-800 text-xs">DIRECTOR/PRINCIPAL</div>
+                      <div className="text-xs text-gray-600">B.SOFT Institute</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Footer Information */}
-                <div className="grid grid-cols-3 gap-8 mb-6 text-center">
-                  <div className="bg-blue-50/50 p-4 rounded-lg">
-                    <div className="font-bold text-blue-800 mb-2">Issue Date</div>
-                    <div className="text-lg font-semibold text-gray-800">
-                      {marksheetData?.examination_date 
-                        ? new Date(marksheetData.examination_date).toLocaleDateString('en-GB', {
-                            day: '2-digit',
-                            month: '2-digit', 
-                            year: 'numeric'
-                          })
-                        : new Date().toLocaleDateString('en-GB', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                          })
-                      }
-                    </div>
-                  </div>
-                  <div className="bg-purple-50/50 p-4 rounded-lg">
-                    <div className="font-bold text-purple-800 mb-2">Place of Issue</div>
-                    <div className="text-lg font-semibold text-gray-800">Azamgarh, UP</div>
-                  </div>
-                  <div className="bg-green-50/50 p-4 rounded-lg">
-                    <div className="font-bold text-green-800 mb-2">Certificate ID</div>
-                    <div className="text-sm font-mono text-gray-800">
-                      BSOFT{new Date().getFullYear()}{selectedStudent?.id?.slice(-4) || "0000"}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Verification and Contact Information */}
-                <div className="text-center space-y-3 text-sm">
-                  <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
-                    <div className="font-medium text-yellow-800 mb-1">Certificate Verification</div>
+                {/* Contact Information - Bottom */}
+                <div className="text-center mt-4 space-y-2 text-xs">
+                  <div className="bg-yellow-50 border border-yellow-200 p-2 rounded">
+                    <div className="font-medium text-yellow-800">Certificate Verification</div>
                     <div className="text-yellow-700">
-                      Verify this certificate at{" "}
-                      <span className="font-bold text-blue-700 underline">www.binasoftedu.org.in</span>
-                      {" "}using enrollment number: <span className="font-mono font-bold">{selectedStudent?.id || "N/A"}</span>
+                      Verify at <span className="font-bold text-blue-700">www.binasoftedu.org.in</span> | 
+                      Enrollment: <span className="font-mono font-bold">{selectedStudent?.id?.slice(-8) || "N/A"}</span>
                     </div>
                   </div>
                   
-                  <div className="text-gray-600 leading-relaxed">
+                  <div className="text-gray-600">
                     <div className="font-semibold text-gray-800">Head Office Address</div>
                     <div>Near Union Bank Of India, Bina Soft Educational & Welfare Society</div>
                     <div>Vill & Post BILARIYAGAN J, AZAMGARH - 276121, Uttar Pradesh</div>
