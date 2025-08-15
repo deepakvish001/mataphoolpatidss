@@ -251,46 +251,48 @@ const StudentMarksheetContent = () => {
         }
       }
 
-      // Create intelligent page breaks (no overflow beyond page height)
+      // Create page breaks ensuring complete borders and no content cut-off
       let currentY = 0;
       while (currentY + pageHeightPx < canvas.height) {
         const nextBreak = currentY + pageHeightPx;
         let bestBreak = nextBreak;
 
-        // Prefer section boundaries within last 30% of the page, not exceeding nextBreak
+        // Find the best section boundary within 70-90% of page to avoid cutting borders
         const sectionCandidates: number[] = [];
         for (const section of sectionBounds) {
           const boundary = section.bottom;
-          if (boundary >= currentY + Math.round(pageHeightPx * 0.7) && boundary <= nextBreak) {
+          // More conservative range to ensure borders don't get cut
+          if (boundary >= currentY + Math.round(pageHeightPx * 0.6) && boundary <= currentY + Math.round(pageHeightPx * 0.9)) {
             sectionCandidates.push(boundary);
           }
-          // Avoid splitting critical section: if it would cross the break, move break before section if possible
+          // Protect critical sections more strictly
           if (section.critical && section.top >= currentY && section.top < nextBreak && section.bottom > nextBreak) {
-            if (section.top - currentY >= Math.round(pageHeightPx * 0.5)) {
+            if (section.top - currentY >= Math.round(pageHeightPx * 0.4)) {
               sectionCandidates.push(section.top);
             }
           }
         }
         if (sectionCandidates.length > 0) {
-          bestBreak = Math.max(...sectionCandidates); // choose the latest boundary within page
+          bestBreak = Math.max(...sectionCandidates);
         } else if (tableRef.current) {
-          // Try table row boundaries within last 20% of page
+          // More conservative table row breaks
           const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
-          const searchStart = currentY + Math.round(pageHeightPx * 0.8);
+          const searchStart = currentY + Math.round(pageHeightPx * 0.7);
+          const searchEnd = currentY + Math.round(pageHeightPx * 0.9);
           let candidate = 0;
           for (const row of rows) {
             const rowRect = row.getBoundingClientRect();
             const rowBottomPx = Math.round((rowRect.bottom - elemRect.top) * ratio);
-            if (rowBottomPx >= searchStart && rowBottomPx <= nextBreak) {
+            if (rowBottomPx >= searchStart && rowBottomPx <= searchEnd) {
               candidate = Math.max(candidate, rowBottomPx);
             }
           }
           if (candidate > 0) bestBreak = candidate;
         }
 
-        // Ensure progress and clamp to page
-        bestBreak = Math.max(bestBreak, currentY + Math.round(pageHeightPx * 0.5));
-        bestBreak = Math.min(bestBreak, nextBreak);
+        // Ensure progress with strict limits to preserve borders
+        bestBreak = Math.max(bestBreak, currentY + Math.round(pageHeightPx * 0.6));
+        bestBreak = Math.min(bestBreak, currentY + Math.round(pageHeightPx * 0.9));
 
         yBreaks.push(bestBreak);
         currentY = bestBreak;
@@ -301,7 +303,24 @@ const StudentMarksheetContent = () => {
         yBreaks.push(canvas.height);
       }
 
-      // Remove PDF border function since we want to print exactly as shown in portal
+      // Function to draw complete page border exactly as shown in portal
+      const drawCompletePageBorder = () => {
+        // Match the portal's decorative border design
+        // Outer indigo border
+        pdf.setDrawColor(55, 65, 130); // indigo-800
+        pdf.setLineWidth(0.8);
+        pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
+        
+        // Inner amber border
+        pdf.setDrawColor(245, 158, 11); // amber-400  
+        pdf.setLineWidth(0.4);
+        pdf.rect(7, 7, pdfWidth - 14, pdfHeight - 14);
+        
+        // Innermost light border
+        pdf.setDrawColor(165, 180, 252); // indigo-300
+        pdf.setLineWidth(0.2);
+        pdf.rect(9, 9, pdfWidth - 18, pdfHeight - 18);
+      };
 
       // Render each page slice with borders
       for (let i = 0; i < yBreaks.length - 1; i++) {
@@ -328,7 +347,8 @@ const StudentMarksheetContent = () => {
         const clampedHeightMm = Math.min(heightMm, usableHeightMm);
         pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, clampedHeightMm, undefined, 'FAST');
 
-        // No additional PDF borders - print exactly as shown in portal
+        // Draw complete page border on every page to match portal exactly
+        drawCompletePageBorder();
 
         // Add page number if multi-page
         if (yBreaks.length > 2) {
