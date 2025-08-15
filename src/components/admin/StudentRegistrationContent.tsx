@@ -4,9 +4,36 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { Loader2 } from "lucide-react";
+
+interface StudentProfile {
+  id: string;
+  full_name: string;
+  email: string;
+  phone?: string;
+  course_name?: string;
+  status?: string;
+  city?: string;
+  state?: string;
+  enrollment_date?: string;
+}
 
 const StudentRegistrationContent = () => {
-  const { toast } = useToast();
+  const {
+    data: studentProfiles,
+    loading,
+    create,
+    update,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<StudentProfile>({ tableName: 'student_profiles' });
+
+  useAdminRealTime({
+    tableName: 'student_profiles'
+  });
   
   // Form state
   const [formData, setFormData] = useState({
@@ -39,22 +66,74 @@ const StudentRegistrationContent = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.declaration) {
-      toast({
-        title: "Error",
-        description: "Please accept the declaration to proceed",
-        variant: "destructive"
-      });
+      toast.error("Please accept the declaration to proceed");
       return;
     }
 
-    toast({
-      title: "Success",
-      description: "Student registration submitted successfully!",
-      variant: "default"
-    });
+    if (!formData.applicantName || !formData.email || !formData.mobile) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    const studentData = {
+      full_name: formData.applicantName,
+      email: formData.email,
+      phone: formData.mobile,
+      course_name: formData.courseName,
+      status: 'active',
+      city: formData.cityName,
+      state: formData.state,
+      enrollment_date: new Date().toISOString()
+    };
+
+    try {
+      await create(studentData);
+      
+      // Reset form
+      setFormData({
+        courseCategory: "",
+        courseName: "",
+        studyCenter: "",
+        applicantName: "",
+        fatherName: "",
+        motherName: "",
+        gender: "",
+        dateOfBirth: "",
+        category: "",
+        registrationDate: "",
+        mobile: "",
+        email: "",
+        fullAddress: "",
+        cityName: "",
+        state: "",
+        district: "",
+        pinCode: "",
+        qualification: "",
+        yearOfPassing: "",
+        aadharNumber: "",
+        studentId: "2002318",
+        password: "58742318",
+        declaration: false
+      });
+      
+      toast.success("Student registration submitted successfully!");
+    } catch (error) {
+      toast.error("Failed to register student");
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="w-full max-w-none bg-white flex items-center justify-center min-h-[400px]">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <p className="text-gray-600">Loading student registration...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-none bg-white">

@@ -4,9 +4,36 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { Loader2, Edit, Trash2 } from "lucide-react";
+
+interface StudentData {
+  id: string;
+  title: string;
+  details: string;
+  course_category: string;
+  photo_url?: string;
+  publish_date: string;
+}
 
 const StudentDataContent = () => {
-  const { toast } = useToast();
+  const {
+    data: studentDataItems,
+    loading,
+    create,
+    update,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<StudentData>({ 
+    tableName: 'student_data',
+    orderBy: { column: 'created_at', ascending: false }
+  });
+
+  useAdminRealTime({
+    tableName: 'student_data'
+  });
   
   const [formData, setFormData] = useState({
     titleOfData: "",
@@ -16,25 +43,6 @@ const StudentDataContent = () => {
     dateOfPublish: ""
   });
 
-  // Sample student data based on the screenshot
-  const [studentData] = useState([
-    {
-      id: 1,
-      title: "EXAMINATION RESULT",
-      details: "ALL RESULT PDF AVAILABLE",
-      date: "11/04/2019 00:00:00",
-      category: "Diploma in Computer Application",
-      photo: ""
-    },
-    {
-      id: 2,
-      title: "NIVEDITA RAI",
-      details: "",
-      date: "14/05/2025 00:00:00",
-      category: "Advance Diploma In Computer Application(ADCA)",
-      photo: ""
-    }
-  ]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -44,47 +52,64 @@ const StudentDataContent = () => {
     setFormData(prev => ({ ...prev, photoFile: file }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.titleOfData || !formData.detailsOfData) {
-      toast({
-        title: "Error",
-        description: "Please fill in required fields",
-        variant: "destructive"
-      });
+      toast.error("Please fill in required fields");
       return;
     }
 
-    toast({
-      title: "Success",
-      description: "Student data submitted successfully!",
-      variant: "default"
-    });
+    const studentDataItem = {
+      title: formData.titleOfData,
+      details: formData.detailsOfData,
+      course_category: formData.detailsOfCourses,
+      photo_url: formData.photoFile ? URL.createObjectURL(formData.photoFile) : "",
+      publish_date: formData.dateOfPublish || new Date().toLocaleDateString()
+    };
 
-    // Reset form
-    setFormData({
-      titleOfData: "",
-      detailsOfData: "",
-      detailsOfCourses: "Advance Diploma In Computer Application(ADCA)",
-      photoFile: null,
-      dateOfPublish: ""
-    });
+    try {
+      await create(studentDataItem);
+      
+      // Reset form
+      setFormData({
+        titleOfData: "",
+        detailsOfData: "",
+        detailsOfCourses: "Advance Diploma In Computer Application(ADCA)",
+        photoFile: null,
+        dateOfPublish: ""
+      });
+      
+      toast.success("Student data submitted successfully!");
+    } catch (error) {
+      toast.error("Failed to submit student data");
+    }
   };
 
-  const handleEdit = (id: number) => {
-    toast({
-      title: "Edit",
-      description: `Edit student data ID: ${id}`,
-      variant: "default"
-    });
+  const handleEdit = (id: string) => {
+    // In a real implementation, this would open an edit form
+    toast.success(`Edit functionality for ID: ${id} coming soon`);
   };
 
-  const handleDelete = (id: number) => {
-    toast({
-      title: "Delete",
-      description: `Delete student data ID: ${id}`,
-      variant: "destructive"
-    });
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this item?")) return;
+    
+    try {
+      await deleteItem(id);
+      toast.success("Student data deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete student data");
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="w-full max-w-none bg-gray-200 min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <p className="text-gray-600">Loading student data...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-none bg-gray-200 min-h-screen">
@@ -188,35 +213,37 @@ const StudentDataContent = () => {
                 </tr>
               </thead>
               <tbody>
-                {studentData.map((item, index) => (
+                {studentDataItems.map((item, index) => (
                   <tr key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
                     <td className="border-2 border-gray-600 px-4 py-3 text-xs">
                       <div className="flex gap-1 mb-2">
                         <Button
-                          variant="link"
+                          variant="ghost"
+                          size="sm"
                           onClick={() => handleEdit(item.id)}
-                          className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs"
+                          className="p-1 text-blue-600 hover:text-blue-800 hover:bg-blue-50"
                         >
-                          Edit
+                          <Edit className="h-3 w-3" />
                         </Button>
                         <Button
-                          variant="link"
+                          variant="ghost"
+                          size="sm"
                           onClick={() => handleDelete(item.id)}
-                          className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs"
+                          className="p-1 text-red-600 hover:text-red-800 hover:bg-red-50"
                         >
-                          Delete
+                          <Trash2 className="h-3 w-3" />
                         </Button>
                       </div>
                       <div className="font-medium">{item.title}</div>
                     </td>
                     <td className="border-2 border-gray-600 px-4 py-3 text-xs">{item.details}</td>
-                    <td className="border-2 border-gray-600 px-4 py-3 text-xs">{item.date}</td>
-                    <td className="border-2 border-gray-600 px-4 py-3 text-xs">{item.category}</td>
+                    <td className="border-2 border-gray-600 px-4 py-3 text-xs">{item.publish_date}</td>
+                    <td className="border-2 border-gray-600 px-4 py-3 text-xs">{item.course_category}</td>
                     <td className="border-2 border-gray-600 px-4 py-3">
                       <div className="w-16 h-12 border-2 border-gray-400 bg-gray-50 flex items-center justify-center">
-                        {item.photo ? (
+                        {item.photo_url ? (
                           <img 
-                            src={item.photo} 
+                            src={item.photo_url} 
                             alt="Student" 
                             className="w-full h-full object-cover"
                           />
