@@ -16,6 +16,9 @@ import ContactUs from "./pages/ContactUs";
 import DonationPage from "./pages/Donation";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
+import UserLogin from "./pages/UserLogin";
+import AdminLogin from "./pages/AdminLogin";
+import UserDashboard from "./pages/UserDashboard";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
@@ -39,7 +42,17 @@ const App = () => (
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/donation" element={<DonationPage />} />
             <Route path="/login" element={<Auth />} />
+            <Route path="/user-login" element={<UserLogin />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/auth/reset-password" element={<ResetPassword />} />
+            <Route 
+              path="/user/dashboard" 
+              element={
+                <AuthGuard>
+                  <UserDashboard />
+                </AuthGuard>
+              } 
+            />
             <Route 
               path="/admin/*" 
               element={
