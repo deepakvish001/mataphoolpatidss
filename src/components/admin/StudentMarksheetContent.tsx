@@ -179,7 +179,10 @@ const StudentMarksheetContent = () => {
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
       const pdfWidth = 210;
       const pdfHeight = 297;
-      const margin = 10; // mm
+
+      // Content margins
+      const margin = 10; // mm for image placement (content area)
+      const borderOuter = 5; // mm decorative border offset from edges
 
       // Compute usable page size (accounting for margins)
       const usableWidthMm = pdfWidth - margin * 2;
@@ -189,7 +192,8 @@ const StudentMarksheetContent = () => {
       const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
 
       // Compute row-aware page breaks to avoid splitting subject rows
-      const ratio = canvas.width / element.clientWidth; // canvas px per CSS px
+      const cssWidth = element.scrollWidth || element.clientWidth || 1;
+      const ratio = canvas.width / cssWidth; // canvas px per CSS px
       const yBreaks: number[] = [0];
       let lastBreak = 0;
 
@@ -208,8 +212,8 @@ const StudentMarksheetContent = () => {
         }
       }
 
+      // Fallback fill to ensure we cover the whole canvas height
       if (yBreaks[yBreaks.length - 1] !== canvas.height) {
-        // Fill remaining pages if needed
         let next = yBreaks[yBreaks.length - 1];
         while (next + pageHeightPx < canvas.height) {
           next += pageHeightPx;
@@ -217,6 +221,22 @@ const StudentMarksheetContent = () => {
         }
         if (yBreaks[yBreaks.length - 1] !== canvas.height) yBreaks.push(canvas.height);
       }
+
+      const drawPageFrame = () => {
+        // Draw a decorative border on every page so the frame is fixed across pages
+        // Outer deep border
+        pdf.setDrawColor(40, 55, 120); // indigo-like
+        pdf.setLineWidth(0.6);
+        pdf.rect(borderOuter, borderOuter, pdfWidth - borderOuter * 2, pdfHeight - borderOuter * 2);
+        // Middle golden border
+        pdf.setDrawColor(200, 150, 30);
+        pdf.setLineWidth(0.4);
+        pdf.rect(borderOuter + 2, borderOuter + 2, pdfWidth - (borderOuter + 2) * 2, pdfHeight - (borderOuter + 2) * 2);
+        // Inner soft border
+        pdf.setDrawColor(130, 160, 220);
+        pdf.setLineWidth(0.3);
+        pdf.rect(borderOuter + 4, borderOuter + 4, pdfWidth - (borderOuter + 4) * 2, pdfHeight - (borderOuter + 4) * 2);
+      };
 
       // Render each slice as a page with margins
       for (let i = 0; i < yBreaks.length - 1; i++) {
@@ -238,10 +258,13 @@ const StudentMarksheetContent = () => {
         const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
         pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
 
-        // Optional border for aesthetics
-        pdf.setDrawColor(90, 90, 140);
-        pdf.setLineWidth(0.4);
-        pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
+        // Draw page border after adding image so it's on top
+        drawPageFrame();
+
+        // Optional: Page number (helps verify multipage output visually)
+        pdf.setTextColor(100);
+        pdf.setFontSize(9);
+        pdf.text(`${i + 1}/${yBreaks.length - 1}`, pdfWidth - 20, pdfHeight - 8, { align: 'right' });
       }
 
       const currentDate = new Date().toISOString().split('T')[0];
