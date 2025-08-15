@@ -49,6 +49,8 @@ const AttendanceManagementContent = () => {
     markedBy: ""
   });
 
+  const [editingAttendance, setEditingAttendance] = useState<AttendanceManagement | null>(null);
+
   const [filterData, setFilterData] = useState({
     studentId: "",
     courseName: "",
@@ -107,33 +109,64 @@ const AttendanceManagementContent = () => {
     }
 
     try {
-      await create({
-        student_id: formData.studentId,
-        student_name: formData.studentName,
-        course_name: formData.courseName,
-        attendance_date: formData.attendanceDate,
-        status: formData.status,
-        session_type: formData.sessionType,
-        remarks: formData.remarks || null,
-        marked_by: formData.markedBy || null
-      });
+      if (editingAttendance) {
+        await update(editingAttendance.id, {
+          student_id: formData.studentId,
+          student_name: formData.studentName,
+          course_name: formData.courseName,
+          attendance_date: formData.attendanceDate,
+          status: formData.status,
+          session_type: formData.sessionType,
+          remarks: formData.remarks || undefined,
+          marked_by: formData.markedBy || undefined
+        });
+        toast.success("Attendance updated successfully!");
+      } else {
+        await create({
+          student_id: formData.studentId,
+          student_name: formData.studentName,
+          course_name: formData.courseName,
+          attendance_date: formData.attendanceDate,
+          status: formData.status,
+          session_type: formData.sessionType,
+          remarks: formData.remarks || null,
+          marked_by: formData.markedBy || null
+        });
+        toast.success("Attendance marked successfully!");
+      }
 
-      // Reset form (keep date and session type for convenience)
-      setFormData({
-        studentId: "",
-        studentName: "",
-        courseName: "",
-        attendanceDate: formData.attendanceDate,
-        status: "present",
-        sessionType: formData.sessionType,
-        remarks: "",
-        markedBy: formData.markedBy
-      });
-
-      toast.success("Attendance marked successfully!");
+      handleReset();
     } catch (error) {
-      toast.error("Failed to mark attendance");
+      toast.error(`Failed to ${editingAttendance ? 'update' : 'mark'} attendance`);
     }
+  };
+
+  const handleEdit = (record: AttendanceManagement) => {
+    setEditingAttendance(record);
+    setFormData({
+      studentId: record.student_id,
+      studentName: record.student_name,
+      courseName: record.course_name,
+      attendanceDate: record.attendance_date,
+      status: record.status,
+      sessionType: record.session_type,
+      remarks: record.remarks || "",
+      markedBy: record.marked_by || ""
+    });
+  };
+
+  const handleReset = () => {
+    setEditingAttendance(null);
+    setFormData({
+      studentId: "",
+      studentName: "",
+      courseName: "",
+      attendanceDate: new Date().toISOString().split('T')[0],
+      status: "present",
+      sessionType: "theory",
+      remarks: "",
+      markedBy: ""
+    });
   };
 
   const handleBulkAttendance = async (status: 'present' | 'absent') => {
@@ -331,24 +364,38 @@ const AttendanceManagementContent = () => {
               className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
             >
               <Plus className="h-5 w-5 mr-2" />
-              Mark Attendance
+              {editingAttendance ? 'Update Attendance' : 'Mark Attendance'}
             </Button>
             
-            <Button
-              onClick={() => handleBulkAttendance('present')}
-              variant="outline"
-              className="border-green-600 text-green-600 hover:bg-green-50 px-6 py-3"
-            >
-              Bulk Present
-            </Button>
+            {editingAttendance && (
+              <Button
+                onClick={handleReset}
+                variant="outline"
+                className="border-gray-600 text-gray-600 hover:bg-gray-50 px-6 py-3"
+              >
+                Cancel Edit
+              </Button>
+            )}
             
-            <Button
-              onClick={() => handleBulkAttendance('absent')}
-              variant="outline"
-              className="border-red-600 text-red-600 hover:bg-red-50 px-6 py-3"
-            >
-              Bulk Absent
-            </Button>
+            {!editingAttendance && (
+              <>
+                <Button
+                  onClick={() => handleBulkAttendance('present')}
+                  variant="outline"
+                  className="border-green-600 text-green-600 hover:bg-green-50 px-6 py-3"
+                >
+                  Bulk Present
+                </Button>
+                
+                <Button
+                  onClick={() => handleBulkAttendance('absent')}
+                  variant="outline"
+                  className="border-red-600 text-red-600 hover:bg-red-50 px-6 py-3"
+                >
+                  Bulk Absent
+                </Button>
+              </>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -425,6 +472,7 @@ const AttendanceManagementContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(record)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />

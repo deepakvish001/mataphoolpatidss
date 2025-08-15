@@ -63,6 +63,8 @@ const AlotNumberContent = () => {
     directorSignature: null as File | null
   });
 
+  const [editingAlot, setEditingAlot] = useState<AlotNumber | null>(null);
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
@@ -98,50 +100,98 @@ const AlotNumberContent = () => {
     }
 
     try {
-      await create({
-        student_id: formData.studentsId,
-        course_name: formData.courseName,
-        theory_max_marks: formData.theoryMaxMarks,
-        practical_max_marks: formData.practicalMaxMarks,
-        obtain_theory_marks: formData.obtainTheoryMarks,
-        obtain_practical_marks: formData.obtainPracticalMarks,
-        student_name: formData.studentName,
-        student_father_name: formData.studentFatherName,
-        student_mother_name: formData.studentMotherName,
-        course_examination_date: formData.courseExaminationDate,
-        center_name: formData.centerName,
-        center_code: formData.centerCode,
-        issue_date: formData.issueDate,
-        place: formData.place,
-        student_photo_url: formData.studentPhoto ? formData.studentPhoto.name : null,
-        director_signature_url: formData.directorSignature ? formData.directorSignature.name : null
-      });
+      if (editingAlot) {
+        await update(editingAlot.id, {
+          student_id: formData.studentsId,
+          course_name: formData.courseName,
+          theory_max_marks: formData.theoryMaxMarks,
+          practical_max_marks: formData.practicalMaxMarks,
+          obtain_theory_marks: formData.obtainTheoryMarks,
+          obtain_practical_marks: formData.obtainPracticalMarks,
+          student_name: formData.studentName,
+          student_father_name: formData.studentFatherName,
+          student_mother_name: formData.studentMotherName,
+          course_examination_date: formData.courseExaminationDate,
+          center_name: formData.centerName,
+          center_code: formData.centerCode,
+          issue_date: formData.issueDate,
+          place: formData.place,
+          student_photo_url: formData.studentPhoto ? formData.studentPhoto.name : undefined,
+          director_signature_url: formData.directorSignature ? formData.directorSignature.name : undefined
+        });
+        toast.success("Alot number updated successfully!");
+      } else {
+        await create({
+          student_id: formData.studentsId,
+          course_name: formData.courseName,
+          theory_max_marks: formData.theoryMaxMarks,
+          practical_max_marks: formData.practicalMaxMarks,
+          obtain_theory_marks: formData.obtainTheoryMarks,
+          obtain_practical_marks: formData.obtainPracticalMarks,
+          student_name: formData.studentName,
+          student_father_name: formData.studentFatherName,
+          student_mother_name: formData.studentMotherName,
+          course_examination_date: formData.courseExaminationDate,
+          center_name: formData.centerName,
+          center_code: formData.centerCode,
+          issue_date: formData.issueDate,
+          place: formData.place,
+          student_photo_url: formData.studentPhoto ? formData.studentPhoto.name : null,
+          director_signature_url: formData.directorSignature ? formData.directorSignature.name : null
+        });
+        toast.success("Alot number created successfully!");
+      }
 
-      // Reset form
-      setFormData({
-        studentsId: "",
-        courseName: "",
-        theoryMaxMarks: "",
-        practicalMaxMarks: "",
-        obtainTheoryMarks: "",
-        obtainPracticalMarks: "",
-        studentId: "BSOFT3004482",
-        studentName: "",
-        studentFatherName: "",
-        studentMotherName: "",
-        courseExaminationDate: "",
-        centerName: "",
-        centerCode: "",
-        issueDate: "",
-        place: "",
-        studentPhoto: null,
-        directorSignature: null
-      });
-
-      toast.success("Alot number data submitted successfully!");
+      handleReset();
     } catch (error) {
-      toast.error("Failed to submit alot number data");
+      toast.error(`Failed to ${editingAlot ? 'update' : 'create'} alot number`);
     }
+  };
+
+  const handleEdit = (alot: AlotNumber) => {
+    setEditingAlot(alot);
+    setFormData({
+      studentsId: alot.student_id,
+      courseName: alot.course_name,
+      theoryMaxMarks: alot.theory_max_marks || "",
+      practicalMaxMarks: alot.practical_max_marks || "",
+      obtainTheoryMarks: alot.obtain_theory_marks || "",
+      obtainPracticalMarks: alot.obtain_practical_marks || "",
+      studentId: alot.student_id,
+      studentName: alot.student_name || "",
+      studentFatherName: alot.student_father_name || "",
+      studentMotherName: alot.student_mother_name || "",
+      courseExaminationDate: alot.course_examination_date || "",
+      centerName: alot.center_name || "",
+      centerCode: alot.center_code || "",
+      issueDate: alot.issue_date || "",
+      place: alot.place || "",
+      studentPhoto: null,
+      directorSignature: null
+    });
+  };
+
+  const handleReset = () => {
+    setEditingAlot(null);
+    setFormData({
+      studentsId: "",
+      courseName: "",
+      theoryMaxMarks: "",
+      practicalMaxMarks: "",
+      obtainTheoryMarks: "",
+      obtainPracticalMarks: "",
+      studentId: "BSOFT3004482",
+      studentName: "",
+      studentFatherName: "",
+      studentMotherName: "",
+      courseExaminationDate: "",
+      centerName: "",
+      centerCode: "",
+      issueDate: "",
+      place: "",
+      studentPhoto: null,
+      directorSignature: null
+    });
   };
 
   const handleDelete = async (id: string) => {
@@ -367,12 +417,24 @@ const AlotNumberContent = () => {
 
             {/* Final Submit */}
             <div className="pt-4">
+            <div className="flex space-x-4">
               <Button 
                 onClick={handleFinalSubmit}
                 className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Final Submit
+                {editingAlot ? 'Update' : 'Final Submit'}
               </Button>
+              
+              {editingAlot && (
+                <Button 
+                  onClick={handleReset}
+                  variant="outline"
+                  className="border-gray-600 text-gray-600 hover:bg-gray-50 px-6 py-3"
+                >
+                  Cancel Edit
+                </Button>
+              )}
+            </div>
             </div>
           </div>
         </CardContent>
@@ -401,6 +463,7 @@ const AlotNumberContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(alot)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />
