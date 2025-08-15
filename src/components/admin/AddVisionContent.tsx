@@ -24,10 +24,7 @@ const AddVisionContent = () => {
   } = useOptimisticCrud<Vision>({ tableName: 'visions' });
 
   useAdminRealTime({
-    tableName: 'visions',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'visions'
   });
 
   const [content, setContent] = useState("");

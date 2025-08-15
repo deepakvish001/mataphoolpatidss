@@ -25,10 +25,7 @@ const ContactUsContent = () => {
   } = useOptimisticCrud<ContactUs>({ tableName: 'contact_us' });
 
   useAdminRealTime({
-    tableName: 'contact_us',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'contact_us'
   });
 
   const handleDelete = async (id: string) => {

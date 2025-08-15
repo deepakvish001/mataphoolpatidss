@@ -24,10 +24,7 @@ const AddCourseCategoryContent = () => {
   } = useOptimisticCrud<CourseCategory>({ tableName: 'course_categories' });
 
   useAdminRealTime({
-    tableName: 'course_categories',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'course_categories'
   });
 
   const [courseCategory, setCourseCategory] = useState("");

@@ -24,10 +24,7 @@ const AddMissionContent = () => {
   } = useOptimisticCrud<Mission>({ tableName: 'missions' });
 
   useAdminRealTime({
-    tableName: 'missions',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'missions'
   });
 
   const [content, setContent] = useState("");

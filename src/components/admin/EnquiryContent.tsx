@@ -28,10 +28,7 @@ const EnquiryContent = () => {
   } = useOptimisticCrud<Enquiry>({ tableName: 'enquiries' });
 
   useAdminRealTime({
-    tableName: 'enquiries',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'enquiries'
   });
 
   const handleDelete = async (id: string) => {

@@ -24,10 +24,7 @@ const AddDirectorMessageContent = () => {
   } = useOptimisticCrud<DirectorMessage>({ tableName: 'director_messages' });
 
   useAdminRealTime({
-    tableName: 'director_messages',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'director_messages'
   });
 
   const [directorMessage, setDirectorMessage] = useState("");

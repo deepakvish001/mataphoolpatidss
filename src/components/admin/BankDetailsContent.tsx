@@ -28,10 +28,7 @@ const BankDetailsContent = () => {
   } = useOptimisticCrud<BankDetails>({ tableName: 'bank_details' });
 
   useAdminRealTime({
-    tableName: 'bank_details',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'bank_details'
   });
 
   const [formData, setFormData] = useState({

@@ -28,10 +28,7 @@ const AddNewsContent = () => {
   } = useOptimisticCrud<News>({ tableName: 'news' });
 
   useAdminRealTime({
-    tableName: 'news',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'news'
   });
 
   const [newsTitle, setNewsTitle] = useState("");
