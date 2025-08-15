@@ -4,25 +4,38 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Trophy, Edit, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Trophy, Edit, Trash2, Loader2, Upload } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface CompetitionCourse {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  file?: string;
+}
 
 const AddCompetitionCoursesContent = () => {
-  const { toast } = useToast();
+  const {
+    data: competitions,
+    loading,
+    create,
+    update,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<CompetitionCourse>({ tableName: 'competition_courses' });
+
+  useAdminRealTime({
+    tableName: 'competition_courses'
+  });
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  
-  const [competitions, setCompetitions] = useState([
-    {
-      id: 1,
-      title: "WELCOME TO B. SOFT",
-      description: "NA",
-      date: "18/05/2020",
-      file: "logo.png"
-    }
-  ]);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -31,78 +44,105 @@ const AddCompetitionCoursesContent = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a title",
-        variant: "destructive"
-      });
+      toast.error("Please enter a title");
       return;
     }
 
     if (!description.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a description",
-        variant: "destructive"
-      });
+      toast.error("Please enter a description");
       return;
     }
 
     if (!date.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a date",
-        variant: "destructive"
-      });
+      toast.error("Please enter a date");
       return;
     }
 
-    const newCompetition = {
-      id: Math.max(...competitions.map(c => c.id)) + 1,
+    const competitionData = {
       title,
       description,
       date,
-      file: selectedImage ? selectedImage.name : "No file"
+      file: selectedImage ? selectedImage.name : undefined
     };
 
-    setCompetitions(prev => [...prev, newCompetition]);
-    
-    toast({
-      title: "Success",
-      description: "Competition course added successfully!",
-      variant: "default"
-    });
+    try {
+      if (editingId) {
+        await update(editingId, competitionData);
+        toast.success("Competition course updated successfully!");
+        setEditingId(null);
+      } else {
+        await create(competitionData);
+        toast.success("Competition course added successfully!");
+      }
 
+      // Reset form
+      setTitle("");
+      setDescription("");
+      setDate("");
+      setSelectedImage(null);
+      
+      // Reset file input
+      const fileInput = document.getElementById('competitionImageInput') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+    } catch (error) {
+      toast.error(editingId ? "Failed to update competition course" : "Failed to add competition course");
+    }
+  };
+
+  const handleEdit = (competition: CompetitionCourse) => {
+    setTitle(competition.title);
+    setDescription(competition.description);
+    setDate(competition.date);
+    setEditingId(competition.id);
+    setSelectedImage(null);
+  };
+
+  const handleCancelEdit = () => {
     setTitle("");
     setDescription("");
     setDate("");
     setSelectedImage(null);
+    setEditingId(null);
+    
     // Reset file input
     const fileInput = document.getElementById('competitionImageInput') as HTMLInputElement;
     if (fileInput) fileInput.value = '';
   };
 
-  const handleDelete = (id: number) => {
-    setCompetitions(prev => prev.filter(item => item.id !== id));
-    toast({
-      title: "Success",
-      description: "Competition course deleted successfully!",
-      variant: "default"
-    });
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Competition course deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete competition course");
+    }
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading competition courses...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
-      {/* Add Competition Courses Form */}
+      {/* Add/Edit Competition Courses Form */}
       <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
         <CardHeader className="p-8 border-b border-gray-100 bg-gray-400">
           <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
             <div className="p-2 bg-blue-500 rounded-lg">
               <Trophy className="h-6 w-6 text-white" />
             </div>
-            <span>Add Competition Courses</span>
+            <span>{editingId ? "Edit Competition Course" : "Add Competition Courses"}</span>
           </CardTitle>
         </CardHeader>
         
@@ -176,14 +216,24 @@ const AddCompetitionCoursesContent = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div className="pt-4">
+            {/* Submit and Cancel Buttons */}
+            <div className="flex space-x-4 pt-4">
               <Button
                 onClick={handleSubmit}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Submit Now
+                <Upload className="h-5 w-5 mr-2" />
+                {editingId ? "Update Course" : "Submit Now"}
               </Button>
+              {editingId && (
+                <Button
+                  onClick={handleCancelEdit}
+                  variant="outline"
+                  className="border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+                >
+                  Cancel Edit
+                </Button>
+              )}
             </div>
           </div>
         </CardContent>
@@ -224,7 +274,9 @@ const AddCompetitionCoursesContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(item)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                        title="Edit competition course"
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
@@ -233,6 +285,7 @@ const AddCompetitionCoursesContent = () => {
                         size="sm"
                         onClick={() => handleDelete(item.id)}
                         className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                        title="Delete competition course"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
