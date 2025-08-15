@@ -144,34 +144,61 @@ const StudentMarksheetContent = () => {
     }
 
     try {
-      toast.info("Generating PDF... Please wait");
+      toast.info("Generating Professional Certificate PDF... Please wait");
       
+      // Enhanced canvas options for better quality
       const canvas = await html2canvas(marksheetRef.current, {
-        scale: 2,
+        scale: 3, // Higher scale for better quality
         useCORS: true,
         allowTaint: true,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        width: marksheetRef.current.scrollWidth,
+        height: marksheetRef.current.scrollHeight,
+        logging: false,
+        imageTimeout: 0,
+        removeContainer: true
       });
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png', 1.0); // Maximum quality
+      const pdf = new jsPDF({
+        orientation: 'landscape', // Better for certificate format
+        unit: 'mm',
+        format: 'a4',
+        compress: false // Don't compress for better quality
+      });
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
+      
+      // Calculate aspect ratio to fit properly
       const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const finalWidth = imgWidth * ratio;
+      const finalHeight = imgHeight * ratio;
       
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 0;
+      // Center the image
+      const imgX = (pdfWidth - finalWidth) / 2;
+      const imgY = (pdfHeight - finalHeight) / 2;
 
-      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-      pdf.save(`${selectedStudent?.full_name}_marksheet.pdf`);
+      pdf.addImage(imgData, 'PNG', imgX, imgY, finalWidth, finalHeight, '', 'FAST');
       
-      toast.success("PDF generated successfully!");
+      // Add metadata
+      pdf.setProperties({
+        title: `${selectedStudent?.full_name} - Course Certificate`,
+        subject: `Certificate for ${selectedStudent?.course_name}`,
+        author: 'B.SOFT Computer & Technical Institute',
+        keywords: 'certificate, diploma, course completion',
+        creator: 'B.SOFT Institute Management System'
+      });
+
+      const fileName = `${selectedStudent?.full_name?.replace(/\s+/g, '_')}_Certificate_${new Date().getFullYear()}.pdf`;
+      pdf.save(fileName);
+      
+      toast.success("Professional Certificate PDF generated successfully!");
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error("Failed to generate PDF");
+      toast.error("Failed to generate PDF. Please try again.");
     }
   };
 
@@ -290,254 +317,314 @@ const StudentMarksheetContent = () => {
         </CardContent>
       </Card>
 
-      {/* Marksheet Template */}
+      {/* Professional Certificate Template */}
       <div className="px-6 pb-6">
-        <Card className="shadow-2xl border-0 bg-white">
+        <Card className="shadow-2xl border-0 bg-white overflow-hidden">
           <CardContent className="p-0">
-            <div ref={marksheetRef} className="bg-gray-50 p-8 border-2 border-gray-400">
+            <div ref={marksheetRef} className="relative bg-gradient-to-br from-white via-blue-50/30 to-purple-50/20 p-12 min-h-[800px]">
               
-              {/* Header Section with Logo */}
-              <div className="flex items-start justify-between mb-8">
-                <div className="text-left">
-                  <div className="font-bold text-black text-base">Enroll. Number</div>
-                  <div className="border-b-2 border-black w-40 h-6 mt-2 flex items-end">
-                    <span className="text-sm pb-1">{selectedStudent?.id || ""}</span>
-                  </div>
-                </div>
-                
-                {/* Center Logo */}
-                <div className="flex-shrink-0 mx-8">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-400 via-pink-500 to-pink-600 border-4 border-pink-700 flex items-center justify-center shadow-lg">
-                    <div className="text-center">
-                      <div className="text-xs font-bold text-white leading-tight">B SOFT</div>
-                      <div className="text-xs text-white leading-none">Computer &</div>
-                      <div className="text-xs text-white leading-none">Technical</div>
-                      <div className="text-xs text-white leading-none">Institute</div>
-                    </div>
-                  </div>
-                </div>
+              {/* Elegant Border Design */}
+              <div className="absolute inset-4 border-4 border-double border-blue-800/40 rounded-lg">
+                <div className="absolute inset-2 border border-orange-300/50 rounded-md"></div>
+              </div>
+              
+              {/* Decorative Corner Elements */}
+              <div className="absolute top-8 left-8 w-16 h-16 border-l-4 border-t-4 border-blue-800/60 rounded-tl-lg"></div>
+              <div className="absolute top-8 right-8 w-16 h-16 border-r-4 border-t-4 border-blue-800/60 rounded-tr-lg"></div>
+              <div className="absolute bottom-8 left-8 w-16 h-16 border-l-4 border-b-4 border-blue-800/60 rounded-bl-lg"></div>
+              <div className="absolute bottom-8 right-8 w-16 h-16 border-r-4 border-b-4 border-blue-800/60 rounded-br-lg"></div>
 
-                <div className="text-right">
-                  <div className="font-bold text-black text-base">Sl. No.</div>
-                  <div className="border-b-2 border-black w-40 h-6 mt-2 flex items-end justify-end">
-                    <span className="text-sm pb-1">{marksheetData?.roll_number || ""}</span>
-                  </div>
+              {/* Watermark */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                <div className="transform rotate-45 text-9xl font-elegant text-blue-800">
+                  B.SOFT
                 </div>
               </div>
 
-              {/* Institute Header with Photo */}
-              <div className="relative mb-8">
-                <div className="text-center">
-                  <h1 className="text-3xl font-bold text-blue-700 mb-4 tracking-wider">
+              <div className="relative z-10">
+                {/* Header with Logo and Institution Name */}
+                <div className="text-center mb-8">
+                  <div className="flex items-center justify-center mb-6">
+                    {/* Enhanced Logo */}
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 border-4 border-gold-400 flex items-center justify-center shadow-2xl">
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-white leading-tight font-elegant">B</div>
+                        <div className="text-xs text-white leading-none">SOFT</div>
+                        <div className="text-xs text-white leading-none font-light">Institute</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Institution Header */}
+                  <h1 className="text-4xl font-elegant font-bold text-blue-800 mb-3 tracking-wide">
                     B.SOFT COMPUTER & TECHNICAL INSTITUTE
                   </h1>
-                  <div className="text-sm text-black mb-2 leading-tight">
-                    <span className="font-medium">Registered NGO DARPAN ID AAYOGRegd. No. </span>
-                    <span className="text-red-600 font-bold">UP/2011/0044943</span>
+                  
+                  <div className="space-y-1 text-sm text-gray-700 mb-6">
+                    <div>
+                      <span className="font-medium">Registered NGO DARPAN ID: </span>
+                      <span className="text-red-600 font-bold">UP/2011/0044943</span>
+                    </div>
+                    <div>
+                      <span className="font-medium">Society Regd. No.: </span>
+                      <span className="text-red-600 font-bold">AZ-13610</span>
+                    </div>
+                    <div>
+                      <span className="font-medium">ISO 9001:2015 CERTIFIED No.: </span>
+                      <span className="text-red-600 font-bold">UQ-252016790</span>
+                    </div>
                   </div>
-                  <div className="text-sm text-black mb-2 leading-tight">
-                    <span className="font-medium">Regd. with : Society Regd. No. : </span>
-                    <span className="text-red-600 font-bold">AZ-13610</span>
+
+                  {/* Certificate Title */}
+                  <div className="mb-8">
+                    <div className="text-purple-600 font-certificate text-lg tracking-wide mb-2 italic">
+                      Certificate of Course Completion
+                    </div>
+                    <h2 className="text-3xl font-elegant font-bold text-red-600 tracking-wider">
+                      DIPLOMA CERTIFICATE-CUM-MARKS SHEET
+                    </h2>
+                    <div className="mt-4 mx-auto w-32 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
                   </div>
-                  <div className="text-sm text-black mb-6 leading-tight">
-                    <span className="font-medium">ISO 9001:2015 CERTIFIED/No.- </span>
-                    <span className="text-red-600 font-bold">UQ-252016790</span>
+                </div>
+
+                {/* Student Photo and Details Section */}
+                <div className="flex justify-between items-start mb-8">
+                  <div className="flex-1">
+                    <div className="grid grid-cols-2 gap-8 text-sm">
+                      <div>
+                        <div className="font-certificate text-gray-700 mb-1">Enrollment Number:</div>
+                        <div className="font-bold text-blue-800 text-lg">{selectedStudent?.id || "Not Available"}</div>
+                      </div>
+                      <div>
+                        <div className="font-certificate text-gray-700 mb-1">Roll Number:</div>
+                        <div className="font-bold text-blue-800 text-lg">{marksheetData?.roll_number || "Not Available"}</div>
+                      </div>
+                    </div>
                   </div>
                   
-                  {/* Photo positioned absolute on right side */}
-                  <div className="absolute right-0 top-20">
-                    <div className="w-24 h-32 border-2 border-black bg-white flex items-center justify-center">
-                      <div className="text-xs text-gray-500 text-center">Student Photo</div>
+                  {/* Student Photo */}
+                  <div className="w-32 h-40 border-4 border-gray-300 bg-gray-50 flex items-center justify-center shadow-lg rounded-lg">
+                    <div className="text-center text-gray-500">
+                      <div className="text-xs mb-1">STUDENT</div>
+                      <div className="text-xs">PHOTOGRAPH</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Certificate Text */}
+                <div className="mb-8 text-center font-certificate text-lg leading-relaxed">
+                  <div className="bg-blue-50/50 p-6 rounded-lg border border-blue-200/50">
+                    <p className="mb-4">
+                      This is to certify that <span className="font-bold text-blue-800 text-xl underline decoration-blue-600/30 decoration-2">
+                        {selectedStudent?.full_name || "___________________"}
+                      </span>
+                    </p>
+                    <p className="mb-4">
+                      Son/Daughter of Mr./Mrs. <span className="border-b-2 border-blue-300 inline-block w-48 h-6 align-bottom mx-2"></span>
+                    </p>
+                    <p className="mb-4">
+                      has successfully completed the <span className="font-bold text-purple-700 text-xl">
+                        {selectedStudent?.course_name || "___________________"}
+                      </span> course
+                    </p>
+                    <p className="mb-4">
+                      conducted by <span className="font-bold text-blue-800">B.SOFT Computer & Technical Institute</span>
+                    </p>
+                    <p className="mb-4">
+                      in the year <span className="font-bold text-red-600 text-xl">
+                        {marksheetData?.examination_date ? new Date(marksheetData.examination_date).getFullYear() : new Date().getFullYear()}
+                      </span>
+                    </p>
+                    <p className="text-gray-700">
+                      Center Code: <span className="font-bold text-blue-800">BSOFT001</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Academic Performance Table */}
+                <div className="mb-8">
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-elegant font-bold text-blue-800 tracking-wider">ACADEMIC PERFORMANCE</h3>
+                    <div className="mt-2 mx-auto w-24 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600"></div>
+                  </div>
+                  
+                  <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+                          <th className="px-4 py-3 text-sm font-semibold text-center">Subject</th>
+                          <th className="px-4 py-3 text-sm font-semibold text-center">Max. Theory</th>
+                          <th className="px-4 py-3 text-sm font-semibold text-center">Max. Practical</th>
+                          <th className="px-4 py-3 text-sm font-semibold text-center">Obtained Theory</th>
+                          <th className="px-4 py-3 text-sm font-semibold text-center">Obtained Practical</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-sm">
+                        {courseSubjects.map((subject, index) => (
+                          <tr key={subject.id} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+                            <td className="px-4 py-3 text-center font-medium text-gray-800">{subject.subject}</td>
+                            <td className="px-4 py-3 text-center">{subject.theory_marks}</td>
+                            <td className="px-4 py-3 text-center">{subject.practical_marks}</td>
+                            <td className="px-4 py-3 text-center font-semibold text-blue-600">
+                              {Math.round(parseInt(subject.theory_marks || "0") * 0.75)}
+                            </td>
+                            <td className="px-4 py-3 text-center font-semibold text-purple-600">
+                              {Math.round(parseInt(subject.practical_marks || "0") * 0.8)}
+                            </td>
+                          </tr>
+                        ))}
+                        
+                        {/* Summary Rows */}
+                        <tr className="bg-blue-100 border-t-2 border-blue-300">
+                          <td className="px-4 py-3 text-center font-bold text-blue-800">TOTAL MARKS</td>
+                          <td className="px-4 py-3 text-center font-bold text-blue-700">
+                            {courseSubjects.reduce((sum, s) => sum + parseInt(s.theory_marks || "0"), 0)}
+                          </td>
+                          <td className="px-4 py-3 text-center font-bold text-blue-700">
+                            {courseSubjects.reduce((sum, s) => sum + parseInt(s.practical_marks || "0"), 0)}
+                          </td>
+                          <td className="px-4 py-3 text-center font-bold text-green-600 text-lg">
+                            {marksheetData?.obtained_marks || 0}
+                          </td>
+                          <td className="px-4 py-3 text-center font-bold text-green-600">
+                            {courseSubjects.reduce((sum, s) => sum + Math.round(parseInt(s.practical_marks || "0") * 0.8), 0)}
+                          </td>
+                        </tr>
+                        
+                        <tr className="bg-purple-100">
+                          <td className="px-4 py-3 text-center font-bold text-purple-800">GRAND TOTAL</td>
+                          <td className="px-4 py-3 text-center font-bold text-purple-700 text-lg">
+                            {marksheetData?.total_marks || 0}
+                          </td>
+                          <td className="px-4 py-3 text-center"></td>
+                          <td className="px-4 py-3 text-center font-bold text-green-600 text-lg">
+                            {marksheetData?.obtained_marks || 0}
+                          </td>
+                          <td className="px-4 py-3 text-center"></td>
+                        </tr>
+                        
+                        <tr className="bg-gradient-to-r from-green-100 to-blue-100">
+                          <td className="px-4 py-4 text-center font-bold text-gray-800 text-lg">RESULT</td>
+                          <td className="px-4 py-4 text-center">
+                            <div className="text-red-600 font-bold text-xl">
+                              {marksheetData?.percentage || 0}%
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-center">
+                            <div className="text-green-600 font-bold text-xl">
+                              {marksheetData?.grade || "N/A"}
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-center">
+                            <div className={`font-bold text-lg px-3 py-1 rounded-full ${
+                              marksheetData?.result_status === 'pass' 
+                                ? 'bg-green-200 text-green-800' 
+                                : 'bg-red-200 text-red-800'
+                            }`}>
+                              {marksheetData?.result_status?.toUpperCase() || "PENDING"}
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-center"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Grading System and Signatures */}
+                <div className="grid grid-cols-2 gap-12 mb-8">
+                  {/* Grading Legend */}
+                  <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h4 className="font-bold text-blue-800 mb-4 text-lg">GRADING SYSTEM</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="font-medium">Distinction (A+):</span>
+                        <span className="text-green-600 font-bold">85% & Above</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">First Class (A):</span>
+                        <span className="text-blue-600 font-bold">75% - 84%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Second Class (B):</span>
+                        <span className="text-purple-600 font-bold">65% - 74%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Third Class (C):</span>
+                        <span className="text-orange-600 font-bold">55% - 64%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Pass (D):</span>
+                        <span className="text-yellow-600 font-bold">50% - 54%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="font-medium">Fail (F):</span>
+                        <span className="text-red-600 font-bold">Below 50%</span>
+                      </div>
                     </div>
                   </div>
                   
-                  <div className="text-pink-600 font-bold text-lg tracking-wide mb-2">
-                    (Awarded to Under the Management)
-                  </div>
-                  <h2 className="text-2xl font-bold text-red-600 tracking-wider">
-                    CERTIFICATE-CUM-MARKS SHEET
-                  </h2>
-                </div>
-              </div>
-
-              {/* Certificate Text with Dynamic Data */}
-              <div className="mb-8 text-sm leading-relaxed">
-                <p className="mb-3">
-                  This is to certify that{" "}
-                  <span className="border-b-2 border-black inline-block min-w-40 h-5 align-bottom px-2 font-semibold">
-                    {selectedStudent?.full_name || ""}
-                  </span>
-                </p>
-                <p className="mb-3">
-                  Son/Daughter of Mr. and Mrs.{" "}
-                  <span className="border-b-2 border-black inline-block w-40 h-4 align-bottom"></span>
-                </p>
-                <p className="mb-3">
-                  has passed one year{" "}
-                  <span className="border-b-2 border-black inline-block min-w-32 h-5 align-bottom px-2 font-semibold">
-                    {selectedStudent?.course_name || ""}
-                  </span>{" "}
-                  Course examination held in{" "}
-                  <span className="border-b-2 border-black inline-block w-32 h-5 align-bottom px-2">
-                    {marksheetData?.examination_date ? new Date(marksheetData.examination_date).getFullYear() : ""}
-                  </span>
-                </p>
-                <p className="mb-3">
-                  from{" "}
-                  <span className="border-b-2 border-black inline-block w-48 h-5 align-bottom px-2">
-                    B.SOFT Computer & Technical Institute
-                  </span>
-                </p>
-                <p className="mb-6">
-                  Center Code:{" "}
-                  <span className="border-b-2 border-black inline-block w-24 h-5 align-bottom px-2">
-                    BSOFT001
-                  </span>. His/Her grading in Individual Papers are given below.
-                </p>
-              </div>
-
-              {/* Grades Awarded Table with Dynamic Data */}
-              <div className="mb-8">
-                <div className="text-center mb-4">
-                  <h3 className="text-blue-700 font-bold text-xl tracking-wider">GRADES AWARDED</h3>
-                </div>
-                
-                <table className="w-full border-2 border-black border-collapse bg-white text-sm">
-                  <thead>
-                    <tr className="bg-gray-200">
-                      <th className="border-2 border-black px-3 py-2 font-bold text-center">Subjects</th>
-                      <th className="border-2 border-black px-3 py-2 font-bold text-center">Max.Theory Marks</th>
-                      <th className="border-2 border-black px-3 py-2 font-bold text-center">Max.Practical Marks</th>
-                      <th className="border-2 border-black px-3 py-2 font-bold text-center">Obtain Theory Marks</th>
-                      <th className="border-2 border-black px-3 py-2 font-bold text-center">Obtain Practical Marks</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {courseSubjects.map((subject, index) => (
-                      <tr key={subject.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                        <td className="border-2 border-black px-3 py-2 text-center">{subject.subject}</td>
-                        <td className="border-2 border-black px-3 py-2 text-center">{subject.theory_marks}</td>
-                        <td className="border-2 border-black px-3 py-2 text-center">{subject.practical_marks}</td>
-                        <td className="border-2 border-black px-3 py-2 text-center">
-                          {Math.round(parseInt(subject.theory_marks || "0") * 0.75)}
-                        </td>
-                        <td className="border-2 border-black px-3 py-2 text-center">
-                          {Math.round(parseInt(subject.practical_marks || "0") * 0.8)}
-                        </td>
-                      </tr>
-                    ))}
-                    
-                    <tr className="bg-gray-100">
-                      <td className="border-2 border-black px-3 py-2 font-bold text-center">Total</td>
-                      <td className="border-2 border-black px-3 py-2 text-center font-bold">
-                        {courseSubjects.reduce((sum, s) => sum + parseInt(s.theory_marks || "0"), 0)}
-                      </td>
-                      <td className="border-2 border-black px-3 py-2 text-center font-bold">
-                        {courseSubjects.reduce((sum, s) => sum + parseInt(s.practical_marks || "0"), 0)}
-                      </td>
-                      <td className="border-2 border-black px-3 py-2 text-center font-bold">
-                        {marksheetData?.obtained_marks || 0}
-                      </td>
-                      <td className="border-2 border-black px-3 py-2 text-center font-bold">
-                        {courseSubjects.reduce((sum, s) => sum + Math.round(parseInt(s.practical_marks || "0") * 0.8), 0)}
-                      </td>
-                    </tr>
-                    
-                    <tr className="bg-white">
-                      <td className="border-2 border-black px-3 py-2 font-bold text-center">Grand Total</td>
-                      <td className="border-2 border-black px-3 py-2 text-center font-bold">
-                        {marksheetData?.total_marks || 0}
-                      </td>
-                      <td className="border-2 border-black px-3 py-2 text-center"></td>
-                      <td className="border-2 border-black px-3 py-2 text-center font-bold">
-                        {marksheetData?.obtained_marks || 0}
-                      </td>
-                      <td className="border-2 border-black px-3 py-2 text-center"></td>
-                    </tr>
-                    
-                    <tr className="bg-gray-100">
-                      <td className="border-2 border-black px-3 py-2 font-bold text-center">Percentage (%)</td>
-                      <td className="border-2 border-black px-3 py-2 text-center">
-                        <span className="text-red-600 font-bold">{marksheetData?.percentage || 0}%</span>
-                      </td>
-                      <td className="border-2 border-black px-3 py-2 text-center"></td>
-                      <td className="border-2 border-black px-3 py-2 text-center"></td>
-                      <td className="border-2 border-black px-3 py-2 text-center"></td>
-                    </tr>
-                    
-                    <tr className="bg-white">
-                      <td className="border-2 border-black px-3 py-2 font-bold text-center">Grade</td>
-                      <td className="border-2 border-black px-3 py-2 text-center font-bold text-green-600">
-                        {marksheetData?.grade || ""}
-                      </td>
-                      <td className="border-2 border-black px-3 py-2 text-center"></td>
-                      <td className="border-2 border-black px-3 py-2 text-center"></td>
-                      <td className="border-2 border-black px-3 py-2 text-center"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Legend of Grades and Signature Section */}
-              <div className="grid grid-cols-2 gap-8 mb-8">
-                <div>
-                  <div className="font-bold text-sm mb-3">LEGEND OF GRADES</div>
-                  <div className="text-sm leading-relaxed">
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                      <div>S : 85% & Above</div>
-                      <div>A : 75%-84%</div>
-                      <div>C : 55%-64%</div>
-                      <div>D : 50%-54%</div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-1">
-                      <div>B : 65%-74%</div>
-                      <div></div>
-                      <div>F : Less than 50% - Fail</div>
-                      <div></div>
+                  {/* Signatures Section */}
+                  <div className="text-center space-y-6">
+                    <div>
+                      <div className="w-40 h-20 border-2 border-gray-300 bg-blue-50/30 mx-auto mb-3 flex items-center justify-center rounded-lg">
+                        <div className="text-xs text-gray-500 font-elegant">Digital Signature</div>
+                      </div>
+                      <div className="border-b-2 border-gray-400 w-40 mx-auto mb-2"></div>
+                      <div className="font-bold text-blue-800 text-sm">DIRECTOR/PRINCIPAL</div>
+                      <div className="text-xs text-gray-600 mt-1">B.SOFT Institute</div>
                     </div>
                   </div>
                 </div>
-                
-                <div className="text-right">
-                  <div className="w-24 h-16 border-2 border-black bg-white ml-auto mb-2 flex items-center justify-center">
-                    <div className="text-xs text-gray-500">Digital Signature</div>
-                  </div>
-                  <div className="font-bold text-sm">Digitally signed by</div>
-                  <div className="border-b-2 border-black w-32 h-4 ml-auto mt-1"></div>
-                </div>
-              </div>
 
-              {/* Footer Section with Dynamic Data */}
-              <div className="grid grid-cols-3 gap-8 mb-6">
-                <div>
-                  <div className="font-bold text-sm mb-2">Issue Date :</div>
-                  <div className="border-b-2 border-black w-full h-5 flex items-end">
-                    <span className="text-sm pb-1">
-                      {marksheetData?.examination_date ? new Date(marksheetData.examination_date).toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB')}
-                    </span>
+                {/* Footer Information */}
+                <div className="grid grid-cols-3 gap-8 mb-6 text-center">
+                  <div className="bg-blue-50/50 p-4 rounded-lg">
+                    <div className="font-bold text-blue-800 mb-2">Issue Date</div>
+                    <div className="text-lg font-semibold text-gray-800">
+                      {marksheetData?.examination_date 
+                        ? new Date(marksheetData.examination_date).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit', 
+                            year: 'numeric'
+                          })
+                        : new Date().toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                          })
+                      }
+                    </div>
+                  </div>
+                  <div className="bg-purple-50/50 p-4 rounded-lg">
+                    <div className="font-bold text-purple-800 mb-2">Place of Issue</div>
+                    <div className="text-lg font-semibold text-gray-800">Azamgarh, UP</div>
+                  </div>
+                  <div className="bg-green-50/50 p-4 rounded-lg">
+                    <div className="font-bold text-green-800 mb-2">Certificate ID</div>
+                    <div className="text-sm font-mono text-gray-800">
+                      BSOFT{new Date().getFullYear()}{selectedStudent?.id?.slice(-4) || "0000"}
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <div className="font-bold text-sm mb-2">Place :</div>
-                  <div className="border-b-2 border-black w-full h-5 flex items-end">
-                    <span className="text-sm pb-1">Azamgarh</span>
+
+                {/* Verification and Contact Information */}
+                <div className="text-center space-y-3 text-sm">
+                  <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+                    <div className="font-medium text-yellow-800 mb-1">Certificate Verification</div>
+                    <div className="text-yellow-700">
+                      Verify this certificate at{" "}
+                      <span className="font-bold text-blue-700 underline">www.binasoftedu.org.in</span>
+                      {" "}using enrollment number: <span className="font-mono font-bold">{selectedStudent?.id || "N/A"}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="text-gray-600 leading-relaxed">
+                    <div className="font-semibold text-gray-800">Head Office Address</div>
+                    <div>Near Union Bank Of India, Bina Soft Educational & Welfare Society</div>
+                    <div>Vill & Post BILARIYAGAN J, AZAMGARH - 276121, Uttar Pradesh</div>
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="font-bold text-sm">SECRETARY/DIRECTOR</div>
-                </div>
-              </div>
-
-              {/* Verification Link */}
-              <div className="text-center text-sm mb-4 leading-tight">
-                <span className="font-medium">This Diploma may be Verified at </span>
-                <span className="text-blue-700 underline font-medium">www.binasoftedu.org.in</span>
-                <span className="font-medium"> using the diploma holder's enrollment number</span>
-              </div>
-
-              {/* Head Office Address */}
-              <div className="text-center text-sm leading-tight">
-                <div className="font-bold">Head Office Address - Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121</div>
               </div>
             </div>
           </CardContent>

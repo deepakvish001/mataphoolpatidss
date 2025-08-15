@@ -22,6 +22,8 @@ export default {
 				sans: ['Inter', 'sans-serif'],
 				serif: ['Playfair Display', 'serif'],
 				display: ['Space Grotesk', 'sans-serif'],
+				certificate: ['Cormorant Garamond', 'serif'],
+				elegant: ['Cinzel', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
