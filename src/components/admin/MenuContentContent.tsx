@@ -30,10 +30,7 @@ const MenuContentContent = () => {
   } = useOptimisticCrud<MenuContent>({ tableName: 'menu_content' });
 
   useAdminRealTime({
-    tableName: 'menu_content',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'menu_content'
   });
 
   const [formData, setFormData] = useState({
