@@ -144,27 +144,36 @@ const StudentMarksheetContent = () => {
     }
 
     try {
-      toast.info("Generating Professional Certificate PDF... Please wait");
+      toast.loading("Processing certificate for PDF generation...", { id: "pdf-gen" });
       
-      // Enhanced canvas options for better quality
+      // Wait a moment for any final renders
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Ultra high quality canvas options for professional certificate
       const canvas = await html2canvas(marksheetRef.current, {
-        scale: 3, // Higher scale for better quality
+        scale: 4, // Ultra high resolution
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         width: marksheetRef.current.scrollWidth,
         height: marksheetRef.current.scrollHeight,
         logging: false,
-        imageTimeout: 0,
-        removeContainer: true
+        imageTimeout: 15000,
+        removeContainer: true,
+        ignoreElements: (element) => {
+          return element.classList?.contains('no-print');
+        }
       });
 
-      const imgData = canvas.toDataURL('image/png', 1.0); // Maximum quality
+      toast.loading("Creating professional PDF document...", { id: "pdf-gen" });
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.98); // High quality JPEG
       const pdf = new jsPDF({
-        orientation: 'landscape', // Better for certificate format
+        orientation: 'landscape',
         unit: 'mm',
         format: 'a4',
-        compress: false // Don't compress for better quality
+        compress: true,
+        precision: 2
       });
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -172,33 +181,33 @@ const StudentMarksheetContent = () => {
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
       
-      // Calculate aspect ratio to fit properly
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      // Optimal scaling for A4 landscape
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.95;
       const finalWidth = imgWidth * ratio;
       const finalHeight = imgHeight * ratio;
       
-      // Center the image
+      // Perfect centering
       const imgX = (pdfWidth - finalWidth) / 2;
       const imgY = (pdfHeight - finalHeight) / 2;
 
-      pdf.addImage(imgData, 'PNG', imgX, imgY, finalWidth, finalHeight, '', 'FAST');
+      pdf.addImage(imgData, 'JPEG', imgX, imgY, finalWidth, finalHeight, '', 'FAST');
       
-      // Add metadata
+      // Enhanced metadata
       pdf.setProperties({
-        title: `${selectedStudent?.full_name} - Course Certificate`,
-        subject: `Certificate for ${selectedStudent?.course_name}`,
+        title: `${selectedStudent?.full_name} - Professional Certificate`,
+        subject: `Course Completion Certificate - ${selectedStudent?.course_name}`,
         author: 'B.SOFT Computer & Technical Institute',
-        keywords: 'certificate, diploma, course completion',
+        keywords: 'certificate, diploma, course completion, professional certification',
         creator: 'B.SOFT Institute Management System'
       });
 
-      const fileName = `${selectedStudent?.full_name?.replace(/\s+/g, '_')}_Certificate_${new Date().getFullYear()}.pdf`;
+      const fileName = `${selectedStudent?.full_name?.replace(/[^a-zA-Z0-9]/g, '_')}_Certificate_${new Date().getFullYear()}.pdf`;
       pdf.save(fileName);
       
-      toast.success("Professional Certificate PDF generated successfully!");
+      toast.success("Professional Certificate PDF generated successfully!", { id: "pdf-gen" });
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error("Failed to generate PDF. Please try again.");
+      toast.error("Failed to generate PDF. Please try again.", { id: "pdf-gen" });
     }
   };
 
@@ -275,24 +284,36 @@ const StudentMarksheetContent = () => {
 
           {/* Student Search Results */}
           {showResults && (
-            <div className="mt-4 max-h-64 overflow-y-auto border border-gray-200 rounded-lg bg-white">
+            <div className="mt-4 max-h-64 overflow-y-auto border border-gray-200 rounded-lg bg-white shadow-lg animate-fade-in">
               {searchResults.length === 0 ? (
-                <div className="p-4 text-center text-gray-500">No students found</div>
+                <div className="p-4 text-center text-gray-500 animate-fade-in">No students found</div>
               ) : (
                 <div className="divide-y divide-gray-100">
-                  {searchResults.map((student) => (
+                  {searchResults.map((student, index) => (
                     <div
                       key={student.id}
                       onClick={() => selectStudent(student)}
-                      className="p-4 hover:bg-orange-50 cursor-pointer flex items-center justify-between"
+                      className="p-4 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 cursor-pointer flex items-center justify-between transition-all duration-300 hover:shadow-md animate-fade-in"
+                      style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      <div>
-                        <div className="font-medium text-gray-900">{student.full_name}</div>
-                        <div className="text-sm text-gray-500">
-                          {student.email} • {student.course_name || 'No course assigned'}
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900 text-lg">{student.full_name}</div>
+                        <div className="text-sm text-gray-500 mt-1">
+                          <span className="inline-flex items-center gap-1">
+                            📧 {student.email}
+                          </span>
+                          <span className="mx-2">•</span>
+                          <span className="inline-flex items-center gap-1">
+                            📚 {student.course_name || 'No course assigned'}
+                          </span>
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1">
+                          ID: {student.id}
                         </div>
                       </div>
-                      <div className="text-sm text-gray-400">Click to select</div>
+                      <div className="text-sm text-orange-600 font-medium hover:text-orange-700 transition-colors">
+                        Select →
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -345,12 +366,13 @@ const StudentMarksheetContent = () => {
                 {/* Header with Logo and Institution Name */}
                 <div className="text-center mb-8">
                   <div className="flex items-center justify-center mb-6">
-                    {/* Enhanced Logo */}
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 border-4 border-gold-400 flex items-center justify-center shadow-2xl">
+                 {/* Enhanced Logo */}
+                    <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 border-4 border-amber-400 shadow-2xl flex items-center justify-center">
+                      <div className="absolute inset-1 rounded-full border-2 border-white/30"></div>
                       <div className="text-center">
-                        <div className="text-sm font-bold text-white leading-tight font-elegant">B</div>
-                        <div className="text-xs text-white leading-none">SOFT</div>
-                        <div className="text-xs text-white leading-none font-light">Institute</div>
+                        <div className="text-lg font-bold text-white leading-tight">B</div>
+                        <div className="text-sm text-white leading-none font-medium">SOFT</div>
+                        <div className="text-xs text-white/90 leading-none font-light">Institute</div>
                       </div>
                     </div>
                   </div>
