@@ -214,33 +214,34 @@ const StudentMarksheetContent = () => {
   const missing = checkMissingData();
 
   return (
-    <div className="w-full max-w-none bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
+    <div className="w-full max-w-none bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 min-h-screen">
       {/* Enhanced Header with Search */}
-      <Card className="shadow-lg border-0 bg-white/95 backdrop-blur-sm m-6 mb-4">
-        <CardContent className="p-6">
+      <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-md m-6 mb-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-orange-600/5"></div>
+        <CardContent className="p-6 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
             <div className="flex items-center space-x-6">
-              <a href="/admin" className="text-orange-600 hover:text-orange-800 font-medium flex items-center gap-2">
-                <User className="h-4 w-4" />
+              <a href="/admin" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105">
+                <User className="h-5 w-5" />
                 Admin Home
               </a>
               <div className="flex items-center space-x-4">
                 <div className="flex items-center gap-2">
-                  <Search className="h-4 w-4 text-gray-500" />
-                  <span className="text-gray-700 font-medium">Find Student:</span>
+                  <Search className="h-5 w-5 text-blue-600" />
+                  <span className="text-gray-700 font-semibold">Find Student:</span>
                 </div>
                 <div className="flex gap-2">
                   <Input
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && searchStudents()}
-                    className="w-60 h-10 border border-orange-300 focus:border-orange-500 focus:ring-orange-500/20"
+                    className="w-64 h-12 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 rounded-lg transition-all duration-300"
                     placeholder="Search by name, email, or ID..."
                   />
                   <Button 
                     onClick={searchStudents}
                     disabled={loading}
-                    className="bg-orange-600 hover:bg-orange-700 text-white px-6"
+                    className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-8 h-12 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                   >
                     {loading ? "Searching..." : "Search"}
                   </Button>
@@ -252,10 +253,10 @@ const StudentMarksheetContent = () => {
               <Button 
                 onClick={generatePDF}
                 disabled={!selectedStudent || missing.length > 0}
-                className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-6 py-2 flex items-center gap-2"
+                className="bg-gradient-to-r from-green-600 via-green-700 to-emerald-700 hover:from-green-700 hover:via-green-800 hover:to-emerald-800 text-white px-8 py-3 h-12 flex items-center gap-3 font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
-                <FileDown className="h-4 w-4" />
-                Generate Certificate PDF
+                <FileDown className="h-5 w-5" />
+                Generate Professional Certificate PDF
               </Button>
             </div>
           </div>
