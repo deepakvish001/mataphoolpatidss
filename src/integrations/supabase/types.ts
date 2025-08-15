@@ -681,6 +681,225 @@ export type Database = {
         }
         Relationships: []
       }
+      fees_receipts: {
+        Row: {
+          amount_due: number
+          amount_paid: number
+          course: string
+          created_at: string
+          franchise_id: string
+          franchise_name: string
+          id: string
+          payment_details: string | null
+          receipt_date: string
+          receipt_no: string
+          status: string
+          student: string
+          student_id: string
+          total_fee: number
+          updated_at: string
+        }
+        Insert: {
+          amount_due?: number
+          amount_paid: number
+          course: string
+          created_at?: string
+          franchise_id: string
+          franchise_name: string
+          id?: string
+          payment_details?: string | null
+          receipt_date: string
+          receipt_no: string
+          status?: string
+          student: string
+          student_id: string
+          total_fee: number
+          updated_at?: string
+        }
+        Update: {
+          amount_due?: number
+          amount_paid?: number
+          course?: string
+          created_at?: string
+          franchise_id?: string
+          franchise_name?: string
+          id?: string
+          payment_details?: string | null
+          receipt_date?: string
+          receipt_no?: string
+          status?: string
+          student?: string
+          student_id?: string
+          total_fee?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      franchise_registrations: {
+        Row: {
+          antivirus: string | null
+          antivirus_remark: string | null
+          approval_status: string
+          centre_head_name: string
+          city_town_village: string | null
+          connectivity_type: string | null
+          created_at: string
+          date_of_registration: string
+          designation: string
+          district_name: string
+          district_sort_name: string
+          documents: Json | null
+          educational_qualification: string | null
+          email: string
+          experience: string | null
+          faculty_indicate: string | null
+          franchise_type: string
+          gender: string | null
+          head_date_of_birth: string | null
+          head_district: string
+          head_email: string
+          head_mobile_number: string
+          head_pin_code: string
+          head_postal_address: string
+          head_state: string
+          id: string
+          infrastructure_data: Json | null
+          institute_full_name: string
+          institute_sort_name: string
+          internet_connectivity: string | null
+          internet_speed: string | null
+          marital_status: string | null
+          mobile_country_code: string
+          mobile_number: string
+          number_of_faculties: string | null
+          number_of_servers: string | null
+          operating_system: string | null
+          os_remark: string | null
+          pin_code: string
+          postal_address: string
+          power_backup: string | null
+          power_remark: string | null
+          printer_remark: string | null
+          printers_scanner: string | null
+          religion: string | null
+          server_remark: string | null
+          state_name: string
+          state_sort_name: string
+          status: string
+          type_of_faculties: string | null
+          updated_at: string
+          year_of_establishment: string
+        }
+        Insert: {
+          antivirus?: string | null
+          antivirus_remark?: string | null
+          approval_status?: string
+          centre_head_name: string
+          city_town_village?: string | null
+          connectivity_type?: string | null
+          created_at?: string
+          date_of_registration: string
+          designation: string
+          district_name: string
+          district_sort_name: string
+          documents?: Json | null
+          educational_qualification?: string | null
+          email: string
+          experience?: string | null
+          faculty_indicate?: string | null
+          franchise_type: string
+          gender?: string | null
+          head_date_of_birth?: string | null
+          head_district: string
+          head_email: string
+          head_mobile_number: string
+          head_pin_code: string
+          head_postal_address: string
+          head_state: string
+          id?: string
+          infrastructure_data?: Json | null
+          institute_full_name: string
+          institute_sort_name: string
+          internet_connectivity?: string | null
+          internet_speed?: string | null
+          marital_status?: string | null
+          mobile_country_code?: string
+          mobile_number: string
+          number_of_faculties?: string | null
+          number_of_servers?: string | null
+          operating_system?: string | null
+          os_remark?: string | null
+          pin_code: string
+          postal_address: string
+          power_backup?: string | null
+          power_remark?: string | null
+          printer_remark?: string | null
+          printers_scanner?: string | null
+          religion?: string | null
+          server_remark?: string | null
+          state_name: string
+          state_sort_name: string
+          status?: string
+          type_of_faculties?: string | null
+          updated_at?: string
+          year_of_establishment: string
+        }
+        Update: {
+          antivirus?: string | null
+          antivirus_remark?: string | null
+          approval_status?: string
+          centre_head_name?: string
+          city_town_village?: string | null
+          connectivity_type?: string | null
+          created_at?: string
+          date_of_registration?: string
+          designation?: string
+          district_name?: string
+          district_sort_name?: string
+          documents?: Json | null
+          educational_qualification?: string | null
+          email?: string
+          experience?: string | null
+          faculty_indicate?: string | null
+          franchise_type?: string
+          gender?: string | null
+          head_date_of_birth?: string | null
+          head_district?: string
+          head_email?: string
+          head_mobile_number?: string
+          head_pin_code?: string
+          head_postal_address?: string
+          head_state?: string
+          id?: string
+          infrastructure_data?: Json | null
+          institute_full_name?: string
+          institute_sort_name?: string
+          internet_connectivity?: string | null
+          internet_speed?: string | null
+          marital_status?: string | null
+          mobile_country_code?: string
+          mobile_number?: string
+          number_of_faculties?: string | null
+          number_of_servers?: string | null
+          operating_system?: string | null
+          os_remark?: string | null
+          pin_code?: string
+          postal_address?: string
+          power_backup?: string | null
+          power_remark?: string | null
+          printer_remark?: string | null
+          printers_scanner?: string | null
+          religion?: string | null
+          server_remark?: string | null
+          state_name?: string
+          state_sort_name?: string
+          status?: string
+          type_of_faculties?: string | null
+          updated_at?: string
+          year_of_establishment?: string
+        }
+        Relationships: []
+      }
       head_offices: {
         Row: {
           address: string

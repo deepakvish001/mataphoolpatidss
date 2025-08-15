@@ -4,8 +4,84 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Building, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface FranchiseRegistration {
+  id: string;
+  franchise_type: string;
+  institute_sort_name: string;
+  institute_full_name: string;
+  year_of_establishment: string;
+  postal_address: string;
+  pin_code: string;
+  city_town_village?: string;
+  state_name: string;
+  district_name: string;
+  state_sort_name: string;
+  district_sort_name: string;
+  date_of_registration: string;
+  mobile_country_code: string;
+  mobile_number: string;
+  email: string;
+  centre_head_name: string;
+  designation: string;
+  head_state: string;
+  head_district: string;
+  head_postal_address: string;
+  head_pin_code: string;
+  head_mobile_number: string;
+  head_email: string;
+  head_date_of_birth?: string;
+  gender?: string;
+  educational_qualification?: string;
+  experience?: string;
+  marital_status?: string;
+  religion?: string;
+  infrastructure_data?: any;
+  internet_connectivity?: string;
+  connectivity_type?: string;
+  internet_speed?: string;
+  number_of_servers?: string;
+  server_remark?: string;
+  operating_system?: string;
+  os_remark?: string;
+  antivirus?: string;
+  antivirus_remark?: string;
+  printers_scanner?: string;
+  printer_remark?: string;
+  power_backup?: string;
+  power_remark?: string;
+  type_of_faculties?: string;
+  number_of_faculties?: string;
+  faculty_indicate?: string;
+  documents?: any;
+  status: string;
+  approval_status: string;
+  created_at: string;
+}
 
 const FranchiseRegistrationContent = () => {
+  const {
+    data: franchiseRegistrations,
+    loading,
+    create,
+    update,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<FranchiseRegistration>({ 
+    tableName: 'franchise_registrations',
+    orderBy: { column: 'created_at', ascending: false }
+  });
+
+  useAdminRealTime({
+    tableName: 'franchise_registrations'
+  });
+
   // Institute Information
   const [franchiseType, setFranchiseType] = useState("");
   const [instituteSortName, setInstituteSortName] = useState("");
@@ -87,19 +163,165 @@ const FranchiseRegistrationContent = () => {
   // Declaration
   const [acceptTerms, setAcceptTerms] = useState(false);
 
-  const handleSubmit = () => {
-    console.log("Form submitted");
-    // Add submit logic here
+  const handleSubmit = async () => {
+    if (!franchiseType || !instituteSortName || !instituteFullName || !yearOfEstablishment || 
+        !postalAddress || !pinCode || !stateName || !districtName || !dateOfRegistration || 
+        !mobileNumber || !email || !centreHeadName || !designation || !acceptTerms) {
+      toast.error("Please fill in all required fields and accept terms");
+      return;
+    }
+
+    try {
+      await create({
+        franchise_type: franchiseType,
+        institute_sort_name: instituteSortName,
+        institute_full_name: instituteFullName,
+        year_of_establishment: yearOfEstablishment,
+        postal_address: postalAddress,
+        pin_code: pinCode,
+        city_town_village: cityTownVillage,
+        state_name: stateName,
+        district_name: districtName,
+        state_sort_name: stateSortName,
+        district_sort_name: districtSortName,
+        date_of_registration: dateOfRegistration,
+        mobile_country_code: mobileCountryCode,
+        mobile_number: mobileNumber,
+        email: email,
+        centre_head_name: centreHeadName,
+        designation: designation,
+        head_state: headState,
+        head_district: headDistrict,
+        head_postal_address: headPostalAddress,
+        head_pin_code: headPinCode,
+        head_mobile_number: headMobileNumber,
+        head_email: headEmail,
+        head_date_of_birth: headDateOfBirth,
+        gender: gender,
+        educational_qualification: educationalQualification,
+        experience: experience,
+        marital_status: maritalStatus,
+        religion: religion,
+        infrastructure_data: infrastructureData,
+        internet_connectivity: internetConnectivity,
+        connectivity_type: connectivityType,
+        internet_speed: internetSpeed,
+        number_of_servers: numberOfServers,
+        server_remark: serverRemark,
+        operating_system: operatingSystem,
+        os_remark: osRemark,
+        antivirus: antivirus,
+        antivirus_remark: antivirusRemark,
+        printers_scanner: printersScanner,
+        printer_remark: printerRemark,
+        power_backup: powerBackup,
+        power_remark: powerRemark,
+        type_of_faculties: typeOfFaculties,
+        number_of_faculties: numberOfFaculties,
+        faculty_indicate: facultyIndicate,
+        documents: documents,
+        status: 'pending',
+        approval_status: 'pending'
+      });
+
+      handleReset();
+      toast.success("Franchise registration submitted successfully!");
+    } catch (error) {
+      toast.error("Failed to submit franchise registration");
+    }
   };
 
   const handleReset = () => {
-    // Reset all form fields
     setFranchiseType("");
     setInstituteSortName("");
     setInstituteFullName("");
-    // ... reset all other fields
+    setYearOfEstablishment("");
+    setPostalAddress("");
+    setPinCode("");
+    setCityTownVillage("");
+    setStateName("");
+    setDistrictName("");
+    setStateSortName("");
+    setDistrictSortName("");
+    setDateOfRegistration("");
+    setMobileCountryCode("+91");
+    setMobileNumber("");
+    setEmail("");
+    setCentreHeadName("");
+    setDesignation("");
+    setHeadState("");
+    setHeadDistrict("");
+    setHeadPostalAddress("");
+    setHeadPinCode("");
+    setHeadMobileNumber("");
+    setHeadEmail("");
+    setHeadDateOfBirth("");
+    setGender("");
+    setEducationalQualification("");
+    setExperience("");
+    setMaritalStatus("");
+    setReligion("");
+    setInfrastructureData({
+      directorRoom: { indicate: "", numberOfRoom: "", remark: "" },
+      officeRoom: { indicate: "", numberOfRoom: "", remark: "" },
+      theoryRoom: { indicate: "", numberOfRoom: "", remark: "" },
+      practicalRoom: { indicate: "", numberOfRoom: "", remark: "" },
+      staffRoom: { indicate: "", numberOfRoom: "", remark: "" },
+      library: { indicate: "", numberOfRoom: "", remark: "" },
+      reception: { indicate: "", numberOfRoom: "", remark: "" },
+      waitingRoom: { indicate: "", numberOfRoom: "", remark: "" },
+      toilet: { indicate: "", numberOfRoom: "", remark: "" },
+      anyOtherRoom: { indicate: "", numberOfRoom: "", remark: "" }
+    });
+    setInternetConnectivity("");
+    setConnectivityType("");
+    setInternetSpeed("0.00 mb/second");
+    setNumberOfServers("");
+    setServerRemark("");
+    setOperatingSystem("");
+    setOsRemark("");
+    setAntivirus("");
+    setAntivirusRemark("");
+    setPrintersScanner("");
+    setPrinterRemark("");
+    setPowerBackup("");
+    setPowerRemark("");
+    setTypeOfFaculties("");
+    setNumberOfFaculties("");
+    setFacultyIndicate("");
+    setDocuments({
+      headPhoto: null,
+      aadharCard: null,
+      tradeLicense: null,
+      labRoomPhoto: null,
+      officeRoomPhoto: null,
+      frontSidePhoto: null,
+      lastQualification: null
+    });
     setAcceptTerms(false);
   };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this registration?")) return;
+    
+    try {
+      await deleteItem(id);
+      toast.success("Registration deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete registration");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="w-full max-w-none bg-gray-50 min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <p className="text-gray-600">Loading franchise registrations...</p>
+        </div>
+      </div>
+    );
+  }
 
   const updateInfrastructure = (roomType: string, field: string, value: string) => {
     setInfrastructureData(prev => ({
@@ -916,6 +1138,101 @@ const FranchiseRegistrationContent = () => {
             </div>
           </div>
         </div>
+
+        {/* Franchise Registrations Table */}
+        {franchiseRegistrations.length > 0 && (
+          <div className="mt-8">
+            <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
+              <CardHeader className="p-6 border-b border-gray-100">
+                <CardTitle className="text-xl font-bold text-gray-800 flex items-center space-x-3">
+                  <div className="p-2 bg-blue-500 rounded-lg">
+                    <Building className="h-5 w-5 text-white" />
+                  </div>
+                  <span>Franchise Registrations</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-blue-600 hover:bg-blue-600">
+                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
+                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Institute</TableHead>
+                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Type</TableHead>
+                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Centre Head</TableHead>
+                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Contact</TableHead>
+                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Status</TableHead>
+                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Approval</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {franchiseRegistrations.map((registration, index) => (
+                      <TableRow key={registration.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                        <TableCell className="border-2 border-gray-600 p-4">
+                          <div className="flex space-x-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(registration.id)}
+                              className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                        <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                          <div>
+                            <div className="font-bold">{registration.institute_sort_name}</div>
+                            <div className="text-sm text-gray-500">{registration.institute_full_name}</div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                          {registration.franchise_type}
+                        </TableCell>
+                        <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                          <div>
+                            <div className="font-medium">{registration.centre_head_name}</div>
+                            <div className="text-sm text-gray-500">{registration.designation}</div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                          <div>
+                            <div>{registration.email}</div>
+                            <div className="text-sm text-gray-500">{registration.mobile_number}</div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="border-2 border-gray-600 text-center p-4">
+                          <span className={`px-2 py-1 rounded text-sm font-medium ${
+                            registration.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            registration.status === 'active' ? 'bg-green-100 text-green-800' :
+                            'bg-red-100 text-red-800'
+                          }`}>
+                            {registration.status}
+                          </span>
+                        </TableCell>
+                        <TableCell className="border-2 border-gray-600 text-center p-4">
+                          <span className={`px-2 py-1 rounded text-sm font-medium ${
+                            registration.approval_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            registration.approval_status === 'approved' ? 'bg-green-100 text-green-800' :
+                            'bg-red-100 text-red-800'
+                          }`}>
+                            {registration.approval_status}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   );
