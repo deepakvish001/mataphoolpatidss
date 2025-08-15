@@ -189,201 +189,199 @@ const UserProfile: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 p-4">
-      <div className="max-w-4xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold">My Profile</h1>
-          <p className="text-muted-foreground">Manage your account information and preferences</p>
-        </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold">My Profile</h1>
+        <p className="text-muted-foreground">Manage your account information and preferences</p>
+      </div>
 
-        {/* Profile Overview Card */}
-        <Card className="shadow-lg">
-          <CardContent className="pt-6">
-            <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-              <div className="relative">
-                <Avatar className="h-24 w-24">
-                  <AvatarImage src={profile?.avatar_url} />
-                  <AvatarFallback className="text-lg">
-                    {getInitials(profile?.full_name)}
-                  </AvatarFallback>
-                </Avatar>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  className="absolute -bottom-2 -right-2 rounded-full h-8 w-8 p-0"
-                >
-                  <Camera className="h-4 w-4" />
-                </Button>
-              </div>
-              
-              <div className="text-center md:text-left flex-1">
-                <h2 className="text-2xl font-bold">{profile?.full_name || 'User'}</h2>
-                <p className="text-muted-foreground flex items-center justify-center md:justify-start mt-1">
-                  <Mail className="h-4 w-4 mr-1" />
-                  {user?.email}
-                </p>
-                <div className="flex items-center justify-center md:justify-start space-x-2 mt-2">
-                  <Badge variant="secondary">
-                    <Shield className="h-3 w-3 mr-1" />
-                    {userRole || 'user'}
-                  </Badge>
-                  <Badge variant="outline">
-                    <Calendar className="h-3 w-3 mr-1" />
-                    Joined {new Date(profile?.created_at || '').toLocaleDateString()}
-                  </Badge>
-                </div>
+      {/* Profile Overview Card */}
+      <Card className="shadow-lg">
+        <CardContent className="pt-6">
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+            <div className="relative">
+              <Avatar className="h-24 w-24">
+                <AvatarImage src={profile?.avatar_url} />
+                <AvatarFallback className="text-lg">
+                  {getInitials(profile?.full_name)}
+                </AvatarFallback>
+              </Avatar>
+              <Button
+                size="sm"
+                variant="secondary"
+                className="absolute -bottom-2 -right-2 rounded-full h-8 w-8 p-0"
+              >
+                <Camera className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            <div className="text-center md:text-left flex-1">
+              <h2 className="text-2xl font-bold">{profile?.full_name || 'User'}</h2>
+              <p className="text-muted-foreground flex items-center justify-center md:justify-start mt-1">
+                <Mail className="h-4 w-4 mr-1" />
+                {user?.email}
+              </p>
+              <div className="flex items-center justify-center md:justify-start space-x-2 mt-2">
+                <Badge variant="secondary">
+                  <Shield className="h-3 w-3 mr-1" />
+                  {userRole || 'user'}
+                </Badge>
+                <Badge variant="outline">
+                  <Calendar className="h-3 w-3 mr-1" />
+                  Joined {new Date(profile?.created_at || '').toLocaleDateString()}
+                </Badge>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Profile Management Tabs */}
-        <Tabs defaultValue="profile" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="profile">
-              <User className="h-4 w-4 mr-2" />
-              Profile Information
-            </TabsTrigger>
-            <TabsTrigger value="settings">
-              <Settings className="h-4 w-4 mr-2" />
-              Account Settings
-            </TabsTrigger>
-          </TabsList>
+      {/* Profile Management Tabs */}
+      <Tabs defaultValue="profile" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="profile">
+            <User className="h-4 w-4 mr-2" />
+            Profile Information
+          </TabsTrigger>
+          <TabsTrigger value="settings">
+            <Settings className="h-4 w-4 mr-2" />
+            Account Settings
+          </TabsTrigger>
+        </TabsList>
 
-          {/* Profile Information Tab */}
-          <TabsContent value="profile">
-            <Card>
-              <CardHeader>
-                <CardTitle>Personal Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="full_name">Full Name</Label>
-                    <Input
-                      id="full_name"
-                      value={formData.full_name}
-                      onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                </div>
-
+        {/* Profile Information Tab */}
+        <TabsContent value="profile">
+          <Card>
+            <CardHeader>
+              <CardTitle>Personal Information</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="full_name">Full Name</Label>
                   <Input
-                    id="email"
-                    value={user?.email || ''}
-                    disabled
-                    className="bg-muted"
+                    id="full_name"
+                    value={formData.full_name}
+                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                    placeholder="Enter your full name"
                   />
-                  <p className="text-sm text-muted-foreground">
-                    Email cannot be changed from this page
-                  </p>
                 </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+              </div>
 
-                <Separator />
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  value={user?.email || ''}
+                  disabled
+                  className="bg-muted"
+                />
+                <p className="text-sm text-muted-foreground">
+                  Email cannot be changed from this page
+                </p>
+              </div>
 
-                <div className="flex justify-end">
-                  <Button onClick={handleSaveProfile} disabled={saving}>
-                    {saving ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Saving...
-                      </>
-                    ) : (
-                      <>
-                        <Save className="mr-2 h-4 w-4" />
-                        Save Changes
-                      </>
-                    )}
+              <Separator />
+
+              <div className="flex justify-end">
+                <Button onClick={handleSaveProfile} disabled={saving}>
+                  {saving ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="mr-2 h-4 w-4" />
+                      Save Changes
+                    </>
+                  )}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Account Settings Tab */}
+        <TabsContent value="settings">
+          <Card>
+            <CardHeader>
+              <CardTitle>Account Settings</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <Bell className="h-5 w-5 text-primary" />
+                    <div>
+                      <h3 className="font-medium">Email Notifications</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Receive updates about your account
+                      </p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    Configure
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
 
-          {/* Account Settings Tab */}
-          <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>Account Settings</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <Bell className="h-5 w-5 text-primary" />
-                      <div>
-                        <h3 className="font-medium">Email Notifications</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Receive updates about your account
-                        </p>
-                      </div>
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <Lock className="h-5 w-5 text-primary" />
+                    <div>
+                      <h3 className="font-medium">Change Password</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Update your account password
+                      </p>
                     </div>
-                    <Button variant="outline" size="sm">
-                      Configure
-                    </Button>
                   </div>
-
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <Lock className="h-5 w-5 text-primary" />
-                      <div>
-                        <h3 className="font-medium">Change Password</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Update your account password
-                        </p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm">
-                      Change
-                    </Button>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <Shield className="h-5 w-5 text-primary" />
-                      <div>
-                        <h3 className="font-medium">Two-Factor Authentication</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Add an extra layer of security
-                        </p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm">
-                      Enable
-                    </Button>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-                  <h3 className="font-medium text-destructive mb-2">Danger Zone</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Once you delete your account, there is no going back.
-                  </p>
-                  <Button variant="destructive" size="sm">
-                    Delete Account
+                  <Button variant="outline" size="sm">
+                    Change
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
+
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <Shield className="h-5 w-5 text-primary" />
+                    <div>
+                      <h3 className="font-medium">Two-Factor Authentication</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Add an extra layer of security
+                      </p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    Enable
+                  </Button>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+                <h3 className="font-medium text-destructive mb-2">Danger Zone</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Once you delete your account, there is no going back.
+                </p>
+                <Button variant="destructive" size="sm">
+                  Delete Account
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

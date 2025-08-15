@@ -20,6 +20,7 @@ import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import UserProfile from "./pages/UserProfile";
 import UserDashboard from "./pages/UserDashboard";
+import { UserLayout } from "./components/user/UserLayout";
 
 const queryClient = new QueryClient();
 
@@ -54,10 +55,12 @@ const App = () => (
               path="/user/*" 
               element={
                 <AuthGuard requiredRole="user">
-                  <Routes>
-                    <Route path="dashboard" element={<UserDashboard />} />
-                    <Route path="profile" element={<UserProfile />} />
-                  </Routes>
+                  <UserLayout>
+                    <Routes>
+                      <Route path="dashboard" element={<UserDashboard />} />
+                      <Route path="profile" element={<UserProfile />} />
+                    </Routes>
+                  </UserLayout>
                 </AuthGuard>
               } 
             />
