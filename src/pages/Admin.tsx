@@ -5,8 +5,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown, Key, Video, Building2, Image, MapPin, Map, BookOpen, Newspaper, FolderPlus, Eye, Target, MessageSquare, Phone, HelpCircle, UserPlus, UserCheck, Database, Shield, CheckCircle, Printer, FileOutput, Upload, Hash, FileCheck, Edit, BarChart, Receipt, Wallet, PlusCircle, Book, Scale, Calculator } from "lucide-react";
+import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown, Key, Video, Building2, Image, MapPin, Map, BookOpen, Newspaper, FolderPlus, Eye, Target, MessageSquare, Phone, HelpCircle, UserPlus, UserCheck, Database, Shield, CheckCircle, Printer, FileOutput, Upload, Hash, FileCheck, Edit, BarChart, Receipt, Wallet, PlusCircle, Book, Scale, Calculator, ArrowLeft } from "lucide-react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import NewDashboardContent from "@/components/admin/NewDashboardContent";
 import DashboardContent from "@/components/admin/DashboardContent";
 import EditProfileContent from "@/components/admin/EditProfileContent";
@@ -78,6 +79,20 @@ const Admin = () => {
   const [openSubmenus, setOpenSubmenus] = useState<Set<number>>(new Set());
   const navigate = useNavigate();
   const location = useLocation();
+  const { signOut } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+  const handleBackToHome = () => {
+    navigate('/');
+  };
   
   const getCurrentView = () => {
     const path = location.pathname;
@@ -371,6 +386,8 @@ const Admin = () => {
                     onClick={() => {
                       if (item.label === 'Dashboard') {
                         navigate('/admin/dashboard');
+                      } else if (item.label === 'LogOut') {
+                        handleLogout();
                       } else if (item.hasSubmenu && !sidebarCollapsed) {
                         toggleSubmenu(index);
                       }
@@ -541,6 +558,20 @@ const Admin = () => {
                 </div>
               ))}
             </nav>
+            
+            {/* Back to User Home Button */}
+            {!sidebarCollapsed && (
+              <div className="mt-6 pt-4 border-t border-gray-700/50">
+                <Button
+                  onClick={handleBackToHome}
+                  variant="outline"
+                  className="w-full bg-gradient-to-r from-green-600/20 to-blue-600/20 border-green-500/30 text-green-400 hover:bg-green-600/30 hover:text-white transition-all duration-200"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to User Home
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
