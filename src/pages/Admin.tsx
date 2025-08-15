@@ -5,8 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown, Key, Video, Building2, Image, MapPin, Map, BookOpen, Newspaper, FolderPlus, Eye, Target, MessageSquare, Phone, HelpCircle, UserPlus, UserCheck, Database, Shield, CheckCircle, Printer, FileOutput, Upload, Hash, FileCheck, Edit, BarChart, Receipt, Wallet, PlusCircle, Book, Scale, Calculator } from "lucide-react";
-import { UserMenu } from "@/components/auth/UserMenu";
+import { Search, Home, User, Building, Users, GraduationCap, Award, Clock, DollarSign, Crown, FileText, CreditCard, LogOut, Mail, Calendar, ChevronLeft, ChevronRight, Send, Star, Settings, Bell, Menu, Minimize2, X, ChevronDown, Key, Video, Building2, Image, MapPin, Map, BookOpen, Newspaper, FolderPlus, Eye, Target, MessageSquare, Phone, HelpCircle, UserPlus, UserCheck, Database, Shield, CheckCircle, Printer, FileOutput, Upload, Hash, FileCheck, Edit, BarChart, Receipt, Wallet, PlusCircle, Book, Scale, Calculator } from "lucide-react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import NewDashboardContent from "@/components/admin/NewDashboardContent";
 import DashboardContent from "@/components/admin/DashboardContent";
@@ -306,6 +305,10 @@ const Admin = () => {
       { label: "Reporting", icon: BarChart },
       { label: "Student_Editing", icon: Edit }
     ]
+  }, {
+    icon: LogOut,
+    label: "LogOut",
+    color: "text-gray-400"
   }];
 
   const getDaysInMonth = (date: Date) => {
@@ -624,7 +627,14 @@ const Admin = () => {
                 </Badge>
               </div>
               <div className="h-8 w-px bg-gray-300 mx-2"></div>
-              <UserMenu />
+              <div className="flex items-center space-x-3 cursor-pointer group">
+                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg group-hover:shadow-xl transition-shadow duration-200"></div>
+                <div>
+                  <span className="font-bold text-gray-800 group-hover:text-purple-600 transition-colors duration-200">Admin</span>
+                  <div className="text-xs text-gray-500">Administrator</div>
+                </div>
+                <Settings className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors duration-200" />
+              </div>
             </div>
           </div>
         </div>

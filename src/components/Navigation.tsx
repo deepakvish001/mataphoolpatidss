@@ -1,29 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown, Heart, LogOut, User as UserIcon } from 'lucide-react';
+import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import { useAuth } from '@/contexts/AuthContext';
-import { useRealtimeProfile } from '@/hooks/useRealtimeProfile';
-import { Link } from 'react-router-dom';
 import securePaymentWhite from '@/assets/secure-payment-white.png';
 
 const Navigation = () => {
-  const { user, userRole, session, signOut } = useAuth();
-  const { profile } = useRealtimeProfile();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [showProgramsDropdown, setShowProgramsDropdown] = useState(false);
   const [dropdownTimeoutId, setDropdownTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-  const getInitials = (name?: string) => {
-    if (!name) return 'U';
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-  };
-
   const navItems = [
+    { name: 'Home', href: '/', icon: Globe },
     { name: 'About', href: '/about', icon: Users },
     { name: 'Programs', href: '#training', icon: BookOpen, hasDropdown: true },
     { name: 'Partners', href: '/partners', icon: Award },
@@ -198,64 +187,9 @@ const Navigation = () => {
               })}
             </div>
 
-            {/* Right Actions - Enhanced with Auth */}
+            {/* Right Actions - Simplified */}
             <div className="flex items-center space-x-4">
               
-              {/* Authentication Section - Show only Login when not authenticated */}
-              {user && session ? (
-                <div className="hidden md:flex items-center space-x-3">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="flex items-center space-x-2 hover:bg-muted/50">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={profile?.avatar_url} />
-                          <AvatarFallback className="text-xs bg-primary/10">
-                            {getInitials(profile?.full_name)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <span className="text-sm font-medium hidden lg:block">
-                          {profile?.full_name?.split(' ')[0] || 'User'}
-                        </span>
-                        <ChevronDown className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-56">
-                      <div className="px-3 py-2 border-b">
-                        <p className="text-sm font-medium">{profile?.full_name || 'User'}</p>
-                        <p className="text-xs text-muted-foreground">{user.email}</p>
-                        <p className="text-xs text-primary font-medium capitalize">{userRole} Account</p>
-                      </div>
-                      <DropdownMenuItem asChild>
-                        <Link to={userRole === 'admin' ? '/admin/dashboard' : '/user/dashboard'} className="flex items-center">
-                          <UserIcon className="h-4 w-4 mr-2" />
-                          Dashboard
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link to="/user/profile" className="flex items-center">
-                          <UserIcon className="h-4 w-4 mr-2" />
-                          Profile
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                       <DropdownMenuItem onClick={signOut} className="flex items-center text-destructive">
-                         <LogOut className="h-4 w-4 mr-2" />
-                         Sign Out
-                       </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              ) : (
-                <div className="hidden md:flex">
-                  <Button asChild variant="outline" size="sm">
-                    <Link to="/login">
-                      <UserIcon className="h-4 w-4 mr-2" />
-                      Login
-                    </Link>
-                  </Button>
-                </div>
-              )}
-
               {/* Payment Options */}
               <div className="hidden md:flex items-center space-x-3">
                 <a 
