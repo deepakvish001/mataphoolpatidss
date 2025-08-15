@@ -1,119 +1,75 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/hooks/use-toast";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+interface StudentProfile {
+  id: string;
+  full_name: string;
+  email: string;
+  phone?: string;
+  course_name?: string;
+  city?: string;
+  state?: string;
+  status: string;
+  enrollment_date: string;
+  created_at: string;
+  updated_at: string;
+}
 
 const StudentApprovalContent = () => {
-  const { toast } = useToast();
+  const { data: students, loading, update } = useOptimisticCrud<StudentProfile>({
+    tableName: 'student_profiles',
+    orderBy: { column: 'created_at', ascending: false }
+  });
 
-  // Sample student data based on the screenshots
-  const [students, setStudents] = useState([
-    {
-      id: 2317,
-      approved: false,
-      state: "Uttar Pradesh",
-      district: "Azamgarh",
-      studyCenterId: "UP/Azm/B.Soft./000220",
-      courseName: "ADCA",
-      studentFullName: "Ms./सुश्री Anshika Yadav",
-      fatherName: "Mr./श्री Rampravesh Yadav",
-      motherName: "Mrs./श्रीमती Indu Devi",
-      dob: "07/04/2005",
-      email: "ankushydv771@gmail.com",
-      mobile: "+917068992013",
-      studentId: "2002317",
-      password: "58742317"
-    },
-    {
-      id: 2316,
-      approved: false,
-      state: "Uttar Pradesh", 
-      district: "",
-      studyCenterId: "UP/Azm/B.Soft./000220",
-      courseName: "Advance Diploma In Computer Application(ADCA)",
-      studentFullName: "Mr./श्री Beauty Yadav",
-      fatherName: "Mr./श्री Ramesh Yadav",
-      motherName: "Mrs./श्रीमती Anita Devi",
-      dob: "13/04/2005",
-      email: "beautyy200@gmail.com",
-      mobile: "+918957645599",
-      studentId: "2002316",
-      password: "58742316"
-    },
-    {
-      id: 2315,
-      approved: true,
-      state: "Uttar Pradesh",
-      district: "Azamgarh", 
-      studyCenterId: "UP/AZM/B.Soft/0007",
-      courseName: "------Select Course Name------",
-      studentFullName: "Mr./श्री YOGENDRA KUMAR",
-      fatherName: "Mr./श्री RAJESH KUMAR",
-      motherName: "Mrs./श्रीमती SHILA DEVI",
-      dob: "06/07/2002",
-      email: "",
-      mobile: "+919454868605",
-      studentId: "2002315",
-      password: "58742315"
-    },
-    {
-      id: 2314,
-      approved: true,
-      state: "Uttar Pradesh",
-      district: "",
-      studyCenterId: "UP/Azm/B.Soft./000220",
-      courseName: "Advance Diploma In Computer Application(ADCA)",
-      studentFullName: "Ms./सुश्री Madhu Yadav",
-      fatherName: "Mr./श्री Dinesh Yadav",
-      motherName: "Mrs./श्रीमती Uma Devi",
-      dob: "18-08-2008",
-      email: "madhu2008@gmail.com",
-      mobile: "+918090893530",
-      studentId: "2002314",
-      password: "58742314"
-    },
-    {
-      id: 2313,
-      approved: false,
-      state: "Uttar Pradesh",
-      district: "Azamgarh",
-      studyCenterId: "UP/Azm/B.Soft./000220",
-      courseName: "Advance Diploma In Computer Application(ADCA)",
-      studentFullName: "Mr./श्री Suraj Saroj",
-      fatherName: "Mr./श्री Khurmulli Saroj",
-      motherName: "Mrs./श्रीमती Urmila Devi",
-      dob: "12-02-2010",
-      email: "khurmullikumar88@gmail.com",
-      mobile: "+917087849878",
-      studentId: "2002313",
-      password: "58742313"
+  // Enable real-time updates
+  useAdminRealTime({
+    tableName: 'student_profiles'
+  });
+
+  const handleApprovalChange = async (student: StudentProfile, approved: boolean) => {
+    try {
+      const newStatus = approved ? 'active' : 'pending';
+      await update(student.id, {
+        ...student,
+        status: newStatus
+      });
+
+      toast.success(`${student.full_name} ${approved ? 'approved' : 'marked as pending'} successfully!`);
+    } catch (error) {
+      toast.error('Failed to update student approval status');
     }
-  ]);
+  };
 
-  const handleApprovalChange = (studentId: number, approved: boolean) => {
-    setStudents(prev => 
-      prev.map(student => 
-        student.id === studentId 
-          ? { ...student, approved }
-          : student
-      )
-    );
+  const handleBulkApproval = async () => {
+    const approvedStudents = students.filter(s => s.status === 'active');
     
-    toast({
-      title: approved ? "Student Approved" : "Approval Removed",
-      description: `Student ID ${studentId} has been ${approved ? 'approved' : 'disapproved'}`,
-      variant: "default"
-    });
+    if (approvedStudents.length === 0) {
+      toast.error('No approved students to process');
+      return;
+    }
+
+    try {
+      // Here you could implement bulk processing logic
+      toast.success(`Processing ${approvedStudents.length} approved students`);
+    } catch (error) {
+      toast.error('Failed to process bulk approval');
+    }
   };
 
-  const handleBulkApproval = () => {
-    const approvedCount = students.filter(s => s.approved).length;
-    toast({
-      title: "Bulk Action",
-      description: `${approvedCount} students are currently approved`,
-      variant: "default"
-    });
-  };
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="flex items-center space-x-2">
+          <Loader2 className="h-6 w-6 animate-spin" />
+          <span>Loading student profiles...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-none bg-white">
@@ -142,50 +98,58 @@ const StudentApprovalContent = () => {
       <div className="border-2 border-gray-600 bg-white">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-blue-600 text-white">
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[80px]">Approve</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[60px]">Id</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[80px]">State</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[80px]">Dist</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[120px]">Study_Center_ID</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[200px]">CourseName</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[180px]">Student_Full_Name</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[140px]">Father_Name</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[140px]">Mother_Name</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[100px]">D.O.B.</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[180px]">Email</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[120px]">Mobile</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[100px]">Student Id</th>
-                <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[100px]">Password</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student, index) => (
-                <tr key={student.id} className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-center">
-                    <Checkbox
-                      checked={student.approved}
-                      onCheckedChange={(checked) => handleApprovalChange(student.id, checked as boolean)}
-                      className="w-4 h-4"
-                    />
-                  </td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.id}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.state}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.district}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.studyCenterId}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.courseName}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.studentFullName}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.fatherName}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.motherName}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.dob}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.email}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.mobile}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs font-medium">{student.studentId}</td>
-                  <td className="border-2 border-gray-600 px-3 py-2 text-xs font-medium">{student.password}</td>
+              <thead>
+                <tr className="bg-blue-600 text-white">
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[80px]">Approve</th>
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[180px]">Student Name</th>
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[180px]">Email</th>
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[120px]">Phone</th>
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[200px]">Course Name</th>
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[80px]">State</th>
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[80px]">City</th>
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[100px]">Status</th>
+                  <th className="border-2 border-gray-600 px-3 py-2 text-sm font-medium text-left min-w-[120px]">Enrollment Date</th>
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+              <tbody>
+                {students.length === 0 ? (
+                  <tr>
+                    <td colSpan={9} className="border-2 border-gray-600 px-4 py-8 text-center text-gray-500">
+                      No student profiles found
+                    </td>
+                  </tr>
+                ) : (
+                  students.map((student, index) => (
+                    <tr key={student.id} className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-center">
+                        <Checkbox
+                          checked={student.status === 'active'}
+                          onCheckedChange={(checked) => handleApprovalChange(student, checked as boolean)}
+                          className="w-4 h-4"
+                        />
+                      </td>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.full_name}</td>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.email}</td>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.phone || '-'}</td>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.course_name || 'Not assigned'}</td>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.state || '-'}</td>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-xs">{student.city || '-'}</td>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-xs">
+                        <span className={`px-2 py-1 rounded text-xs ${
+                          student.status === 'active' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {student.status}
+                        </span>
+                      </td>
+                      <td className="border-2 border-gray-600 px-3 py-2 text-xs">
+                        {new Date(student.enrollment_date).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
           </table>
         </div>
       </div>
@@ -194,8 +158,8 @@ const StudentApprovalContent = () => {
       <div className="mt-4 p-4 bg-gray-100 border border-gray-400">
         <p className="text-sm text-gray-700">
           Total Students: {students.length} | 
-          Approved: {students.filter(s => s.approved).length} | 
-          Pending: {students.filter(s => !s.approved).length}
+          Approved: {students.filter(s => s.status === 'active').length} | 
+          Pending: {students.filter(s => s.status === 'pending').length}
         </p>
       </div>
     </div>
