@@ -675,23 +675,20 @@ const HeadOfficeContent = () => {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto border-2 border-gray-200 rounded-lg">
-              <Table className="w-full min-w-[1200px]">
+            <div className="overflow-x-auto">
+              <Table className="w-full">
                 <TableHeader>
                   <TableRow className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-b-2 border-blue-300">
-                    <TableHead className="font-bold text-white text-base py-5 px-6 border-r border-blue-300 min-w-[300px]">
+                    <TableHead className="font-bold text-white text-sm py-4 px-3 border-r border-blue-300">
                       Office Details
                     </TableHead>
-                    <TableHead className="font-bold text-white text-base py-5 px-6 border-r border-blue-300 min-w-[250px]">
-                      Contact Information
+                    <TableHead className="font-bold text-white text-sm py-4 px-3 border-r border-blue-300">
+                      Contact & Location
                     </TableHead>
-                    <TableHead className="font-bold text-white text-base py-5 px-6 border-r border-blue-300 min-w-[200px]">
-                      Location
-                    </TableHead>
-                    <TableHead className="font-bold text-white text-base py-5 px-6 border-r border-blue-300 min-w-[150px]">
+                    <TableHead className="font-bold text-white text-sm py-4 px-3 border-r border-blue-300 text-center">
                       Status
                     </TableHead>
-                    <TableHead className="font-bold text-white text-base py-5 px-6 min-w-[200px]">
+                    <TableHead className="font-bold text-white text-sm py-4 px-3 text-center">
                       Actions
                     </TableHead>
                   </TableRow>
@@ -701,130 +698,134 @@ const HeadOfficeContent = () => {
                     <TableRow 
                       key={office.id} 
                       className={`
-                        border-b-2 border-gray-200
+                        border-b border-gray-200
                         hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 
-                        transition-all duration-300
+                        transition-all duration-200
                         ${index % 2 === 0 ? 'bg-gray-50/70' : 'bg-white'}
-                        hover:shadow-lg hover:scale-[1.001]
+                        hover:shadow-md
                       `}
                     >
-                      <TableCell className="py-5 px-6 border-r-2 border-gray-200">
-                        <div className="space-y-3">
-                          <div className="flex items-center space-x-3">
-                            <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
-                              <Building2 className="h-5 w-5 text-white" />
+                      {/* Office Details Column */}
+                      <TableCell className="py-4 px-3 border-r border-gray-200 max-w-[300px]">
+                        <div className="space-y-2">
+                          <div className="flex items-start space-x-2">
+                            <div className="p-1.5 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex-shrink-0">
+                              <Building2 className="h-4 w-4 text-white" />
                             </div>
-                            <div>
-                              <div className="flex items-center space-x-2">
-                                <span className="font-bold text-gray-900 text-lg">
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center space-x-2 mb-1">
+                                <span className="font-semibold text-gray-900 text-sm truncate">
                                   {office.name || "Unnamed Office"}
                                 </span>
                                 {office.is_primary && (
-                                  <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1 animate-pulse">
-                                    <Star className="h-3 w-3 mr-1 fill-current" />
-                                    PRIMARY
+                                  <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-1.5 py-0.5">
+                                    <Star className="h-3 w-3 fill-current" />
                                   </Badge>
                                 )}
                               </div>
-                              <div className="flex items-start space-x-2 mt-2">
-                                <MapPin className="h-4 w-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                                <span className="text-sm text-gray-700 leading-relaxed font-medium">
-                                  {office.address}
-                                </span>
-                              </div>
+                              <p className="text-xs text-gray-600 line-clamp-2 leading-tight">
+                                {office.address}
+                              </p>
                               {office.website && (
-                                <div className="flex items-center space-x-2 mt-2">
-                                  <div className="p-1 bg-purple-100 rounded-full">
-                                    <Globe className="h-3 w-3 text-purple-600" />
-                                  </div>
-                                  <a 
-                                    href={office.website.startsWith('http') ? office.website : `https://${office.website}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm text-blue-600 hover:underline font-medium hover:text-blue-800"
-                                  >
-                                    {office.website}
-                                  </a>
-                                </div>
+                                <a 
+                                  href={office.website.startsWith('http') ? office.website : `https://${office.website}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs text-blue-600 hover:underline truncate block"
+                                >
+                                  <Globe className="h-3 w-3 inline mr-1" />
+                                  {office.website}
+                                </a>
                               )}
                             </div>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="py-5 px-6 border-r-2 border-gray-200">
-                        <div className="space-y-3">
-                          <div className="flex items-center space-x-3">
-                            <div className="p-2 bg-green-100 rounded-full">
-                              <Phone className="h-4 w-4 text-green-600" />
-                            </div>
-                            <span className="text-gray-900 font-semibold text-base">{office.phone}</span>
-                          </div>
-                          <div className="flex items-center space-x-3">
-                            <div className="p-2 bg-blue-100 rounded-full">
-                              <Mail className="h-4 w-4 text-blue-600" />
-                            </div>
-                            <span className="text-gray-900 font-semibold text-sm">{office.email}</span>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-5 px-6 border-r-2 border-gray-200">
+
+                      {/* Contact & Location Column */}
+                      <TableCell className="py-4 px-3 border-r border-gray-200 max-w-[280px]">
                         <div className="space-y-2">
-                          <div className="text-sm text-gray-800 font-semibold">
-                            {office.city && office.state ? (
-                              <>
-                                <div className="text-base text-gray-900">{office.city}</div>
-                                <div className="text-gray-600">{office.state}</div>
-                                {office.postal_code && (
-                                  <Badge variant="outline" className="text-xs mt-1">
-                                    PIN: {office.postal_code}
-                                  </Badge>
-                                )}
-                              </>
-                            ) : (
-                              <span className="text-gray-400 italic">Not specified</span>
-                            )}
+                          <div className="flex items-center space-x-2">
+                            <div className="p-1 bg-green-100 rounded-full flex-shrink-0">
+                              <Phone className="h-3 w-3 text-green-600" />
+                            </div>
+                            <span className="text-sm text-gray-900 font-medium truncate">{office.phone}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <div className="p-1 bg-blue-100 rounded-full flex-shrink-0">
+                              <Mail className="h-3 w-3 text-blue-600" />
+                            </div>
+                            <span className="text-xs text-gray-900 truncate">{office.email}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <div className="p-1 bg-red-100 rounded-full flex-shrink-0">
+                              <MapPin className="h-3 w-3 text-red-600" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="text-xs text-gray-900 truncate block">
+                                {[office.city, office.state, office.country].filter(Boolean).join(", ")}
+                              </span>
+                              {office.postal_code && (
+                                <Badge variant="outline" className="text-xs mt-1 px-1 py-0">
+                                  {office.postal_code}
+                                </Badge>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="py-5 px-6 border-r-2 border-gray-200">
-                        <div className="space-y-3 text-center">
+
+                      {/* Status Column */}
+                      <TableCell className="py-4 px-3 border-r border-gray-200 text-center">
+                        <div className="space-y-2">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleStatusToggle(office.id, office.status)}
-                            className="p-0 h-auto hover:scale-110 transition-transform"
+                            className="p-0 h-auto hover:scale-105 transition-transform"
                           >
                             {office.status === 'active' ? (
-                              <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 text-sm hover:from-green-600 hover:to-green-700 cursor-pointer">
-                                ✅ ACTIVE
+                              <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 text-xs hover:from-green-600 hover:to-green-700 cursor-pointer">
+                                ✅ Active
                               </Badge>
                             ) : (
-                              <Badge className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-4 py-2 text-sm hover:from-gray-500 hover:to-gray-600 cursor-pointer">
-                                ⏸️ INACTIVE
+                              <Badge className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-3 py-1 text-xs hover:from-gray-500 hover:to-gray-600 cursor-pointer">
+                                ⏸️ Inactive
                               </Badge>
                             )}
                           </Button>
+                          {office.is_primary && (
+                            <div>
+                              <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1">
+                                Primary
+                              </Badge>
+                            </div>
+                          )}
                         </div>
                       </TableCell>
-                      <TableCell className="py-5 px-6">
-                        <div className="flex items-center justify-center space-x-3">
+
+                      {/* Actions Column */}
+                      <TableCell className="py-4 px-3 text-center">
+                        <div className="flex items-center justify-center space-x-2">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => openEditDialog(office)}
-                            className="p-3 text-blue-600 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-lg"
+                            className="p-2 text-blue-600 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 rounded-lg transition-all duration-200 hover:scale-105"
+                            title="Edit Office"
                           >
-                            <Edit className="h-5 w-5" />
+                            <Edit className="h-4 w-4" />
                           </Button>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleStatusToggle(office.id, office.status)}
-                            className={`p-3 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-lg ${
+                            className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
                               office.status === 'active' 
                                 ? "text-orange-600 hover:text-white hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-600" 
                                 : "text-green-600 hover:text-white hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600"
                             }`}
+                            title={office.status === 'active' ? 'Deactivate' : 'Activate'}
                           >
                             {office.status === 'active' ? '⏸️' : '▶️'}
                           </Button>
@@ -832,9 +833,10 @@ const HeadOfficeContent = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleDelete(office.id)}
-                            className="p-3 text-red-600 hover:text-white hover:bg-gradient-to-r hover:from-red-500 hover:to-red-600 rounded-lg transition-all duration-200 hover:scale-110 hover:shadow-lg"
+                            className="p-2 text-red-600 hover:text-white hover:bg-gradient-to-r hover:from-red-500 hover:to-red-600 rounded-lg transition-all duration-200 hover:scale-105"
+                            title="Delete Office"
                           >
-                            <Trash2 className="h-5 w-5" />
+                            <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
