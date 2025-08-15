@@ -121,14 +121,26 @@ const StudentMarksheetContent = () => {
     if (!marksheetRef.current) return;
 
     try {
-      toast.info("Generating Professional Certificate PDF...");
+      // Add loading animation to button
+      const button = document.querySelector('[data-pdf-button]') as HTMLButtonElement;
+      if (button) {
+        button.innerHTML = '<svg class="animate-spin h-4 w-4 mr-2" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Generating PDF...';
+        button.disabled = true;
+      }
+      
+      toast.info("Generating Professional Certificate PDF...", {
+        description: "Please wait while we create your certificate"
+      });
       
       const canvas = await html2canvas(marksheetRef.current, {
-        scale: 2,
+        scale: 3,
         useCORS: true,
+        allowTaint: true,
         backgroundColor: '#ffffff',
         width: marksheetRef.current.scrollWidth,
         height: marksheetRef.current.scrollHeight,
+        logging: false,
+        imageTimeout: 0,
       });
 
       const imgData = canvas.toDataURL('image/png', 1.0);
@@ -136,6 +148,7 @@ const StudentMarksheetContent = () => {
         orientation: 'landscape',
         unit: 'mm',
         format: 'a4',
+        compress: false
       });
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -150,15 +163,41 @@ const StudentMarksheetContent = () => {
       const imgX = (pdfWidth - finalWidth) / 2;
       const imgY = (pdfHeight - finalHeight) / 2;
 
-      pdf.addImage(imgData, 'PNG', imgX, imgY, finalWidth, finalHeight);
+      pdf.addImage(imgData, 'PNG', imgX, imgY, finalWidth, finalHeight, '', 'FAST');
+      
+      // Add metadata
+      pdf.setProperties({
+        title: `${selectedStudent?.full_name} - Course Certificate`,
+        subject: `Certificate for ${selectedStudent?.course_name}`,
+        author: 'B.SOFT Computer & Technical Institute',
+        keywords: 'certificate, diploma, course completion',
+        creator: 'B.SOFT Institute Management System'
+      });
       
       const fileName = `${selectedStudent?.full_name?.replace(/\s+/g, '_')}_Certificate_${new Date().getFullYear()}.pdf`;
       pdf.save(fileName);
       
-      toast.success("Certificate PDF generated successfully!");
+      toast.success("Certificate PDF generated successfully!", {
+        description: `Downloaded: ${fileName}`
+      });
+      
+      // Reset button
+      if (button) {
+        button.innerHTML = '<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>Generate Certificate PDF';
+        button.disabled = !selectedStudent;
+      }
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error("Failed to generate PDF");
+      toast.error("Failed to generate PDF", {
+        description: "Please try again or contact support"
+      });
+      
+      // Reset button on error
+      const button = document.querySelector('[data-pdf-button]') as HTMLButtonElement;
+      if (button) {
+        button.innerHTML = '<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>Generate Certificate PDF';
+        button.disabled = !selectedStudent;
+      }
     }
   };
 
@@ -203,21 +242,27 @@ const StudentMarksheetContent = () => {
                     placeholder="Type student name or email..."
                   />
                   
-                  {/* Real-time Search Results */}
+                  {/* Real-time Search Results with Animation */}
                   {showResults && searchResults.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 mt-1">
-                      {searchResults.map((student) => (
-                        <div
-                          key={student.id}
-                          onClick={() => selectStudent(student)}
-                          className="p-3 hover:bg-orange-50 cursor-pointer border-b border-gray-100 last:border-b-0"
-                        >
-                          <div className="font-medium text-gray-900">{student.full_name}</div>
-                          <div className="text-sm text-gray-500">
-                            {student.email} • {student.course_name || 'No course'}
+                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-xl z-50 mt-1 animate-fade-in">
+                      <div className="max-h-64 overflow-y-auto">
+                        {searchResults.map((student, index) => (
+                          <div
+                            key={student.id}
+                            onClick={() => selectStudent(student)}
+                            className="p-3 hover:bg-orange-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-all duration-200 hover:scale-[1.02] hover:shadow-sm"
+                            style={{ animationDelay: `${index * 50}ms` }}
+                          >
+                            <div className="font-medium text-gray-900 flex items-center gap-2">
+                              <User className="h-4 w-4 text-orange-500" />
+                              {student.full_name}
+                            </div>
+                            <div className="text-sm text-gray-500 ml-6">
+                              {student.email} • {student.course_name || 'No course'}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -228,7 +273,8 @@ const StudentMarksheetContent = () => {
               <Button 
                 onClick={generatePDF}
                 disabled={!selectedStudent}
-                className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-6 py-2 flex items-center gap-2"
+                data-pdf-button
+                className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-6 py-2 flex items-center gap-2 transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <FileDown className="h-4 w-4" />
                 Generate Certificate PDF
@@ -236,9 +282,9 @@ const StudentMarksheetContent = () => {
             </div>
           </div>
 
-          {/* Selected Student Info */}
+          {/* Selected Student Info with Animation */}
           {selectedStudent && (
-            <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
               <div className="flex items-center gap-3">
                 <BookOpen className="h-5 w-5 text-green-600" />
                 <div>
@@ -253,11 +299,11 @@ const StudentMarksheetContent = () => {
         </CardContent>
       </Card>
 
-      {/* Professional Certificate Template */}
-      <div className="px-6 pb-6">
-        <Card className="shadow-2xl border-0 bg-white overflow-hidden">
+      {/* Professional Certificate Template with Animation */}
+      <div className="px-6 pb-6 animate-fade-in">
+        <Card className="shadow-2xl border-0 bg-white overflow-hidden hover-scale transition-all duration-300">
           <CardContent className="p-0">
-            <div ref={marksheetRef} className="bg-white p-8 min-h-[1000px]" style={{ width: '210mm' }}>
+            <div ref={marksheetRef} className="bg-white p-8 min-h-[1000px] relative" style={{ width: '210mm' }}>
               
               {/* Header */}
               <div className="text-center mb-6">
