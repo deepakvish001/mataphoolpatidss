@@ -82,7 +82,7 @@ const StudentMarksheetContent = () => {
       const { data: students, error } = await supabase
         .from('student_profiles')
         .select('*')
-        .or(`full_name.ilike.%${searchValue}%,email.ilike.%${searchValue}%,id.eq.${searchValue}`)
+        .or(`full_name.ilike.%${searchValue}%,email.ilike.%${searchValue}%,phone.ilike.%${searchValue}%,course_name.ilike.%${searchValue}%`)
         .limit(10);
 
       if (error) throw error;
