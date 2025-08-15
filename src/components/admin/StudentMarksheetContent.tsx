@@ -301,12 +301,7 @@ const StudentMarksheetContent = () => {
         yBreaks.push(canvas.height);
       }
 
-      // Function to draw certificate border on each page (single border)
-      const drawCertificateBorder = () => {
-        pdf.setDrawColor(55, 65, 130); // indigo-800
-        pdf.setLineWidth(0.8);
-        pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
-      };
+      // Remove PDF border function since we want to print exactly as shown in portal
 
       // Render each page slice with borders
       for (let i = 0; i < yBreaks.length - 1; i++) {
@@ -333,8 +328,7 @@ const StudentMarksheetContent = () => {
         const clampedHeightMm = Math.min(heightMm, usableHeightMm);
         pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, clampedHeightMm, undefined, 'FAST');
 
-        // Draw border on every page
-        drawCertificateBorder();
+        // No additional PDF borders - print exactly as shown in portal
 
         // Add page number if multi-page
         if (yBreaks.length > 2) {
@@ -492,21 +486,18 @@ const StudentMarksheetContent = () => {
           <CardContent className="p-0">
             <div ref={marksheetRef} className="relative bg-white w-[210mm] min-h-[297mm] mx-auto p-8" style={{ fontFamily: 'serif' }}>
               
-              {/* Hide internal borders while exporting to avoid duplicate page borders */}
-              {!isGenerating && (
-                <>
-                  <div className="absolute inset-4 border-4 border-double border-indigo-800 rounded-lg">
-                    <div className="absolute inset-2 border-2 border-amber-400 rounded-md">
-                      <div className="absolute inset-2 border border-indigo-300 rounded-sm bg-gradient-to-br from-blue-50/40 via-white to-amber-50/30"></div>
-                    </div>
-                  </div>
-                  {/* Elegant Corner Decorations */}
-                  <div className="absolute top-6 left-6 w-16 h-16 border-l-4 border-t-4 border-indigo-800 rounded-tl-xl opacity-60"></div>
-                  <div className="absolute top-6 right-6 w-16 h-16 border-r-4 border-t-4 border-indigo-800 rounded-tr-xl opacity-60"></div>
-                  <div className="absolute bottom-6 left-6 w-16 h-16 border-l-4 border-b-4 border-indigo-800 rounded-bl-xl opacity-60"></div>
-                  <div className="absolute bottom-6 right-6 w-16 h-16 border-r-4 border-b-4 border-indigo-800 rounded-br-xl opacity-60"></div>
-                </>
-              )}
+              {/* Premium Border Design - Always visible in PDF to match portal */}
+              <div className="absolute inset-4 border-4 border-double border-indigo-800 rounded-lg">
+                <div className="absolute inset-2 border-2 border-amber-400 rounded-md">
+                  <div className="absolute inset-2 border border-indigo-300 rounded-sm bg-gradient-to-br from-blue-50/40 via-white to-amber-50/30"></div>
+                </div>
+              </div>
+              
+              {/* Elegant Corner Decorations */}
+              <div className="absolute top-6 left-6 w-16 h-16 border-l-4 border-t-4 border-indigo-800 rounded-tl-xl opacity-60"></div>
+              <div className="absolute top-6 right-6 w-16 h-16 border-r-4 border-t-4 border-indigo-800 rounded-tr-xl opacity-60"></div>
+              <div className="absolute bottom-6 left-6 w-16 h-16 border-l-4 border-b-4 border-indigo-800 rounded-bl-xl opacity-60"></div>
+              <div className="absolute bottom-6 right-6 w-16 h-16 border-r-4 border-b-4 border-indigo-800 rounded-br-xl opacity-60"></div>
 
               <div className="relative z-10 p-8 h-full flex flex-col">
                 {/* Premium Header */}
