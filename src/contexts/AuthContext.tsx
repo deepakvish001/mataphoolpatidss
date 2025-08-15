@@ -98,8 +98,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setSession(session);
         setUser(session?.user ?? null);
 
-        if (session?.user && event === 'SIGNED_IN') {
-          // Defer additional data fetching to prevent auth callback blocking
+        if (session?.user) {
+          // Fetch user data for any authenticated session
           setTimeout(() => {
             if (isSubscribed) {
               fetchUserData(session.user.id);
