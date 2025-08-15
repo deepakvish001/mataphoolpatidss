@@ -252,6 +252,42 @@ export type Database = {
         }
         Relationships: []
       }
+      course_subjects: {
+        Row: {
+          course_name: string
+          created_at: string
+          description: string | null
+          id: string
+          practical_marks: string
+          semester_year: string
+          subject: string
+          theory_marks: string
+          updated_at: string
+        }
+        Insert: {
+          course_name: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          practical_marks: string
+          semester_year: string
+          subject: string
+          theory_marks: string
+          updated_at?: string
+        }
+        Update: {
+          course_name?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          practical_marks?: string
+          semester_year?: string
+          subject?: string
+          theory_marks?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           created_at: string
@@ -446,6 +482,30 @@ export type Database = {
           organization?: string | null
           phone?: string
           state?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      expense_master: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          service_name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          service_name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          service_name?: string
           updated_at?: string
         }
         Relationships: []
@@ -895,6 +955,39 @@ export type Database = {
           total_study_hours?: number | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      videos: {
+        Row: {
+          created_at: string
+          file_name: string | null
+          file_size: number | null
+          file_type: string | null
+          id: string
+          label: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          file_name?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          id?: string
+          label: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          file_name?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          id?: string
+          label?: string
+          updated_at?: string
+          video_url?: string | null
         }
         Relationships: []
       }
