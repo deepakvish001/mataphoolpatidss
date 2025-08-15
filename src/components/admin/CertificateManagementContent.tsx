@@ -56,7 +56,58 @@ const CertificateManagementContent = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const [editingCertificate, setEditingCertificate] = useState<CertificateManagement | null>(null);
+
+  const handleEdit = (certificate: CertificateManagement) => {
+    setEditingCertificate(certificate);
+    setFormData({
+      studentId: certificate.student_id,
+      studentName: certificate.student_name,
+      courseName: certificate.course_name,
+      certificateNumber: certificate.certificate_number,
+      issueDate: certificate.issue_date,
+      completionDate: certificate.completion_date || "",
+      grade: certificate.grade || "",
+      certificateType: certificate.certificate_type,
+      status: certificate.status
+    });
+  };
+
+  const handleUpdate = async () => {
+    if (!editingCertificate) return;
+    
+    if (!formData.studentId || !formData.studentName || !formData.courseName || !formData.certificateNumber) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    try {
+      await update(editingCertificate.id, {
+        student_id: formData.studentId,
+        student_name: formData.studentName,
+        course_name: formData.courseName,
+        certificate_number: formData.certificateNumber,
+        issue_date: formData.issueDate,
+        completion_date: formData.completionDate || null,
+        grade: formData.grade || null,
+        certificate_type: formData.certificateType,
+        status: formData.status
+      });
+
+      setEditingCertificate(null);
+      handleReset();
+      toast.success("Certificate updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update certificate");
+    }
+  };
+
   const handleSubmit = async () => {
+    if (editingCertificate) {
+      await handleUpdate();
+      return;
+    }
+
     if (!formData.studentId || !formData.studentName || !formData.courseName || !formData.certificateNumber) {
       toast.error("Please fill in all required fields");
       return;
@@ -75,23 +126,26 @@ const CertificateManagementContent = () => {
         status: formData.status
       });
 
-      // Reset form
-      setFormData({
-        studentId: "",
-        studentName: "",
-        courseName: "",
-        certificateNumber: "",
-        issueDate: "",
-        completionDate: "",
-        grade: "",
-        certificateType: "course_completion",
-        status: "active"
-      });
-
+      handleReset();
       toast.success("Certificate created successfully!");
     } catch (error) {
       toast.error("Failed to create certificate");
     }
+  };
+
+  const handleReset = () => {
+    setFormData({
+      studentId: "",
+      studentName: "",
+      courseName: "",
+      certificateNumber: "",
+      issueDate: "",
+      completionDate: "",
+      grade: "",
+      certificateType: "course_completion",
+      status: "active"
+    });
+    setEditingCertificate(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -250,8 +304,17 @@ const CertificateManagementContent = () => {
               className="bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
             >
               <Plus className="h-5 w-5 mr-2" />
-              Create Certificate
+              {editingCertificate ? "Update Certificate" : "Create Certificate"}
             </Button>
+            {editingCertificate && (
+              <Button
+                onClick={handleReset}
+                variant="outline"
+                className="ml-4 border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3"
+              >
+                Cancel
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -280,6 +343,7 @@ const CertificateManagementContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(certificate)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />

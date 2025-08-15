@@ -41,7 +41,50 @@ const ExpenseEntryContent = () => {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
 
+  const [editingExpense, setEditingExpense] = useState<ExpenseEntry | null>(null);
+
+  const handleEdit = (expense: ExpenseEntry) => {
+    setEditingExpense(expense);
+    setServiceName(expense.service_name);
+    setExpenseName(expense.expense_name);
+    setQuantity(expense.quantity);
+    setGivenTo(expense.given_to);
+    setDescription(expense.description || "");
+    setDate(expense.expense_date);
+  };
+
+  const handleUpdate = async () => {
+    if (!editingExpense) return;
+    
+    if (!serviceName || !expenseName || !quantity || !givenTo || !date) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    try {
+      await update(editingExpense.id, {
+        service_name: serviceName,
+        expense_name: expenseName,
+        quantity: quantity,
+        given_to: givenTo,
+        description: description || null,
+        expense_date: date
+      });
+
+      setEditingExpense(null);
+      handleReset();
+      toast.success("Expense entry updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update expense entry");
+    }
+  };
+
   const handleSubmit = async () => {
+    if (editingExpense) {
+      await handleUpdate();
+      return;
+    }
+
     if (!serviceName || !expenseName || !quantity || !givenTo || !date) {
       toast.error("Please fill in all required fields");
       return;
@@ -71,9 +114,12 @@ const ExpenseEntryContent = () => {
     setGivenTo("");
     setDescription("");
     setDate("");
+    setEditingExpense(null);
   };
 
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this expense entry?")) return;
+    
     try {
       await deleteItem(id);
       toast.success("Expense entry deleted successfully!");
@@ -207,7 +253,7 @@ const ExpenseEntryContent = () => {
                 onClick={handleSubmit}
                 className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                SUBMIT
+                {editingExpense ? "UPDATE" : "SUBMIT"}
               </Button>
               <Button 
                 onClick={handleReset}
@@ -244,6 +290,7 @@ const ExpenseEntryContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(expense)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />
