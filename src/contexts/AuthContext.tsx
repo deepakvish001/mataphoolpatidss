@@ -36,12 +36,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Force clear any existing state on app start
+  // Force clear any existing state and sessions on app initialization
   useEffect(() => {
-    console.log('Clearing any existing auth state on app start');
-    setUser(null);
-    setSession(null);
-    setUserRole(null);
+    const clearAllSessions = async () => {
+      console.log('Force clearing all existing sessions...');
+      
+      // Clear all storage first
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Clear Supabase session with global scope
+      try {
+        await supabase.auth.signOut({ scope: 'global' });
+      } catch (e) {
+        console.log('Session already cleared or error:', e);
+      }
+      
+      // Ensure state is clean
+      setUser(null);
+      setSession(null);
+      setUserRole(null);
+      
+      console.log('All sessions forcefully cleared');
+    };
+    
+    clearAllSessions();
   }, []);
 
   useEffect(() => {
