@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown, Heart } from 'lucide-react';
+import { Menu, X, Phone, Mail, ArrowRight, Sparkles, Globe, Users, Award, BookOpen, MessageSquare, Download, Search, Bell, ChevronDown, Heart, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useAuth } from '@/contexts/AuthContext';
+import UserProfileNav from '@/components/UserProfileNav';
 import securePaymentWhite from '@/assets/secure-payment-white.png';
 
 const Navigation = () => {
@@ -10,6 +12,7 @@ const Navigation = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [showProgramsDropdown, setShowProgramsDropdown] = useState(false);
   const [dropdownTimeoutId, setDropdownTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const { user, loading } = useAuth();
 
   const navItems = [
     { name: 'About', href: '/about', icon: Users },
@@ -186,8 +189,25 @@ const Navigation = () => {
               })}
             </div>
 
-            {/* Right Actions - Simplified */}
+            {/* Right Actions - Auth & Payment */}
             <div className="flex items-center space-x-4">
+              
+              {/* Authentication Section */}
+              {loading ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+              ) : user ? (
+                <UserProfileNav />
+              ) : (
+                <Button 
+                  asChild
+                  className="hidden md:flex items-center space-x-2 h-10 px-4 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                >
+                  <a href="/login">
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Sign In
+                  </a>
+                </Button>
+              )}
               
               {/* Payment Options */}
               <div className="hidden md:flex items-center space-x-3">
@@ -226,6 +246,18 @@ const Navigation = () => {
           <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-2xl fade-in-scale">
             <div className="px-6 py-8 space-y-8">
               
+              {/* Mobile Auth Button */}
+              {!user && !loading && (
+                <a 
+                  href="/login"
+                  className="w-full p-4 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center space-x-3 hover:bg-primary/90 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <LogIn className="h-5 w-5" />
+                  <span className="font-medium">Sign In</span>
+                </a>
+              )}
+
               {/* Mobile Payment Option */}
               <a 
                 href="/donation"
