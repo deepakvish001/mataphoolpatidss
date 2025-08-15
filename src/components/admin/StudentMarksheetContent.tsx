@@ -151,7 +151,7 @@ const StudentMarksheetContent = () => {
 
       // Capture the certificate at high DPI without forcing size (prevents cropping)
       const canvas = await html2canvas(marksheetRef.current, {
-        scale: Math.min(3, window.devicePixelRatio * 2),
+        scale: 4, // Ultra-high quality for professional certificates
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
@@ -359,52 +359,92 @@ const StudentMarksheetContent = () => {
       <div className="px-6 pb-6">
         <Card className="shadow-2xl border-0 bg-white overflow-hidden">
           <CardContent className="p-0">
-            <div ref={marksheetRef} className="relative bg-white p-4 min-h-[1123px] w-[794px] mx-auto" style={{ aspectRatio: '210/297' }}>
+              <div ref={marksheetRef} className="relative bg-white p-6 min-h-[1123px] w-[794px] mx-auto shadow-2xl" style={{ aspectRatio: '210/297' }}>
               
-              {/* Elegant Certificate Border with Decorative Frame */}
-              <div className="absolute inset-3 border-4 border-double border-blue-900 rounded-lg bg-gradient-to-br from-blue-50/30 via-white to-amber-50/30">
-                <div className="absolute inset-3 border-2 border-amber-500 rounded-md bg-white/80"></div>
-                <div className="absolute inset-5 border border-blue-400 rounded-sm"></div>
+              {/* Professional Certificate Border with Gold Accent */}
+              <div className="absolute inset-4 bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 rounded-2xl p-1 shadow-2xl">
+                <div className="absolute inset-1 bg-gradient-to-br from-amber-400 via-yellow-400 to-orange-400 rounded-xl p-1">
+                  <div className="w-full h-full bg-gradient-to-br from-white via-blue-50/50 to-amber-50/30 rounded-lg relative overflow-hidden">
+                    {/* Decorative Pattern Background */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.3),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.3),transparent_50%)]"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
               
-              {/* Elegant Corner Ornaments */}
-              <div className="absolute top-6 left-6 w-12 h-12 border-l-3 border-t-3 border-blue-900 rounded-tl-lg"></div>
-              <div className="absolute top-6 right-6 w-12 h-12 border-r-3 border-t-3 border-blue-900 rounded-tr-lg"></div>
-              <div className="absolute bottom-6 left-6 w-12 h-12 border-l-3 border-b-3 border-blue-900 rounded-bl-lg"></div>
-              <div className="absolute bottom-6 right-6 w-12 h-12 border-r-3 border-b-3 border-blue-900 rounded-br-lg"></div>
+              {/* Premium Corner Seals */}
+              <div className="absolute top-8 left-8 w-16 h-16 bg-gradient-to-br from-blue-900 to-purple-900 rounded-full shadow-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <div className="w-6 h-6 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute top-8 right-8 w-16 h-16 bg-gradient-to-br from-blue-900 to-purple-900 rounded-full shadow-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <div className="w-6 h-6 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
 
-              {/* Subtle Watermark */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-3 pointer-events-none">
-                <div className="transform rotate-45 text-6xl font-bold text-blue-800">B.SOFT</div>
+              {/* Premium Watermark */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-3 pointer-events-none z-0">
+                <div className="transform rotate-45 text-8xl font-black text-transparent bg-gradient-to-r from-blue-800 to-purple-800 bg-clip-text">B.SOFT</div>
               </div>
 
               <div className="relative z-10 p-6 h-full flex flex-col justify-between">
-                {/* Header Section - Compact */}
-                <div className="text-center mb-4">
-                  <div className="flex items-center justify-center mb-3">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 border-3 border-amber-400 shadow-lg flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-sm font-bold text-white leading-tight">B</div>
-                        <div className="text-xs text-white leading-none">SOFT</div>
+                {/* Premium Header Section */}
+                <div className="relative z-10 text-center mb-6">
+                  {/* Institute Logo */}
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="relative">
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 border-4 border-amber-400 shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform">
+                        <div className="text-center">
+                          <div className="text-lg font-black text-white leading-tight drop-shadow-lg">B</div>
+                          <div className="text-sm text-white leading-none font-bold drop-shadow-lg">SOFT</div>
+                        </div>
+                      </div>
+                      <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full border-2 border-white shadow-lg"></div>
+                    </div>
+                  </div>
+
+                  {/* Institute Name with Premium Styling */}
+                  <div className="mb-4">
+                    <h1 className="text-3xl font-black text-transparent bg-gradient-to-r from-blue-800 via-purple-700 to-blue-900 bg-clip-text mb-2 leading-tight tracking-wide">
+                      B.SOFT COMPUTER & TECHNICAL INSTITUTE
+                    </h1>
+                    <div className="mx-auto w-32 h-1 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400 rounded-full shadow-lg"></div>
+                  </div>
+                  
+                  {/* Credentials with Enhanced Design */}
+                  <div className="bg-gradient-to-r from-blue-50 via-white to-purple-50 rounded-lg p-3 mb-4 border border-blue-200 shadow-inner">
+                    <div className="text-xs text-gray-800 space-y-1 font-medium">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-blue-700 font-semibold">NGO DARPAN ID:</span> 
+                        <span className="text-red-600 font-black text-sm">UP/2011/0044943</span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-blue-700 font-semibold">Society Regd. No.:</span> 
+                        <span className="text-red-600 font-black text-sm">AZ-13610</span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-blue-700 font-semibold">ISO 9001:2015 CERTIFIED No.:</span> 
+                        <span className="text-red-600 font-black text-sm">UQ-252016790</span>
                       </div>
                     </div>
                   </div>
 
-                  <h1 className="text-2xl font-bold text-blue-800 mb-1 leading-tight">
-                    B.SOFT COMPUTER & TECHNICAL INSTITUTE
-                  </h1>
-                  
-                  <div className="text-xs text-gray-700 mb-2 space-y-0.5">
-                    <div><span className="font-medium">NGO DARPAN ID:</span> <span className="text-red-600 font-bold">UP/2011/0044943</span></div>
-                    <div><span className="font-medium">Society Regd. No.:</span> <span className="text-red-600 font-bold">AZ-13610</span></div>
-                    <div><span className="font-medium">ISO 9001:2015 CERTIFIED No.:</span> <span className="text-red-600 font-bold">UQ-252016790</span></div>
-                  </div>
-
-                  <div className="mb-3">
-                    <h2 className="text-xl font-bold text-red-600 tracking-wide">
-                      DIPLOMA CERTIFICATE-CUM-MARKS SHEET
-                    </h2>
-                    <div className="mt-1 mx-auto w-20 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+                  {/* Certificate Title with Premium Design */}
+                  <div className="mb-6">
+                    <div className="relative">
+                      <h2 className="text-2xl font-black text-transparent bg-gradient-to-r from-red-600 via-red-700 to-red-800 bg-clip-text tracking-wider leading-tight">
+                        DIPLOMA CERTIFICATE-CUM-MARKS SHEET
+                      </h2>
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-40 h-0.5 bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
+                    </div>
+                    <div className="mt-3 mx-auto w-28 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 rounded-full shadow-lg"></div>
                   </div>
                 </div>
 
