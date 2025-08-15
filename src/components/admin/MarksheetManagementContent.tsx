@@ -53,6 +53,8 @@ const MarksheetManagementContent = () => {
     resultStatus: "pass"
   });
 
+  const [editingMarksheet, setEditingMarksheet] = useState<MarksheetManagement | null>(null);
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
@@ -88,36 +90,70 @@ const MarksheetManagementContent = () => {
     const autoGrade = calculateGrade(percentage);
 
     try {
-      await create({
-        student_id: formData.studentId,
-        student_name: formData.studentName,
-        course_name: formData.courseName,
-        roll_number: formData.rollNumber,
-        examination_date: formData.examinationDate,
-        total_marks: totalMarks,
-        obtained_marks: obtainedMarks,
-        percentage: percentage,
-        grade: formData.grade || autoGrade,
-        result_status: formData.resultStatus
-      });
+      if (editingMarksheet) {
+        await update(editingMarksheet.id, {
+          student_id: formData.studentId,
+          student_name: formData.studentName,
+          course_name: formData.courseName,
+          roll_number: formData.rollNumber,
+          examination_date: formData.examinationDate,
+          total_marks: totalMarks,
+          obtained_marks: obtainedMarks,
+          percentage: percentage,
+          grade: formData.grade || autoGrade,
+          result_status: formData.resultStatus
+        });
+        toast.success("Marksheet updated successfully!");
+      } else {
+        await create({
+          student_id: formData.studentId,
+          student_name: formData.studentName,
+          course_name: formData.courseName,
+          roll_number: formData.rollNumber,
+          examination_date: formData.examinationDate,
+          total_marks: totalMarks,
+          obtained_marks: obtainedMarks,
+          percentage: percentage,
+          grade: formData.grade || autoGrade,
+          result_status: formData.resultStatus
+        });
+        toast.success("Marksheet created successfully!");
+      }
 
-      // Reset form
-      setFormData({
-        studentId: "",
-        studentName: "",
-        courseName: "",
-        rollNumber: "",
-        examinationDate: "",
-        totalMarks: "",
-        obtainedMarks: "",
-        grade: "",
-        resultStatus: "pass"
-      });
-
-      toast.success("Marksheet created successfully!");
+      handleReset();
     } catch (error) {
-      toast.error("Failed to create marksheet");
+      toast.error(`Failed to ${editingMarksheet ? 'update' : 'create'} marksheet`);
     }
+  };
+
+  const handleEdit = (marksheet: MarksheetManagement) => {
+    setEditingMarksheet(marksheet);
+    setFormData({
+      studentId: marksheet.student_id,
+      studentName: marksheet.student_name,
+      courseName: marksheet.course_name,
+      rollNumber: marksheet.roll_number,
+      examinationDate: marksheet.examination_date,
+      totalMarks: marksheet.total_marks.toString(),
+      obtainedMarks: marksheet.obtained_marks.toString(),
+      grade: marksheet.grade,
+      resultStatus: marksheet.result_status
+    });
+  };
+
+  const handleReset = () => {
+    setEditingMarksheet(null);
+    setFormData({
+      studentId: "",
+      studentName: "",
+      courseName: "",
+      rollNumber: "",
+      examinationDate: "",
+      totalMarks: "",
+      obtainedMarks: "",
+      grade: "",
+      resultStatus: "pass"
+    });
   };
 
   const handleDelete = async (id: string) => {
@@ -281,14 +317,24 @@ const MarksheetManagementContent = () => {
             </div>
           )}
 
-          <div className="pt-6">
+          <div className="pt-6 flex space-x-4">
             <Button
               onClick={handleSubmit}
               className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
             >
               <Plus className="h-5 w-5 mr-2" />
-              Create Marksheet
+              {editingMarksheet ? 'Update' : 'Create'} Marksheet
             </Button>
+            
+            {editingMarksheet && (
+              <Button
+                onClick={handleReset}
+                variant="outline"
+                className="border-gray-600 text-gray-600 hover:bg-gray-50 px-6 py-3"
+              >
+                Cancel Edit
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -319,6 +365,7 @@ const MarksheetManagementContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(marksheet)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />

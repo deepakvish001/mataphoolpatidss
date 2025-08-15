@@ -33,6 +33,7 @@ const VideoContent = () => {
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [label, setLabel] = useState("");
+  const [editingVideo, setEditingVideo] = useState<VideoData | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -42,7 +43,7 @@ const VideoContent = () => {
   };
 
   const handleUpload = async () => {
-    if (!selectedFile) {
+    if (!selectedFile && !editingVideo) {
       toast.error("Please select a video file to upload");
       return;
     }
@@ -53,25 +54,45 @@ const VideoContent = () => {
     }
 
     try {
-      await create({
-        label: label,
-        file_name: selectedFile.name,
-        file_size: selectedFile.size,
-        file_type: selectedFile.type,
-        video_url: null // In a real app, you'd upload to storage and get URL
-      });
+      if (editingVideo) {
+        await update(editingVideo.id, {
+          label: label,
+          file_name: selectedFile ? selectedFile.name : editingVideo.file_name,
+          file_size: selectedFile ? selectedFile.size : editingVideo.file_size,
+          file_type: selectedFile ? selectedFile.type : editingVideo.file_type,
+          video_url: editingVideo.video_url // Keep existing URL if no new file
+        });
+        toast.success("Video updated successfully!");
+      } else {
+        await create({
+          label: label,
+          file_name: selectedFile!.name,
+          file_size: selectedFile!.size,
+          file_type: selectedFile!.type,
+          video_url: null // In a real app, you'd upload to storage and get URL
+        });
+        toast.success("Video uploaded successfully!");
+      }
 
-      // Reset form
-      setSelectedFile(null);
-      setLabel("");
-      // Reset file input
-      const fileInput = document.getElementById('video-file') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
-      
-      toast.success("Video uploaded successfully!");
+      handleReset();
     } catch (error) {
-      toast.error("Failed to upload video");
+      toast.error(`Failed to ${editingVideo ? 'update' : 'upload'} video`);
     }
+  };
+
+  const handleEdit = (video: VideoData) => {
+    setEditingVideo(video);
+    setLabel(video.label);
+    setSelectedFile(null);
+  };
+
+  const handleReset = () => {
+    setEditingVideo(null);
+    setSelectedFile(null);
+    setLabel("");
+    // Reset file input
+    const fileInput = document.getElementById('video-file') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
   };
 
   const handleDelete = async (id: string) => {
@@ -105,7 +126,7 @@ const VideoContent = () => {
             <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
               <Video className="h-6 w-6 text-white" />
             </div>
-            <span>Add Videos</span>
+            <span>{editingVideo ? 'Edit' : 'Add'} Videos</span>
           </CardTitle>
         </CardHeader>
         
@@ -149,14 +170,24 @@ const VideoContent = () => {
             </div>
 
             {/* Upload Button */}
-            <div className="pt-4">
+            <div className="pt-4 flex space-x-4">
               <Button
                 onClick={handleUpload}
                 className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
                 <Upload className="h-5 w-5 mr-2" />
-                Upload
+                {editingVideo ? 'Update' : 'Upload'}
               </Button>
+              
+              {editingVideo && (
+                <Button
+                  onClick={handleReset}
+                  variant="outline"
+                  className="border-gray-600 text-gray-600 hover:bg-gray-50 px-6 py-3"
+                >
+                  Cancel Edit
+                </Button>
+              )}
             </div>
 
             {/* File Info */}
@@ -195,6 +226,7 @@ const VideoContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(video)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />
