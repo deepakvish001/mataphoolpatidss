@@ -58,6 +58,7 @@ const StudentMarksheetContent = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const checkMissingData = () => {
     const missing: string[] = [];
@@ -159,6 +160,7 @@ const StudentMarksheetContent = () => {
       await new Promise((resolve) => setTimeout(resolve, 400));
 
       const element = marksheetRef.current;
+      setIsGenerating(true);
 
       // High-DPI capture for crisp text
       const canvas = await html2canvas(element, {
@@ -346,10 +348,12 @@ const StudentMarksheetContent = () => {
       const sanitizedName = selectedStudent?.full_name?.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_') || 'Student';
       const fileName = `${sanitizedName}_Certificate_${currentDate}.pdf`;
       pdf.save(fileName);
+      setIsGenerating(false);
 
       toast.success("Professional Certificate Generated!", { id: "pdf-gen" });
     } catch (error: any) {
       console.error('PDF error:', error);
+      setIsGenerating(false);
       toast.error(`Failed to generate certificate: ${error?.message || 'Unknown error'}`, { id: "pdf-gen" });
     }
   };
@@ -488,18 +492,21 @@ const StudentMarksheetContent = () => {
           <CardContent className="p-0">
             <div ref={marksheetRef} className="relative bg-white w-[210mm] min-h-[297mm] mx-auto p-8" style={{ fontFamily: 'serif' }}>
               
-              {/* Premium Border Design */}
-              <div className="absolute inset-4 border-4 border-double border-indigo-800 rounded-lg">
-                <div className="absolute inset-2 border-2 border-amber-400 rounded-md">
-                  <div className="absolute inset-2 border border-indigo-300 rounded-sm bg-gradient-to-br from-blue-50/40 via-white to-amber-50/30"></div>
-                </div>
-              </div>
-              
-              {/* Elegant Corner Decorations */}
-              <div className="absolute top-6 left-6 w-16 h-16 border-l-4 border-t-4 border-indigo-800 rounded-tl-xl opacity-60"></div>
-              <div className="absolute top-6 right-6 w-16 h-16 border-r-4 border-t-4 border-indigo-800 rounded-tr-xl opacity-60"></div>
-              <div className="absolute bottom-6 left-6 w-16 h-16 border-l-4 border-b-4 border-indigo-800 rounded-bl-xl opacity-60"></div>
-              <div className="absolute bottom-6 right-6 w-16 h-16 border-r-4 border-b-4 border-indigo-800 rounded-br-xl opacity-60"></div>
+              {/* Hide internal borders while exporting to avoid duplicate page borders */}
+              {!isGenerating && (
+                <>
+                  <div className="absolute inset-4 border-4 border-double border-indigo-800 rounded-lg">
+                    <div className="absolute inset-2 border-2 border-amber-400 rounded-md">
+                      <div className="absolute inset-2 border border-indigo-300 rounded-sm bg-gradient-to-br from-blue-50/40 via-white to-amber-50/30"></div>
+                    </div>
+                  </div>
+                  {/* Elegant Corner Decorations */}
+                  <div className="absolute top-6 left-6 w-16 h-16 border-l-4 border-t-4 border-indigo-800 rounded-tl-xl opacity-60"></div>
+                  <div className="absolute top-6 right-6 w-16 h-16 border-r-4 border-t-4 border-indigo-800 rounded-tr-xl opacity-60"></div>
+                  <div className="absolute bottom-6 left-6 w-16 h-16 border-l-4 border-b-4 border-indigo-800 rounded-bl-xl opacity-60"></div>
+                  <div className="absolute bottom-6 right-6 w-16 h-16 border-r-4 border-b-4 border-indigo-800 rounded-br-xl opacity-60"></div>
+                </>
+              )}
 
               <div className="relative z-10 p-8 h-full flex flex-col">
                 {/* Premium Header */}
