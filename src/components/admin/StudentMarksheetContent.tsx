@@ -148,45 +148,71 @@ const StudentMarksheetContent = () => {
 
     try {
       toast.loading("Creating Professional Certificate...", { id: "pdf-gen" });
-      
-      // Simple wait for rendering
-      await new Promise(resolve => setTimeout(resolve, 800));
 
-      // Simple, reliable canvas capture
-      const canvas = await html2canvas(marksheetRef.current, {
-        scale: 3,
+      // Ensure layout and webfonts are fully ready
+      if ((document as any).fonts?.ready) {
+        await (document as any).fonts.ready;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      const element = marksheetRef.current;
+
+      // High-DPI capture for crisp text; stable settings to avoid blank pages
+      const canvas = await html2canvas(element, {
+        scale: Math.min(3, window.devicePixelRatio * 2),
         useCORS: true,
+        allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
-        allowTaint: true
+        imageTimeout: 12000,
+        scrollX: 0,
+        scrollY: 0,
       });
 
-      // Simple PDF creation
-      const pdf = new jsPDF('portrait', 'mm', 'a4');
+      if (canvas.width === 0 || canvas.height === 0) {
+        throw new Error('Captured canvas has zero size');
+      }
+
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
       const pdfWidth = 210;
       const pdfHeight = 297;
 
-      // Scale to fit A4 perfectly
-      const imgData = canvas.toDataURL('image/jpeg', 0.92);
-      const aspectRatio = canvas.height / canvas.width;
-      const imgHeight = pdfWidth * aspectRatio;
+      // Compute page height in canvas pixels to slice clean A4 pages
+      const pageHeightPx = Math.round((canvas.width * pdfHeight) / pdfWidth);
 
-      if (imgHeight <= pdfHeight) {
-        // Single page
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, imgHeight);
-      } else {
-        // Multi-page if needed
-        const scale = pdfHeight / imgHeight;
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth * scale, pdfHeight);
+      const totalPages = Math.max(1, Math.ceil(canvas.height / pageHeightPx));
+      let y = 0;
+
+      for (let page = 0; page < totalPages; page++) {
+        if (page > 0) pdf.addPage();
+
+        const sliceHeight = Math.min(pageHeightPx, canvas.height - y);
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceHeight;
+        const ctx = pageCanvas.getContext('2d');
+        if (!ctx) throw new Error('2D context not available');
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.drawImage(canvas, 0, y, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
+
+        const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+        // Full-bleed A4
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+
+        y += sliceHeight;
       }
 
-      const fileName = `${selectedStudent?.full_name?.replace(/[^a-zA-Z0-9]/g, '_')}_Certificate.pdf`;
+      const currentDate = new Date().toISOString().split('T')[0];
+      const sanitizedName = selectedStudent?.full_name?.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_') || 'Student';
+      const fileName = `${sanitizedName}_Certificate_${currentDate}.pdf`;
       pdf.save(fileName);
 
       toast.success("Professional Certificate Generated!", { id: "pdf-gen" });
-    } catch (error) {
+    } catch (error: any) {
       console.error('PDF error:', error);
-      toast.error("Failed to generate certificate", { id: "pdf-gen" });
+      toast.error(`Failed to generate certificate: ${error?.message || 'Unknown error'}`, { id: "pdf-gen" });
     }
   };
 
