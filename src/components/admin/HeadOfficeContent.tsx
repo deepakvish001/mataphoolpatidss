@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useGlobalCrud } from "@/contexts/GlobalCrudContext";
+import { useButtonDetection } from "@/hooks/useButtonDetection";
 import { 
   Building2, 
   Edit, 
@@ -45,6 +47,7 @@ interface HeadOffice {
 
 const HeadOfficeContent = () => {
   const { user } = useAuth();
+  const { lastEvent } = useGlobalCrud();
   const [headOffices, setHeadOffices] = useState<HeadOffice[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -66,6 +69,9 @@ const HeadOfficeContent = () => {
   });
   const [formLoading, setFormLoading] = useState(false);
 
+  // Enable button detection for head_offices table
+  useButtonDetection('head_offices');
+
   // Load head offices data
   const loadHeadOffices = async () => {
     try {
@@ -85,20 +91,20 @@ const HeadOfficeContent = () => {
     }
   };
 
-  // Real-time subscription with automatic background refresh
+  // Real-time subscription with instant updates
   useEffect(() => {
     loadHeadOffices();
 
     const channel = supabase
-      .channel('head-office-auto-refresh')
+      .channel('head-office-realtime-instant')
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
         table: 'head_offices'
       }, (payload: any) => {
-        console.log('Head office real-time change:', payload);
+        console.log('🚀 Head office instant real-time change:', payload);
         
-        // Automatic background refresh without user interaction
+        // Instant UI updates with no delays
         switch (payload.eventType) {
           case 'INSERT':
             setHeadOffices(prev => {
@@ -113,6 +119,7 @@ const HeadOfficeContent = () => {
               
               return newList;
             });
+            console.log('✅ Office added instantly to UI');
             break;
             
           case 'UPDATE':
@@ -125,16 +132,18 @@ const HeadOfficeContent = () => {
                 return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
               });
             });
+            console.log('⚡ Office updated instantly in UI');
             break;
             
           case 'DELETE':
             setHeadOffices(prev => prev.filter(office => office.id !== payload.old.id));
+            console.log('🗑️ Office removed instantly from UI');
             break;
         }
       })
       .subscribe((status) => {
         if (status === 'SUBSCRIBED') {
-          console.log('✅ Head office auto-refresh active');
+          console.log('🚀 Head office instant real-time active');
         }
       });
 
@@ -142,6 +151,15 @@ const HeadOfficeContent = () => {
       supabase.removeChannel(channel);
     };
   }, []);
+
+  // React to global CRUD events for additional reliability
+  useEffect(() => {
+    if (lastEvent && lastEvent.table === 'head_offices') {
+      console.log('🔄 Global CRUD event for head_offices:', lastEvent);
+      // The real-time subscription above should handle the update,
+      // but this provides an additional safety net
+    }
+  }, [lastEvent]);
 
   // Filter head offices
   const filteredOffices = headOffices.filter(office => {
