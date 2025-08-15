@@ -144,14 +144,14 @@ const StudentMarksheetContent = () => {
     }
 
     try {
-      toast.loading("Processing certificate for professional A4 PDF generation...", { id: "pdf-gen" });
+      toast.loading("Generating Full A4 Certificate PDF...", { id: "pdf-gen" });
       
       // Wait for any final renders
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      // High quality canvas options for A4 certificate
+      // Ultra high quality canvas for full A4 certificate
       const canvas = await html2canvas(marksheetRef.current, {
-        scale: 2.5, // Optimal scale for A4
+        scale: 3, // High resolution for crisp A4 output
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
@@ -159,101 +159,85 @@ const StudentMarksheetContent = () => {
         height: marksheetRef.current.scrollHeight,
         logging: false,
         imageTimeout: 15000,
-        removeContainer: true,
-        ignoreElements: (element) => {
-          return element.classList?.contains('no-print');
-        }
+        removeContainer: true
       });
 
-      toast.loading("Creating professional A4 PDF document...", { id: "pdf-gen" });
+      toast.loading("Creating Full A4 Size Professional Certificate PDF...", { id: "pdf-gen" });
 
-      // A4 dimensions in mm: 210 x 297
+      // Create PDF with exact A4 dimensions
       const pdf = new jsPDF({
-        orientation: 'portrait', // Changed to portrait for better certificate layout
+        orientation: 'portrait', // A4 Portrait: 210 x 297 mm
         unit: 'mm',
         format: 'a4',
-        compress: true,
-        precision: 2
+        compress: false // Maximum quality
       });
       
-      const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
-      const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
-      const margin = 10; // 10mm margin on all sides
-      const contentWidth = pdfWidth - (margin * 2); // 190mm
-      const contentHeight = pdfHeight - (margin * 2); // 277mm
+      // A4 dimensions in mm
+      const pdfWidth = 210;  // A4 width
+      const pdfHeight = 297; // A4 height
       
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
+      // Convert canvas to image
+      const imgData = canvas.toDataURL('image/png', 1.0); // Maximum quality PNG
       
-      // Calculate optimal scaling for A4 with margins
-      const scaleX = contentWidth / (imgWidth * 0.264583); // Convert px to mm
-      const scaleY = contentHeight / (imgHeight * 0.264583);
-      const scale = Math.min(scaleX, scaleY, 1); // Don't upscale
+      // Add image to fill entire A4 page (no margins)
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
       
-      const finalWidth = (imgWidth * 0.264583) * scale;
-      const finalHeight = (imgHeight * 0.264583) * scale;
+      // Check if content needs additional pages
+      const imgRatio = canvas.height / canvas.width;
+      const pdfRatio = pdfHeight / pdfWidth;
       
-      // Center the content on the page
-      const imgX = (pdfWidth - finalWidth) / 2;
-      const imgY = (pdfHeight - finalHeight) / 2;
-
-      // Check if content needs multiple pages
-      if (finalHeight > contentHeight) {
-        // Content is too tall, split into multiple pages
-        const pagesNeeded = Math.ceil(finalHeight / contentHeight);
+      if (imgRatio > pdfRatio) {
+        // Content is taller than A4 ratio, might need multiple pages
+        const totalContentHeight = pdfWidth * imgRatio;
+        const pagesNeeded = Math.ceil(totalContentHeight / pdfHeight);
         
-        for (let pageIndex = 0; pageIndex < pagesNeeded; pageIndex++) {
-          if (pageIndex > 0) {
+        if (pagesNeeded > 1) {
+          // Add additional pages for overflow content
+          for (let page = 1; page < pagesNeeded; page++) {
             pdf.addPage();
+            
+            // Calculate the portion of content for this page
+            const sourceY = (canvas.height / pagesNeeded) * page;
+            const sourceHeight = canvas.height / pagesNeeded;
+            
+            // Create canvas section for this page
+            const pageCanvas = document.createElement('canvas');
+            pageCanvas.width = canvas.width;
+            pageCanvas.height = sourceHeight;
+            const pageCtx = pageCanvas.getContext('2d');
+            
+            // Draw the section
+            pageCtx.fillStyle = '#ffffff';
+            pageCtx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+            pageCtx.drawImage(canvas, 0, sourceY, canvas.width, sourceHeight, 0, 0, canvas.width, sourceHeight);
+            
+            const pageImgData = pageCanvas.toDataURL('image/png', 1.0);
+            
+            // Add to PDF filling entire page
+            pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
           }
-          
-          // Calculate the portion of the image for this page
-          const sourceY = (imgHeight / pagesNeeded) * pageIndex;
-          const sourceHeight = imgHeight / pagesNeeded;
-          
-          // Create a temporary canvas for this page section
-          const pageCanvas = document.createElement('canvas');
-          const pageCtx = pageCanvas.getContext('2d');
-          
-          pageCanvas.width = imgWidth;
-          pageCanvas.height = sourceHeight;
-          
-          // Draw the portion of the image for this page
-          pageCtx.drawImage(canvas, 0, sourceY, imgWidth, sourceHeight, 0, 0, imgWidth, sourceHeight);
-          
-          const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
-          
-          // Add this page section to PDF
-          const pageImgHeight = (sourceHeight * 0.264583) * scale;
-          pdf.addImage(pageImgData, 'JPEG', imgX, margin, finalWidth, pageImgHeight, '', 'FAST');
-          
-          // Add page number
-          pdf.setFontSize(10);
-          pdf.setTextColor(100, 100, 100);
-          pdf.text(`Page ${pageIndex + 1} of ${pagesNeeded}`, pdfWidth - 30, pdfHeight - 5);
         }
-      } else {
-        // Content fits on one page
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        pdf.addImage(imgData, 'JPEG', imgX, imgY, finalWidth, finalHeight, '', 'FAST');
       }
       
       // Enhanced metadata
       pdf.setProperties({
-        title: `${selectedStudent?.full_name} - Professional Certificate`,
-        subject: `Course Completion Certificate - ${selectedStudent?.course_name}`,
+        title: `${selectedStudent?.full_name} - Official Certificate`,
+        subject: `Professional Course Certificate - ${selectedStudent?.course_name}`,
         author: 'B.SOFT Computer & Technical Institute',
-        keywords: 'certificate, diploma, course completion, professional certification',
-        creator: 'B.SOFT Institute Management System'
+        keywords: 'official certificate, diploma, course completion, A4 certificate',
+        creator: 'B.SOFT Institute Certificate System'
       });
 
-      const fileName = `${selectedStudent?.full_name?.replace(/[^a-zA-Z0-9]/g, '_')}_Certificate_${new Date().getFullYear()}.pdf`;
+      // Generate filename with date
+      const currentDate = new Date().toISOString().split('T')[0];
+      const fileName = `${selectedStudent?.full_name?.replace(/[^a-zA-Z0-9]/g, '_')}_Official_Certificate_${currentDate}.pdf`;
+      
       pdf.save(fileName);
       
-      toast.success("Professional A4 Certificate PDF generated successfully!", { id: "pdf-gen" });
+      toast.success("Full A4 Certificate PDF Generated Successfully!", { id: "pdf-gen" });
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error("Failed to generate PDF. Please try again.", { id: "pdf-gen" });
+      toast.error("Failed to generate certificate PDF. Please try again.", { id: "pdf-gen" });
     }
   };
 
