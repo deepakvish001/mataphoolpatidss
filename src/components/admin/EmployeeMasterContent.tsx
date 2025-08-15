@@ -1,18 +1,51 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Upload } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { useGlobalCrud } from "@/contexts/GlobalCrudContext";
-import { useButtonDetection } from "@/hooks/useButtonDetection";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Users, Edit, Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+
+interface Employee {
+  id: string;
+  employee_id: string;
+  employee_password: string;
+  full_name: string;
+  father_name?: string;
+  contact_no: string;
+  email_id: string;
+  country?: string;
+  state?: string;
+  district?: string;
+  address?: string;
+  other_details?: string;
+  pincode?: string;
+  salary?: string;
+  registration_date?: string;
+  photo_url?: string;
+  status?: string;
+}
 
 const EmployeeMasterContent = () => {
-  const { toast } = useToast();
-  const { lastEvent, isConnected } = useGlobalCrud();
-  useButtonDetection('employees');
+  const {
+    data: employees,
+    loading,
+    create,
+    update,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<Employee>({ tableName: 'employees' });
+
+  useAdminRealTime({
+    tableName: 'employees',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
   
   const [formData, setFormData] = useState({
     employeeId: "EMP001210",
@@ -59,41 +92,49 @@ const EmployeeMasterContent = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.fullName.trim() || !formData.contactNo.trim() || !formData.emailId.trim()) {
-      toast({
-        title: "Error",
-        description: "Please fill in all required fields",
-        variant: "destructive"
-      });
+      toast.error("Please fill in all required fields");
       return;
     }
 
-    toast({
-      title: "Success",
-      description: "Employee details submitted successfully!",
-      variant: "default"
-    });
+    const newEmployee = {
+      employee_id: formData.employeeId,
+      employee_password: formData.employeePassword,
+      full_name: formData.fullName,
+      father_name: formData.fatherName,
+      contact_no: formData.contactNo,
+      email_id: formData.emailId,
+      country: formData.country,
+      state: formData.state,
+      district: formData.district,
+      address: formData.address,
+      other_details: formData.otherDetails,
+      pincode: formData.pincode,
+      salary: formData.salary,
+      registration_date: formData.registrationDate,
+      photo_url: formData.photoUpload ? formData.photoUpload.name : null,
+      status: 'active'
+    };
+
+    try {
+      await create(newEmployee);
+      handleReset();
+      toast.success("Employee added successfully!");
+    } catch (error) {
+      toast.error("Failed to add employee");
+    }
   };
 
-  // Listen to global CRUD events for real-time updates
-  useEffect(() => {
-    if (lastEvent && lastEvent.table === 'employees') {
-      if (lastEvent.operation === 'INSERT') {
-        toast({
-          title: "Employee Added",
-          description: "New employee has been successfully added",
-          variant: "default"
-        });
-      } else if (lastEvent.operation === 'UPDATE') {
-        toast({
-          title: "Employee Updated",
-          description: "Employee information has been updated",
-          variant: "default"
-        });
-      }
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteItem(id);
+      toast.success("Employee deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete employee");
     }
-  }, [lastEvent, toast]);
+  };
+
 
   const handleReset = () => {
     setFormData({
@@ -118,6 +159,19 @@ const EmployeeMasterContent = () => {
     const fileInput = document.getElementById('employee-photo-file') as HTMLInputElement;
     if (fileInput) fileInput.value = '';
   };
+
+  if (loading) {
+    return (
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <p className="text-gray-600">Loading employees...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -374,6 +428,74 @@ const EmployeeMasterContent = () => {
               Reset
             </Button>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Employee List */}
+      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-blue-600 hover:bg-blue-600">
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Employee ID</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Full Name</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Contact</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Email</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">State</TableHead>
+                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {employees.map((employee, index) => (
+                <TableRow key={employee.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
+                    <div className="flex justify-center space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(employee.id)}
+                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4 font-medium">
+                    {employee.employee_id}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4 font-medium">
+                    {employee.full_name}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
+                    {employee.contact_no}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
+                    {employee.email_id}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
+                    {employee.state || 'N/A'}
+                  </TableCell>
+                  <TableCell className="border-2 border-gray-600 text-center p-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      employee.status === 'active' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-gray-100 text-gray-800'
+                    }`}>
+                      {employee.status || 'active'}
+                    </span>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </div>

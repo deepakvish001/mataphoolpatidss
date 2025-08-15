@@ -6,8 +6,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Edit, Trash2, Plus, RefreshCw, Loader2 } from "lucide-react";
+import { BookOpen, Edit, Trash2, Plus, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useAdminRealTime } from "@/hooks/useAdminRealTime";
+import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
 
 interface Course {
   id: string;
@@ -17,11 +19,25 @@ interface Course {
   fees: string;
   category: string;
   status: 'active' | 'inactive';
-  created_at: string;
-  updated_at: string;
 }
 
 const CourseMasterContent = () => {
+  const {
+    data: courses,
+    loading,
+    create,
+    update,
+    delete: deleteItem,
+    refresh
+  } = useOptimisticCrud<Course>({ tableName: 'course_master' });
+
+  useAdminRealTime({
+    tableName: 'course_master',
+    onInsert: refresh,
+    onUpdate: refresh,
+    onDelete: refresh
+  });
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [formData, setFormData] = useState({
@@ -33,33 +49,6 @@ const CourseMasterContent = () => {
     status: "active" as "active" | "inactive"
   });
   const [formLoading, setFormLoading] = useState(false);
-
-  // Static data for now since courses table doesn't exist yet
-  const [courses, setCourses] = useState<Course[]>([
-    {
-      id: "17",
-      course_name: "Diploma in Computer Hardware and Networking",
-      course_sort_name: "DCHN",
-      duration: "12 months",
-      fees: "15000",
-      category: "12 Month",
-      status: "active",
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    },
-    {
-      id: "18",
-      course_name: "Advance Diploma In Computer Application(ADCA)",
-      course_sort_name: "ADCA",
-      duration: "12",
-      fees: "4800",
-      category: "12 Month",
-      status: "active",
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    }
-  ]);
-  const [loading, setLoading] = useState(false);
 
   const courseCategories = [
     { value: "3-month", label: "3 Month" },
@@ -126,30 +115,27 @@ const CourseMasterContent = () => {
 
     setFormLoading(true);
     try {
-      const courseData: Course = {
-        id: editingCourse?.id || `course-${Date.now()}`,
+      const courseData = {
         course_name: formData.courseName,
         course_sort_name: formData.courseSortName,
         duration: formData.courseDuration,
         fees: formData.fees,
         category: courseCategories.find(cat => cat.value === formData.courseCategory)?.label || formData.courseCategory,
-        status: formData.status,
-        created_at: editingCourse?.created_at || new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        status: formData.status
       };
 
       if (editingCourse) {
-        setCourses(prev => prev.map(course => 
-          course.id === editingCourse.id ? courseData : course
-        ));
-        toast.success("🎉 Course updated instantly!");
+        await update(editingCourse.id, courseData);
+        toast.success("Course updated successfully!");
       } else {
-        setCourses(prev => [courseData, ...prev]);
-        toast.success("🎉 Course added instantly!");
+        await create(courseData);
+        toast.success("Course added successfully!");
       }
 
       setIsDialogOpen(false);
       resetForm();
+    } catch (error) {
+      toast.error(editingCourse ? "Failed to update course" : "Failed to add course");
     } finally {
       setFormLoading(false);
     }
@@ -158,12 +144,12 @@ const CourseMasterContent = () => {
   const handleDelete = async (id: string) => {
     if (!confirm("⚠️ Are you sure you want to delete this course?")) return;
     
-    setCourses(prev => prev.filter(course => course.id !== id));
-    toast.success("🗑️ Course deleted instantly!");
-  };
-
-  const refresh = () => {
-    toast.success("Data refreshed!");
+    try {
+      await deleteItem(id);
+      toast.success("Course deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete course");
+    }
   };
 
   if (loading) {

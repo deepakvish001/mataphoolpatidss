@@ -186,6 +186,42 @@ export type Database = {
         }
         Relationships: []
       }
+      course_master: {
+        Row: {
+          category: string
+          course_name: string
+          course_sort_name: string
+          created_at: string
+          duration: string
+          fees: string
+          id: string
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          course_name: string
+          course_sort_name: string
+          created_at?: string
+          duration: string
+          fees: string
+          id?: string
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          course_name?: string
+          course_sort_name?: string
+          created_at?: string
+          duration?: string
+          fees?: string
+          id?: string
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           created_at: string
@@ -272,6 +308,72 @@ export type Database = {
           id?: string
           site_id?: number
           site_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      employees: {
+        Row: {
+          address: string | null
+          contact_no: string
+          country: string | null
+          created_at: string
+          district: string | null
+          email_id: string
+          employee_id: string
+          employee_password: string
+          father_name: string | null
+          full_name: string
+          id: string
+          other_details: string | null
+          photo_url: string | null
+          pincode: string | null
+          registration_date: string | null
+          salary: string | null
+          state: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          contact_no: string
+          country?: string | null
+          created_at?: string
+          district?: string | null
+          email_id: string
+          employee_id: string
+          employee_password: string
+          father_name?: string | null
+          full_name: string
+          id?: string
+          other_details?: string | null
+          photo_url?: string | null
+          pincode?: string | null
+          registration_date?: string | null
+          salary?: string | null
+          state?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          contact_no?: string
+          country?: string | null
+          created_at?: string
+          district?: string | null
+          email_id?: string
+          employee_id?: string
+          employee_password?: string
+          father_name?: string | null
+          full_name?: string
+          id?: string
+          other_details?: string | null
+          photo_url?: string | null
+          pincode?: string | null
+          registration_date?: string | null
+          salary?: string | null
+          state?: string | null
+          status?: string | null
           updated_at?: string
         }
         Relationships: []
