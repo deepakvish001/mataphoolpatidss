@@ -67,34 +67,50 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUserRole(null);
         }
         
+        // Always set loading to false after processing auth state
         setLoading(false);
       }
     );
 
-    // Check for existing session on app start
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      console.log('Initial session check:', session ? `session exists for user: ${session.user.email}` : 'no session');
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        try {
-          const { data } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', session.user.id)
-            .maybeSingle();
-          
-          console.log('Initial user role:', data?.role || 'user');
-          setUserRole(data?.role || 'user');
-        } catch (error) {
-          console.error('Error fetching user role:', error);
-          setUserRole('user');
+    // Check for existing session on app start - this is critical for refresh
+    const initializeAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        console.log('Initial session check:', session ? `session exists for user: ${session.user.email}` : 'no session');
+        
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          try {
+            const { data } = await supabase
+              .from('user_roles')
+              .select('role')
+              .eq('user_id', session.user.id)
+              .maybeSingle();
+            
+            console.log('Initial user role:', data?.role || 'user');
+            setUserRole(data?.role || 'user');
+          } catch (error) {
+            console.error('Error fetching user role:', error);
+            setUserRole('user');
+          }
+        } else {
+          setUserRole(null);
         }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+        setSession(null);
+        setUser(null);
+        setUserRole(null);
+      } finally {
+        // Always set loading to false, regardless of success or error
+        setLoading(false);
+        console.log('Authentication initialization complete');
       }
-      
-      setLoading(false);
-    });
+    };
+    
+    initializeAuth();
     return () => subscription.unsubscribe();
   }, []);
 
