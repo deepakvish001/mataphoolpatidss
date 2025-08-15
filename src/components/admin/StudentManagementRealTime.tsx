@@ -76,41 +76,39 @@ const StudentManagementRealTime = () => {
     }
   };
 
-  // Real-time subscription
+  // Automatic background refresh system
   useEffect(() => {
     loadStudents();
 
     const channel = supabase
-      .channel('student-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'student_profiles'
-        },
-        (payload: any) => {
-          console.log('Student change:', payload);
-          
-          if (payload.eventType === 'INSERT') {
-            setStudents(prev => [payload.new, ...prev]);
-            toast.success("New student registered!");
-          } else if (payload.eventType === 'UPDATE') {
-            setStudents(prev => 
-              prev.map(student => 
-                student.id === payload.new.id ? payload.new : student
-              )
-            );
-            toast.success("Student updated!");
-          } else if (payload.eventType === 'DELETE') {
-            setStudents(prev => 
-              prev.filter(student => student.id !== payload.old.id)
-            );
-            toast.success("Student removed!");
-          }
+      .channel('student-auto-refresh')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'student_profiles'
+      }, (payload: any) => {
+        console.log('Student auto-refresh change:', payload);
+        
+        // Instant background updates
+        if (payload.eventType === 'INSERT') {
+          setStudents(prev => [payload.new, ...prev]);
+        } else if (payload.eventType === 'UPDATE') {
+          setStudents(prev => 
+            prev.map(student => 
+              student.id === payload.new.id ? payload.new : student
+            )
+          );
+        } else if (payload.eventType === 'DELETE') {
+          setStudents(prev => 
+            prev.filter(student => student.id !== payload.old.id)
+          );
         }
-      )
-      .subscribe();
+      })
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          console.log('✅ Student auto-refresh active');
+        }
+      });
 
     return () => {
       supabase.removeChannel(channel);
@@ -287,15 +285,6 @@ const StudentManagementRealTime = () => {
             <span>Student Management</span>
           </CardTitle>
           <div className="flex space-x-3">
-            <Button
-              onClick={loadStudents}
-              variant="outline"
-              size="sm"
-              className="flex items-center space-x-2"
-            >
-              <RefreshCw className="h-4 w-4" />
-              <span>Refresh</span>
-            </Button>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button 

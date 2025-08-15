@@ -157,10 +157,6 @@ const FranchiseManagementContent = () => {
               <span>Franchise Management</span>
             </CardTitle>
             <div className="flex space-x-3">
-              <Button onClick={refresh} variant="outline" size="sm">
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Refresh
-              </Button>
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
                   <Button onClick={resetForm} className="bg-gradient-to-r from-green-600 to-green-700">

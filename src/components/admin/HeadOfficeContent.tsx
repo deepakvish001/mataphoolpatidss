@@ -85,90 +85,56 @@ const HeadOfficeContent = () => {
     }
   };
 
-  // Real-time subscription with instant updates
+  // Real-time subscription with automatic background refresh
   useEffect(() => {
     loadHeadOffices();
 
-    // Enable real-time for the table if not already enabled
-    const enableRealtime = async () => {
-      try {
-        await supabase.from('head_offices').select('*').limit(1);
-      } catch (error) {
-        console.log('Realtime may not be enabled for head_offices table');
-      }
-    };
-    enableRealtime();
-
     const channel = supabase
-      .channel('head-office-realtime-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'head_offices'
-        },
-        (payload: any) => {
-          console.log('Real-time head office change:', payload);
-          
-          // Instant UI updates without waiting
-          switch (payload.eventType) {
-            case 'INSERT':
-              setHeadOffices(prev => {
-                // Prevent duplicates and sort correctly
-                const exists = prev.some(office => office.id === payload.new.id);
-                if (exists) return prev;
-                
-                const newList = [payload.new, ...prev].sort((a, b) => {
-                  // Primary offices first, then by creation date
-                  if (a.is_primary && !b.is_primary) return -1;
-                  if (!a.is_primary && b.is_primary) return 1;
-                  return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-                });
-                
-                toast.success("✅ New head office added instantly!", {
-                  duration: 2000,
-                  style: { background: '#10B981', color: 'white' }
-                });
-                return newList;
-              });
-              break;
+      .channel('head-office-auto-refresh')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'head_offices'
+      }, (payload: any) => {
+        console.log('Head office real-time change:', payload);
+        
+        // Automatic background refresh without user interaction
+        switch (payload.eventType) {
+          case 'INSERT':
+            setHeadOffices(prev => {
+              const exists = prev.some(office => office.id === payload.new.id);
+              if (exists) return prev;
               
-            case 'UPDATE':
-              setHeadOffices(prev => {
-                const updated = prev.map(office => 
-                  office.id === payload.new.id ? { ...office, ...payload.new } : office
-                ).sort((a, b) => {
-                  // Re-sort after update
-                  if (a.is_primary && !b.is_primary) return -1;
-                  if (!a.is_primary && b.is_primary) return 1;
-                  return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-                });
-                
-                toast.success("⚡ Head office updated instantly!", {
-                  duration: 2000,
-                  style: { background: '#3B82F6', color: 'white' }
-                });
-                return updated;
+              const newList = [payload.new, ...prev].sort((a, b) => {
+                if (a.is_primary && !b.is_primary) return -1;
+                if (!a.is_primary && b.is_primary) return 1;
+                return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
               });
-              break;
               
-            case 'DELETE':
-              setHeadOffices(prev => {
-                const filtered = prev.filter(office => office.id !== payload.old.id);
-                toast.success("🗑️ Head office removed instantly!", {
-                  duration: 2000,
-                  style: { background: '#EF4444', color: 'white' }
-                });
-                return filtered;
+              return newList;
+            });
+            break;
+            
+          case 'UPDATE':
+            setHeadOffices(prev => {
+              return prev.map(office => 
+                office.id === payload.new.id ? { ...office, ...payload.new } : office
+              ).sort((a, b) => {
+                if (a.is_primary && !b.is_primary) return -1;
+                if (!a.is_primary && b.is_primary) return 1;
+                return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
               });
-              break;
-          }
+            });
+            break;
+            
+          case 'DELETE':
+            setHeadOffices(prev => prev.filter(office => office.id !== payload.old.id));
+            break;
         }
-      )
+      })
       .subscribe((status) => {
         if (status === 'SUBSCRIBED') {
-          console.log('✅ Real-time subscription active for head offices');
+          console.log('✅ Head office auto-refresh active');
         }
       });
 
@@ -433,15 +399,6 @@ const HeadOfficeContent = () => {
               <span>Head Office Management</span>
             </CardTitle>
             <div className="flex space-x-3">
-              <Button
-                onClick={loadHeadOffices}
-                variant="outline"
-                size="sm"
-                className="flex items-center space-x-2"
-              >
-                <RefreshCw className="h-4 w-4" />
-                <span>Refresh</span>
-              </Button>
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
                   <Button 
