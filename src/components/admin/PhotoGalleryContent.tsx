@@ -24,10 +24,7 @@ const PhotoGalleryContent = () => {
   } = useOptimisticCrud<PhotoGallery>({ tableName: 'photo_gallery' });
 
   useAdminRealTime({
-    tableName: 'photo_gallery',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'photo_gallery'
   });
 
   const [formData, setFormData] = useState({
