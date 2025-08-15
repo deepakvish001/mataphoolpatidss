@@ -406,8 +406,8 @@ const Navigation = () => {
         )}
       </header>
 
-      {/* Dynamic Spacer */}
-      <div className={`${isScrolled ? 'h-20' : 'h-32'} transition-all duration-700 ease-out`}></div>
+      {/* Minimal Spacer - just for fixed header offset */}
+      <div className={`${isScrolled ? 'h-20' : 'h-20'} transition-all duration-700 ease-out`}></div>
     </>
   );
 };
