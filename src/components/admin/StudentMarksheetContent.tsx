@@ -150,98 +150,109 @@ const StudentMarksheetContent = () => {
     }
 
     try {
-      toast.loading("Creating Certificate PDF...", { id: "pdf-gen" });
+      toast.loading("Creating Professional Certificate...", { id: "pdf-gen" });
+
+      // Ensure layout and webfonts are fully ready
+      if ((document as any).fonts?.ready) {
+        await (document as any).fonts.ready;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 400));
 
       const element = marksheetRef.current;
-      
-      console.log('PDF Generation Started');
-      console.log('Element dimensions:', {
-        width: element.offsetWidth,
-        height: element.offsetHeight,
-        scrollWidth: element.scrollWidth,
-        scrollHeight: element.scrollHeight
-      });
 
-      // Wait for layout to settle
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Simple, reliable canvas capture
+      // High-DPI capture for crisp text; stable settings to avoid blank pages
       const canvas = await html2canvas(element, {
-        scale: 2,
+        scale: Math.min(3, window.devicePixelRatio * 2),
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        logging: true,
-        imageTimeout: 10000,
+        logging: false,
+        imageTimeout: 12000,
         scrollX: 0,
         scrollY: 0,
-        width: element.scrollWidth,
-        height: element.scrollHeight
-      });
-
-      console.log('Canvas captured:', {
-        width: canvas.width,
-        height: canvas.height,
-        dataURL: canvas.toDataURL('image/jpeg', 0.1).substring(0, 50) + '...'
       });
 
       if (canvas.width === 0 || canvas.height === 0) {
-        throw new Error('Canvas has zero dimensions');
+        throw new Error('Captured canvas has zero size');
       }
 
-      // Create PDF with simple settings
-      const pdf = new jsPDF('portrait', 'mm', 'a4');
-      const pageWidth = 210;
-      const pageHeight = 297;
-      const margin = 10;
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+      const margin = 10; // mm
 
-      // Calculate image dimensions to fit page
-      const maxWidth = pageWidth - (margin * 2);
-      const maxHeight = pageHeight - (margin * 2);
-      
-      const aspectRatio = canvas.height / canvas.width;
-      let imgWidth = maxWidth;
-      let imgHeight = imgWidth * aspectRatio;
+      // Compute usable page size (accounting for margins)
+      const usableWidthMm = pdfWidth - margin * 2;
+      const usableHeightMm = pdfHeight - margin * 2;
 
-      // If image is too tall, scale it down
-      if (imgHeight > maxHeight) {
-        imgHeight = maxHeight;
-        imgWidth = imgHeight / aspectRatio;
+      // Compute page height in canvas pixels to slice clean A4 pages (scaled to usable area)
+      const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
+
+      // Compute row-aware page breaks to avoid splitting subject rows
+      const ratio = canvas.width / element.clientWidth; // canvas px per CSS px
+      const yBreaks: number[] = [0];
+      let lastBreak = 0;
+
+      if (tableRef.current) {
+        const elemRect = element.getBoundingClientRect();
+        const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
+        for (let i = 0; i < rows.length; i++) {
+          const r = rows[i].getBoundingClientRect();
+          const rowBottomPx = Math.round((r.bottom - elemRect.top) * ratio);
+          if (rowBottomPx - lastBreak > pageHeightPx && i > 0) {
+            const prevBottom = rows[i - 1].getBoundingClientRect().bottom;
+            const prevBottomPx = Math.max(lastBreak + 1, Math.round((prevBottom - elemRect.top) * ratio));
+            yBreaks.push(prevBottomPx);
+            lastBreak = prevBottomPx;
+          }
+        }
       }
 
-      // Center the image on the page
-      const x = margin + (maxWidth - imgWidth) / 2;
-      const y = margin + (maxHeight - imgHeight) / 2;
+      if (yBreaks[yBreaks.length - 1] !== canvas.height) {
+        // Fill remaining pages if needed
+        let next = yBreaks[yBreaks.length - 1];
+        while (next + pageHeightPx < canvas.height) {
+          next += pageHeightPx;
+          yBreaks.push(next);
+        }
+        if (yBreaks[yBreaks.length - 1] !== canvas.height) yBreaks.push(canvas.height);
+      }
 
-      console.log('Adding image to PDF:', {
-        x, y, imgWidth, imgHeight,
-        pageWidth, pageHeight
-      });
+      // Render each slice as a page with margins
+      for (let i = 0; i < yBreaks.length - 1; i++) {
+        if (i > 0) pdf.addPage();
+        const sliceTop = yBreaks[i];
+        const sliceHeight = yBreaks[i + 1] - sliceTop;
 
-      // Convert canvas to image and add to PDF
-      const imgData = canvas.toDataURL('image/jpeg', 0.9);
-      pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight);
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceHeight;
+        const ctx = pageCanvas.getContext('2d');
+        if (!ctx) throw new Error('2D context not available');
 
-      // Add a simple border
-      pdf.setDrawColor(0, 0, 0);
-      pdf.setLineWidth(0.5);
-      pdf.rect(margin, margin, maxWidth, maxHeight);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.drawImage(canvas, 0, sliceTop, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
 
-      // Generate filename
+        const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+        const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
+        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
+
+        // Optional border for aesthetics
+        pdf.setDrawColor(90, 90, 140);
+        pdf.setLineWidth(0.4);
+        pdf.rect(5, 5, pdfWidth - 10, pdfHeight - 10);
+      }
+
       const currentDate = new Date().toISOString().split('T')[0];
-      const sanitizedName = selectedStudent?.full_name
-        ?.replace(/[^a-zA-Z0-9\s]/g, '')
-        .trim()
-        .replace(/\s+/g, '_') || 'Student';
+      const sanitizedName = selectedStudent?.full_name?.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_') || 'Student';
       const fileName = `${sanitizedName}_Certificate_${currentDate}.pdf`;
-      
-      console.log('Saving PDF as:', fileName);
       pdf.save(fileName);
 
-      toast.success("Certificate PDF Generated Successfully! 📄", { id: "pdf-gen" });
+      toast.success("Professional Certificate Generated!", { id: "pdf-gen" });
     } catch (error: any) {
-      console.error('PDF generation failed:', error);
-      toast.error(`PDF generation failed: ${error?.message || 'Unknown error'}`, { id: "pdf-gen" });
+      console.error('PDF error:', error);
+      toast.error(`Failed to generate certificate: ${error?.message || 'Unknown error'}`, { id: "pdf-gen" });
     }
   };
 
