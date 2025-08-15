@@ -19,6 +19,7 @@ import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import UserProfile from "./pages/UserProfile";
+import UserDashboard from "./pages/UserDashboard";
 
 const queryClient = new QueryClient();
 
@@ -54,14 +55,7 @@ const App = () => (
               element={
                 <AuthGuard requiredRole="user">
                   <Routes>
-                    <Route path="dashboard" element={
-                      <div className="min-h-screen flex items-center justify-center">
-                        <div className="text-center space-y-4">
-                          <h1 className="text-2xl font-bold">User Dashboard</h1>
-                          <p className="text-muted-foreground">Welcome to your user dashboard!</p>
-                        </div>
-                      </div>
-                    } />
+                    <Route path="dashboard" element={<UserDashboard />} />
                     <Route path="profile" element={<UserProfile />} />
                   </Routes>
                 </AuthGuard>
