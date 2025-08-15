@@ -9,6 +9,7 @@ import ImageSlider from '@/components/ImageSlider';
 import Donation from '@/components/Donation';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import QuickAccess from '@/components/QuickAccess';
 
 
 const Index = () => {
@@ -17,6 +18,7 @@ const Index = () => {
       <Navigation />
       <main>
         <Hero />
+        <QuickAccess />
         <Welcome />
         <ModiQuote />
         <MissionCourses />
