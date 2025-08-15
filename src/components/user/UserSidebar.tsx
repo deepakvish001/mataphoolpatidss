@@ -100,7 +100,10 @@ export function UserSidebar() {
     isActive ? "bg-primary text-primary-foreground font-medium" : "hover:bg-muted/50";
 
   return (
-    <Sidebar className={`${collapsed ? "w-14" : "w-64"} border-r`} collapsible="icon">
+    <Sidebar 
+      className={`${collapsed ? "w-14" : "w-64"} border-r bg-background`} 
+      collapsible="icon"
+    >
       <SidebarContent className="py-4">
         {/* Main Navigation */}
         <SidebarGroup>

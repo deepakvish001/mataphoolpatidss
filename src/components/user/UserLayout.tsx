@@ -11,24 +11,24 @@ interface UserLayoutProps {
 export const UserLayout = ({ children }: UserLayoutProps) => {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full flex-col">
-        {/* Fixed Header */}
-        <UserHeader />
+      <div className="min-h-screen flex w-full">
+        <UserSidebar />
         
         {/* Main Content Area */}
-        <div className="flex flex-1">
-          <UserSidebar />
+        <div className="flex-1 flex flex-col">
+          {/* Fixed Header */}
+          <UserHeader />
           
           {/* Main Content */}
           <main className="flex-1 overflow-auto">
-            <div className="p-6 pb-20"> {/* pb-20 to account for fixed footer */}
+            <div className="p-6">
               {children}
             </div>
           </main>
+          
+          {/* Footer */}
+          <UserFooter />
         </div>
-        
-        {/* Fixed Footer */}
-        <UserFooter />
       </div>
     </SidebarProvider>
   );

@@ -40,7 +40,7 @@ export const UserHeader = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shrink-0">
       <div className="flex h-full items-center justify-between px-4">
         {/* Left side - Sidebar trigger and search */}
         <div className="flex items-center space-x-4">
