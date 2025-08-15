@@ -43,6 +43,8 @@ const StudentDataContent = () => {
     dateOfPublish: ""
   });
 
+  const [editingStudent, setEditingStudent] = useState<StudentData | null>(null);
+
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -67,26 +69,40 @@ const StudentDataContent = () => {
     };
 
     try {
-      await create(studentDataItem);
+      if (editingStudent) {
+        await update(editingStudent.id, studentDataItem);
+        toast.success("Student data updated successfully!");
+      } else {
+        await create(studentDataItem);
+        toast.success("Student data submitted successfully!");
+      }
       
-      // Reset form
-      setFormData({
-        titleOfData: "",
-        detailsOfData: "",
-        detailsOfCourses: "Advance Diploma In Computer Application(ADCA)",
-        photoFile: null,
-        dateOfPublish: ""
-      });
-      
-      toast.success("Student data submitted successfully!");
+      handleReset();
     } catch (error) {
-      toast.error("Failed to submit student data");
+      toast.error(`Failed to ${editingStudent ? 'update' : 'submit'} student data`);
     }
   };
 
-  const handleEdit = (id: string) => {
-    // In a real implementation, this would open an edit form
-    toast.success(`Edit functionality for ID: ${id} coming soon`);
+  const handleEdit = (student: StudentData) => {
+    setEditingStudent(student);
+    setFormData({
+      titleOfData: student.title,
+      detailsOfData: student.details,
+      detailsOfCourses: student.course_category,
+      photoFile: null,
+      dateOfPublish: student.publish_date
+    });
+  };
+
+  const handleReset = () => {
+    setEditingStudent(null);
+    setFormData({
+      titleOfData: "",
+      detailsOfData: "",
+      detailsOfCourses: "Advance Diploma In Computer Application(ADCA)",
+      photoFile: null,
+      dateOfPublish: ""
+    });
   };
 
   const handleDelete = async (id: string) => {
@@ -188,13 +204,23 @@ const StudentDataContent = () => {
         </div>
 
         {/* Submit Button */}
-        <div className="pt-4">
+        <div className="pt-4 flex space-x-4">
           <Button 
             onClick={handleSubmit}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 text-sm"
           >
-            Submit Now
+            {editingStudent ? 'Update' : 'Submit'} Now
           </Button>
+          
+          {editingStudent && (
+            <Button 
+              onClick={handleReset}
+              variant="outline"
+              className="border-gray-600 text-gray-600 hover:bg-gray-50 px-6 py-2"
+            >
+              Cancel Edit
+            </Button>
+          )}
         </div>
       </div>
 
@@ -220,7 +246,7 @@ const StudentDataContent = () => {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleEdit(item.id)}
+                          onClick={() => handleEdit(item)}
                           className="p-1 text-blue-600 hover:text-blue-800 hover:bg-blue-50"
                         >
                           <Edit className="h-3 w-3" />
