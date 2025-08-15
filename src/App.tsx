@@ -19,6 +19,8 @@ import Auth from "./pages/Auth";
 import UserLogin from "./pages/UserLogin";
 import AdminLogin from "./pages/AdminLogin";
 import UserDashboard from "./pages/UserDashboard";
+import UserProfile from "./pages/UserProfile";
+import AdminProfile from "./pages/AdminProfile";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
@@ -50,6 +52,22 @@ const App = () => (
               element={
                 <AuthGuard>
                   <UserDashboard />
+                </AuthGuard>
+              } 
+            />
+            <Route 
+              path="/user/profile" 
+              element={
+                <AuthGuard>
+                  <UserProfile />
+                </AuthGuard>
+              } 
+            />
+            <Route 
+              path="/admin/profile" 
+              element={
+                <AuthGuard requiredRole="admin">
+                  <AdminProfile />
                 </AuthGuard>
               } 
             />
