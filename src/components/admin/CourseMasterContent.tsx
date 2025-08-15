@@ -32,10 +32,7 @@ const CourseMasterContent = () => {
   } = useOptimisticCrud<Course>({ tableName: 'course_master' });
 
   useAdminRealTime({
-    tableName: 'course_master',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'course_master'
   });
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);

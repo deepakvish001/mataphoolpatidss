@@ -25,10 +25,7 @@ const StateMasterContent = () => {
   } = useOptimisticCrud<StateMaster>({ tableName: 'state_master' });
 
   useAdminRealTime({
-    tableName: 'state_master',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'state_master'
   });
 
   const [stateName, setStateName] = useState("");

@@ -41,10 +41,7 @@ const EmployeeMasterContent = () => {
   } = useOptimisticCrud<Employee>({ tableName: 'employees' });
 
   useAdminRealTime({
-    tableName: 'employees',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'employees'
   });
   
   const [formData, setFormData] = useState({

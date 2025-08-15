@@ -27,10 +27,7 @@ const DistrictMasterContent = () => {
   } = useOptimisticCrud<DistrictMaster>({ tableName: 'district_master' });
 
   useAdminRealTime({
-    tableName: 'district_master',
-    onInsert: refresh,
-    onUpdate: refresh,
-    onDelete: refresh
+    tableName: 'district_master'
   });
 
   const [selectedState, setSelectedState] = useState("");
