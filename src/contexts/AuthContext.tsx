@@ -40,6 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('Auth state change:', event, session ? 'session exists' : 'no session');
         setSession(session);
         setUser(session?.user ?? null);
         
@@ -52,6 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               .eq('user_id', session.user.id)
               .maybeSingle();
             
+            console.log('User role fetched:', data?.role || 'user');
             setUserRole(data?.role || 'user');
           } catch (error) {
             console.error('Error fetching user role:', error);
@@ -67,6 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Check for existing session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      console.log('Initial session check:', session ? 'session exists' : 'no session');
       setSession(session);
       setUser(session?.user ?? null);
       
@@ -78,6 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             .eq('user_id', session.user.id)
             .maybeSingle();
           
+          console.log('Initial user role:', data?.role || 'user');
           setUserRole(data?.role || 'user');
         } catch (error) {
           console.error('Error fetching user role:', error);
