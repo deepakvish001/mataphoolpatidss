@@ -38,7 +38,7 @@ const App = () => (
             <Route path="/partners" element={<Partners />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/donation" element={<DonationPage />} />
-            <Route path="/auth" element={<Auth />} />
+            <Route path="/login" element={<Auth />} />
             <Route path="/auth/reset-password" element={<ResetPassword />} />
             <Route 
               path="/admin/*" 

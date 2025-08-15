@@ -22,7 +22,7 @@ const QuickAccess: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-              <Link to="/auth">
+              <Link to="/login">
                 <Lock className="mr-2 h-4 w-4" />
                 Admin Login
               </Link>
