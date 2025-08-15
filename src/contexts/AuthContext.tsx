@@ -188,8 +188,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    console.log('🚨 signOut function called! Stack trace:');
+    console.trace();
     try {
-      console.log('Force clearing all authentication data...');
+      console.log('Manual signOut triggered by user - clearing authentication...');
       
       // Clear all auth state immediately
       setUser(null);

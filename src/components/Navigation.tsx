@@ -238,7 +238,10 @@ const Navigation = () => {
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={signOut} className="flex items-center text-destructive">
+                       <DropdownMenuItem onClick={() => {
+                         console.log('🔥 Navigation signOut clicked');
+                         signOut();
+                       }} className="flex items-center text-destructive">
                         <LogOut className="h-4 w-4 mr-2" />
                         Sign Out
                       </DropdownMenuItem>
