@@ -55,29 +55,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Fetch user profile and role
   const fetchUserData = async (userId: string) => {
     try {
-      // Fetch profile - using any to bypass type checking temporarily
+      // Fetch profile - using maybeSingle to handle no data gracefully
       const { data: profileData, error: profileError } = await (supabase as any)
         .from('profiles')
         .select('*')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle();
 
-      if (profileError && profileError.code !== 'PGRST116') {
+      if (profileError) {
         console.error('Error fetching profile:', profileError);
-      } else {
+      } else if (profileData) {
+        console.log('Profile data fetched:', profileData);
         setProfile(profileData);
       }
 
-      // Fetch user role - using any to bypass type checking temporarily
+      // Fetch user role - using maybeSingle to handle no data gracefully
       const { data: roleData, error: roleError } = await (supabase as any)
         .from('user_roles')
         .select('*')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle();
 
-      if (roleError && roleError.code !== 'PGRST116') {
+      if (roleError) {
         console.error('Error fetching user role:', roleError);
-      } else {
+      } else if (roleData) {
+        console.log('Role data fetched:', roleData);
         setUserRole(roleData);
       }
     } catch (error) {

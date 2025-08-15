@@ -26,7 +26,16 @@ const UserProfileNav = () => {
 
   if (!user) return null;
 
-  const displayName = profile?.full_name || user.email?.split('@')[0] || 'User';
+  // Get display name with fallback logic
+  const displayName = profile?.full_name || 
+                     user.user_metadata?.full_name || 
+                     user.email?.split('@')[0] || 
+                     'User';
+  
+  console.log('UserProfileNav - User:', user);
+  console.log('UserProfileNav - Profile:', profile);
+  console.log('UserProfileNav - Display Name:', displayName);
+
   const initials = displayName
     .split(' ')
     .map(name => name[0])
@@ -63,8 +72,8 @@ const UserProfileNav = () => {
             </AvatarFallback>
           </Avatar>
           
-          <div className="hidden md:flex flex-col items-start text-left">
-            <span className="text-sm font-medium text-foreground">
+          <div className="hidden lg:flex flex-col items-start text-left min-w-0">
+            <span className="text-sm font-medium text-foreground truncate max-w-32">
               {displayName}
             </span>
             {userRole && (
