@@ -426,6 +426,39 @@ export type Database = {
         }
         Relationships: []
       }
+      day_book_entries: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          entry_date: string
+          id: string
+          service_name: string
+          transaction_type: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          entry_date: string
+          id?: string
+          service_name: string
+          transaction_type?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          entry_date?: string
+          id?: string
+          service_name?: string
+          transaction_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       director_messages: {
         Row: {
           created_at: string
@@ -822,6 +855,33 @@ export type Database = {
           type?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      opening_balances: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string
+          entry_date: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description: string
+          entry_date: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string
+          entry_date?: string
+          id?: string
+          updated_at?: string
         }
         Relationships: []
       }
