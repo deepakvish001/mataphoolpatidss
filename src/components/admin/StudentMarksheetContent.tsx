@@ -187,8 +187,9 @@ const StudentMarksheetContent = () => {
       const usableWidthMm = pdfWidth - margin * 2;
       const usableHeightMm = pdfHeight - margin * 2;
 
-      // Calculate how much content fits on each page
-      const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
+      // Calculate conservative page height to prevent content cutting
+      // Reduce by 10% to ensure no bottom cutting
+      const pageHeightPx = Math.round((canvas.width * usableHeightMm * 0.9) / usableWidthMm);
 
       // Intelligent section-aware page breaks based on content structure
       const cssWidth = element.scrollWidth || element.clientWidth || 1;
@@ -251,48 +252,49 @@ const StudentMarksheetContent = () => {
         }
       }
 
-      // Create page breaks ensuring complete borders and no content cut-off
+      // Create conservative page breaks to prevent cutting and ensure full page usage
       let currentY = 0;
       while (currentY + pageHeightPx < canvas.height) {
-        const nextBreak = currentY + pageHeightPx;
+        let nextBreak = currentY + pageHeightPx;
         let bestBreak = nextBreak;
 
-        // Find the best section boundary within 70-90% of page to avoid cutting borders
+        // Find section boundaries within 50-80% of page to prevent cutting
         const sectionCandidates: number[] = [];
         for (const section of sectionBounds) {
           const boundary = section.bottom;
-          // More conservative range to ensure borders don't get cut
-          if (boundary >= currentY + Math.round(pageHeightPx * 0.6) && boundary <= currentY + Math.round(pageHeightPx * 0.9)) {
+          // Earlier break range to prevent bottom cutting
+          if (boundary >= currentY + Math.round(pageHeightPx * 0.5) && boundary <= currentY + Math.round(pageHeightPx * 0.8)) {
             sectionCandidates.push(boundary);
           }
-          // Protect critical sections more strictly
+          // Protect critical sections - break before them if they would be split
           if (section.critical && section.top >= currentY && section.top < nextBreak && section.bottom > nextBreak) {
-            if (section.top - currentY >= Math.round(pageHeightPx * 0.4)) {
+            if (section.top - currentY >= Math.round(pageHeightPx * 0.3)) {
               sectionCandidates.push(section.top);
             }
           }
         }
+        
         if (sectionCandidates.length > 0) {
-          bestBreak = Math.max(...sectionCandidates);
+          bestBreak = Math.min(...sectionCandidates); // Choose earliest good break to prevent cutting
         } else if (tableRef.current) {
-          // More conservative table row breaks
+          // Conservative table row breaks
           const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
-          const searchStart = currentY + Math.round(pageHeightPx * 0.7);
-          const searchEnd = currentY + Math.round(pageHeightPx * 0.9);
+          const searchStart = currentY + Math.round(pageHeightPx * 0.5);
+          const searchEnd = currentY + Math.round(pageHeightPx * 0.8);
           let candidate = 0;
           for (const row of rows) {
             const rowRect = row.getBoundingClientRect();
             const rowBottomPx = Math.round((rowRect.bottom - elemRect.top) * ratio);
             if (rowBottomPx >= searchStart && rowBottomPx <= searchEnd) {
-              candidate = Math.max(candidate, rowBottomPx);
+              if (candidate === 0) candidate = rowBottomPx; // Take first good candidate
             }
           }
           if (candidate > 0) bestBreak = candidate;
         }
 
-        // Ensure progress with strict limits to preserve borders
-        bestBreak = Math.max(bestBreak, currentY + Math.round(pageHeightPx * 0.6));
-        bestBreak = Math.min(bestBreak, currentY + Math.round(pageHeightPx * 0.9));
+        // Ensure progress with conservative limits
+        bestBreak = Math.max(bestBreak, currentY + Math.round(pageHeightPx * 0.4));
+        bestBreak = Math.min(bestBreak, currentY + Math.round(pageHeightPx * 0.8));
 
         yBreaks.push(bestBreak);
         currentY = bestBreak;
@@ -324,11 +326,12 @@ const StudentMarksheetContent = () => {
         ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
         ctx.drawImage(canvas, 0, sliceTop, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
 
-        // Add content to PDF
+        // Calculate proper height to fill page
         const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
         const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
-        const clampedHeightMm = Math.min(heightMm, usableHeightMm);
-        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, clampedHeightMm, undefined, 'FAST');
+        // Scale height to use full page when needed
+        const scaledHeightMm = Math.min(heightMm, usableHeightMm);
+        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, scaledHeightMm, undefined, 'FAST');
 
         // Template borders are already captured in the image - no additional borders needed
 
