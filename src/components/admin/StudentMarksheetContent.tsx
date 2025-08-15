@@ -188,39 +188,75 @@ const StudentMarksheetContent = () => {
       // Calculate how much content fits on each page
       const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
 
-      // Smart page breaks - avoid cutting sections
+      // Smart section-aware page breaks
       const cssWidth = element.scrollWidth || element.clientWidth || 1;
       const ratio = canvas.width / cssWidth;
       const yBreaks: number[] = [0];
 
-      // Find safe break points (avoid cutting table rows and sections)
+      // Find major section boundaries to avoid cutting
+      const elemRect = element.getBoundingClientRect();
+      const sectionBreaks: number[] = [];
+
+      // Find all major sections that shouldn't be split
+      const sections = [
+        element.querySelector('.text-center.mb-6'), // Header section
+        element.querySelector('.flex.justify-between.items-start.mb-6'), // Student info
+        element.querySelector('.mb-6.text-center'), // Certificate text
+        tableRef.current, // Academic table
+        element.querySelector('.grid.grid-cols-3.gap-6.items-end.mt-8'), // Footer section
+        element.querySelector('.text-center.mt-6.text-sm') // Contact info
+      ].filter(Boolean);
+
+      // Calculate pixel positions of section boundaries
+      for (const section of sections) {
+        if (section) {
+          const sectionRect = section.getBoundingClientRect();
+          const sectionTopPx = Math.round((sectionRect.top - elemRect.top) * ratio);
+          const sectionBottomPx = Math.round((sectionRect.bottom - elemRect.top) * ratio);
+          sectionBreaks.push(sectionTopPx, sectionBottomPx);
+        }
+      }
+
+      // Create page breaks ensuring sections don't get cut
       let currentY = 0;
       while (currentY + pageHeightPx < canvas.height) {
         let nextBreak = currentY + pageHeightPx;
         
-        // Try to find a better break point within the last 20% of the page
-        const searchStart = currentY + Math.round(pageHeightPx * 0.8);
-        const searchEnd = Math.min(nextBreak, canvas.height);
+        // Look for the best section boundary within acceptable range
+        const searchStart = currentY + Math.round(pageHeightPx * 0.7); // Start searching at 70% of page
+        const searchEnd = Math.min(currentY + Math.round(pageHeightPx * 1.1), canvas.height); // Allow 10% overflow
         
-        // Look for table row boundaries if table exists
-        if (tableRef.current) {
-          const elemRect = element.getBoundingClientRect();
+        let bestBreak = nextBreak;
+        
+        // First, try to find section boundaries
+        for (const sectionY of sectionBreaks) {
+          if (sectionY >= searchStart && sectionY <= searchEnd) {
+            bestBreak = sectionY;
+            break;
+          }
+        }
+        
+        // If no section boundary found, try table row boundaries
+        if (bestBreak === nextBreak && tableRef.current) {
           const rows = Array.from(tableRef.current.querySelectorAll('tbody tr')) as HTMLElement[];
-          
           for (const row of rows) {
             const rowRect = row.getBoundingClientRect();
             const rowBottomPx = Math.round((rowRect.bottom - elemRect.top) * ratio);
             
-            // If this row end is in our search area, use it as break point
             if (rowBottomPx >= searchStart && rowBottomPx <= searchEnd) {
-              nextBreak = rowBottomPx;
+              bestBreak = rowBottomPx;
               break;
             }
           }
         }
         
-        yBreaks.push(nextBreak);
-        currentY = nextBreak;
+        // Ensure we make progress
+        if (bestBreak <= currentY) {
+          bestBreak = Math.min(nextBreak, canvas.height);
+        }
+        
+        yBreaks.push(bestBreak);
+        currentY = bestBreak;
       }
 
       // Add final page if needed
@@ -252,8 +288,8 @@ const StudentMarksheetContent = () => {
         const heightMm = (sliceHeight / canvas.width) * usableWidthMm;
         pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
 
-        // Add page number (subtle, bottom right)
-        if (yBreaks.length > 2) { // Only if multi-page
+        // Add page number (subtle, bottom right) - only if multi-page
+        if (yBreaks.length > 2) {
           pdf.setTextColor(120, 120, 120);
           pdf.setFontSize(8);
           pdf.text(`Page ${i + 1} of ${yBreaks.length - 1}`, pdfWidth - 15, pdfHeight - 5, { align: 'right' });
