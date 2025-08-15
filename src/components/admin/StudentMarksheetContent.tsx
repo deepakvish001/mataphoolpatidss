@@ -146,88 +146,68 @@ const StudentMarksheetContent = () => {
     try {
       toast.loading("Generating Full A4 Certificate PDF...", { id: "pdf-gen" });
       
-      // Wait for any final renders
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Capture certificate with optimal quality for A4
+      // Ensure layout fully rendered
+      await new Promise(resolve => setTimeout(resolve, 400));
+
+      // Capture the certificate at high DPI without forcing size (prevents cropping)
       const canvas = await html2canvas(marksheetRef.current, {
-        scale: 2, // Balanced scale for quality and performance
+        scale: Math.min(3, window.devicePixelRatio * 2),
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        width: 794, // A4 width in pixels at 96 DPI
-        height: 1123, // A4 height in pixels at 96 DPI
         logging: false,
         imageTimeout: 10000,
         removeContainer: true
       });
 
-      toast.loading("Creating Full A4 Professional Certificate PDF...", { id: "pdf-gen" });
-
-      // Create PDF with exact A4 dimensions
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4',
         compress: true
       });
-      
-      // A4 dimensions in mm
+
       const pdfWidth = 210;
       const pdfHeight = 297;
-      
-      // Convert canvas to high-quality image
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
-      
-      // Calculate if we need single or multiple pages
-      const canvasRatio = canvas.height / canvas.width;
-      const a4Ratio = pdfHeight / pdfWidth;
-      
-      if (canvasRatio <= a4Ratio) {
-        // Content fits in one page - scale to fill A4
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
+
+      // Calculate page height in canvas pixels for perfect A4 slicing at full width
+      const a4Ratio = pdfHeight / pdfWidth; // ~1.414
+      const pageHeightPx = Math.round(canvas.width * a4Ratio);
+
+      // If the canvas height fits into one A4 page slice, render single page filling the sheet
+      if (canvas.height <= pageHeightPx) {
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        // Fill entire page (no margins). Our template keeps A4 ratio so no distortion.
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
       } else {
-        // Content is too tall - split into multiple pages
-        const contentHeight = pdfWidth * canvasRatio;
-        const pagesNeeded = Math.ceil(contentHeight / pdfHeight);
-        
-        toast.loading(`Creating ${pagesNeeded}-page certificate PDF...`, { id: "pdf-gen" });
-        
-        for (let pageIndex = 0; pageIndex < pagesNeeded; pageIndex++) {
-          if (pageIndex > 0) {
-            pdf.addPage();
-          }
-          
-          // Calculate section of content for this page
-          const sectionHeight = canvas.height / pagesNeeded;
-          const sourceY = sectionHeight * pageIndex;
-          
-          // Create canvas for this page section
+        // Multi-page: slice the tall canvas into A4-height chunks
+        let y = 0;
+        let pageIndex = 0;
+        while (y < canvas.height) {
+          const sliceHeight = Math.min(pageHeightPx, canvas.height - y);
           const pageCanvas = document.createElement('canvas');
           pageCanvas.width = canvas.width;
-          pageCanvas.height = sectionHeight;
-          
-          const pageCtx = pageCanvas.getContext('2d');
-          if (pageCtx) {
-            // Fill with white background
-            pageCtx.fillStyle = '#ffffff';
-            pageCtx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-            
-            // Draw the section from main canvas
-            pageCtx.drawImage(
+          pageCanvas.height = sliceHeight;
+          const ctx = pageCanvas.getContext('2d');
+          if (ctx) {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+            ctx.drawImage(
               canvas,
-              0, sourceY, canvas.width, sectionHeight,
+              0, y, canvas.width, sliceHeight,
               0, 0, pageCanvas.width, pageCanvas.height
             );
-            
-            // Convert to image and add to PDF
-            const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
-            pdf.addImage(pageImgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
+            const pageImg = pageCanvas.toDataURL('image/jpeg', 0.98);
+            if (pageIndex > 0) pdf.addPage();
+            // Maintain aspect ratio based on width
+            const pageImgHeightMm = (sliceHeight / pageHeightPx) * pdfHeight;
+            pdf.addImage(pageImg, 'JPEG', 0, 0, pdfWidth, pageImgHeightMm, undefined, 'FAST');
           }
+          y += sliceHeight;
+          pageIndex += 1;
         }
       }
-      
-      // Enhanced metadata
+
       pdf.setProperties({
         title: `${selectedStudent?.full_name} - Official Course Certificate`,
         subject: `Professional Certificate - ${selectedStudent?.course_name}`,
@@ -236,12 +216,10 @@ const StudentMarksheetContent = () => {
         creator: 'B.SOFT Institute Certificate System'
       });
 
-      // Generate filename with date
       const currentDate = new Date().toISOString().split('T')[0];
       const fileName = `${selectedStudent?.full_name?.replace(/[^a-zA-Z0-9]/g, '_')}_Certificate_${currentDate}.pdf`;
-      
       pdf.save(fileName);
-      
+
       toast.success("Full A4 Certificate PDF Generated Successfully!", { id: "pdf-gen" });
     } catch (error) {
       console.error('PDF generation error:', error);
