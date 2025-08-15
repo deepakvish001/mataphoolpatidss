@@ -107,7 +107,7 @@ export function useOptimisticCrud<T extends { id: string }>(options: OptimisticC
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [loadData, options]);
+  }, [loadData, options.tableName, options.realTimeChannel, options.orderBy?.column, options.orderBy?.ascending, options.onSuccess]);
 
   // Optimistic create
   const create = useCallback(async (newItem: Omit<T, 'id' | 'created_at' | 'updated_at'>) => {
