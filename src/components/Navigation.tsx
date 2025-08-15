@@ -16,6 +16,7 @@ const Navigation = () => {
     { name: 'About', href: '/about', icon: Users },
     { name: 'Programs', href: '#training', icon: BookOpen, hasDropdown: true },
     { name: 'Partners', href: '/partners', icon: Award },
+    { name: 'Admin', href: '/auth', icon: Users },
     { name: 'Donate', href: '/donation', icon: Heart },
     { name: 'Contact', href: '/contact', icon: MessageSquare },
   ];
