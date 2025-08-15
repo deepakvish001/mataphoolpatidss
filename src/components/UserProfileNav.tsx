@@ -63,7 +63,7 @@ const UserProfileNav = () => {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          className="flex items-center space-x-3 h-12 px-3 rounded-full hover:bg-muted/50 focus:bg-muted/50"
+          className="flex items-center space-x-2 h-10 w-10 p-0 rounded-full hover:bg-muted/50 focus:bg-muted/50"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage src={profile?.avatar_url || ''} alt={displayName} />
@@ -71,22 +71,6 @@ const UserProfileNav = () => {
               {initials}
             </AvatarFallback>
           </Avatar>
-          
-          <div className="hidden lg:flex flex-col items-start text-left min-w-0">
-            <span className="text-sm font-medium text-foreground truncate max-w-32">
-              {displayName}
-            </span>
-            {userRole && (
-              <Badge 
-                variant="secondary" 
-                className={`text-xs h-4 px-1 ${getRoleBadgeColor(userRole.role)}`}
-              >
-                {userRole.role}
-              </Badge>
-            )}
-          </div>
-          
-          <ChevronDown className="h-4 w-4 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
       
