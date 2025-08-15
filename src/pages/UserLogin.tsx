@@ -37,7 +37,7 @@ const UserLogin: React.FC = () => {
   const [resetEmail, setResetEmail] = useState('');
 
   // Redirect if already authenticated to user dashboard
-  if (user && !loading) {
+  if (user && !loading && user.email_confirmed_at) {
     return <Navigate to="/user/dashboard" replace />;
   }
 
