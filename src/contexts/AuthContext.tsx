@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Check for existing session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      console.log('Initial session check:', session ? 'session exists' : 'no session');
+      console.log('Initial session check:', session ? `session exists for user: ${session.user.email}` : 'no session');
       setSession(session);
       setUser(session?.user ?? null);
       
@@ -169,15 +169,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     try {
+      console.log('Signing out user...');
       await supabase.auth.signOut();
       setUser(null);
       setSession(null);
       setUserRole(null);
+      
+      // Clear any local storage if needed
+      localStorage.removeItem('supabase.auth.token');
+      
       toast({
         title: "Logged out",
         description: "You have been successfully logged out."
       });
+      
+      console.log('User signed out successfully');
     } catch (error: any) {
+      console.error('Sign out error:', error);
       toast({
         title: "Logout Error",
         description: error.message,

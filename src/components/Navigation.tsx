@@ -248,7 +248,7 @@ const Navigation = () => {
               ) : (
                 <div className="hidden md:flex">
                   <Button asChild variant="outline" size="sm">
-                    <Link to="/login">
+                    <Link to="/auth">
                       <UserIcon className="h-4 w-4 mr-2" />
                       Login
                     </Link>
