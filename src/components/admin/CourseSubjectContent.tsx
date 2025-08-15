@@ -48,6 +48,11 @@ const CourseSubjectContent = () => {
   };
 
   const handleSubmit = async () => {
+    if (editingSubject) {
+      await handleUpdate();
+      return;
+    }
+
     if (!formData.courseName || !formData.semesterYear || !formData.subject) {
       toast.error("Please fill in required fields");
       return;
@@ -84,9 +89,57 @@ const CourseSubjectContent = () => {
       practicalMarks: "",
       description: ""
     });
+    setEditingSubject(null);
+  };
+
+  const [editingSubject, setEditingSubject] = useState<CourseSubject | null>(null);
+
+  const handleEdit = (subject: CourseSubject) => {
+    setEditingSubject(subject);
+    setFormData({
+      courseName: subject.course_name,
+      semesterYear: subject.semester_year,
+      subject: subject.subject,
+      theoryMarks: subject.theory_marks,
+      practicalMarks: subject.practical_marks,
+      description: subject.description || ""
+    });
+  };
+
+  const handleUpdate = async () => {
+    if (!editingSubject) return;
+    
+    if (!formData.courseName || !formData.semesterYear || !formData.subject) {
+      toast.error("Please fill in required fields");
+      return;
+    }
+
+    if (!formData.theoryMarks || !formData.practicalMarks) {
+      toast.error("Please enter theory and practical marks");
+      return;
+    }
+
+    try {
+      await update(editingSubject.id, {
+        course_name: formData.courseName,
+        semester_year: formData.semesterYear,
+        subject: formData.subject,
+        theory_marks: formData.theoryMarks,
+        practical_marks: formData.practicalMarks,
+        description: formData.description || null
+      });
+      
+      setEditingSubject(null);
+      handleReset();
+      toast.success("Course subject updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update course subject");
+    }
   };
 
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this course subject?")) return;
+    
     try {
       await deleteItem(id);
       toast.success("Course subject deleted successfully!");
@@ -204,7 +257,7 @@ const CourseSubjectContent = () => {
                 onClick={handleSubmit}
                 className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                SUBMIT
+                {editingSubject ? "UPDATE" : "SUBMIT"}
               </Button>
               <Button 
                 onClick={handleReset}
@@ -241,6 +294,7 @@ const CourseSubjectContent = () => {
                       <Button
                         variant="ghost"
                         size="sm"
+                        onClick={() => handleEdit(subject)}
                         className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
                       >
                         <Edit className="h-4 w-4" />
