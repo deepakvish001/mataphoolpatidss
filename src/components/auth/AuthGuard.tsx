@@ -14,7 +14,7 @@ interface AuthGuardProps {
 export const AuthGuard: React.FC<AuthGuardProps> = ({
   children,
   requiredRole,
-  redirectTo = '/auth'
+  redirectTo = '/login'
 }) => {
   const { user, userRole, loading, hasRole } = useAuth();
   const location = useLocation();

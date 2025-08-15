@@ -74,7 +74,7 @@ const ResetPassword: React.FC = () => {
                 <h3 className="text-lg font-semibold">Password Reset Successful!</h3>
                 <p className="text-muted-foreground">Your password has been updated successfully.</p>
               </div>
-              <Button onClick={() => window.location.href = '/auth'} className="w-full">
+              <Button onClick={() => window.location.href = '/login'} className="w-full">
                 Sign In with New Password
               </Button>
             </div>
@@ -197,7 +197,7 @@ const ResetPassword: React.FC = () => {
 
         {/* Footer */}
         <div className="text-center text-sm text-muted-foreground">
-          <p>Remember your password? <a href="/auth" className="text-primary hover:underline">Sign In</a></p>
+          <p>Remember your password? <a href="/login" className="text-primary hover:underline">Sign In</a></p>
         </div>
       </div>
     </div>

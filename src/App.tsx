@@ -43,7 +43,7 @@ const App = () => (
               <Route path="/partners" element={<Partners />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/donation" element={<DonationPage />} />
-              <Route path="/auth" element={<Auth />} />
+              <Route path="/login" element={<Auth />} />
               <Route path="/auth/reset-password" element={<ResetPassword />} />
               <Route 
                 path="/admin/*" 
@@ -71,8 +71,8 @@ const App = () => (
                   </AuthGuard>
                 } 
               />
-              {/* Redirect old login route to auth */}
-              <Route path="/login" element={<Navigate to="/auth" replace />} />
+              {/* Redirect auth route to login for consistency */}
+              <Route path="/auth" element={<Navigate to="/login" replace />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
