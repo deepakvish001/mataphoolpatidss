@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 
-// Mock data to simulate student admit cards
+// Mock data for student admit cards
 const mockStudentData = [
   {
     id: "1",
@@ -23,7 +23,8 @@ const mockStudentData = [
     exam_start_time: "10:00 AM",
     exam_duration: "2 Hours",
     student_photo_url: "/lovable-uploads/393bdd79-f1d0-430f-8c0d-c10eb0d72005.png",
-    pwd_status: "No"
+    pwd_status: "No",
+    status: "active"
   },
   {
     id: "2",
@@ -42,7 +43,28 @@ const mockStudentData = [
     exam_start_time: "11:00 AM",
     exam_duration: "90 Minutes",
     student_photo_url: "/lovable-uploads/393bdd79-f1d0-430f-8c0d-c10eb0d72005.png",
-    pwd_status: "No"
+    pwd_status: "No",
+    status: "active"
+  },
+  {
+    id: "3",
+    student_id: "STU003",
+    student_name: "RAJESH KUMAR",
+    mothers_name: "SUNITA DEVI",
+    fathers_name: "RAM PRASAD",
+    course_name: "PGDCA",
+    roll_number: "20045",
+    exam_center_code: "EC003",
+    exam_center_address: "Main Center, Azamgarh",
+    exam_date: "2024-03-16",
+    batch: "Evening",
+    reporting_time: "02:00 PM",
+    gate_closing_time: "02:30 PM",
+    exam_start_time: "03:00 PM",
+    exam_duration: "3 Hours",
+    student_photo_url: "/lovable-uploads/393bdd79-f1d0-430f-8c0d-c10eb0d72005.png",
+    pwd_status: "No",
+    status: "active"
   }
 ];
 
@@ -53,6 +75,8 @@ const GenerateStudentAdmitCardContent = () => {
   const [selectedCard, setSelectedCard] = useState<StudentAdmitCard | null>(null);
   const [searchResults, setSearchResults] = useState<StudentAdmitCard[]>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const { toast } = useToast();
 
   const handleSearch = () => {
@@ -65,27 +89,33 @@ const GenerateStudentAdmitCardContent = () => {
       return;
     }
 
-    const results = mockStudentData.filter(student => 
-      student.student_id.toLowerCase().includes(searchValue.toLowerCase()) ||
-      student.roll_number.toLowerCase().includes(searchValue.toLowerCase()) ||
-      student.student_name.toLowerCase().includes(searchValue.toLowerCase())
-    );
+    setLoading(true);
+    
+    // Simulate API call delay
+    setTimeout(() => {
+      const results = mockStudentData.filter(student => 
+        student.student_id.toLowerCase().includes(searchValue.toLowerCase()) ||
+        student.roll_number.toLowerCase().includes(searchValue.toLowerCase()) ||
+        student.student_name.toLowerCase().includes(searchValue.toLowerCase())
+      );
 
-    setSearchResults(results);
-    setShowSearchResults(true);
+      setSearchResults(results);
+      setShowSearchResults(true);
+      setLoading(false);
 
-    if (results.length > 0) {
-      toast({
-        title: "Success",
-        description: `Found ${results.length} student(s)`,
-      });
-    } else {
-      toast({
-        title: "No Results",
-        description: "No students found with the given criteria",
-        variant: "destructive"
-      });
-    }
+      if (results.length > 0) {
+        toast({
+          title: "Success",
+          description: `Found ${results.length} student(s)`,
+        });
+      } else {
+        toast({
+          title: "No Results",
+          description: "No students found with the given criteria",
+          variant: "destructive"
+        });
+      }
+    }, 500);
   };
 
   const handleSelectStudent = (card: StudentAdmitCard) => {
@@ -107,10 +137,23 @@ const GenerateStudentAdmitCardContent = () => {
       return;
     }
 
-    toast({
-      title: "Success",
-      description: `Admit card generated for ${selectedCard.student_name}`,
-    });
+    setGenerating(true);
+    
+    // Simulate generation process
+    setTimeout(() => {
+      toast({
+        title: "Success",
+        description: `Admit card generated successfully for ${selectedCard.student_name}`,
+      });
+
+      // Update the selected card status locally
+      setSelectedCard({
+        ...selectedCard,
+        status: 'generated'
+      });
+      
+      setGenerating(false);
+    }, 1000);
   };
 
   const handlePrintAdmitCard = () => {
@@ -145,8 +188,9 @@ const GenerateStudentAdmitCardContent = () => {
             <Button 
               onClick={handleSearch}
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 text-sm"
+              disabled={loading}
             >
-              Search
+              {loading ? "Searching..." : "Search"}
             </Button>
           </div>
         </div>
@@ -154,9 +198,9 @@ const GenerateStudentAdmitCardContent = () => {
           <Button 
             onClick={handleGenerateAdmitCard}
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2"
-            disabled={!selectedCard}
+            disabled={!selectedCard || generating}
           >
-            Generate Admit Card
+            {generating ? "Generating..." : "Generate Admit Card"}
           </Button>
           <Button 
             onClick={handlePrintAdmitCard}
