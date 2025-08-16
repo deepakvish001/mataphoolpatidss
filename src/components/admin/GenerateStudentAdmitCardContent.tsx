@@ -8,71 +8,28 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { supabase } from "@/integrations/supabase/client";
 
-// Mock data for student admit cards (using mock data since table types aren't available)
-const mockStudentData = [
-  {
-    id: "1",
-    student_id: "STU001",
-    student_name: "GUPTESHWAR SINGH",
-    mothers_name: "SHASHI PRABHA SINGH",
-    fathers_name: "RAVINDRA SINGH",
-    course_name: "ADCA",
-    roll_number: "20040",
-    exam_center_code: "EC001",
-    exam_center_address: "B. Soft Computer Institute, Azamgarh",
-    exam_date: "2024-03-15",
-    batch: "Morning",
-    reporting_time: "09:00 AM",
-    gate_closing_time: "09:30 AM",
-    exam_start_time: "10:00 AM",
-    exam_duration: "2 Hours",
-    student_photo_url: "/lovable-uploads/393bdd79-f1d0-430f-8c0d-c10eb0d72005.png",
-    pwd_status: "No",
-    status: "active"
-  },
-  {
-    id: "2",
-    student_id: "STU002",
-    student_name: "CHOTE LAL KUMAR",
-    mothers_name: "DHARMI DEVI",
-    fathers_name: "VIJAY PRASAD",
-    course_name: "DCA",
-    roll_number: "20043",
-    exam_center_code: "EC002",
-    exam_center_address: "Jiyanpur Center",
-    exam_date: "2024-03-15",
-    batch: "Morning",
-    reporting_time: "10:00 AM",
-    gate_closing_time: "10:30 AM",
-    exam_start_time: "11:00 AM",
-    exam_duration: "90 Minutes",
-    student_photo_url: "/lovable-uploads/393bdd79-f1d0-430f-8c0d-c10eb0d72005.png",
-    pwd_status: "No",
-    status: "active"
-  },
-  {
-    id: "3",
-    student_id: "STU003",
-    student_name: "RAJESH KUMAR",
-    mothers_name: "SUNITA DEVI",
-    fathers_name: "RAM PRASAD",
-    course_name: "PGDCA",
-    roll_number: "20045",
-    exam_center_code: "EC003",
-    exam_center_address: "Main Center, Azamgarh",
-    exam_date: "2024-03-16",
-    batch: "Evening",
-    reporting_time: "02:00 PM",
-    gate_closing_time: "02:30 PM",
-    exam_start_time: "03:00 PM",
-    exam_duration: "3 Hours",
-    student_photo_url: "/lovable-uploads/393bdd79-f1d0-430f-8c0d-c10eb0d72005.png",
-    pwd_status: "No",
-    status: "active"
-  }
-];
-
-type StudentAdmitCard = typeof mockStudentData[0];
+type StudentAdmitCard = {
+  id: string;
+  student_id: string;
+  student_name: string;
+  mothers_name: string | null;
+  fathers_name: string | null;
+  course_name: string;
+  roll_number: string;
+  exam_center_code: string | null;
+  exam_center_address: string | null;
+  exam_date: string | null;
+  batch: string | null;
+  reporting_time: string | null;
+  gate_closing_time: string | null;
+  exam_start_time: string | null;
+  exam_duration: string | null;
+  student_photo_url: string | null;
+  pwd_status: string | null;
+  status: string;
+  created_at: string;
+  updated_at: string;
+};
 
 const GenerateStudentAdmitCardContent = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -85,7 +42,7 @@ const GenerateStudentAdmitCardContent = () => {
   const admitCardRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!searchValue.trim()) {
       toast({
         title: "Error",
@@ -97,22 +54,25 @@ const GenerateStudentAdmitCardContent = () => {
 
     setLoading(true);
     
-    // Simulate API call delay
-    setTimeout(() => {
-      const results = mockStudentData.filter(student => 
-        student.student_id.toLowerCase().includes(searchValue.toLowerCase()) ||
-        student.roll_number.toLowerCase().includes(searchValue.toLowerCase()) ||
-        student.student_name.toLowerCase().includes(searchValue.toLowerCase())
-      );
+    try {
+      const { data, error } = await supabase
+        .from('student_admit_cards')
+        .select('*')
+        .or(`student_id.ilike.%${searchValue}%,roll_number.ilike.%${searchValue}%,student_name.ilike.%${searchValue}%`)
+        .eq('status', 'active');
 
-      setSearchResults(results);
+      if (error) {
+        throw error;
+      }
+
+      setSearchResults(data || []);
       setShowSearchResults(true);
       setLoading(false);
 
-      if (results.length > 0) {
+      if (data && data.length > 0) {
         toast({
           title: "Success",
-          description: `Found ${results.length} student(s)`,
+          description: `Found ${data.length} student(s)`,
         });
       } else {
         toast({
@@ -121,7 +81,15 @@ const GenerateStudentAdmitCardContent = () => {
           variant: "destructive"
         });
       }
-    }, 500);
+    } catch (error: any) {
+      console.error('Search error:', error);
+      setLoading(false);
+      toast({
+        title: "Error",
+        description: "Failed to search students. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleSelectStudent = (card: StudentAdmitCard) => {
