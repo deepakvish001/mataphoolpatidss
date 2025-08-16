@@ -507,20 +507,38 @@ const MakeStudentAdmitCardContent = () => {
               <table className="w-full border-collapse text-sm">
                 <thead>
                   <tr className="bg-muted/50 border-b border-border/40">
-                    <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Course</th>
-                    <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Roll Number</th>
-                    <th className="text-left p-4 font-semibold text-foreground min-w-[200px]">Student Name</th>
-                    <th className="text-left p-4 font-semibold text-foreground min-w-[180px]">Mother's Name</th>
-                    <th className="text-left p-4 font-semibold text-foreground min-w-[180px]">Father's Name</th>
-                    <th className="text-left p-4 font-semibold text-foreground min-w-[150px]">Center Code</th>
-                    <th className="text-left p-4 font-semibold text-foreground min-w-[80px]">PWD</th>
-                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Photo</th>
                     <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Actions</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Course</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Roll Number</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[180px]">Student Name</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[160px]">Mother's Name</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[160px]">Father's Name</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Center Code</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[80px]">PWD</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[180px]">Center Address</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Exam Date</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Batch</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Reporting Time</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Gate Closing</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Exam Start</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Duration</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Photo</th>
                   </tr>
                 </thead>
                 <tbody>
                   {studentData.map((item, index) => (
                     <tr key={item.id} className={`border-b border-border/20 hover:bg-accent/10 transition-colors ${index % 2 === 0 ? "bg-background" : "bg-muted/20"}`}>
+                      <td className="p-4">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleDelete(item.id)}
+                          className="text-destructive hover:text-destructive border-destructive/20 hover:border-destructive hover:bg-destructive/10"
+                        >
+                          <Trash2 className="h-4 w-4 mr-1" />
+                          Delete
+                        </Button>
+                      </td>
                       <td className="p-4">
                         <Badge variant="outline" className="font-medium">
                           {item.course}
@@ -532,6 +550,13 @@ const MakeStudentAdmitCardContent = () => {
                       <td className="p-4 text-muted-foreground">{item.fatherName}</td>
                       <td className="p-4 text-muted-foreground">{item.examCentreCode || "-"}</td>
                       <td className="p-4 text-muted-foreground">{item.pwd || "-"}</td>
+                      <td className="p-4 text-muted-foreground">{item.examCentreAddress || "-"}</td>
+                      <td className="p-4 text-muted-foreground">{item.examDate || "-"}</td>
+                      <td className="p-4 text-muted-foreground">{item.batch || "-"}</td>
+                      <td className="p-4 text-muted-foreground">{item.reportingTime || "-"}</td>
+                      <td className="p-4 text-muted-foreground">{item.gateClosingTime || "-"}</td>
+                      <td className="p-4 text-muted-foreground">{item.examStartTime || "-"}</td>
+                      <td className="p-4 text-muted-foreground">{item.examDuration || "-"}</td>
                       <td className="p-4">
                         <div className="w-16 h-12 border border-border/40 bg-muted/20 rounded overflow-hidden">
                           {item.studentPhoto ? (
@@ -546,17 +571,6 @@ const MakeStudentAdmitCardContent = () => {
                             </div>
                           )}
                         </div>
-                      </td>
-                      <td className="p-4">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleDelete(item.id)}
-                          className="text-destructive hover:text-destructive border-destructive/20 hover:border-destructive hover:bg-destructive/10"
-                        >
-                          <Trash2 className="h-4 w-4 mr-1" />
-                          Delete
-                        </Button>
                       </td>
                     </tr>
                   ))}
