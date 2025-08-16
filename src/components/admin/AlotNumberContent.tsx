@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText, Edit, Trash2, Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { Loader2, Edit, Trash2, Search, Filter, FileText, Users, Award, BarChart3, CheckCircle, Plus, BookOpen, Calendar, Hash, Upload, Image as ImageIcon } from "lucide-react";
 
 interface AlotNumber {
   id: string;
@@ -37,7 +37,10 @@ const AlotNumberContent = () => {
     update,
     delete: deleteItem,
     refresh
-  } = useOptimisticCrud<AlotNumber>({ tableName: 'alot_numbers' });
+  } = useOptimisticCrud<AlotNumber>({ 
+    tableName: 'alot_numbers',
+    orderBy: { column: 'created_at', ascending: false }
+  });
 
   useAdminRealTime({
     tableName: 'alot_numbers'
@@ -50,7 +53,6 @@ const AlotNumberContent = () => {
     practicalMaxMarks: "",
     obtainTheoryMarks: "",
     obtainPracticalMarks: "",
-    studentId: "BSOFT3004482",
     studentName: "",
     studentFatherName: "",
     studentMotherName: "",
@@ -64,6 +66,8 @@ const AlotNumberContent = () => {
   });
 
   const [editingAlot, setEditingAlot] = useState<AlotNumber | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterCourse, setFilterCourse] = useState("all");
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -73,27 +77,7 @@ const AlotNumberContent = () => {
     setFormData(prev => ({ ...prev, [field]: file }));
   };
 
-  const handleSubmitNow = async () => {
-    if (!formData.studentsId) {
-      toast.error("Please enter Students ID");
-      return;
-    }
-
-    // Set the student ID in the form
-    setFormData(prev => ({ ...prev, studentId: formData.studentsId }));
-    toast.success("Students ID submitted successfully!");
-  };
-
-  const handleAddNow = () => {
-    if (!formData.courseName || !formData.theoryMaxMarks || !formData.practicalMaxMarks || 
-        !formData.obtainTheoryMarks || !formData.obtainPracticalMarks) {
-      toast.error("Please fill in all marks fields");
-      return;
-    }
-    toast.success("Marks data added successfully!");
-  };
-
-  const handleFinalSubmit = async () => {
+  const handleSubmit = async () => {
     if (!formData.studentsId || !formData.courseName || !formData.studentName) {
       toast.error("Please fill in required fields");
       return;
@@ -157,7 +141,6 @@ const AlotNumberContent = () => {
       practicalMaxMarks: alot.practical_max_marks || "",
       obtainTheoryMarks: alot.obtain_theory_marks || "",
       obtainPracticalMarks: alot.obtain_practical_marks || "",
-      studentId: alot.student_id,
       studentName: alot.student_name || "",
       studentFatherName: alot.student_father_name || "",
       studentMotherName: alot.student_mother_name || "",
@@ -180,7 +163,6 @@ const AlotNumberContent = () => {
       practicalMaxMarks: "",
       obtainTheoryMarks: "",
       obtainPracticalMarks: "",
-      studentId: "BSOFT3004482",
       studentName: "",
       studentFatherName: "",
       studentMotherName: "",
@@ -195,6 +177,8 @@ const AlotNumberContent = () => {
   };
 
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this alot number?")) return;
+    
     try {
       await deleteItem(id);
       toast.success("Alot number deleted successfully!");
@@ -203,305 +187,563 @@ const AlotNumberContent = () => {
     }
   };
 
+  // Filter and search functionality
+  const filteredData = useMemo(() => {
+    let filtered = alotNumbers || [];
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(item =>
+        item.student_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.student_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.center_name?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Apply category filter
+    if (filterCourse !== "all") {
+      filtered = filtered.filter(item => item.course_name === filterCourse);
+    }
+
+    return filtered;
+  }, [alotNumbers, searchTerm, filterCourse]);
+
+  const courseCategories = [
+    "ADCA",
+    "DCA", 
+    "PGDCA",
+    "DCHN"
+  ];
+
+  // Statistics calculations
+  const stats = useMemo(() => {
+    const total = alotNumbers?.length || 0;
+    const thisMonth = alotNumbers?.filter(item => {
+      const itemDate = new Date(item.issue_date || "");
+      const currentMonth = new Date().getMonth();
+      return itemDate.getMonth() === currentMonth;
+    }).length || 0;
+    const withPhotos = alotNumbers?.filter(item => item.student_photo_url).length || 0;
+    const filteredResults = filteredData.length;
+
+    return { total, thisMonth, withPhotos, filteredResults };
+  }, [alotNumbers, filteredData]);
+
   if (loading) {
     return (
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
         <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
           <div className="flex flex-col items-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-            <p className="text-gray-600">Loading alot numbers...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-muted-foreground">Loading alot numbers...</p>
           </div>
         </CardContent>
       </Card>
     );
-  };
+  }
 
   return (
-    <div className="space-y-8">
-      {/* Form Card */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100">
-          <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-            <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
-              <FileText className="h-6 w-6 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 p-6">
+      <div className="w-full max-w-7xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <Hash className="h-8 w-8 text-primary" />
             </div>
-            <span>Alot Number</span>
-          </CardTitle>
-        </CardHeader>
-        
-        <CardContent className="p-8">
-          <div className="space-y-8">
-            {/* Alot Number Section */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-medium text-gray-700">Student ID Entry</h2>
-              <div className="flex gap-4 items-end">
-                <div className="flex-1">
+            <span>Alot Number Management</span>
+          </h1>
+        </div>
+
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-primary-foreground/80 text-sm font-medium">Total Records</p>
+                  <p className="text-3xl font-bold">{stats.total}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <FileText className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-accent-foreground/80 text-sm font-medium">This Month</p>
+                  <p className="text-3xl font-bold">{stats.thisMonth}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Calendar className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-secondary-foreground/80 text-sm font-medium">With Photos</p>
+                  <p className="text-3xl font-bold">{stats.withPhotos}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <ImageIcon className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground/80 text-sm font-medium">Filtered Results</p>
+                  <p className="text-3xl font-bold text-foreground">{stats.filteredResults}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Filter className="h-6 w-6 text-foreground" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Add/Edit Form */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <Plus className="h-6 w-6" />
+              </div>
+              <span>{editingAlot ? 'Edit Alot Number' : 'Add New Alot Number'}</span>
+            </CardTitle>
+          </CardHeader>
+          
+          <CardContent className="p-8">
+            <div className="space-y-8">
+              {/* Student ID and Course Selection */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Student ID *</label>
                   <Input
                     value={formData.studentsId}
                     onChange={(e) => handleInputChange('studentsId', e.target.value)}
-                    className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                    placeholder="Enter Students ID"
+                    className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                    placeholder="Enter Student ID"
                   />
                 </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Course Name *</label>
+                  <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
+                    <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
+                      <SelectValue placeholder="Select Course Name" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-card border-border/40">
+                      <SelectItem value="ADCA" className="hover:bg-accent/50">Advance Diploma In Computer Application(ADCA)</SelectItem>
+                      <SelectItem value="DCA" className="hover:bg-accent/50">Diploma in Computer Application (DCA)</SelectItem>
+                      <SelectItem value="PGDCA" className="hover:bg-accent/50">Post Graduate Diploma in Computer Application (PGDCA)</SelectItem>
+                      <SelectItem value="DCHN" className="hover:bg-accent/50">Diploma in Computer Hardware and Networking</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Marks Section */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">Marks Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Theory Max Marks</label>
+                    <Input
+                      value={formData.theoryMaxMarks}
+                      onChange={(e) => handleInputChange('theoryMaxMarks', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Theory Max Marks"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Practical Max Marks</label>
+                    <Input
+                      value={formData.practicalMaxMarks}
+                      onChange={(e) => handleInputChange('practicalMaxMarks', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Practical Max Marks"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Obtain Theory Marks</label>
+                    <Input
+                      value={formData.obtainTheoryMarks}
+                      onChange={(e) => handleInputChange('obtainTheoryMarks', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Obtain Theory Marks"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Obtain Practical Marks</label>
+                    <Input
+                      value={formData.obtainPracticalMarks}
+                      onChange={(e) => handleInputChange('obtainPracticalMarks', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Obtain Practical Marks"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Student Information */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">Student Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Student Name *</label>
+                    <Input
+                      value={formData.studentName}
+                      onChange={(e) => handleInputChange('studentName', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Student Name"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Father Name</label>
+                    <Input
+                      value={formData.studentFatherName}
+                      onChange={(e) => handleInputChange('studentFatherName', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Student Father Name"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Mother Name</label>
+                    <Input
+                      value={formData.studentMotherName}
+                      onChange={(e) => handleInputChange('studentMotherName', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Student Mother Name"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Center & Date Information */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">Center & Date Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Examination Date</label>
+                    <Input
+                      type="date"
+                      value={formData.courseExaminationDate}
+                      onChange={(e) => handleInputChange('courseExaminationDate', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Center Name</label>
+                    <Input
+                      value={formData.centerName}
+                      onChange={(e) => handleInputChange('centerName', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Center Name"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Center Code</label>
+                    <Input
+                      value={formData.centerCode}
+                      onChange={(e) => handleInputChange('centerCode', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Center Code"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Issue Date</label>
+                    <Input
+                      type="date"
+                      value={formData.issueDate}
+                      onChange={(e) => handleInputChange('issueDate', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Place</label>
+                    <Input
+                      value={formData.place}
+                      onChange={(e) => handleInputChange('place', e.target.value)}
+                      className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                      placeholder="Place"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* File Uploads */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">File Uploads</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Student Photo Upload */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Student Photo</label>
+                    <div className="border border-border/40 rounded-lg p-4 bg-background">
+                      <div className="flex items-center space-x-4">
+                        <div className="relative">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange('studentPhoto', e.target.files?.[0] || null)}
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                          />
+                          <Button variant="outline" className="border-border/40 hover:bg-accent/20">
+                            <Upload className="h-4 w-4 mr-2" />
+                            Choose Photo
+                          </Button>
+                        </div>
+                        <span className="text-muted-foreground text-sm">
+                          {formData.studentPhoto ? formData.studentPhoto.name : "No file chosen"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Director Signature */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Director Signature</label>
+                    <div className="border border-border/40 rounded-lg p-4 bg-background">
+                      <div className="flex items-center space-x-4">
+                        <div className="relative">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange('directorSignature', e.target.files?.[0] || null)}
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                          />
+                          <Button variant="outline" className="border-border/40 hover:bg-accent/20">
+                            <Upload className="h-4 w-4 mr-2" />
+                            Choose Signature
+                          </Button>
+                        </div>
+                        <span className="text-muted-foreground text-sm">
+                          {formData.directorSignature ? formData.directorSignature.name : "No file chosen"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Submit Buttons */}
+              <div className="flex space-x-4 pt-8 border-t border-border/20">
                 <Button 
-                  onClick={handleSubmitNow}
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 h-12"
+                  onClick={handleSubmit}
+                  className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg px-8"
                 >
-                  Submit Now
+                  {editingAlot ? 'Update Alot Number' : 'Create Alot Number'}
                 </Button>
+                
+                {editingAlot && (
+                  <Button 
+                    onClick={handleReset}
+                    variant="outline"
+                    className="border-border/40 hover:bg-accent/20 px-8"
+                  >
+                    Cancel Edit
+                  </Button>
+                )}
               </div>
             </div>
+          </CardContent>
+        </Card>
 
-            {/* Course Selection and Marks */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-700">Course & Marks Details</h3>
-              <div className="flex gap-4">
-                <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
-                  <SelectTrigger className="w-80 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white">
-                    <SelectValue placeholder="Select Course Name" />
+        {/* Search and Filter */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                  placeholder="Search by student name, ID, or center..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                />
+              </div>
+              <div className="w-full md:w-64">
+                <Select value={filterCourse} onValueChange={setFilterCourse}>
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
+                    <Filter className="h-4 w-4 mr-2" />
+                    <SelectValue placeholder="Filter by course" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="ADCA">Advance Diploma In Computer Application(ADCA)</SelectItem>
-                    <SelectItem value="DCA">Diploma in Computer Application (DCA)</SelectItem>
-                    <SelectItem value="PGDCA">Post Graduate Diploma in Computer Application (PGDCA)</SelectItem>
-                    <SelectItem value="DCHN">Diploma in Computer Hardware and Networking</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    <SelectItem value="all" className="hover:bg-accent/50">All Courses</SelectItem>
+                    {courseCategories.map((category) => (
+                      <SelectItem key={category} value={category} className="hover:bg-accent/50">
+                        {category}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
-
-              <div className="grid grid-cols-4 gap-4">
-                <Input
-                  value={formData.theoryMaxMarks}
-                  onChange={(e) => handleInputChange('theoryMaxMarks', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Theory Max Marks"
-                />
-                <Input
-                  value={formData.practicalMaxMarks}
-                  onChange={(e) => handleInputChange('practicalMaxMarks', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Practical Max Marks"
-                />
-                <Input
-                  value={formData.obtainTheoryMarks}
-                  onChange={(e) => handleInputChange('obtainTheoryMarks', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Obtain Theory Marks"
-                />
-                <Input
-                  value={formData.obtainPracticalMarks}
-                  onChange={(e) => handleInputChange('obtainPracticalMarks', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Obtain Practical Marks"
-                />
-              </div>
-
-              <div>
-                <Button 
-                  onClick={handleAddNow}
-                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold px-6 py-2"
-                >
-                  Add Now
-                </Button>
-              </div>
             </div>
+          </CardContent>
+        </Card>
 
-            {/* Student Details */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-700">Student Information</h3>
-              <div className="grid grid-cols-4 gap-4">
-                <Input
-                  value={formData.studentId}
-                  onChange={(e) => handleInputChange('studentId', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-gray-100"
-                  placeholder="Student ID"
-                  readOnly
-                />
-                <Input
-                  value={formData.studentName}
-                  onChange={(e) => handleInputChange('studentName', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Student Name"
-                />
-                <Input
-                  value={formData.studentFatherName}
-                  onChange={(e) => handleInputChange('studentFatherName', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Student Father Name"
-                />
-                <Input
-                  value={formData.studentMotherName}
-                  onChange={(e) => handleInputChange('studentMotherName', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Student Mother Name"
-                />
-              </div>
-
-              <div className="grid grid-cols-4 gap-4">
-                <Input
-                  value={formData.courseExaminationDate}
-                  onChange={(e) => handleInputChange('courseExaminationDate', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Course Examination Date"
-                />
-                <Input
-                  value={formData.centerName}
-                  onChange={(e) => handleInputChange('centerName', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Center Name"
-                />
-                <Input
-                  value={formData.centerCode}
-                  onChange={(e) => handleInputChange('centerCode', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Center Code"
-                />
-                <Input
-                  value={formData.issueDate}
-                  onChange={(e) => handleInputChange('issueDate', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Issue Date"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <Input
-                  value={formData.place}
-                  onChange={(e) => handleInputChange('place', e.target.value)}
-                  className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
-                  placeholder="Place"
-                />
-              </div>
-            </div>
-
-            {/* File Uploads */}
-            <div className="grid grid-cols-2 gap-8">
-              {/* Student Photo Upload */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Student Photo Upload</label>
-                <div className="border border-gray-300 rounded bg-white flex h-12">
-                  <label className="bg-gray-100 hover:bg-gray-200 border-r border-gray-300 px-4 py-2 cursor-pointer text-sm font-medium text-gray-700 flex items-center">
-                    Choose file
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleFileChange('studentPhoto', e.target.files?.[0] || null)}
-                      className="hidden"
-                    />
-                  </label>
-                  <span className="px-3 py-2 text-gray-500 text-sm flex-1 flex items-center">
-                    {formData.studentPhoto ? formData.studentPhoto.name : "No file chosen"}
-                  </span>
+        {/* Data Table */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                  <Hash className="h-6 w-6" />
                 </div>
+                <span>Alot Number Records ({filteredData.length})</span>
               </div>
-
-              {/* Director Signature */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Director Signature</label>
-                <div className="border border-gray-300 rounded bg-white flex h-12">
-                  <label className="bg-gray-100 hover:bg-gray-200 border-r border-gray-300 px-4 py-2 cursor-pointer text-sm font-medium text-gray-700 flex items-center">
-                    Choose file
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleFileChange('directorSignature', e.target.files?.[0] || null)}
-                      className="hidden"
-                    />
-                  </label>
-                  <span className="px-3 py-2 text-gray-500 text-sm flex-1 flex items-center">
-                    {formData.directorSignature ? formData.directorSignature.name : "No file chosen"}
-                  </span>
-                </div>
+              <Badge className="bg-background/20 text-primary-foreground border-background/30">
+                Total: {alotNumbers?.length || 0}
+              </Badge>
+            </CardTitle>
+          </CardHeader>
+          
+          <CardContent className="p-8">
+            <div className="border border-border/40 rounded-lg bg-background/50 overflow-hidden shadow-inner">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground">
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <Edit className="h-4 w-4" />
+                          Actions
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[120px]">
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4" />
+                          Student ID
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[200px]">
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4" />
+                          Student Name
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <BookOpen className="h-4 w-4" />
+                          Course
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[100px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <BarChart3 className="h-4 w-4" />
+                          Theory
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[100px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <BarChart3 className="h-4 w-4" />
+                          Practical
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[150px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <FileText className="h-4 w-4" />
+                          Center
+                        </div>
+                      </th>
+                      <th className="px-6 py-4 text-sm font-bold text-center min-w-[100px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <Calendar className="h-4 w-4" />
+                          Issue Date
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.length === 0 ? (
+                      <tr>
+                        <td colSpan={8} className="text-center py-12 text-muted-foreground bg-background/30">
+                          <div className="flex flex-col items-center space-y-3">
+                            <Hash className="h-12 w-12 text-muted-foreground/30" />
+                            <p className="text-lg font-medium">No alot numbers found</p>
+                            <p className="text-sm">Try adjusting your search or filter criteria</p>
+                          </div>
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredData.map((alot, index) => (
+                        <tr 
+                          key={alot.id} 
+                          className={`hover:bg-accent/20 transition-colors ${
+                            index % 2 === 0 ? "bg-background" : "bg-accent/5"
+                          }`}
+                        >
+                          <td className="border-r border-border/20 px-6 py-4 text-center">
+                            <div className="flex justify-center space-x-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleEdit(alot)}
+                                className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8 p-0"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleDelete(alot.id)}
+                                className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-foreground font-medium">
+                            {alot.student_id}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-foreground font-medium">
+                            {alot.student_name || 'N/A'}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center">
+                            <span className="px-2 py-1 bg-secondary/20 text-secondary-foreground rounded-md text-sm font-medium">
+                              {alot.course_name}
+                            </span>
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground">
+                            <span className="text-primary font-medium">
+                              {alot.obtain_theory_marks || '0'}/{alot.theory_max_marks || '0'}
+                            </span>
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground">
+                            <span className="text-secondary font-medium">
+                              {alot.obtain_practical_marks || '0'}/{alot.practical_max_marks || '0'}
+                            </span>
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground">
+                            {alot.center_name || 'N/A'}
+                          </td>
+                          <td className="px-6 py-4 text-center text-foreground">
+                            {alot.issue_date || 'N/A'}
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
               </div>
             </div>
-
-            {/* Final Submit */}
-            <div className="pt-4">
-            <div className="flex space-x-4">
-              <Button 
-                onClick={handleFinalSubmit}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                {editingAlot ? 'Update' : 'Final Submit'}
-              </Button>
-              
-              {editingAlot && (
-                <Button 
-                  onClick={handleReset}
-                  variant="outline"
-                  className="border-gray-600 text-gray-600 hover:bg-gray-50 px-6 py-3"
-                >
-                  Cancel Edit
-                </Button>
-              )}
-            </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Data Table Card */}
-      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Student ID</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course Name</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Student Name</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Theory Marks</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Practical Marks</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Center Name</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {alotNumbers.map((alot, index) => (
-                <TableRow key={alot.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                  <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex justify-center space-x-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEdit(alot)}
-                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(alot.id)}
-                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {alot.student_id}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {alot.course_name}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {alot.student_name || "N/A"}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {alot.obtain_theory_marks || "N/A"}/{alot.theory_max_marks || "N/A"}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {alot.obtain_practical_marks || "N/A"}/{alot.practical_max_marks || "N/A"}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {alot.center_name || "N/A"}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
