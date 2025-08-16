@@ -76,10 +76,7 @@ const StudentApprovalContent = () => {
         status: newStatus
       });
 
-      // Show notification only when approving
-      if (approved) {
-        toast.success(`${student.full_name} has been approved`);
-      }
+      // No notifications - silent approval/unapproval
     } catch (error) {
       toast.error('Failed to update student approval status');
     }
