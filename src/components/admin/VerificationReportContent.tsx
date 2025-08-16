@@ -160,55 +160,73 @@ const VerificationReportContent = () => {
   const referenceNumber = "1234567";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-primary/5 p-6">
-      <div className="w-full max-w-7xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 p-6">
+      <div className="w-full max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-4 rounded-lg shadow-lg">
-          <div className="flex items-center gap-3">
-            <FileText className="h-6 w-6 text-primary-foreground" />
-            <h1 className="text-xl font-bold text-primary-foreground">Verification Report</h1>
-          </div>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <FileText className="h-8 w-8 text-primary" />
+            </div>
+            <span>Verification Report</span>
+          </h1>
         </div>
 
-        {/* Statistics Cards */}
+        {/* Statistics Dashboard */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg">
-            <CardContent className="flex items-center justify-between p-6">
-              <div>
-                <p className="text-blue-100 text-sm font-medium">Total Students</p>
-                <p className="text-2xl font-bold">{students.length}</p>
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-primary-foreground/80 text-sm font-medium">Total Students</p>
+                  <p className="text-3xl font-bold">{students.length}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Users className="h-6 w-6" />
+                </div>
               </div>
-              <Users className="h-8 w-8 text-blue-200" />
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0 shadow-lg">
-            <CardContent className="flex items-center justify-between p-6">
-              <div>
-                <p className="text-green-100 text-sm font-medium">Verified Students</p>
-                <p className="text-2xl font-bold">{students.filter(s => s.enrollmentNo && s.name).length}</p>
+          <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-accent-foreground/80 text-sm font-medium">Verified Students</p>
+                  <p className="text-3xl font-bold">{students.filter(s => s.enrollmentNo && s.name).length}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <FileCheck className="h-6 w-6" />
+                </div>
               </div>
-              <FileCheck className="h-8 w-8 text-green-200" />
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0 shadow-lg">
-            <CardContent className="flex items-center justify-between p-6">
-              <div>
-                <p className="text-purple-100 text-sm font-medium">Courses</p>
-                <p className="text-2xl font-bold">{new Set(students.map(s => s.courseName)).size}</p>
+          <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-secondary-foreground/80 text-sm font-medium">Courses</p>
+                  <p className="text-3xl font-bold">{new Set(students.map(s => s.courseName)).size}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <GraduationCap className="h-6 w-6" />
+                </div>
               </div>
-              <GraduationCap className="h-8 w-8 text-purple-200" />
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0 shadow-lg">
-            <CardContent className="flex items-center justify-between p-6">
-              <div>
-                <p className="text-orange-100 text-sm font-medium">Districts</p>
-                <p className="text-2xl font-bold">{new Set(students.map(s => s.district)).size}</p>
+          <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground/80 text-sm font-medium">Districts</p>
+                  <p className="text-3xl font-bold text-foreground">{new Set(students.map(s => s.district)).size}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <MapPin className="h-6 w-6 text-foreground" />
+                </div>
               </div>
-              <MapPin className="h-8 w-8 text-orange-200" />
             </CardContent>
           </Card>
         </div>
@@ -227,8 +245,8 @@ const VerificationReportContent = () => {
                 <table className="w-full border-collapse min-w-[1800px]">
                   <thead>
                     <tr className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[120px]">
-                        <div className="flex items-center gap-1">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[120px]">
+                        <div className="flex items-center gap-2">
                           <MapPin className="h-4 w-4" />
                           State & Actions
                         </div>
@@ -282,23 +300,23 @@ const VerificationReportContent = () => {
                   <tbody>
                     {students.map((student, index) => (
                       <tr key={student.id} className={index % 2 === 0 ? "bg-background hover:bg-accent/30" : "bg-accent/10 hover:bg-accent/40"}>
-                        <td className="border border-border px-4 py-3 text-sm">
+                        <td className="border-r border-border/30 px-4 py-4 text-sm">
                           <div className="flex gap-2 mb-3">
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleEdit(student.id)}
-                              className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                              className="text-primary hover:text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors"
                             >
-                              <Edit className="h-3 w-3" />
+                              <Edit className="h-4 w-4" />
                             </Button>
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDelete(student.id)}
-                              className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded-lg transition-colors"
                             >
-                              <Trash2 className="h-3 w-3" />
+                              <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
                           <div className="font-medium text-primary">{student.state}</div>
@@ -322,31 +340,33 @@ const VerificationReportContent = () => {
         </Card>
 
         {/* Reference Number Footer */}
-        <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg border-0">
-          <CardContent className="text-center py-6">
-            <div className="flex items-center justify-center gap-3">
-              <FileCheck className="h-6 w-6" />
+        <Card className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground shadow-elegant border-0">
+          <CardContent className="text-center py-8">
+            <div className="flex items-center justify-center gap-4">
+              <div className="p-3 bg-background/20 rounded-full">
+                <FileCheck className="h-8 w-8" />
+              </div>
               <div>
-                <p className="text-sm opacity-90">Report Reference Number</p>
-                <p className="text-2xl font-bold tracking-wider">{referenceNumber}</p>
+                <p className="text-sm text-primary-foreground/80 font-medium">Report Reference Number</p>
+                <p className="text-3xl font-bold tracking-wider mt-1">{referenceNumber}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Action Buttons */}
-        <Card className="shadow-lg border-0 bg-card/50 backdrop-blur">
-          <CardContent className="p-6">
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
+          <CardContent className="p-8">
             <div className="flex flex-wrap gap-4">
-              <Button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg">
+              <Button className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg px-6 py-3">
                 <Share className="h-4 w-4 mr-2" />
                 Export Report
               </Button>
-              <Button variant="outline" className="border-2 hover:bg-accent/50 shadow-md">
+              <Button variant="outline" className="border-border/40 hover:bg-accent/20 shadow-md px-6 py-3">
                 <Printer className="h-4 w-4 mr-2" />
                 Print Report
               </Button>
-              <Button variant="outline" className="border-2 hover:bg-accent/50 shadow-md">
+              <Button variant="outline" className="border-border/40 hover:bg-accent/20 shadow-md px-6 py-3">
                 <Download className="h-4 w-4 mr-2" />
                 Download PDF
               </Button>
