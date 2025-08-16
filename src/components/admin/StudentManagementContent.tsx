@@ -5,8 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Edit, Loader2, Users, BookOpen, GraduationCap, UserCheck, Search, Building, MapPin, Mail, Phone, Trash2, Plus, Download, Printer } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
 
@@ -35,8 +33,12 @@ const StudentManagementContent = () => {
     orderBy: { column: 'enrollment_date', ascending: false }
   });
 
+  // Disable auto notifications to prevent unwanted toasts
   useAdminRealTime({
-    tableName: 'student_profiles'
+    tableName: 'student_profiles',
+    onUpdate: () => {},
+    onInsert: () => {},
+    onDelete: () => {}
   });
 
   const [selectedFranchise, setSelectedFranchise] = useState("");
@@ -68,15 +70,16 @@ const StudentManagementContent = () => {
   }).length;
 
   const handleEdit = (studentId: string) => {
-    toast.success(`Opening edit form for student ${studentId}`);
+    // Open edit form (no notifications)
   };
 
   const handleDelete = async (studentId: string) => {
     try {
       await deleteItem(studentId);
-      // Success notification is handled by the real-time hook
+      // silent success (no notification)
     } catch (error) {
-      toast.error('Failed to delete student');
+      // silent error
+      console.error('Failed to delete student', error);
     }
   };
 
