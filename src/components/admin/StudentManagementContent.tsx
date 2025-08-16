@@ -82,10 +82,10 @@ const StudentManagementContent = () => {
 
   if (loading) {
     return (
-      <div className="w-full max-w-none bg-white flex items-center justify-center min-h-[400px]">
+      <div className="w-full max-w-none bg-background flex items-center justify-center min-h-[400px]">
         <div className="flex flex-col items-center space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-          <p className="text-gray-600">Loading student management...</p>
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-muted-foreground">Loading student management...</p>
         </div>
       </div>
     );
@@ -95,9 +95,9 @@ const StudentManagementContent = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-800 flex items-center space-x-3">
-          <div className="p-3 bg-blue-100 rounded-full">
-            <Users className="h-8 w-8 text-blue-600" />
+        <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
+          <div className="p-3 bg-primary/10 rounded-full">
+            <Users className="h-8 w-8 text-primary" />
           </div>
           <span>Student Management</span>
         </h1>
@@ -105,57 +105,57 @@ const StudentManagementContent = () => {
 
       {/* Statistics Dashboard */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm font-medium">Total Students</p>
+                <p className="text-primary-foreground/80 text-sm font-medium">Total Students</p>
                 <p className="text-3xl font-bold">{totalStudents}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <Users className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100 text-sm font-medium">Active Students</p>
+                <p className="text-accent-foreground/80 text-sm font-medium">Active Students</p>
                 <p className="text-3xl font-bold">{activeStudents}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <UserCheck className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-100 text-sm font-medium">Available Courses</p>
+                <p className="text-secondary-foreground/80 text-sm font-medium">Available Courses</p>
                 <p className="text-3xl font-bold">{uniqueCourses}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <GraduationCap className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-purple-100 text-sm font-medium">Recent Enrollments</p>
-                <p className="text-3xl font-bold">{recentEnrollments}</p>
+                <p className="text-muted-foreground/80 text-sm font-medium">Recent Enrollments</p>
+                <p className="text-3xl font-bold text-foreground">{recentEnrollments}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <BookOpen className="h-6 w-6" />
+              <div className="p-3 bg-background/20 rounded-full">
+                <BookOpen className="h-6 w-6 text-foreground" />
               </div>
             </div>
           </CardContent>
@@ -163,10 +163,10 @@ const StudentManagementContent = () => {
       </div>
 
       {/* Franchise Selection and Actions */}
-      <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm">
-        <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
+      <Card className="shadow-elegant border-0 bg-card/95 backdrop-blur-sm">
+        <CardHeader className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground p-6">
           <CardTitle className="text-xl font-bold flex items-center space-x-3">
-            <div className="p-2 bg-white/20 rounded-lg">
+            <div className="p-2 bg-background/20 rounded-lg">
               <Building className="h-5 w-5" />
             </div>
             <span>Franchise & Actions</span>
@@ -207,22 +207,22 @@ const StudentManagementContent = () => {
       </Card>
 
       {/* Student Management Table */}
-      <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
-        <CardHeader className="bg-gradient-to-r from-gray-700 to-gray-800 text-white p-6">
+      <Card className="shadow-elegant border-0 bg-card/95 backdrop-blur-sm">
+        <CardHeader className="bg-gradient-to-r from-secondary to-secondary/80 text-secondary-foreground p-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
             <CardTitle className="text-xl font-bold flex items-center space-x-3">
-              <div className="p-2 bg-white/20 rounded-lg">
+              <div className="p-2 bg-background/20 rounded-lg">
                 <Users className="h-5 w-5" />
               </div>
               <span>Student Records ({filteredStudents.length} students)</span>
             </CardTitle>
             <div className="relative w-full sm:w-80">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search students..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/90 border-white/20 focus:border-white focus:ring-white/20"
+                className="pl-10 bg-background/90 border-background/20 focus:border-background focus:ring-background/20"
               />
             </div>
           </div>
@@ -232,38 +232,38 @@ const StudentManagementContent = () => {
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">S.No</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Actions</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Student Name</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Email</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Phone</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Course</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Location</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Status</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4">Enrollment Date</TableHead>
+                <TableRow className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary">
+                  <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary/30">S.No</TableHead>
+                  <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary/30">Actions</TableHead>
+                  <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary/30">Student Name</TableHead>
+                  <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary/30">Email</TableHead>
+                  <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary/30">Phone</TableHead>
+                  <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary/30">Course</TableHead>
+                  <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary/30">Location</TableHead>
+                  <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary/30">Status</TableHead>
+                  <TableHead className="text-primary-foreground font-bold text-center py-4">Enrollment Date</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredStudents.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={9} className="text-center py-8 text-gray-500">
+                    <TableCell colSpan={9} className="text-center py-8 text-muted-foreground">
                       {searchTerm ? "No students found matching your search." : "No students registered yet."}
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredStudents.map((student, index) => (
-                    <TableRow key={student.id} className={`${index % 2 === 0 ? "bg-blue-50/50" : "bg-white"} hover:bg-blue-100/50 transition-colors`}>
-                      <TableCell className="text-center p-4 border-r border-gray-200 font-medium">
+                    <TableRow key={student.id} className={`${index % 2 === 0 ? "bg-accent/10" : "bg-background"} hover:bg-accent/20 transition-colors`}>
+                      <TableCell className="text-center p-4 border-r border-border font-medium">
                         {index + 1}
                       </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
+                      <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex space-x-2 justify-center">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEdit(student.id)}
-                            className="text-blue-600 hover:text-blue-800 hover:bg-blue-100 p-2 rounded-lg transition-colors"
+                            className="text-primary hover:text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
@@ -271,55 +271,55 @@ const StudentManagementContent = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleDelete(student.id)}
-                            className="text-red-600 hover:text-red-800 hover:bg-red-100 p-2 rounded-lg transition-colors"
+                            className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded-lg transition-colors"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
-                      <TableCell className="p-4 border-r border-gray-200">
+                      <TableCell className="p-4 border-r border-border">
                         <div className="flex items-center space-x-2">
-                          <Users className="h-4 w-4 text-blue-600" />
-                          <span className="font-medium text-gray-800">{student.full_name}</span>
+                          <Users className="h-4 w-4 text-primary" />
+                          <span className="font-medium text-foreground">{student.full_name}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
+                      <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex items-center justify-center space-x-2">
-                          <Mail className="h-4 w-4 text-green-600" />
-                          <span className="text-gray-700">{student.email}</span>
+                          <Mail className="h-4 w-4 text-accent" />
+                          <span className="text-foreground">{student.email}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
+                      <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex items-center justify-center space-x-2">
-                          <Phone className="h-4 w-4 text-purple-600" />
-                          <span className="text-gray-700">{student.phone || "-"}</span>
+                          <Phone className="h-4 w-4 text-secondary" />
+                          <span className="text-foreground">{student.phone || "-"}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
+                      <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex items-center justify-center space-x-2">
-                          <GraduationCap className="h-4 w-4 text-orange-600" />
-                          <span className="text-gray-700">{student.course_name || "-"}</span>
+                          <GraduationCap className="h-4 w-4 text-primary" />
+                          <span className="text-foreground">{student.course_name || "-"}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
+                      <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex items-center justify-center space-x-2">
-                          <MapPin className="h-4 w-4 text-indigo-600" />
-                          <span className="text-gray-700">
+                          <MapPin className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-foreground">
                             {student.city && student.state ? `${student.city}, ${student.state}` : student.state || student.city || "-"}
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
+                      <TableCell className="text-center p-4 border-r border-border">
                         <span className={`px-3 py-1 text-xs font-medium rounded-full ${
                           student.status === 'active' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-orange-100 text-orange-800'
+                            ? 'bg-accent/20 text-accent-foreground' 
+                            : 'bg-secondary/20 text-secondary-foreground'
                         }`}>
                           {student.status || 'Pending'}
                         </span>
                       </TableCell>
                       <TableCell className="text-center p-4">
-                        <span className="text-gray-700">
+                        <span className="text-foreground">
                           {student.enrollment_date ? new Date(student.enrollment_date).toLocaleDateString() : "-"}
                         </span>
                       </TableCell>
