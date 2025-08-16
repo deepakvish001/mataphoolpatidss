@@ -25,10 +25,10 @@ const VerificationContent = () => {
     orderBy: { column: 'created_at', ascending: false }
   });
 
-  // Enable real-time updates
-  useAdminRealTime({
-    tableName: 'student_profiles'
-  });
+  // Disable real-time updates to prevent false notifications
+  // useAdminRealTime({
+  //   tableName: 'student_profiles'
+  // });
 
   const handleDelete = async (studentId: string) => {
     try {

@@ -31,8 +31,8 @@ export const useAdminRealTime = ({
 }: UseAdminRealTimeOptions) => {
   const { lastEvent, isConnected } = useGlobalCrud();
   
-  // Enable button detection for this table
-  useButtonDetection(tableName);
+  // Completely disable button detection to prevent false notifications
+  // useButtonDetection(tableName);
 
   // Default messages for CRUD operations
   const defaultMessages = {
@@ -52,34 +52,22 @@ export const useAdminRealTime = ({
         case 'INSERT':
           if (onInsert) {
             onInsert(data);
-          } else {
-            toast.success(messages.insert, {
-              duration: 3000,
-              position: 'bottom-right'
-            });
           }
+          // Removed automatic notifications
           break;
 
         case 'UPDATE':
           if (onUpdate) {
             onUpdate(data);
-          } else {
-            toast.success(messages.update, {
-              duration: 3000,
-              position: 'bottom-right'
-            });
           }
+          // Removed automatic notifications
           break;
 
         case 'DELETE':
           if (onDelete) {
             onDelete(data);
-          } else {
-            toast.success(messages.delete, {
-              duration: 3000,
-              position: 'bottom-right'
-            });
           }
+          // Removed automatic notifications
           break;
 
         default:
