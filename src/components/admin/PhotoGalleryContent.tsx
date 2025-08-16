@@ -150,16 +150,11 @@ const PhotoGalleryContent = () => {
 
   if (loading) {
     return (
-      <Card className="border-0 shadow-lg bg-card">
-        <CardContent className="p-12 flex items-center justify-center min-h-[400px]">
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
           <div className="flex flex-col items-center space-y-4">
-            <div className="p-4 bg-purple-100 rounded-full">
-              <Camera className="h-12 w-12 text-purple-600 animate-pulse" />
-            </div>
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Loading Photo Gallery</h3>
-              <p className="text-muted-foreground">Please wait while we load your beautiful photos...</p>
-            </div>
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-muted-foreground">Loading photo gallery...</p>
           </div>
         </CardContent>
       </Card>
@@ -170,61 +165,61 @@ const PhotoGalleryContent = () => {
     <div className="space-y-8">
       {/* Statistics Dashboard */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-purple-50 to-purple-100 border-l-4 border-l-purple-500">
+        <Card className="shadow-lg border border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-purple-600 mb-1">Total Photos</p>
-                <p className="text-3xl font-bold text-purple-700">{stats.total}</p>
-                <p className="text-xs text-purple-500 mt-1">Gallery collection</p>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Total Photos</p>
+                <p className="text-3xl font-bold text-primary">{stats.total}</p>
+                <p className="text-xs text-muted-foreground mt-1">Gallery collection</p>
               </div>
-              <div className="p-3 bg-purple-500 rounded-xl shadow-lg">
-                <Camera className="h-8 w-8 text-white" />
+              <div className="p-3 bg-primary/20 rounded-xl">
+                <Camera className="h-8 w-8 text-primary" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-green-50 to-green-100 border-l-4 border-l-green-500">
+        <Card className="shadow-lg border border-green-500/20 bg-gradient-to-br from-green-500/10 to-green-500/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-green-600 mb-1">With Images</p>
-                <p className="text-3xl font-bold text-green-700">{stats.withImages}</p>
-                <p className="text-xs text-green-500 mt-1">Ready to view</p>
+                <p className="text-sm font-medium text-muted-foreground mb-1">With Images</p>
+                <p className="text-3xl font-bold text-green-600">{stats.withImages}</p>
+                <p className="text-xs text-muted-foreground mt-1">Ready to view</p>
               </div>
-              <div className="p-3 bg-green-500 rounded-xl shadow-lg">
-                <Eye className="h-8 w-8 text-white" />
+              <div className="p-3 bg-green-500/20 rounded-xl">
+                <Eye className="h-8 w-8 text-green-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-orange-50 to-orange-100 border-l-4 border-l-orange-500">
+        <Card className="shadow-lg border border-orange-500/20 bg-gradient-to-br from-orange-500/10 to-orange-500/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-orange-600 mb-1">This Month</p>
-                <p className="text-3xl font-bold text-orange-700">{stats.thisMonth}</p>
-                <p className="text-xs text-orange-500 mt-1">Recent uploads</p>
+                <p className="text-sm font-medium text-muted-foreground mb-1">This Month</p>
+                <p className="text-3xl font-bold text-orange-600">{stats.thisMonth}</p>
+                <p className="text-xs text-muted-foreground mt-1">Recent uploads</p>
               </div>
-              <div className="p-3 bg-orange-500 rounded-xl shadow-lg">
-                <Calendar className="h-8 w-8 text-white" />
+              <div className="p-3 bg-orange-500/20 rounded-xl">
+                <Calendar className="h-8 w-8 text-orange-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-blue-100 border-l-4 border-l-blue-500">
+        <Card className="shadow-lg border border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-blue-600 mb-1">Search Results</p>
-                <p className="text-3xl font-bold text-blue-700">{filteredData.length}</p>
-                <p className="text-xs text-blue-500 mt-1">Current filter</p>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Search Results</p>
+                <p className="text-3xl font-bold text-blue-600">{filteredData.length}</p>
+                <p className="text-xs text-muted-foreground mt-1">Current filter</p>
               </div>
-              <div className="p-3 bg-blue-500 rounded-xl shadow-lg">
-                <Search className="h-8 w-8 text-white" />
+              <div className="p-3 bg-blue-500/20 rounded-xl">
+                <Search className="h-8 w-8 text-blue-600" />
               </div>
             </div>
           </CardContent>
@@ -232,44 +227,55 @@ const PhotoGalleryContent = () => {
       </div>
 
       {/* Add Photo To Gallery Form */}
-      <Card className="border-0 shadow-xl bg-gradient-to-br from-slate-50 to-purple-50 border-t-4 border-t-purple-500">
-        <CardHeader className="p-6 border-b bg-gradient-to-r from-purple-500 to-pink-600">
-          <CardTitle className="text-xl font-semibold text-white flex items-center gap-3">
-            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-              <Camera className="h-6 w-6 text-white" />
-            </div>
-            {editingItem ? 'Edit Photo' : 'Add Photo To Gallery'}
-            {editingItem && (
-              <Badge variant="secondary" className="ml-auto bg-white/20 text-white border-white/30">
-                Editing Mode
-              </Badge>
-            )}
-          </CardTitle>
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="p-0 overflow-hidden">
+          <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 p-6">
+            <CardTitle className="text-xl font-bold text-white flex items-center gap-3">
+              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                <Camera className="h-6 w-6 text-white" />
+              </div>
+              {editingItem ? 'Edit Photo' : 'Add Photo To Gallery'}
+              {editingItem && (
+                <Badge className="ml-auto bg-white/20 text-white border border-white/30">
+                  Editing Mode
+                </Badge>
+              )}
+            </CardTitle>
+            <p className="text-primary-foreground/80 mt-2">
+              Upload and manage gallery photos
+            </p>
+          </div>
         </CardHeader>
         
-        <CardContent className="p-8 bg-white">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Title */}
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                <ImageIcon className="h-4 w-4 text-purple-500" />
-                Photo Title *
-              </label>
-              <Input
-                value={formData.title}
-                onChange={(e) => handleInputChange('title', e.target.value)}
-                className="h-12 border-2 border-purple-200 hover:border-purple-400 rounded-lg bg-purple-50/50 focus:bg-white transition-all"
-                placeholder="Enter descriptive photo title"
-              />
+        <CardContent className="p-8">
+          <div className="space-y-6">
+            {/* Photo Information Section */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                <ImageIcon className="h-4 w-4" />
+                <span>Photo Information</span>
+              </div>
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <ImageIcon className="h-4 w-4 text-primary" />
+                  Photo Title <span className="text-destructive">*</span>
+                </label>
+                <Input
+                  value={formData.title}
+                  onChange={(e) => handleInputChange('title', e.target.value)}
+                  className="h-12 border-2 border-border hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                  placeholder="Enter descriptive photo title"
+                />
+              </div>
             </div>
 
-            {/* Photo Upload */}
-            <div className="space-y-3 lg:col-span-2">
-              <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                <Upload className="h-4 w-4 text-pink-500" />
-                Upload Photo
-              </label>
-              <div className="border-2 border-dashed border-pink-200 rounded-xl p-8 bg-pink-50/50 hover:border-pink-400 transition-all">
+            {/* Photo Upload Section */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                <Upload className="h-4 w-4" />
+                <span>Photo Upload</span>
+              </div>
+              <div className="border-2 border-dashed border-border rounded-xl p-8 bg-muted/20 hover:border-primary/50 transition-all duration-200">
                 <div className="flex flex-col items-center justify-center space-y-4">
                   <div className="relative">
                     <input
@@ -281,7 +287,7 @@ const PhotoGalleryContent = () => {
                     />
                     <Button
                       variant="outline"
-                      className="h-12 px-8 border-2 border-pink-300 hover:border-pink-500 bg-white hover:bg-pink-50 text-pink-700 font-semibold rounded-lg shadow-sm"
+                      className="h-12 px-8 border-2 border-border hover:border-primary/30 hover:bg-primary/5 font-semibold transition-all duration-200"
                     >
                       <Camera className="h-5 w-5 mr-2" />
                       Choose Photo
@@ -289,29 +295,29 @@ const PhotoGalleryContent = () => {
                   </div>
                   
                   {formData.photo ? (
-                    <div className="flex items-center gap-3 bg-white rounded-lg p-4 border border-pink-200 shadow-sm">
-                      <div className="p-2 bg-pink-100 rounded-lg">
-                        <ImageIcon className="h-5 w-5 text-pink-600" />
+                    <div className="flex items-center gap-3 bg-background rounded-lg p-4 border border-border shadow-sm w-full max-w-md">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <ImageIcon className="h-5 w-5 text-primary" />
                       </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-semibold text-pink-700">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-foreground truncate">
                           {formData.photo.name}
                         </p>
-                        <p className="text-xs text-pink-500">
+                        <p className="text-xs text-muted-foreground">
                           {(formData.photo.size / 1024 / 1024).toFixed(1)} MB
                         </p>
                       </div>
-                      <Badge variant="outline" className="text-xs text-pink-600 border-pink-300 bg-pink-50">
-                        Ready to upload
+                      <Badge variant="outline" className="text-xs text-green-600 border-green-300 bg-green-50">
+                        Ready
                       </Badge>
                     </div>
                   ) : (
                     <div className="text-center">
-                      <div className="p-4 bg-pink-100 rounded-full w-fit mx-auto mb-3">
-                        <Camera className="h-8 w-8 text-pink-500" />
+                      <div className="p-4 bg-primary/10 rounded-full w-fit mx-auto mb-3">
+                        <Camera className="h-8 w-8 text-primary" />
                       </div>
-                      <p className="text-sm font-medium text-pink-600 mb-1">Drop your photo here or click to browse</p>
-                      <p className="text-xs text-pink-500">Supports: JPG, PNG, GIF, WEBP</p>
+                      <p className="text-sm font-medium text-foreground mb-1">Drop your photo here or click to browse</p>
+                      <p className="text-xs text-muted-foreground">Supports: JPG, PNG, GIF, WEBP</p>
                     </div>
                   )}
                 </div>
@@ -336,69 +342,69 @@ const PhotoGalleryContent = () => {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Upload Button */}
-          <div className="flex gap-4 pt-8 border-t border-gray-100">
-            <Button
-              onClick={handleUpload}
-              className="h-12 px-8 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-            >
-              <Upload className="h-5 w-5 mr-2" />
-              {editingItem ? "Update Photo" : "Upload Photo"}
-            </Button>
-            <Button
-              onClick={() => {
-                setFormData({ title: "", photo: null });
-                setEditingItem(null);
-                const fileInput = document.getElementById('gallery-file') as HTMLInputElement;
-                if (fileInput) fileInput.value = '';
-              }}
-              variant="outline"
-              className="h-12 px-8 border-2 border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-700 hover:bg-gray-50 rounded-lg font-semibold transition-all duration-200"
-            >
-              <Trash2 className="h-4 w-4 mr-2" />
-              Clear Form
-            </Button>
+            {/* Action Buttons */}
+            <div className="flex justify-end space-x-4 pt-6 border-t border-border">
+              <Button
+                onClick={() => {
+                  setFormData({ title: "", photo: null });
+                  setEditingItem(null);
+                  const fileInput = document.getElementById('gallery-file') as HTMLInputElement;
+                  if (fileInput) fileInput.value = '';
+                }}
+                variant="outline"
+                className="h-12 border-2 border-border hover:border-destructive/30 hover:bg-destructive/5 text-muted-foreground hover:text-destructive transition-all duration-200"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Clear Form
+              </Button>
+              <Button
+                onClick={handleUpload}
+                className="h-12 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-semibold px-8 shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                <Upload className="h-5 w-5 mr-2" />
+                {editingItem ? "Update Photo" : "Upload Photo"}
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Search and Filter Controls */}
-      <Card className="border-0 shadow-lg bg-gradient-to-r from-gray-50 to-slate-50 border-l-4 border-l-indigo-500">
+      <Card className="shadow-lg border border-border bg-white/95 backdrop-blur-sm">
         <CardContent className="p-6">
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-indigo-500" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 placeholder="Search photos by title..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 h-12 border-2 border-indigo-200 hover:border-indigo-400 rounded-lg bg-white focus:bg-white shadow-sm"
+                className="pl-12 h-12 border-2 border-border hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
               />
             </div>
             <div className="w-full lg:w-64">
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="h-12 border-2 border-indigo-200 hover:border-indigo-400 rounded-lg bg-white shadow-sm">
-                  <TrendingUp className="h-5 w-5 mr-2 text-indigo-500" />
+                <SelectTrigger className="h-12 border-2 border-border hover:border-primary focus:border-primary">
+                  <TrendingUp className="h-5 w-5 mr-2 text-primary" />
                   <SelectValue placeholder="Sort by..." />
                 </SelectTrigger>
-                <SelectContent className="border-2 border-indigo-200">
-                  <SelectItem value="newest" className="hover:bg-indigo-50">
+                <SelectContent>
+                  <SelectItem value="newest" className="hover:bg-primary/5">
                     <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-indigo-500" />
+                      <Calendar className="h-4 w-4 text-primary" />
                       Newest First
                     </div>
                   </SelectItem>
-                  <SelectItem value="oldest" className="hover:bg-indigo-50">
+                  <SelectItem value="oldest" className="hover:bg-primary/5">
                     <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-indigo-500" />
+                      <Calendar className="h-4 w-4 text-primary" />
                       Oldest First
                     </div>
                   </SelectItem>
-                  <SelectItem value="title" className="hover:bg-indigo-50">
+                  <SelectItem value="title" className="hover:bg-primary/5">
                     <div className="flex items-center gap-2">
-                      <Star className="h-4 w-4 text-indigo-500" />
+                      <Star className="h-4 w-4 text-primary" />
                       By Title
                     </div>
                   </SelectItem>
@@ -410,200 +416,101 @@ const PhotoGalleryContent = () => {
       </Card>
 
       {/* Photo Gallery Table */}
-      <Card className="border-0 shadow-2xl bg-white border-t-4 border-t-gradient-to-r from-purple-500 to-pink-500">
-        <CardHeader className="p-6 border-b bg-gradient-to-r from-purple-500 to-pink-600">
-          <CardTitle className="text-xl font-semibold text-white flex items-center gap-3">
-            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-              <Camera className="h-6 w-6 text-white" />
-            </div>
-            Photo Gallery Collection
-            <div className="flex gap-2 ml-auto">
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
-                {filteredData.length} Showing
-              </Badge>
-              <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
-                {stats.total} Total
-              </Badge>
-            </div>
-          </CardTitle>
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="p-0 overflow-hidden">
+          <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 p-6">
+            <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
+              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                <Camera className="h-5 w-5 text-white" />
+              </div>
+              <span>Photo Gallery Collection</span>
+            </CardTitle>
+            <p className="text-primary-foreground/80 mt-1">
+              {filteredData.length} photo{filteredData.length !== 1 ? 's' : ''} found
+            </p>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           {filteredData.length === 0 ? (
-            <div className="p-16 text-center bg-gradient-to-b from-purple-50 to-pink-50">
-              <div className="p-4 bg-purple-100 rounded-full w-fit mx-auto mb-6">
-                <Camera className="h-16 w-16 text-purple-500" />
-              </div>
-              <h3 className="text-xl font-semibold text-purple-800 mb-3">No photos found</h3>
-              <p className="text-purple-600 mb-6 max-w-md mx-auto">
-                {searchTerm ? 
-                  "Try adjusting your search terms to find the perfect photo." : 
-                  "Start building your stunning photo gallery by uploading your first image."
-                }
+            <div className="text-center py-12">
+              <Camera className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
+              <p className="text-muted-foreground text-lg">No photos found</p>
+              <p className="text-muted-foreground/70 text-sm mt-1">
+                {searchTerm ? "Try adjusting your search criteria" : "Add your first photo to get started"}
               </p>
-              <Button
-                onClick={() => {
-                  setFormData({ title: "", photo: null });
-                  setEditingItem(null);
-                }}
-                className="bg-purple-500 hover:bg-purple-600 text-white"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Upload First Photo
-              </Button>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-gradient-to-r from-slate-100 to-gray-100 border-b-2 border-gray-200">
-                    <TableHead className="w-32 text-center font-semibold text-gray-700 py-4">
-                      <Users className="h-4 w-4 mx-auto mb-1" />
-                      Actions
-                    </TableHead>
-                    <TableHead className="min-w-[250px] font-semibold text-gray-700 py-4">
-                      <div className="flex items-center gap-2">
-                        <ImageIcon className="h-4 w-4 text-purple-500" />
-                        Photo Title
-                      </div>
-                    </TableHead>
-                    <TableHead className="w-40 text-center font-semibold text-gray-700 py-4">
-                      <div className="flex items-center gap-2 justify-center">
-                        <Camera className="h-4 w-4 text-pink-500" />
-                        Preview
-                      </div>
-                    </TableHead>
-                    <TableHead className="w-32 text-center font-semibold text-gray-700 py-4">
-                      <div className="flex items-center gap-2 justify-center">
-                        <Calendar className="h-4 w-4 text-orange-500" />
-                        Added
-                      </div>
-                    </TableHead>
-                    <TableHead className="w-28 text-center font-semibold text-gray-700 py-4">
-                      <Award className="h-4 w-4 mx-auto" />
-                      Status
-                    </TableHead>
+                  <TableRow className="bg-primary hover:bg-primary border-b-2 border-primary">
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4 min-w-[120px]">Actions</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Photo</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Title</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Status</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4">Date</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredData.map((item, index) => (
                     <TableRow 
                       key={item.id} 
-                      className={`
-                        hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 
-                        transition-all duration-200 border-b border-gray-100
-                        ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}
-                      `}
+                      className={`${index % 2 === 0 ? "bg-muted/30" : "bg-background"} hover:bg-primary/5 transition-colors border-b border-border`}
                     >
-                      <TableCell className="text-center py-6">
-                        <div className="flex gap-2 justify-center">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                              setEditingItem(item);
-                              setFormData({
-                                title: item.title,
-                                photo: null
-                              });
-                            }}
-                            className="h-9 w-9 p-0 text-purple-600 hover:text-purple-800 hover:bg-purple-100 rounded-lg transition-all"
-                            title="Edit photo"
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
+                      <TableCell className="border-r border-border p-4">
+                        <div className="flex justify-center space-x-2">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleDelete(item.id)}
-                            className="h-9 w-9 p-0 text-red-600 hover:text-red-800 hover:bg-red-100 rounded-lg transition-all"
-                            title="Delete photo"
+                            className="text-destructive hover:text-destructive/80 hover:bg-destructive/10 p-2 rounded-md transition-all duration-200"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
-                          {item.image_url && (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => window.open(item.image_url, '_blank')}
-                              className="h-9 w-9 p-0 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-all"
-                              title="View full size"
-                            >
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                          )}
                         </div>
                       </TableCell>
-                      <TableCell className="py-6">
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 bg-purple-100 rounded-lg">
-                            <ImageIcon className="h-5 w-5 text-purple-600" />
+                      <TableCell className="border-r border-border p-4 text-center">
+                        {item.image_url ? (
+                          <div className="flex justify-center">
+                            <img 
+                              src={item.image_url} 
+                              alt={item.title}
+                              className="w-16 h-16 object-cover rounded-lg border border-border shadow-sm"
+                            />
                           </div>
-                          <div className="space-y-1">
-                            <p className="font-semibold text-gray-800 leading-tight">
-                              {item.title}
-                            </p>
-                            <div className="flex items-center gap-1">
-                              <Star className="h-3 w-3 text-yellow-500" />
-                              <span className="text-xs text-gray-500">Gallery Item</span>
+                        ) : (
+                          <div className="flex justify-center">
+                            <div className="w-16 h-16 bg-muted rounded-lg border border-border flex items-center justify-center">
+                              <ImageIcon className="h-6 w-6 text-muted-foreground" />
                             </div>
                           </div>
-                        </div>
+                        )}
                       </TableCell>
-                      <TableCell className="text-center py-6">
-                        <div className="flex justify-center">
-                          {item.image_url ? (
-                            <div className="relative group">
-                              <img
-                                src={item.image_url}
-                                alt={item.title}
-                                className="w-20 h-16 object-cover rounded-xl border-2 border-pink-200 shadow-sm group-hover:shadow-lg transition-all duration-200"
-                              />
-                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 rounded-xl transition-all duration-200 flex items-center justify-center">
-                                <Eye className="h-5 w-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="w-20 h-16 bg-gradient-to-br from-gray-100 to-gray-200 border-2 border-gray-300 rounded-xl flex items-center justify-center">
-                              <div className="text-center">
-                                <ImageIcon className="h-5 w-5 text-gray-400 mx-auto mb-1" />
-                                <span className="text-xs text-gray-500 font-medium">No Image</span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
+                      <TableCell className="border-r border-border p-4">
+                        <span className="font-semibold text-foreground">{item.title}</span>
                       </TableCell>
-                      <TableCell className="text-center py-6">
-                        <div className="flex flex-col items-center gap-1">
-                          <div className="p-2 bg-orange-100 rounded-lg">
-                            <Calendar className="h-4 w-4 text-orange-600" />
-                          </div>
-                          <span className="text-xs font-semibold text-orange-700">
-                            {item.created_at ? new Date(item.created_at).toLocaleDateString() : 'Unknown'}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center py-6">
-                        <div className="flex flex-col items-center gap-2">
-                          <Badge 
-                            variant={item.image_url ? "default" : "outline"}
-                            className={`text-xs font-semibold px-3 py-1 ${
-                              item.image_url 
-                                ? 'bg-green-100 text-green-800 border-green-300' 
-                                : 'bg-yellow-100 text-yellow-800 border-yellow-300'
-                            }`}
-                          >
-                            {item.image_url ? (
-                              <div className="flex items-center gap-1">
-                                <Heart className="h-3 w-3" />
-                                Ready
-                              </div>
-                            ) : (
-                              <div className="flex items-center gap-1">
-                                <Upload className="h-3 w-3" />
-                                Pending
-                              </div>
-                            )}
+                      <TableCell className="border-r border-border p-4 text-center">
+                        {item.image_url ? (
+                          <Badge className="bg-green-500/10 text-green-700 border border-green-200">
+                            <Eye className="h-3 w-3 mr-1" />
+                            Available
                           </Badge>
+                        ) : (
+                          <Badge variant="outline" className="text-muted-foreground">
+                            <ImageIcon className="h-3 w-3 mr-1" />
+                            No Image
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell className="p-4 text-center">
+                        <div className="flex items-center justify-center gap-1">
+                          <Calendar className="h-3 w-3 text-muted-foreground" />
+                          <span className="text-sm font-medium text-foreground">
+                            {item.created_at 
+                              ? new Date(item.created_at).toLocaleDateString()
+                              : "Unknown"
+                            }
+                          </span>
                         </div>
                       </TableCell>
                     </TableRow>
