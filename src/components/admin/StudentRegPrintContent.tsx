@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Search, Filter, UserCheck, FileText, Printer, Users, GraduationCap, Calendar, Award, Building, MapPin, Phone, Mail, CreditCard, User, FileDown, Loader2 } from "lucide-react";
+import { Search, UserCheck, FileText, Users, GraduationCap, Calendar, Award, Building, MapPin, Phone, Mail, CreditCard, User, FileDown, Loader2 } from "lucide-react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { supabase } from "@/integrations/supabase/client";
+import indiaEmblem from "@/assets/india-emblem.png";
+import nabardLogo from "@/assets/nabard-logo.png";
 
 type StudentData = {
   id: string;
@@ -105,17 +107,6 @@ const StudentRegPrintContent = () => {
     });
   };
 
-  const handlePrintReceipt = () => {
-    if (!selectedStudent) {
-      toast({
-        title: "Error",
-        description: "Please search and select a student first",
-        variant: "destructive"
-      });
-      return;
-    }
-    window.print();
-  };
 
   const generateProfessionalPDF = async () => {
     if (!selectedStudent) {
@@ -182,13 +173,13 @@ const StudentRegPrintContent = () => {
       const usableHeightMm = pdfHeight - margin * 2;
 
       // Calculate how to fit the content
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const imgData = canvas.toDataURL('image/png');
       const aspectRatio = canvas.height / canvas.width;
       const heightMm = usableWidthMm * aspectRatio;
 
       if (heightMm <= usableHeightMm) {
         // Fits on one page
-        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
+        pdf.addImage(imgData, 'PNG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
       } else {
         // Multi-page handling
         const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
@@ -210,9 +201,9 @@ const StudentRegPrintContent = () => {
           ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
           ctx.drawImage(canvas, 0, currentY, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
 
-          const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+          const pageImgData = pageCanvas.toDataURL('image/png');
           const pageHeightMm = (sliceHeight / canvas.width) * usableWidthMm;
-          pdf.addImage(pageImgData, 'JPEG', margin, margin, usableWidthMm, pageHeightMm, undefined, 'FAST');
+          pdf.addImage(pageImgData, 'PNG', margin, margin, usableWidthMm, pageHeightMm, undefined, 'FAST');
 
           // Add page number
           pdf.setTextColor(120, 120, 120);
@@ -370,14 +361,6 @@ const StudentRegPrintContent = () => {
               </div>
               <div className="flex gap-2">
                 <Button 
-                  onClick={handlePrintReceipt}
-                  disabled={!selectedStudent}
-                  className="bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary text-secondary-foreground shadow-lg px-6"
-                >
-                  <Printer className="h-4 w-4 mr-2" />
-                  Print Receipt
-                </Button>
-                <Button 
                   onClick={generateProfessionalPDF}
                   disabled={!selectedStudent || isGeneratingPDF}
                   className="bg-gradient-to-r from-green-600 via-green-700 to-emerald-700 hover:from-green-700 hover:via-green-800 hover:to-emerald-800 text-white px-6 py-2 flex items-center gap-2 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
@@ -458,202 +441,152 @@ const StudentRegPrintContent = () => {
           </CardHeader>
           
           <CardContent className="p-8">
-            <div ref={registrationFormRef}>
-              {/* Selected Student Info */}
-              {selectedStudent && (
-                <div className="mb-6 p-4 bg-accent/10 rounded-lg border border-accent/20">
-                  <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center space-x-2">
-                    <UserCheck className="h-5 w-5 text-primary" />
-                    <span>Selected Student Information</span>
-                  </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div>
-                      <span className="font-medium text-muted-foreground">Name:</span>
-                      <p className="text-foreground">{selectedStudent.student_name}</p>
-                    </div>
-                    <div>
-                      <span className="font-medium text-muted-foreground">ID:</span>
-                      <p className="text-foreground">{selectedStudent.student_id}</p>
-                    </div>
-                    <div>
-                      <span className="font-medium text-muted-foreground">Course:</span>
-                      <p className="text-foreground">{selectedStudent.course_name}</p>
-                    </div>
-                    <div>
-                      <span className="font-medium text-muted-foreground">Center:</span>
-                      <p className="text-foreground">{selectedStudent.center_name}</p>
-                    </div>
+            {/* Preview panel (screen) */}
+            {selectedStudent && (
+              <div className="mb-6 p-4 bg-accent/10 rounded-lg border border-accent/20">
+                <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center space-x-2">
+                  <UserCheck className="h-5 w-5 text-primary" />
+                  <span>Selected Student Information</span>
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium text-muted-foreground">Name:</span>
+                    <p className="text-foreground">{selectedStudent.student_name}</p>
                   </div>
-                </div>
-              )}
-
-              {/* Institute Header */}
-              <div className="flex items-center justify-between mb-8">
-                {/* Logo */}
-                <div className="flex-shrink-0">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 border-4 border-primary/30 flex items-center justify-center shadow-lg">
-                    <div className="text-center">
-                      <div className="text-xs font-bold text-primary">B SOFT</div>
-                      <div className="text-xs text-primary/80">Computer & Technical</div>
-                      <div className="text-xs text-primary/80">Institute</div>
-                    </div>
+                  <div>
+                    <span className="font-medium text-muted-foreground">ID:</span>
+                    <p className="text-foreground">{selectedStudent.student_id}</p>
                   </div>
-                </div>
-
-                {/* Institute Details */}
-                <div className="flex-1 text-center px-8">
-                  <h1 className="text-2xl font-bold text-primary mb-2">
-                    B SOFT Computer & Technical Institute
-                  </h1>
-                  <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground mb-1">
-                    <MapPin className="h-4 w-4" />
-                    <p>Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121</p>
+                  <div>
+                    <span className="font-medium text-muted-foreground">Course:</span>
+                    <p className="text-foreground">{selectedStudent.course_name}</p>
                   </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="flex-shrink-0 text-right space-y-2">
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <Mail className="h-4 w-4" />
-                    <p>infobinasoft@gmail.com</p>
+                  <div>
+                    <span className="font-medium text-muted-foreground">Center:</span>
+                    <p className="text-foreground">{selectedStudent.center_name}</p>
                   </div>
                 </div>
               </div>
+            )}
 
-              {/* Student Registration Form */}
-              <div className="border-t border-border/40 pt-8">
-                <h2 className="text-lg font-bold text-center mb-8 underline text-foreground flex items-center justify-center space-x-2">
-                  <FileText className="h-5 w-5" />
-                  <span>Student Registration Print</span>
-                </h2>
+            {/* A4 Certificate Canvas (captured to PDF) */}
+            <div
+              ref={registrationFormRef}
+              className="relative mx-auto bg-background w-[794px] min-h-[1123px] p-10 border-[12px] border-primary/20 rounded-md shadow-elegant"
+            >
+              {/* Inner frame */}
+              <div className="absolute inset-4 border-2 border-border/60 rounded-md pointer-events-none" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
-                  {/* Left Column */}
-                  <div className="space-y-8">
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <User className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Name :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
-                          <span className="text-foreground">{selectedStudent?.student_name || ''}</span>
-                        </div>
-                      </div>
-                    </div>
+              {/* Watermark */}
+              <img
+                src={nabardLogo}
+                alt="Institute watermark logo"
+                className="absolute inset-0 m-auto opacity-5 w-[420px] h-[420px] object-contain pointer-events-none"
+              />
 
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <GraduationCap className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Course Category :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
-                          <span className="text-foreground">{selectedStudent?.course_name || ''}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <Award className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Course Name :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
-                          <span className="text-foreground">{selectedStudent?.course_name || ''}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <User className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Father's Name :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
-                          <span className="text-foreground">{selectedStudent?.student_father_name || ''}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <User className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Mother's Name :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
-                          <span className="text-foreground">{selectedStudent?.student_mother_name || ''}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column */}
-                  <div className="space-y-8">
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <Building className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Study Center Code :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
-                          <span className="text-foreground">{selectedStudent?.center_code || ''}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <Calendar className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Date of Birth :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors"></div>
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <Phone className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Mobile No. :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors"></div>
-                      </div>
-                    </div>
-
-                    <div className="group">
-                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
-                        <CreditCard className="h-4 w-4 text-primary mr-3" />
-                        <label className="text-sm font-medium text-foreground w-32">Student ID :</label>
-                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
-                          <span className="text-foreground">{selectedStudent?.student_id || ''}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              {/* Header */}
+              <div className="relative flex items-start justify-between">
+                <img src={indiaEmblem} alt="National emblem" className="h-16 w-auto opacity-90" />
+                <div className="text-center flex-1 px-4">
+                  <h1 className="text-2xl font-extrabold text-foreground">B SOFT Computer & Technical Institute</h1>
+                  <p className="text-sm text-muted-foreground">
+                    Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121
+                  </p>
+                  <p className="text-xs text-muted-foreground">Email: infobinasoft@gmail.com</p>
                 </div>
-
-                {/* Signature Section */}
-                <div className="grid grid-cols-3 gap-8 mt-16 pt-8 border-t border-border/40">
-                  <div className="text-center">
-                    <div className="border-b border-border/60 pb-2 mb-2 h-16"></div>
-                    <p className="text-sm font-medium text-foreground">Student Signature</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="border-b border-border/60 pb-2 mb-2 h-16"></div>
-                    <p className="text-sm font-medium text-foreground">Parent/Guardian Signature</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="border-b border-border/60 pb-2 mb-2 h-16"></div>
-                    <p className="text-sm font-medium text-foreground">Institute Signature</p>
-                  </div>
+                <div className="h-24 w-20 border-2 border-border/60 rounded-sm overflow-hidden bg-muted/20">
+                  {selectedStudent?.student_photo_url ? (
+                    <img
+                      src={selectedStudent.student_photo_url}
+                      alt={`${selectedStudent.student_name} photo`}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full flex items-center justify-center text-[10px] text-muted-foreground">Photo</div>
+                  )}
                 </div>
+              </div>
 
-                {/* Footer Information */}
-                <div className="mt-12 pt-8 border-t border-border/40 bg-accent/10 p-6 rounded-lg">
-                  <div className="grid grid-cols-2 gap-8 text-sm text-muted-foreground">
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">Document Details:</h4>
-                      <p>• This is an official registration document</p>
-                      <p>• Valid for academic purposes</p>
-                      <p>• Keep this document safe for future reference</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">Verification Code:</h4>
-                      <div className="bg-background p-3 rounded border border-border/40 font-mono text-center">
-                        REG-{new Date().getFullYear()}-{selectedStudent?.student_id || Math.random().toString(36).substr(2, 6).toUpperCase()}
-                      </div>
-                    </div>
-                  </div>
+              {/* Title */}
+              <div className="mt-6 text-center">
+                <h2 className="text-xl font-bold tracking-wide text-primary uppercase">Registration Certificate</h2>
+                <p className="text-xs text-muted-foreground mt-1">
+                  This certifies that the student details below are registered with the institute.
+                </p>
+              </div>
+
+              {/* Details */}
+              <div className="mt-8 grid grid-cols-2 gap-x-10 gap-y-5 text-sm">
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Student Name</p>
+                  <p className="border-b border-border/60 py-2 font-semibold">{selectedStudent?.student_name || "-"}</p>
                 </div>
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Student ID</p>
+                  <p className="border-b border-border/60 py-2 font-semibold">{selectedStudent?.student_id || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Course</p>
+                  <p className="border-b border-border/60 py-2">{selectedStudent?.course_name || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Study Center Code</p>
+                  <p className="border-b border-border/60 py-2">{selectedStudent?.center_code || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Father's Name</p>
+                  <p className="border-b border-border/60 py-2">{selectedStudent?.student_father_name || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Mother's Name</p>
+                  <p className="border-b border-border/60 py-2">{selectedStudent?.student_mother_name || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Center Name</p>
+                  <p className="border-b border-border/60 py-2">{selectedStudent?.center_name || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Place</p>
+                  <p className="border-b border-border/60 py-2">{selectedStudent?.place || "-"}</p>
+                </div>
+              </div>
+
+              {/* Verification strip */}
+              <div className="mt-8 grid grid-cols-3 gap-4 items-end">
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Issued Date</p>
+                  <p className="border-b border-border/60 py-2">{new Date().toLocaleDateString()}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Verification Code</p>
+                  <p className="border border-border/60 rounded px-3 py-2 font-mono text-center">
+                    REG-{new Date().getFullYear()}-{(selectedStudent?.student_id || "").toString().replace(/[^A-Z0-9]/gi, "").toUpperCase()}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[11px] text-muted-foreground font-medium">Authorized Signatory</p>
+                  <div className="border-b border-border/60 h-10"></div>
+                </div>
+              </div>
+
+              {/* Signatures */}
+              <div className="mt-12 grid grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="border-b border-border/60 h-12 mb-2"></div>
+                  <p className="text-sm font-medium">Student Signature</p>
+                </div>
+                <div className="text-center">
+                  <div className="border-b border-border/60 h-12 mb-2"></div>
+                  <p className="text-sm font-medium">Parent/Guardian Signature</p>
+                </div>
+                <div className="text-center">
+                  <div className="border-b border-border/60 h-12 mb-2"></div>
+                  <p className="text-sm font-medium">Institute Seal & Signature</p>
+                </div>
+              </div>
+
+              <div className="mt-8 text-[10px] text-muted-foreground text-center">
+                This document is computer generated and does not require a physical signature.
               </div>
             </div>
           </CardContent>
