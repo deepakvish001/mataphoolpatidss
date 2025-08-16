@@ -232,65 +232,67 @@ const VerificationReportContent = () => {
         </div>
 
         {/* Verification Report Table */}
-        <Card className="shadow-lg border-0 bg-card/50 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-primary" />
-              Student Verification Report ({students.length} records)
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <FileText className="h-6 w-6" />
+              </div>
+              <span>Student Verification Report ({students.length} records)</span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="border border-border rounded-lg bg-background/50 overflow-hidden">
+          <CardContent className="p-8">
+            <div className="border border-border/40 rounded-lg bg-background/50 overflow-hidden shadow-inner">
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse min-w-[1800px]">
                   <thead>
-                    <tr className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
+                    <tr className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground">
                       <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[120px]">
                         <div className="flex items-center gap-2">
                           <MapPin className="h-4 w-4" />
                           State & Actions
                         </div>
                       </th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[120px]">
-                        <div className="flex items-center gap-1">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[120px]">
+                        <div className="flex items-center gap-2">
                           <MapPin className="h-4 w-4" />
                           District
                         </div>
                       </th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[140px]">Center Code</th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[150px]">Enrollment No</th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[120px]">
-                        <div className="flex items-center gap-1">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[140px]">Center Code</th>
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[150px]">Enrollment No</th>
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[120px]">
+                        <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4" />
                           DOB
                         </div>
                       </th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[160px]">
-                        <div className="flex items-center gap-1">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[160px]">
+                        <div className="flex items-center gap-2">
                           <User className="h-4 w-4" />
                           Student Name
                         </div>
                       </th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[300px]">
-                        <div className="flex items-center gap-1">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[300px]">
+                        <div className="flex items-center gap-2">
                           <Award className="h-4 w-4" />
                           Course Name
                         </div>
                       </th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[220px]">
-                        <div className="flex items-center gap-1">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[220px]">
+                        <div className="flex items-center gap-2">
                           <Image className="h-4 w-4" />
                           Photo
                         </div>
                       </th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[220px]">
-                        <div className="flex items-center gap-1">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[220px]">
+                        <div className="flex items-center gap-2">
                           <FileCheck className="h-4 w-4" />
                           Certificate
                         </div>
                       </th>
-                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[250px]">
-                        <div className="flex items-center gap-1">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[250px]">
+                        <div className="flex items-center gap-2">
                           <FileText className="h-4 w-4" />
                           Marksheet
                         </div>
@@ -299,7 +301,7 @@ const VerificationReportContent = () => {
                   </thead>
                   <tbody>
                     {students.map((student, index) => (
-                      <tr key={student.id} className={index % 2 === 0 ? "bg-background hover:bg-accent/30" : "bg-accent/10 hover:bg-accent/40"}>
+                      <tr key={student.id} className={`${index % 2 === 0 ? "bg-background/80" : "bg-accent/5"} hover:bg-accent/20 transition-colors duration-200 border-b border-border/30`}>
                         <td className="border-r border-border/30 px-4 py-4 text-sm">
                           <div className="flex gap-2 mb-3">
                             <Button
