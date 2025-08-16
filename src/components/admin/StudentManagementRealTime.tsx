@@ -213,11 +213,11 @@ const StudentManagementRealTime = () => {
 
   if (loading) {
     return (
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
         <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
           <div className="flex flex-col items-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-            <p className="text-gray-600">Loading students...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-muted-foreground">Loading students...</p>
           </div>
         </CardContent>
       </Card>
@@ -228,9 +228,9 @@ const StudentManagementRealTime = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-800 flex items-center space-x-3">
-          <div className="p-3 bg-purple-100 rounded-full">
-            <TrendingUp className="h-8 w-8 text-purple-600" />
+        <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
+          <div className="p-3 bg-primary/10 rounded-full">
+            <TrendingUp className="h-8 w-8 text-primary" />
           </div>
           <span>Real-Time Student Management</span>
         </h1>
@@ -238,79 +238,79 @@ const StudentManagementRealTime = () => {
 
       {/* Statistics Dashboard */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm font-medium">Total Students</p>
+                <p className="text-primary-foreground/80 text-sm font-medium">Total Students</p>
                 <p className="text-3xl font-bold">{totalStudents}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <Users className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100 text-sm font-medium">Active Students</p>
+                <p className="text-accent-foreground/80 text-sm font-medium">Active Students</p>
                 <p className="text-3xl font-bold">{activeStudents}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <UserCheck className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-purple-100 text-sm font-medium">Graduated Students</p>
+                <p className="text-secondary-foreground/80 text-sm font-medium">Graduated Students</p>
                 <p className="text-3xl font-bold">{graduatedStudents}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <GraduationCap className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-100 text-sm font-medium">Recent Enrollments</p>
-                <p className="text-3xl font-bold">{recentEnrollments}</p>
+                <p className="text-muted-foreground/80 text-sm font-medium">Recent Enrollments</p>
+                <p className="text-3xl font-bold text-foreground">{recentEnrollments}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <Calendar className="h-6 w-6" />
+              <div className="p-3 bg-background/20 rounded-full">
+                <Calendar className="h-6 w-6 text-foreground" />
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100">
+      <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
+        <CardHeader className="p-8 border-b border-border/10">
           <div className="flex justify-between items-center">
-            <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-              <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
-                <Users className="h-6 w-6 text-white" />
+            <CardTitle className="text-2xl font-bold text-foreground flex items-center space-x-3">
+              <div className="p-2 bg-gradient-to-r from-primary to-primary/80 rounded-lg">
+                <Users className="h-6 w-6 text-primary-foreground" />
               </div>
               <span>Student Management</span>
-              <Badge className="bg-purple-100 text-purple-800">
+              <Badge className="bg-primary/10 text-primary">
                 Real-time
               </Badge>
             </CardTitle>
             <div className="flex space-x-3">
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button onClick={resetForm} className="bg-gradient-to-r from-green-600 to-green-700">
+                  <Button onClick={resetForm} className="bg-gradient-to-r from-accent to-accent/80">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Student
                   </Button>
