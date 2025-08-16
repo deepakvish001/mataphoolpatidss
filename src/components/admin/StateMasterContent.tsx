@@ -144,301 +144,294 @@ const StateMasterContent = () => {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Statistics Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-100 text-sm font-medium">Total States</p>
-                <p className="text-3xl font-bold">{stats.total}</p>
-                <p className="text-xs text-blue-200 mt-1">Registered states</p>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-primary/5 p-6">
+      <div className="w-full max-w-6xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-primary to-primary/80 px-8 py-6 rounded-xl shadow-lg animate-fade-in">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-primary-foreground/20 rounded-lg">
+              <MapPin className="h-8 w-8 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-primary-foreground">State Master Management</h1>
+              <p className="text-primary-foreground/80">Manage state data and geographic information</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 animate-fade-in">
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg hover-scale cursor-pointer">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-blue-100 text-sm font-medium">Total States</p>
+                  <p className="text-3xl font-bold">{stats.total}</p>
+                  <p className="text-xs text-blue-200 mt-1">Registered states</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-full">
+                  <MapPin className="h-6 w-6" />
+                </div>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <MapPin className="h-6 w-6" />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0 shadow-lg hover-scale cursor-pointer">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-green-100 text-sm font-medium">Recent Additions</p>
+                  <p className="text-3xl font-bold">{stats.recentlyAdded}</p>
+                  <p className="text-xs text-green-200 mt-1">Last 30 days</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-full">
+                  <TrendingUp className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0 shadow-lg hover-scale cursor-pointer">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-purple-100 text-sm font-medium">Oldest Entry</p>
+                  <p className="text-3xl font-bold">#{stats.oldestEntry}</p>
+                  <p className="text-xs text-purple-200 mt-1">First state ID</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-full">
+                  <BarChart3 className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0 shadow-lg hover-scale cursor-pointer">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-orange-100 text-sm font-medium">Latest Entry</p>
+                  <p className="text-3xl font-bold">#{stats.newestEntry}</p>
+                  <p className="text-xs text-orange-200 mt-1">Recent state ID</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-full">
+                  <Activity className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* State Master Form */}
+        <Card className="shadow-xl border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur animate-scale-in">
+          <CardHeader className="border-b border-border bg-gradient-to-r from-primary/10 via-primary/5 to-transparent">
+            <CardTitle className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-gradient-to-r from-primary to-primary/80 rounded-xl shadow-lg">
+                  <MapPin className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <div>
+                  <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    {editingState ? 'Edit State Details' : 'State Registration Form'}
+                  </span>
+                  <p className="text-sm text-muted-foreground font-normal">Manage state information and geographic data</p>
+                </div>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          
+          <CardContent className="p-8">
+            <div className="space-y-8">
+              {/* Geographic Information Section */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b-2 border-gradient-to-r from-primary/20 to-transparent">
+                  <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
+                    <Globe className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">Geographic Information</h3>
+                  <div className="ml-auto">
+                    <div className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">Required</div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 group">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                    State Name *
+                  </label>
+                  <Input
+                    value={stateName}
+                    onChange={(e) => setStateName(e.target.value)}
+                    placeholder="Enter state name (e.g., Uttar Pradesh)"
+                    className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
+                  />
+                  <div className="text-xs text-muted-foreground">Enter the complete state name as per official records</div>
+                </div>
+              </div>
+
+              {/* Submit and Reset Buttons */}
+              <div className="flex gap-4 pt-6 border-t border-border">
+                <Button 
+                  onClick={handleSave}
+                  className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg"
+                  size="lg"
+                >
+                  {editingState ? (
+                    <>
+                      <Edit className="h-4 w-4 mr-2" />
+                      Update State
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add State
+                    </>
+                  )}
+                </Button>
+                <Button variant="outline" onClick={handleReset} size="lg">
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Reset Form
+                </Button>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg hover:shadow-xl transition-shadow">
+        {/* Search and Filter Controls */}
+        <Card className="shadow-xl border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur animate-scale-in">
+          <CardHeader className="border-b border-border bg-gradient-to-r from-primary/10 via-primary/5 to-transparent">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg">
+                <Search className="h-5 w-5 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">Search & Filter States</h3>
+            </div>
+          </CardHeader>
           <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-green-100 text-sm font-medium">Recent Additions</p>
-                <p className="text-3xl font-bold">{stats.recentlyAdded}</p>
-                <p className="text-xs text-green-200 mt-1">Last 30 days</p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search by state name or ID..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20"
+                />
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <TrendingUp className="h-6 w-6" />
-              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => refresh()}
+                className="border-2 border-border/80 hover:border-primary"
+              >
+                <RefreshCw className="h-4 w-4" />
+              </Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-purple-100 text-sm font-medium">Oldest Entry</p>
-                <p className="text-3xl font-bold">#{stats.oldestEntry}</p>
-                <p className="text-xs text-purple-200 mt-1">First state ID</p>
+        {/* State Master Table */}
+        <Card className="shadow-xl border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur animate-scale-in">
+          <CardHeader className="border-b border-border bg-gradient-to-r from-primary/10 via-primary/5 to-transparent">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg">
+                <MapPin className="h-5 w-5 text-white" />
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <BarChart3 className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-orange-100 text-sm font-medium">Latest Entry</p>
-                <p className="text-3xl font-bold">#{stats.newestEntry}</p>
-                <p className="text-xs text-orange-200 mt-1">Recent state ID</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <Activity className="h-6 w-6" />
+              <div className="flex-1">
+                <CardTitle className="text-xl font-semibold text-foreground">
+                  State Master Registry
+                </CardTitle>
+                <div className="flex items-center justify-between mt-2">
+                  <p className="text-sm text-muted-foreground">
+                    Complete state database with {filteredStates.length} entries
+                  </p>
+                  <Badge variant="outline" className="border-primary/30 text-primary bg-primary/10">
+                    {filteredStates.length} of {states.length} states
+                  </Badge>
+                </div>
               </div>
             </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            {filteredStates.length === 0 ? (
+              <div className="p-12 text-center">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="p-4 bg-muted rounded-full">
+                    <MapPin className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-medium text-muted-foreground">
+                      {searchTerm ? "No states found" : "No states available"}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {searchTerm 
+                        ? "Try adjusting your search criteria" 
+                        : "Start by adding your first state using the form above"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader className="bg-muted/50">
+                    <TableRow className="border-b-2 border-border">
+                      <TableHead className="w-[120px] font-semibold text-foreground">Actions</TableHead>
+                      <TableHead className="min-w-[120px] font-semibold text-foreground">State ID</TableHead>
+                      <TableHead className="min-w-[200px] font-semibold text-foreground">State Name</TableHead>
+                      <TableHead className="min-w-[150px] font-semibold text-foreground">Created Date</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredStates.map((state, index) => (
+                      <TableRow 
+                        key={state.id} 
+                        className={`hover:bg-muted/50 transition-colors ${
+                          index % 2 === 0 ? 'bg-background' : 'bg-muted/20'
+                        }`}
+                      >
+                        <TableCell className="py-4">
+                          <div className="flex gap-1">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(state)}
+                              className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                              title="Edit state"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(state.id)}
+                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                              title="Delete state"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                        <TableCell className="py-4">
+                          <span className="font-mono text-sm font-medium">{state.city_id}</span>
+                        </TableCell>
+                        <TableCell className="py-4">
+                          <span className="font-medium text-foreground">{state.city_name}</span>
+                        </TableCell>
+                        <TableCell className="py-4">
+                          <span className="text-sm text-muted-foreground">
+                            {state.created_date || "N/A"}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
-
-      {/* State Master Form */}
-      <Card className="shadow-lg border-l-4 border-l-emerald-500 bg-gradient-to-r from-emerald-50/50 to-white dark:from-emerald-950/20 dark:to-background">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-emerald-500 text-white rounded-lg">
-              <Plus className="h-5 w-5" />
-            </div>
-            <div>
-              <CardTitle className="text-xl font-semibold text-emerald-700 dark:text-emerald-300">
-                {editingState ? 'Edit State Details' : 'Add New State'}
-              </CardTitle>
-              <p className="text-sm text-emerald-600 dark:text-emerald-400 mt-1">
-                {editingState ? "Update state information" : "Enter state details for registration"}
-              </p>
-            </div>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-semibold flex items-center gap-2 text-emerald-700 dark:text-emerald-300">
-              <Globe className="h-4 w-4" />
-              State Name *
-            </label>
-            <div className="relative">
-              <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-500 h-4 w-4" />
-              <Input
-                value={stateName}
-                onChange={(e) => setStateName(e.target.value)}
-                placeholder="Enter state name (e.g., Uttar Pradesh)"
-                className="pl-10 border-emerald-200 focus:border-emerald-400 focus:ring-emerald-400"
-              />
-            </div>
-          </div>
-
-          <div className="flex gap-4 pt-6 border-t border-emerald-200">
-            <Button 
-              onClick={handleSave}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
-              size="lg"
-            >
-              {editingState ? (
-                <>
-                  <Edit className="h-4 w-4 mr-2" />
-                  Update State
-                </>
-              ) : (
-                <>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add State
-                </>
-              )}
-            </Button>
-            <Button variant="outline" onClick={handleReset} size="lg">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Reset Form
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Search Section */}
-      <Card className="shadow-lg border-l-4 border-l-indigo-500 bg-gradient-to-r from-indigo-50/50 to-white dark:from-indigo-950/20 dark:to-background">
-        <CardContent className="p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-indigo-500 text-white rounded-lg">
-              <Search className="h-5 w-5" />
-            </div>
-            <h3 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">Search States</h3>
-          </div>
-          <div className="flex gap-4 items-center">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-500 h-4 w-4" />
-              <Input
-                placeholder="Search by state name or ID..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 border-indigo-200 focus:border-indigo-400 focus:ring-indigo-400"
-              />
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => refresh()}
-              className="border-indigo-200 text-indigo-600 hover:bg-indigo-50"
-            >
-              <RefreshCw className="h-4 w-4" />
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* States Table */}
-      <Card className="shadow-lg border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50/50 to-white dark:from-purple-950/20 dark:to-background">
-        <CardHeader className="pb-4 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-950/30">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-purple-500 text-white rounded-lg">
-              <MapPin className="h-5 w-5" />
-            </div>
-            <div className="flex-1">
-              <CardTitle className="text-xl font-semibold text-purple-700 dark:text-purple-300">
-                State Master Registry
-              </CardTitle>
-              <div className="flex items-center justify-between mt-2">
-                <p className="text-sm text-purple-600 dark:text-purple-400">
-                  Complete state database with {filteredStates.length} entries
-                </p>
-                <Badge variant="outline" className="border-purple-300 text-purple-700 bg-purple-50">
-                  {filteredStates.length} of {states.length} states
-                </Badge>
-              </div>
-            </div>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
-                <TableRow className="border-b-2 border-purple-200">
-                  <TableHead className="w-[120px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <Activity className="h-4 w-4 text-purple-500" />
-                      Actions
-                    </div>
-                  </TableHead>
-                  <TableHead className="min-w-[120px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <Hash className="h-4 w-4 text-blue-500" />
-                      State ID
-                    </div>
-                  </TableHead>
-                  <TableHead className="min-w-[200px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <Globe className="h-4 w-4 text-green-500" />
-                      State Name
-                    </div>
-                  </TableHead>
-                  <TableHead className="min-w-[150px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-orange-500" />
-                      Created Date
-                    </div>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredStates.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={4} className="text-center py-12">
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-full">
-                          <MapPin className="h-8 w-8 text-gray-400" />
-                        </div>
-                        <div className="text-center">
-                          <p className="text-lg font-medium text-gray-600 dark:text-gray-400">
-                            {searchTerm ? "No states found" : "No states available"}
-                          </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
-                            {searchTerm 
-                              ? "Try adjusting your search criteria" 
-                              : "Start by adding your first state using the form above"}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  filteredStates.map((state, index) => (
-                    <TableRow 
-                      key={state.id} 
-                      className={`hover:bg-purple-50/50 dark:hover:bg-purple-950/20 transition-colors ${
-                        index % 2 === 0 ? 'bg-white dark:bg-background' : 'bg-gray-50/50 dark:bg-gray-950/30'
-                      }`}
-                    >
-                      <TableCell className="py-4">
-                        <div className="flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleEdit(state)}
-                            className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
-                            title="Edit state"
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(state.id)}
-                            className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                            title="Delete state"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-4">
-                        <div className="flex items-center gap-2">
-                          <div className="p-1 bg-blue-100 dark:bg-blue-900/30 rounded">
-                            <Hash className="h-3 w-3 text-blue-600" />
-                          </div>
-                          <span className="font-mono text-sm font-medium">{state.city_id}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-4">
-                        <div className="flex items-center gap-2">
-                          <div className="p-1 bg-green-100 dark:bg-green-900/30 rounded">
-                            <Globe className="h-3 w-3 text-green-600" />
-                          </div>
-                          <span className="font-medium text-gray-900 dark:text-gray-100">{state.city_name}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-4">
-                        <div className="flex items-center gap-2">
-                          <div className="p-1 bg-orange-100 dark:bg-orange-900/30 rounded">
-                            <Calendar className="h-3 w-3 text-orange-600" />
-                          </div>
-                          <span className="text-sm text-gray-700 dark:text-gray-300">
-                            {state.created_date || "N/A"}
-                          </span>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };
