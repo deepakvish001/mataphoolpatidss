@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Users, Edit, Trash2, Plus, Search, Loader2, UserCheck, GraduationCap } from "lucide-react";
+import { Users, Edit, Trash2, Plus, Search, Loader2, UserCheck, GraduationCap, Calendar, TrendingUp, BookOpen, MapPin, Mail, Phone } from "lucide-react";
 import { toast } from "sonner";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
@@ -90,6 +90,20 @@ const StudentManagementRealTime = () => {
     
     return matchesSearch && matchesStatus;
   });
+
+  // Calculate statistics
+  const totalStudents = students.length;
+  const activeStudents = students.filter(s => s.status === 'active').length;
+  const graduatedStudents = students.filter(s => s.status === 'graduated').length;
+  const inactiveStudents = students.filter(s => s.status === 'inactive').length;
+  const uniqueCourses = [...new Set(students.filter(s => s.course_name).map(s => s.course_name))].length;
+  const recentEnrollments = students.filter(student => {
+    if (!student.enrollment_date) return false;
+    const enrollmentDate = new Date(student.enrollment_date);
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    return enrollmentDate >= sevenDaysAgo;
+  }).length;
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -208,6 +222,75 @@ const StudentManagementRealTime = () => {
 
   return (
     <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold text-gray-800 flex items-center space-x-3">
+          <div className="p-3 bg-purple-100 rounded-full">
+            <TrendingUp className="h-8 w-8 text-purple-600" />
+          </div>
+          <span>Real-Time Student Management</span>
+        </h1>
+      </div>
+
+      {/* Statistics Dashboard */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-blue-100 text-sm font-medium">Total Students</p>
+                <p className="text-3xl font-bold">{totalStudents}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <Users className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-green-100 text-sm font-medium">Active Students</p>
+                <p className="text-3xl font-bold">{activeStudents}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <UserCheck className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-purple-100 text-sm font-medium">Graduated Students</p>
+                <p className="text-3xl font-bold">{graduatedStudents}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <GraduationCap className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-orange-100 text-sm font-medium">Recent Enrollments</p>
+                <p className="text-3xl font-bold">{recentEnrollments}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <Calendar className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
         <CardHeader className="p-8 border-b border-gray-100">
           <div className="flex justify-between items-center">
@@ -402,10 +485,19 @@ const StudentManagementRealTime = () => {
                     </TableCell>
                     <TableCell className="p-4">
                       <div className="space-y-1">
-                        <div className="font-medium text-gray-900">{student.full_name}</div>
-                        <div className="text-sm text-gray-500">✉️ {student.email}</div>
+                        <div className="font-medium text-gray-900 flex items-center space-x-2">
+                          <Users className="h-4 w-4 text-blue-600" />
+                          <span>{student.full_name}</span>
+                        </div>
+                        <div className="text-sm text-gray-500 flex items-center space-x-2">
+                          <Mail className="h-3 w-3 text-green-600" />
+                          <span>{student.email}</span>
+                        </div>
                         {student.phone && (
-                          <div className="text-sm text-gray-500">📞 {student.phone}</div>
+                          <div className="text-sm text-gray-500 flex items-center space-x-2">
+                            <Phone className="h-3 w-3 text-purple-600" />
+                            <span>{student.phone}</span>
+                          </div>
                         )}
                       </div>
                     </TableCell>
@@ -419,8 +511,15 @@ const StudentManagementRealTime = () => {
                     </TableCell>
                     <TableCell className="p-4">
                       <div className="text-sm space-y-1">
-                        {student.city && <div>📍 {student.city}</div>}
-                        {student.state && <div className="text-gray-500">{student.state}</div>}
+                        {student.city && (
+                          <div className="flex items-center space-x-2">
+                            <MapPin className="h-3 w-3 text-indigo-600" />
+                            <span>{student.city}</span>
+                          </div>
+                        )}
+                        {student.state && (
+                          <div className="text-gray-500 ml-5">{student.state}</div>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell className="p-4">
