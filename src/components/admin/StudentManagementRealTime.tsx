@@ -37,8 +37,12 @@ const StudentManagementRealTime = () => {
     orderBy: { column: 'created_at', ascending: false }
   });
 
+  // Disable auto notifications to prevent duplicate notifications
   useAdminRealTime({
-    tableName: 'student_profiles'
+    tableName: 'student_profiles',
+    onUpdate: () => {}, // Disable auto notifications
+    onInsert: () => {},
+    onDelete: () => {}
   });
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
