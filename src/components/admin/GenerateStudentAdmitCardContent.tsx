@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { FileDown } from "lucide-react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 // Mock data for student admit cards
 const mockStudentData = [
@@ -77,6 +80,8 @@ const GenerateStudentAdmitCardContent = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const admitCardRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
   const handleSearch = () => {
@@ -168,6 +173,133 @@ const GenerateStudentAdmitCardContent = () => {
     window.print();
   };
 
+  const generatePDF = async () => {
+    if (!admitCardRef.current) {
+      toast({
+        title: "Error",
+        description: "Admit card template not found",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!selectedCard) {
+      toast({
+        title: "Error",
+        description: "Please select a student first",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      setIsGeneratingPDF(true);
+      toast({
+        title: "Generating PDF",
+        description: "Creating Professional Admit Card PDF...",
+      });
+
+      // Ensure layout and webfonts are fully ready
+      if ((document as any).fonts?.ready) {
+        await (document as any).fonts.ready;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      const element = admitCardRef.current;
+
+      // High-DPI capture for crisp text
+      const canvas = await html2canvas(element, {
+        scale: Math.min(3, window.devicePixelRatio * 2),
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+        imageTimeout: 12000,
+        scrollX: 0,
+        scrollY: 0,
+      });
+
+      if (canvas.width === 0 || canvas.height === 0) {
+        throw new Error('Captured canvas has zero size');
+      }
+
+      const pdf = new jsPDF({ 
+        orientation: 'portrait', 
+        unit: 'mm', 
+        format: 'a4', 
+        compress: true 
+      });
+      
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+      const margin = 10;
+      const usableWidthMm = pdfWidth - margin * 2;
+      const usableHeightMm = pdfHeight - margin * 2;
+
+      // Calculate how to fit the content
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const aspectRatio = canvas.height / canvas.width;
+      const heightMm = usableWidthMm * aspectRatio;
+
+      if (heightMm <= usableHeightMm) {
+        // Fits on one page
+        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
+      } else {
+        // Multi-page handling
+        const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
+        let currentY = 0;
+        let pageNumber = 1;
+
+        while (currentY < canvas.height) {
+          if (pageNumber > 1) pdf.addPage();
+          
+          const sliceHeight = Math.min(pageHeightPx, canvas.height - currentY);
+          
+          const pageCanvas = document.createElement('canvas');
+          pageCanvas.width = canvas.width;
+          pageCanvas.height = sliceHeight;
+          const ctx = pageCanvas.getContext('2d');
+          if (!ctx) throw new Error('2D context not available');
+
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+          ctx.drawImage(canvas, 0, currentY, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
+
+          const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+          const pageHeightMm = (sliceHeight / canvas.width) * usableWidthMm;
+          pdf.addImage(pageImgData, 'JPEG', margin, margin, usableWidthMm, pageHeightMm, undefined, 'FAST');
+
+          // Add page number
+          pdf.setTextColor(120, 120, 120);
+          pdf.setFontSize(8);
+          pdf.text(`Page ${pageNumber}`, pdfWidth - 15, pdfHeight - 5, { align: 'right' });
+
+          currentY += sliceHeight;
+          pageNumber++;
+        }
+      }
+
+      const currentDate = new Date().toISOString().split('T')[0];
+      const sanitizedName = selectedCard.student_name?.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_') || 'Student';
+      const fileName = `${sanitizedName}_AdmitCard_${currentDate}.pdf`;
+      pdf.save(fileName);
+
+      toast({
+        title: "Success",
+        description: "Professional Admit Card PDF generated successfully!",
+      });
+    } catch (error: any) {
+      console.error('PDF generation error:', error);
+      toast({
+        title: "Error",
+        description: `Failed to generate PDF: ${error?.message || 'Unknown error'}`,
+        variant: "destructive"
+      });
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
   return (
     <div className="w-full max-w-none bg-gray-50 min-h-screen">
       {/* Header Navigation */}
@@ -201,6 +333,14 @@ const GenerateStudentAdmitCardContent = () => {
             disabled={!selectedCard || generating}
           >
             {generating ? "Generating..." : "Generate Admit Card"}
+          </Button>
+          <Button 
+            onClick={generatePDF}
+            disabled={!selectedCard || isGeneratingPDF}
+            className="bg-gradient-to-r from-green-600 via-green-700 to-emerald-700 hover:from-green-700 hover:via-green-800 hover:to-emerald-800 text-white px-6 py-2 flex items-center gap-2 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+          >
+            <FileDown className="h-4 w-4" />
+            {isGeneratingPDF ? "Generating PDF..." : "Generate Professional PDF"}
           </Button>
           <Button 
             onClick={handlePrintAdmitCard}
@@ -242,7 +382,7 @@ const GenerateStudentAdmitCardContent = () => {
 
       {/* Main Content */}
       <div className="px-6 py-8 max-w-5xl mx-auto">
-        <div className="bg-white p-8 shadow-lg border">
+        <div ref={admitCardRef} className="bg-white p-8 shadow-lg border">
           
           {/* Institute Header */}
           <div className="text-center mb-6">
