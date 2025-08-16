@@ -3,7 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { Search, FileText, Users, GraduationCap, Calendar, Award, Building, MapPin, Phone, Mail, CreditCard, User, Upload, Trash2, Save, Plus } from "lucide-react";
 
 const MakeStudentAdmitCardContent = () => {
   const { toast } = useToast();
@@ -114,282 +117,454 @@ const MakeStudentAdmitCardContent = () => {
   };
 
   return (
-    <div className="w-full max-w-none bg-gray-200 min-h-screen">
-      {/* Header */}
-      <div className="bg-gray-400 px-6 py-4 border-b border-gray-500">
-        <h1 className="text-xl font-medium text-gray-800">Make Student Admit Card</h1>
-      </div>
-
-      {/* Form Container */}
-      <div className="px-8 py-6 space-y-6">
-        
-        {/* Course */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Course</label>
-          <Select value={formData.course} onValueChange={(value) => handleInputChange('course', value)}>
-            <SelectTrigger className="w-full h-12 border-2 border-gray-400 bg-white">
-              <SelectValue placeholder="---------------Select Course Name----------" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="ADCA">Advance Diploma In Computer Application(ADCA)</SelectItem>
-              <SelectItem value="DCA">Diploma in Computer Application (DCA)</SelectItem>
-              <SelectItem value="PGDCA">Post Graduate Diploma in Computer Application (PGDCA)</SelectItem>
-              <SelectItem value="DCHN">Diploma in Computer Hardware and Networking</SelectItem>
-            </SelectContent>
-          </Select>
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 p-6">
+      <div className="w-full max-w-7xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <FileText className="h-8 w-8 text-primary" />
+            </div>
+            <span>Make Student Admit Card</span>
+          </h1>
         </div>
 
-        {/* Student Roll Number */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Student Roll Number</label>
-          <Input
-            value={formData.studentRollNumber}
-            onChange={(e) => handleInputChange('studentRollNumber', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-primary-foreground/80 text-sm font-medium">Total Admit Cards</p>
+                  <p className="text-3xl font-bold">{studentData.length}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Users className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-accent-foreground/80 text-sm font-medium">Active Students</p>
+                  <p className="text-3xl font-bold">{studentData.filter(s => s.course).length}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <GraduationCap className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-secondary-foreground/80 text-sm font-medium">Exam Centers</p>
+                  <p className="text-3xl font-bold">12</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Building className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground/80 text-sm font-medium">Pending Review</p>
+                  <p className="text-3xl font-bold text-foreground">3</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Award className="h-6 w-6 text-foreground" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Student Name */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Student Name</label>
-          <Input
-            value={formData.studentName}
-            onChange={(e) => handleInputChange('studentName', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+        {/* Form Section */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                  <Plus className="h-6 w-6" />
+                </div>
+                <span>Create New Admit Card</span>
+              </div>
+              <Badge className="bg-background/20 text-primary-foreground border-background/30">
+                Form Entry
+              </Badge>
+            </CardTitle>
+          </CardHeader>
 
-        {/* Student Mother's Name */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Student Mother's Name</label>
-          <Input
-            value={formData.studentMotherName}
-            onChange={(e) => handleInputChange('studentMotherName', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+          <CardContent className="p-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Left Column - Student Information */}
+              <div className="space-y-6">
+                <div className="border-b border-border/40 pb-4">
+                  <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center space-x-2">
+                    <User className="h-5 w-5 text-primary" />
+                    <span>Student Information</span>
+                  </h3>
+                </div>
 
-        {/* Student Father's Name */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Student Father's Name</label>
-          <Input
-            value={formData.studentFatherName}
-            onChange={(e) => handleInputChange('studentFatherName', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                <div className="space-y-4">
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <GraduationCap className="h-4 w-4" />
+                      <span>Course</span>
+                    </label>
+                    <Select value={formData.course} onValueChange={(value) => handleInputChange('course', value)}>
+                      <SelectTrigger className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
+                        <SelectValue placeholder="Select Course Name" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ADCA">Advance Diploma In Computer Application (ADCA)</SelectItem>
+                        <SelectItem value="DCA">Diploma in Computer Application (DCA)</SelectItem>
+                        <SelectItem value="PGDCA">Post Graduate Diploma in Computer Application (PGDCA)</SelectItem>
+                        <SelectItem value="DCHN">Diploma in Computer Hardware and Networking</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-        {/* Exam Centre Code */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Exam Centre Code</label>
-          <Input
-            value={formData.examCentreCode}
-            onChange={(e) => handleInputChange('examCentreCode', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <CreditCard className="h-4 w-4" />
+                      <span>Student Roll Number</span>
+                    </label>
+                    <Input
+                      value={formData.studentRollNumber}
+                      onChange={(e) => handleInputChange('studentRollNumber', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="Enter student roll number"
+                    />
+                  </div>
 
-        {/* PWD */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">PWD</label>
-          <Input
-            value={formData.pwd}
-            onChange={(e) => handleInputChange('pwd', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <User className="h-4 w-4" />
+                      <span>Student Name</span>
+                    </label>
+                    <Input
+                      value={formData.studentName}
+                      onChange={(e) => handleInputChange('studentName', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="Enter student full name"
+                    />
+                  </div>
 
-        {/* Exam Centre Address */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Exam Centre Address</label>
-          <Input
-            value={formData.examCentreAddress}
-            onChange={(e) => handleInputChange('examCentreAddress', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <User className="h-4 w-4" />
+                      <span>Mother's Name</span>
+                    </label>
+                    <Input
+                      value={formData.studentMotherName}
+                      onChange={(e) => handleInputChange('studentMotherName', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="Enter mother's name"
+                    />
+                  </div>
 
-        {/* Exam Date */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Exam Date</label>
-          <Input
-            value={formData.examDate}
-            onChange={(e) => handleInputChange('examDate', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <User className="h-4 w-4" />
+                      <span>Father's Name</span>
+                    </label>
+                    <Input
+                      value={formData.studentFatherName}
+                      onChange={(e) => handleInputChange('studentFatherName', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="Enter father's name"
+                    />
+                  </div>
+                </div>
+              </div>
 
-        {/* Batch */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Batch</label>
-          <Input
-            value={formData.batch}
-            onChange={(e) => handleInputChange('batch', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+              {/* Right Column - Exam Information */}
+              <div className="space-y-6">
+                <div className="border-b border-border/40 pb-4">
+                  <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center space-x-2">
+                    <Building className="h-5 w-5 text-primary" />
+                    <span>Examination Details</span>
+                  </h3>
+                </div>
 
-        {/* Reporting Time */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Reporting Time</label>
-          <Input
-            value={formData.reportingTime}
-            onChange={(e) => handleInputChange('reportingTime', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                <div className="space-y-4">
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <Building className="h-4 w-4" />
+                      <span>Exam Centre Code</span>
+                    </label>
+                    <Input
+                      value={formData.examCentreCode}
+                      onChange={(e) => handleInputChange('examCentreCode', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="Enter exam center code"
+                    />
+                  </div>
 
-        {/* Gate Closing Time */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Gate Closing Time</label>
-          <Input
-            value={formData.gateClosingTime}
-            onChange={(e) => handleInputChange('gateClosingTime', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <Award className="h-4 w-4" />
+                      <span>PWD Status</span>
+                    </label>
+                    <Input
+                      value={formData.pwd}
+                      onChange={(e) => handleInputChange('pwd', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="Enter PWD status (if applicable)"
+                    />
+                  </div>
 
-        {/* Exam Start Time */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Exam Start Time</label>
-          <Input
-            value={formData.examStartTime}
-            onChange={(e) => handleInputChange('examStartTime', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <MapPin className="h-4 w-4" />
+                      <span>Exam Centre Address</span>
+                    </label>
+                    <Input
+                      value={formData.examCentreAddress}
+                      onChange={(e) => handleInputChange('examCentreAddress', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="Enter exam center address"
+                    />
+                  </div>
 
-        {/* Exam Duration */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Exam Duration</label>
-          <Input
-            value={formData.examDuration}
-            onChange={(e) => handleInputChange('examDuration', e.target.value)}
-            className="w-full h-12 border-2 border-gray-400 bg-white"
-          />
-        </div>
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <Calendar className="h-4 w-4" />
+                      <span>Exam Date</span>
+                    </label>
+                    <Input
+                      value={formData.examDate}
+                      onChange={(e) => handleInputChange('examDate', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="DD/MM/YYYY"
+                      type="date"
+                    />
+                  </div>
 
-        {/* Student Photo Upload */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Student Photo Upload</label>
-          <div className="border-2 border-gray-400 bg-white flex">
-            <label className="bg-gray-100 hover:bg-gray-200 border-r border-gray-400 px-4 py-2 cursor-pointer text-sm font-medium text-gray-700">
-              Choose file
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
-                className="hidden"
-              />
-            </label>
-            <span className="px-3 py-2 text-gray-500 text-sm flex-1">
-              {formData.studentPhoto ? formData.studentPhoto.name : "No file chosen"}
-            </span>
-          </div>
-        </div>
+                  <div className="group">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center space-x-2 mb-2">
+                      <Users className="h-4 w-4" />
+                      <span>Batch</span>
+                    </label>
+                    <Input
+                      value={formData.batch}
+                      onChange={(e) => handleInputChange('batch', e.target.value)}
+                      className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                      placeholder="Enter batch number"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        {/* Important Notice */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Important Notice</label>
-          <Textarea
-            value={formData.importantNotice}
-            onChange={(e) => handleInputChange('importantNotice', e.target.value)}
-            className="w-full h-32 border-2 border-gray-400 bg-white resize-none"
-          />
-        </div>
+            {/* Time Schedule Section */}
+            <div className="mt-8 border-t border-border/40 pt-8">
+              <h3 className="text-lg font-semibold text-foreground mb-6 flex items-center space-x-2">
+                <Calendar className="h-5 w-5 text-primary" />
+                <span>Time Schedule</span>
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="group">
+                  <label className="text-sm font-medium text-muted-foreground mb-2 block">Reporting Time</label>
+                  <Input
+                    value={formData.reportingTime}
+                    onChange={(e) => handleInputChange('reportingTime', e.target.value)}
+                    className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                    placeholder="HH:MM"
+                    type="time"
+                  />
+                </div>
 
-        {/* Instructions Notice */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Instructions Notice</label>
-          <Textarea
-            value={formData.instructionsNotice}
-            onChange={(e) => handleInputChange('instructionsNotice', e.target.value)}
-            className="w-full h-32 border-2 border-gray-400 bg-white resize-none"
-          />
-        </div>
+                <div className="group">
+                  <label className="text-sm font-medium text-muted-foreground mb-2 block">Gate Closing Time</label>
+                  <Input
+                    value={formData.gateClosingTime}
+                    onChange={(e) => handleInputChange('gateClosingTime', e.target.value)}
+                    className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                    placeholder="HH:MM"
+                    type="time"
+                  />
+                </div>
 
-        {/* Submit Button */}
-        <div className="pt-4 text-center">
-          <Button 
-            onClick={handleSubmit}
-            className="bg-blue-600 hover:bg-blue-700 text-red-500 font-bold px-8 py-3 text-base border-2 border-black"
-          >
-            Submit Now
-          </Button>
-        </div>
-      </div>
+                <div className="group">
+                  <label className="text-sm font-medium text-muted-foreground mb-2 block">Exam Start Time</label>
+                  <Input
+                    value={formData.examStartTime}
+                    onChange={(e) => handleInputChange('examStartTime', e.target.value)}
+                    className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                    placeholder="HH:MM"
+                    type="time"
+                  />
+                </div>
 
-      {/* Data Table */}
-      <div className="px-8 pb-6">
-        <div className="border-2 border-gray-600 bg-white">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs">
-              <thead>
-                <tr className="bg-blue-600 text-white">
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[80px]">Course</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[80px]">Roll Number</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">Student_Name</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">Mother_Name</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">Father_Name</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[120px]">Exam_Center_Code</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[60px]">PWD</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[120px]">Exam_Center_Address</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">Exam_Date</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[80px]">Batch</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">Reporting_Time</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">Gate_Closing_Time</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">Exam_Start_Time</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">Exam_Duration</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">Student_Photo</th>
-                </tr>
-              </thead>
-              <tbody>
-                {studentData.map((item, index) => (
-                  <tr key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">
-                      <div className="mb-2">
+                <div className="group">
+                  <label className="text-sm font-medium text-muted-foreground mb-2 block">Exam Duration</label>
+                  <Input
+                    value={formData.examDuration}
+                    onChange={(e) => handleInputChange('examDuration', e.target.value)}
+                    className="w-full h-12 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                    placeholder="e.g., 90 Minutes"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Photo Upload Section */}
+            <div className="mt-8 border-t border-border/40 pt-8">
+              <h3 className="text-lg font-semibold text-foreground mb-6 flex items-center space-x-2">
+                <Upload className="h-5 w-5 text-primary" />
+                <span>Student Photo Upload</span>
+              </h3>
+              
+              <div className="border-2 border-dashed border-border/40 bg-accent/10 rounded-lg p-6 hover:border-primary/40 transition-colors">
+                <div className="flex items-center justify-center">
+                  <label className="cursor-pointer flex flex-col items-center space-y-2">
+                    <div className="p-4 bg-primary/10 rounded-full">
+                      <Upload className="h-8 w-8 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">Choose Student Photo</span>
+                    <span className="text-xs text-muted-foreground">
+                      {formData.studentPhoto ? formData.studentPhoto.name : "No file chosen"}
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Notices Section */}
+            <div className="mt-8 border-t border-border/40 pt-8">
+              <h3 className="text-lg font-semibold text-foreground mb-6 flex items-center space-x-2">
+                <FileText className="h-5 w-5 text-primary" />
+                <span>Notices & Instructions</span>
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="group">
+                  <label className="text-sm font-medium text-muted-foreground mb-2 block">Important Notice</label>
+                  <Textarea
+                    value={formData.importantNotice}
+                    onChange={(e) => handleInputChange('importantNotice', e.target.value)}
+                    className="w-full h-32 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 resize-none"
+                    placeholder="Enter important notice for students..."
+                  />
+                </div>
+
+                <div className="group">
+                  <label className="text-sm font-medium text-muted-foreground mb-2 block">Instructions Notice</label>
+                  <Textarea
+                    value={formData.instructionsNotice}
+                    onChange={(e) => handleInputChange('instructionsNotice', e.target.value)}
+                    className="w-full h-32 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 resize-none"
+                    placeholder="Enter exam instructions..."
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="mt-8 pt-8 border-t border-border/40 text-center">
+              <Button 
+                onClick={handleSubmit}
+                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground px-8 py-3 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              >
+                <Save className="h-5 w-5 mr-2" />
+                Submit Admit Card Data
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Data Table */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
+          <CardHeader className="bg-gradient-to-r from-secondary via-secondary/95 to-secondary/90 text-secondary-foreground p-6">
+            <CardTitle className="text-xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <Users className="h-5 w-5" />
+              </div>
+              <span>Existing Admit Cards ({studentData.length})</span>
+            </CardTitle>
+          </CardHeader>
+          
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-muted/50 border-b border-border/40">
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Course</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Roll Number</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[200px]">Student Name</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[180px]">Mother's Name</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[180px]">Father's Name</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[150px]">Center Code</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[80px]">PWD</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[120px]">Photo</th>
+                    <th className="text-left p-4 font-semibold text-foreground min-w-[100px]">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {studentData.map((item, index) => (
+                    <tr key={item.id} className={`border-b border-border/20 hover:bg-accent/10 transition-colors ${index % 2 === 0 ? "bg-background" : "bg-muted/20"}`}>
+                      <td className="p-4">
+                        <Badge variant="outline" className="font-medium">
+                          {item.course}
+                        </Badge>
+                      </td>
+                      <td className="p-4 font-medium text-foreground">{item.rollNumber}</td>
+                      <td className="p-4 text-foreground">{item.studentName}</td>
+                      <td className="p-4 text-muted-foreground">{item.motherName}</td>
+                      <td className="p-4 text-muted-foreground">{item.fatherName}</td>
+                      <td className="p-4 text-muted-foreground">{item.examCentreCode || "-"}</td>
+                      <td className="p-4 text-muted-foreground">{item.pwd || "-"}</td>
+                      <td className="p-4">
+                        <div className="w-16 h-12 border border-border/40 bg-muted/20 rounded overflow-hidden">
+                          {item.studentPhoto ? (
+                            <img 
+                              src={item.studentPhoto} 
+                              alt="Student" 
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <User className="h-4 w-4 text-muted-foreground" />
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="p-4">
                         <Button
-                          variant="link"
+                          variant="outline"
+                          size="sm"
                           onClick={() => handleDelete(item.id)}
-                          className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs"
+                          className="text-destructive hover:text-destructive border-destructive/20 hover:border-destructive hover:bg-destructive/10"
                         >
+                          <Trash2 className="h-4 w-4 mr-1" />
                           Delete
                         </Button>
-                      </div>
-                      <div>{item.course}</div>
-                    </td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.rollNumber}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.studentName}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.motherName}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.fatherName}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.examCentreCode}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.pwd}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.examCentreAddress}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.examDate}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.batch}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.reportingTime}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.gateClosingTime}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.examStartTime}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.examDuration}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3">
-                      <div className="w-16 h-12 border-2 border-gray-400 bg-gray-50 flex items-center justify-center">
-                        {item.studentPhoto ? (
-                          <img 
-                            src={item.studentPhoto} 
-                            alt="Student" 
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-4 h-4 border border-gray-400"></div>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
