@@ -211,19 +211,13 @@ const HeadOfficeContent = () => {
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    return status === 'active' 
-      ? <Badge className="bg-green-100 text-green-800">Active</Badge>
-      : <Badge className="bg-gray-100 text-gray-800">Inactive</Badge>;
-  };
-
   if (loading) {
     return (
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
         <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
           <div className="flex flex-col items-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-            <p className="text-gray-600">Loading head office data...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-muted-foreground">Loading head office data...</p>
           </div>
         </CardContent>
       </Card>
@@ -233,202 +227,246 @@ const HeadOfficeContent = () => {
   return (
     <div className="space-y-8">
       {/* Header with controls */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100">
-          <div className="flex justify-between items-center">
-            <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-              <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
-                <Building2 className="h-6 w-6 text-white" />
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="p-0 overflow-hidden">
+          <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 p-6">
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-2xl font-bold text-white flex items-center space-x-3">
+                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                  <Building2 className="h-6 w-6 text-white" />
+                </div>
+                <span>Head Office Management</span>
+              </CardTitle>
+              <div className="flex space-x-3">
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button 
+                      onClick={resetForm}
+                      className="bg-white/20 hover:bg-white/30 text-white border border-white/30 backdrop-blur-sm flex items-center space-x-2 transition-all duration-200"
+                    >
+                      <Plus className="h-4 w-4" />
+                      <span>Add Head Office</span>
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto border-2 border-primary/20">
+                    <DialogHeader className="border-b border-border pb-4">
+                      <DialogTitle className="flex items-center space-x-2 text-xl font-bold text-foreground">
+                        <div className="p-2 bg-primary/10 rounded-lg">
+                          <Building2 className="h-5 w-5 text-primary" />
+                        </div>
+                        <span>{editingOffice ? "Edit Head Office" : "Add New Head Office"}</span>
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6 mt-6">
+                      {/* Basic Information Section */}
+                      <div className="space-y-4">
+                        <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                          <Building2 className="h-4 w-4" />
+                          <span>Basic Information</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">Office Name</label>
+                            <Input
+                              value={formData.name}
+                              onChange={(e) => handleInputChange('name', e.target.value)}
+                              placeholder="Enter office name"
+                              disabled={formLoading}
+                              className="mt-1 h-11 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">
+                              Email <span className="text-destructive">*</span>
+                            </label>
+                            <Input
+                              type="email"
+                              value={formData.email}
+                              onChange={(e) => handleInputChange('email', e.target.value)}
+                              placeholder="Enter email address"
+                              disabled={formLoading}
+                              className="mt-1 h-11 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-sm font-semibold text-foreground">
+                            Address <span className="text-destructive">*</span>
+                          </label>
+                          <Textarea
+                            value={formData.address}
+                            onChange={(e) => handleInputChange('address', e.target.value)}
+                            placeholder="Enter full address"
+                            className="mt-1 min-h-[100px] border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                            disabled={formLoading}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Contact Information Section */}
+                      <div className="space-y-4">
+                        <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                          <Phone className="h-4 w-4" />
+                          <span>Contact Information</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">
+                              Phone <span className="text-destructive">*</span>
+                            </label>
+                            <Input
+                              value={formData.phone}
+                              onChange={(e) => handleInputChange('phone', e.target.value)}
+                              placeholder="Enter phone number"
+                              disabled={formLoading}
+                              className="mt-1 h-11 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">Website</label>
+                            <Input
+                              value={formData.website}
+                              onChange={(e) => handleInputChange('website', e.target.value)}
+                              placeholder="Enter website URL"
+                              disabled={formLoading}
+                              className="mt-1 h-11 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Location Information Section */}
+                      <div className="space-y-4">
+                        <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                          <MapPin className="h-4 w-4" />
+                          <span>Location Information</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">City</label>
+                            <Input
+                              value={formData.city}
+                              onChange={(e) => handleInputChange('city', e.target.value)}
+                              placeholder="Enter city"
+                              disabled={formLoading}
+                              className="mt-1 h-11 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">State</label>
+                            <Input
+                              value={formData.state}
+                              onChange={(e) => handleInputChange('state', e.target.value)}
+                              placeholder="Enter state"
+                              disabled={formLoading}
+                              className="mt-1 h-11 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">Postal Code</label>
+                            <Input
+                              value={formData.postalCode}
+                              onChange={(e) => handleInputChange('postalCode', e.target.value)}
+                              placeholder="Enter postal code"
+                              disabled={formLoading}
+                              className="mt-1 h-11 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Settings Section */}
+                      <div className="space-y-4">
+                        <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                          <Globe className="h-4 w-4" />
+                          <span>Settings</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">Country</label>
+                            <Select 
+                              value={formData.country} 
+                              onValueChange={(value) => handleInputChange('country', value)}
+                            >
+                              <SelectTrigger disabled={formLoading} className="mt-1 h-11 border-2 border-border focus:border-primary">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="India">India</SelectItem>
+                                <SelectItem value="USA">USA</SelectItem>
+                                <SelectItem value="UK">UK</SelectItem>
+                                <SelectItem value="Canada">Canada</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div>
+                            <label className="text-sm font-semibold text-foreground">Status</label>
+                            <Select 
+                              value={formData.status} 
+                              onValueChange={(value) => handleInputChange('status', value)}
+                            >
+                              <SelectTrigger disabled={formLoading} className="mt-1 h-11 border-2 border-border focus:border-primary">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="active">Active</SelectItem>
+                                <SelectItem value="inactive">Inactive</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="flex items-center space-x-3 pt-6">
+                            <input
+                              type="checkbox"
+                              id="isPrimary"
+                              checked={formData.isPrimary}
+                              onChange={(e) => handleInputChange('isPrimary', e.target.checked)}
+                              className="h-4 w-4 rounded border-2 border-border text-primary focus:ring-primary"
+                              disabled={formLoading}
+                            />
+                            <label htmlFor="isPrimary" className="text-sm font-semibold text-foreground flex items-center space-x-1">
+                              <Star className="h-4 w-4 text-yellow-500" />
+                              <span>Primary Office</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end space-x-3 pt-6 border-t border-border">
+                        <Button
+                          variant="outline"
+                          onClick={() => setIsDialogOpen(false)}
+                          disabled={formLoading}
+                          className="h-11 border-2 border-border hover:border-destructive/30 hover:bg-destructive/5 text-muted-foreground hover:text-destructive transition-all duration-200"
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={handleSubmit}
+                          disabled={formLoading}
+                          className="h-11 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground flex items-center space-x-2 shadow-lg hover:shadow-xl transition-all duration-200"
+                        >
+                          {formLoading ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              <span>Saving...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Building2 className="h-4 w-4" />
+                              <span>{editingOffice ? "Update" : "Add"} Office</span>
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
-              <span>Head Office Management</span>
-            </CardTitle>
-            <div className="flex space-x-3">
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button 
-                    onClick={resetForm}
-                    className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white flex items-center space-x-2"
-                  >
-                    <Plus className="h-4 w-4" />
-                    <span>Add Head Office</span>
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle className="flex items-center space-x-2">
-                      <Building2 className="h-5 w-5" />
-                      <span>{editingOffice ? "Edit Head Office" : "Add New Head Office"}</span>
-                    </DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4 mt-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">Office Name</label>
-                        <Input
-                          value={formData.name}
-                          onChange={(e) => handleInputChange('name', e.target.value)}
-                          placeholder="Enter office name"
-                          disabled={formLoading}
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">
-                          Email <span className="text-red-500">*</span>
-                        </label>
-                        <Input
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => handleInputChange('email', e.target.value)}
-                          placeholder="Enter email address"
-                          disabled={formLoading}
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-sm font-medium text-gray-700">
-                        Address <span className="text-red-500">*</span>
-                      </label>
-                      <Textarea
-                        value={formData.address}
-                        onChange={(e) => handleInputChange('address', e.target.value)}
-                        placeholder="Enter full address"
-                        className="min-h-[100px]"
-                        disabled={formLoading}
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">
-                          Phone <span className="text-red-500">*</span>
-                        </label>
-                        <Input
-                          value={formData.phone}
-                          onChange={(e) => handleInputChange('phone', e.target.value)}
-                          placeholder="Enter phone number"
-                          disabled={formLoading}
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">Website</label>
-                        <Input
-                          value={formData.website}
-                          onChange={(e) => handleInputChange('website', e.target.value)}
-                          placeholder="Enter website URL"
-                          disabled={formLoading}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">City</label>
-                        <Input
-                          value={formData.city}
-                          onChange={(e) => handleInputChange('city', e.target.value)}
-                          placeholder="Enter city"
-                          disabled={formLoading}
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">State</label>
-                        <Input
-                          value={formData.state}
-                          onChange={(e) => handleInputChange('state', e.target.value)}
-                          placeholder="Enter state"
-                          disabled={formLoading}
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">Postal Code</label>
-                        <Input
-                          value={formData.postalCode}
-                          onChange={(e) => handleInputChange('postalCode', e.target.value)}
-                          placeholder="Enter postal code"
-                          disabled={formLoading}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">Country</label>
-                        <Select 
-                          value={formData.country} 
-                          onValueChange={(value) => handleInputChange('country', value)}
-                        >
-                          <SelectTrigger disabled={formLoading}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="India">India</SelectItem>
-                            <SelectItem value="USA">USA</SelectItem>
-                            <SelectItem value="UK">UK</SelectItem>
-                            <SelectItem value="Canada">Canada</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">Status</label>
-                        <Select 
-                          value={formData.status} 
-                          onValueChange={(value) => handleInputChange('status', value)}
-                        >
-                          <SelectTrigger disabled={formLoading}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="inactive">Inactive</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="flex items-center space-x-2 pt-6">
-                        <input
-                          type="checkbox"
-                          id="isPrimary"
-                          checked={formData.isPrimary}
-                          onChange={(e) => handleInputChange('isPrimary', e.target.checked)}
-                          className="rounded"
-                          disabled={formLoading}
-                        />
-                        <label htmlFor="isPrimary" className="text-sm font-medium text-gray-700">
-                          Primary Office
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-end space-x-3 pt-4">
-                      <Button
-                        variant="outline"
-                        onClick={() => setIsDialogOpen(false)}
-                        disabled={formLoading}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={formLoading}
-                        className="flex items-center space-x-2"
-                      >
-                        {formLoading ? (
-                          <>
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            <span>Saving...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Building2 className="h-4 w-4" />
-                            <span>{editingOffice ? "Update" : "Add"} Office</span>
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
             </div>
+            <p className="text-primary-foreground/80 mt-2">
+              Manage head office locations and contact information
+            </p>
           </div>
         </CardHeader>
 
@@ -437,17 +475,17 @@ const HeadOfficeContent = () => {
           <div className="flex flex-wrap gap-4 mb-6">
             <div className="flex-1 min-w-64">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search head offices..."
-                  className="pl-10"
+                  className="pl-10 h-11 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                 />
               </div>
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-40">
+              <SelectTrigger className="w-40 h-11 border-2 border-border focus:border-primary">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
@@ -458,188 +496,175 @@ const HeadOfficeContent = () => {
               </SelectContent>
             </Select>
           </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Total Offices</p>
+                  <p className="text-2xl font-bold text-primary">{headOffices.length}</p>
+                </div>
+                <Building2 className="h-8 w-8 text-primary/60" />
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Active</p>
+                  <p className="text-2xl font-bold text-green-600">{headOffices.filter(o => o.status === 'active').length}</p>
+                </div>
+                <div className="h-3 w-3 bg-green-500 rounded-full"></div>
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 border border-yellow-500/20 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Primary</p>
+                  <p className="text-2xl font-bold text-yellow-600">{headOffices.filter(o => o.is_primary).length}</p>
+                </div>
+                <Star className="h-6 w-6 text-yellow-500" />
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Inactive</p>
+                  <p className="text-2xl font-bold text-red-600">{headOffices.filter(o => o.status === 'inactive').length}</p>
+                </div>
+                <div className="h-3 w-3 bg-red-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
       {/* Head Office Management Table */}
-      <Card className="shadow-2xl border-0 bg-gradient-to-br from-white to-gray-50/30 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="p-0 overflow-hidden">
+          <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 p-6">
+            <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
+              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                <Building2 className="h-5 w-5 text-white" />
+              </div>
+              <span>Head Office Records</span>
+            </CardTitle>
+            <p className="text-primary-foreground/80 mt-1">
+              {filteredOffices.length} office{filteredOffices.length !== 1 ? 's' : ''} found
+            </p>
+          </div>
+        </CardHeader>
         <CardContent className="p-0">
           {filteredOffices.length === 0 ? (
-            <div className="text-center py-16 px-8">
-              <Building2 className="h-20 w-20 text-gray-300 mx-auto mb-6" />
-              <h3 className="text-xl font-semibold text-gray-700 mb-3">No head offices found</h3>
-              <p className="text-gray-500 text-lg">
+            <div className="text-center py-12">
+              <Building2 className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
+              <p className="text-muted-foreground text-lg">No head offices found</p>
+              <p className="text-muted-foreground/70 text-sm mt-1">
                 {searchTerm || statusFilter !== "all" 
-                  ? "Try adjusting your search or filters" 
+                  ? "Try adjusting your search or filter criteria"
                   : "Add your first head office to get started"
                 }
               </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <Table className="w-full">
+              <Table>
                 <TableHeader>
-                  <TableRow className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-b-2 border-blue-300">
-                    <TableHead className="font-bold text-white text-sm py-4 px-3 border-r border-blue-300">
-                      Office Details
-                    </TableHead>
-                    <TableHead className="font-bold text-white text-sm py-4 px-3 border-r border-blue-300">
-                      Contact & Location
-                    </TableHead>
-                    <TableHead className="font-bold text-white text-sm py-4 px-3 border-r border-blue-300 text-center">
-                      Status
-                    </TableHead>
-                    <TableHead className="font-bold text-white text-sm py-4 px-3 text-center">
-                      Actions
-                    </TableHead>
+                  <TableRow className="bg-primary hover:bg-primary border-b-2 border-primary">
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4 min-w-[120px]">Actions</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Office Details</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Contact Info</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Location</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Status</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4">Type</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="bg-white">
+                <TableBody>
                   {filteredOffices.map((office, index) => (
                     <TableRow 
                       key={office.id} 
-                      className={`
-                        border-b border-gray-200
-                        hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 
-                        transition-all duration-200
-                        ${index % 2 === 0 ? 'bg-gray-50/70' : 'bg-white'}
-                        hover:shadow-md
-                      `}
+                      className={`${index % 2 === 0 ? "bg-muted/30" : "bg-background"} hover:bg-primary/5 transition-colors border-b border-border`}
                     >
-                      {/* Office Details Column */}
-                      <TableCell className="py-4 px-3 border-r border-gray-200 max-w-[300px]">
-                        <div className="space-y-2">
-                          <div className="flex items-start space-x-2">
-                            <div className="p-1.5 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex-shrink-0">
-                              <Building2 className="h-4 w-4 text-white" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-center space-x-2 mb-1">
-                                <span className="font-semibold text-gray-900 text-sm truncate">
-                                  {office.name || "Unnamed Office"}
-                                </span>
-                                {office.is_primary && (
-                                  <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-1.5 py-0.5">
-                                    <Star className="h-3 w-3 fill-current" />
-                                  </Badge>
-                                )}
-                              </div>
-                              <p className="text-xs text-gray-600 line-clamp-2 leading-tight">
-                                {office.address}
-                              </p>
-                              {office.website && (
-                                <a 
-                                  href={office.website.startsWith('http') ? office.website : `https://${office.website}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-xs text-blue-600 hover:underline truncate block"
-                                >
-                                  <Globe className="h-3 w-3 inline mr-1" />
-                                  {office.website}
-                                </a>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </TableCell>
-
-                      {/* Contact & Location Column */}
-                      <TableCell className="py-4 px-3 border-r border-gray-200 max-w-[280px]">
-                        <div className="space-y-2">
-                          <div className="flex items-center space-x-2">
-                            <div className="p-1 bg-green-100 rounded-full flex-shrink-0">
-                              <Phone className="h-3 w-3 text-green-600" />
-                            </div>
-                            <span className="text-sm text-gray-900 font-medium truncate">{office.phone}</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="p-1 bg-blue-100 rounded-full flex-shrink-0">
-                              <Mail className="h-3 w-3 text-blue-600" />
-                            </div>
-                            <span className="text-xs text-gray-900 truncate">{office.email}</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <div className="p-1 bg-red-100 rounded-full flex-shrink-0">
-                              <MapPin className="h-3 w-3 text-red-600" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <span className="text-xs text-gray-900 truncate block">
-                                {[office.city, office.state, office.country].filter(Boolean).join(", ")}
-                              </span>
-                              {office.postal_code && (
-                                <Badge variant="outline" className="text-xs mt-1 px-1 py-0">
-                                  {office.postal_code}
-                                </Badge>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </TableCell>
-
-                      {/* Status Column */}
-                      <TableCell className="py-4 px-3 border-r border-gray-200 text-center">
-                        <div className="space-y-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleStatusToggle(office.id, office.status)}
-                            className="p-0 h-auto hover:scale-105 transition-transform"
-                          >
-                            {office.status === 'active' ? (
-                              <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 text-xs hover:from-green-600 hover:to-green-700 cursor-pointer">
-                                ✅ Active
-                              </Badge>
-                            ) : (
-                              <Badge className="bg-gradient-to-r from-gray-400 to-gray-500 text-white px-3 py-1 text-xs hover:from-gray-500 hover:to-gray-600 cursor-pointer">
-                                ⏸️ Inactive
-                              </Badge>
-                            )}
-                          </Button>
-                          {office.is_primary && (
-                            <div>
-                              <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1">
-                                Primary
-                              </Badge>
-                            </div>
-                          )}
-                        </div>
-                      </TableCell>
-
-                      {/* Actions Column */}
-                      <TableCell className="py-4 px-3 text-center">
-                        <div className="flex items-center justify-center space-x-2">
+                      <TableCell className="border-r border-border p-4">
+                        <div className="flex justify-center space-x-2">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => openEditDialog(office)}
-                            className="p-2 text-blue-600 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 rounded-lg transition-all duration-200 hover:scale-105"
-                            title="Edit Office"
+                            className="text-primary hover:text-primary/80 hover:bg-primary/10 p-2 rounded-md transition-all duration-200"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleStatusToggle(office.id, office.status)}
-                            className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
-                              office.status === 'active' 
-                                ? "text-orange-600 hover:text-white hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-600" 
-                                : "text-green-600 hover:text-white hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600"
-                            }`}
-                            title={office.status === 'active' ? 'Deactivate' : 'Activate'}
-                          >
-                            {office.status === 'active' ? '⏸️' : '▶️'}
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
                             onClick={() => handleDelete(office.id)}
-                            className="p-2 text-red-600 hover:text-white hover:bg-gradient-to-r hover:from-red-500 hover:to-red-600 rounded-lg transition-all duration-200 hover:scale-105"
-                            title="Delete Office"
+                            className="text-destructive hover:text-destructive/80 hover:bg-destructive/10 p-2 rounded-md transition-all duration-200"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
+                      </TableCell>
+                      <TableCell className="border-r border-border p-4">
+                        <div className="space-y-1">
+                          <p className="font-semibold text-foreground">{office.name || "Unnamed Office"}</p>
+                          <p className="text-sm text-muted-foreground line-clamp-2">{office.address}</p>
+                        </div>
+                      </TableCell>
+                      <TableCell className="border-r border-border p-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center space-x-2 text-sm">
+                            <Phone className="h-3 w-3 text-muted-foreground" />
+                            <span className="text-foreground font-medium">{office.phone}</span>
+                          </div>
+                          <div className="flex items-center space-x-2 text-sm">
+                            <Mail className="h-3 w-3 text-muted-foreground" />
+                            <span className="text-muted-foreground truncate">{office.email}</span>
+                          </div>
+                          {office.website && (
+                            <div className="flex items-center space-x-2 text-sm">
+                              <Globe className="h-3 w-3 text-muted-foreground" />
+                              <span className="text-primary hover:underline cursor-pointer truncate">{office.website}</span>
+                            </div>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className="border-r border-border p-4">
+                        <div className="text-sm space-y-1">
+                          {office.city && <p className="text-foreground font-medium">{office.city}</p>}
+                          {office.state && <p className="text-muted-foreground">{office.state}</p>}
+                          {office.postal_code && <p className="text-muted-foreground">{office.postal_code}</p>}
+                          {office.country && <p className="text-muted-foreground">{office.country}</p>}
+                        </div>
+                      </TableCell>
+                      <TableCell className="border-r border-border p-4 text-center">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleStatusToggle(office.id, office.status)}
+                          className="p-0 h-auto"
+                        >
+                          <Badge 
+                            className={office.status === 'active' 
+                              ? "bg-green-500/10 text-green-700 border border-green-200 hover:bg-green-500/20" 
+                              : "bg-red-500/10 text-red-700 border border-red-200 hover:bg-red-500/20"
+                            }
+                          >
+                            {office.status === 'active' ? 'Active' : 'Inactive'}
+                          </Badge>
+                        </Button>
+                      </TableCell>
+                      <TableCell className="p-4 text-center">
+                        {office.is_primary ? (
+                          <Badge className="bg-yellow-500/10 text-yellow-700 border border-yellow-200">
+                            <Star className="h-3 w-3 mr-1" />
+                            Primary
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="text-muted-foreground">
+                            Regular
+                          </Badge>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -649,56 +674,6 @@ const HeadOfficeContent = () => {
           )}
         </CardContent>
       </Card>
-
-      {/* Summary Stats */}
-      <div className="grid grid-cols-4 gap-4">
-        <Card className="p-4">
-          <div className="flex items-center space-x-3">
-            <Building2 className="h-8 w-8 text-blue-600" />
-            <div>
-              <p className="text-sm text-gray-600">Total Offices</p>
-              <p className="text-2xl font-bold">{headOffices.length}</p>
-            </div>
-          </div>
-        </Card>
-        <Card className="p-4">
-          <div className="flex items-center space-x-3">
-            <Star className="h-8 w-8 text-yellow-600" />
-            <div>
-              <p className="text-sm text-gray-600">Primary Office</p>
-              <p className="text-2xl font-bold">
-                {headOffices.filter(o => o.is_primary).length}
-              </p>
-            </div>
-          </div>
-        </Card>
-        <Card className="p-4">
-          <div className="flex items-center space-x-3">
-            <div className="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center">
-              <div className="h-4 w-4 bg-green-600 rounded-full"></div>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Active</p>
-              <p className="text-2xl font-bold">
-                {headOffices.filter(o => o.status === 'active').length}
-              </p>
-            </div>
-          </div>
-        </Card>
-        <Card className="p-4">
-          <div className="flex items-center space-x-3">
-            <div className="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center">
-              <div className="h-4 w-4 bg-gray-600 rounded-full"></div>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600">Inactive</p>
-              <p className="text-2xl font-bold">
-                {headOffices.filter(o => o.status === 'inactive').length}
-              </p>
-            </div>
-          </div>
-        </Card>
-      </div>
     </div>
   );
 };
