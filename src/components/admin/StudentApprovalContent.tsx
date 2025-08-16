@@ -37,9 +37,12 @@ const StudentApprovalContent = () => {
     orderBy: { column: 'created_at', ascending: false }
   });
 
-  // Enable real-time updates
+  // Disable real-time notifications to prevent duplicates
   useAdminRealTime({
-    tableName: 'student_profiles'
+    tableName: 'student_profiles',
+    onUpdate: () => {}, // Disable auto notifications
+    onInsert: () => {},
+    onDelete: () => {}
   });
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,7 +76,12 @@ const StudentApprovalContent = () => {
         status: newStatus
       });
 
-      // Note: Success notification is handled automatically by the real-time hook
+      // Show single notification immediately
+      if (approved) {
+        toast.success(`${student.full_name} has been approved`);
+      } else {
+        toast.info(`${student.full_name} approval revoked`);
+      }
     } catch (error) {
       toast.error('Failed to update student approval status');
     }
