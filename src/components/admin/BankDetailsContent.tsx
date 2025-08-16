@@ -237,11 +237,11 @@ const BankDetailsContent = () => {
 
   if (loading) {
     return (
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
         <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
           <div className="flex flex-col items-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-            <p className="text-gray-600">Loading bank details...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-muted-foreground">Loading bank details...</p>
           </div>
         </CardContent>
       </Card>
@@ -252,95 +252,268 @@ const BankDetailsContent = () => {
     <div className="space-y-8">
       {/* Statistics Dashboard */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+        <Card className="shadow-lg border border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm font-medium">Total Banks</p>
-                <p className="text-3xl font-bold">{stats.totalBanks}</p>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Total Banks</p>
+                <p className="text-3xl font-bold text-primary">{stats.totalBanks}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <Building2 className="h-6 w-6" />
+              <div className="p-3 bg-primary/20 rounded-xl">
+                <Building2 className="h-6 w-6 text-primary" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white">
+        <Card className="shadow-lg border border-green-500/20 bg-gradient-to-br from-green-500/10 to-green-500/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100 text-sm font-medium">Unique Banks</p>
-                <p className="text-3xl font-bold">{stats.uniqueBanks}</p>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Unique Banks</p>
+                <p className="text-3xl font-bold text-green-600">{stats.uniqueBanks}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <TrendingUp className="h-6 w-6" />
+              <div className="p-3 bg-green-500/20 rounded-xl">
+                <TrendingUp className="h-6 w-6 text-green-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
+        <Card className="shadow-lg border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-purple-500/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-purple-100 text-sm font-medium">Public Banks</p>
-                <p className="text-3xl font-bold">{stats.publicBanks}</p>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Public Banks</p>
+                <p className="text-3xl font-bold text-purple-600">{stats.publicBanks}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <FileText className="h-6 w-6" />
+              <div className="p-3 bg-purple-500/20 rounded-xl">
+                <Shield className="h-6 w-6 text-purple-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white">
+        <Card className="shadow-lg border border-orange-500/20 bg-gradient-to-br from-orange-500/10 to-orange-500/5">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-100 text-sm font-medium">Private Banks</p>
-                <p className="text-3xl font-bold">{stats.privateBanks}</p>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Private Banks</p>
+                <p className="text-3xl font-bold text-orange-600">{stats.privateBanks}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <CreditCard className="h-6 w-6" />
+              <div className="p-3 bg-orange-500/20 rounded-xl">
+                <CreditCard className="h-6 w-6 text-orange-600" />
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Search and Filter Section */}
-      <Card className="shadow-lg border-l-4 border-l-blue-500 bg-gradient-to-r from-blue-50/50 to-white dark:from-blue-950/20 dark:to-background">
-        <CardContent className="p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-blue-500 text-white rounded-lg">
-              <Search className="h-5 w-5" />
-            </div>
-            <h3 className="text-lg font-semibold text-blue-700 dark:text-blue-300">Search & Filter Banks</h3>
+      {/* Add Bank Details Form */}
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="p-0 overflow-hidden">
+          <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 p-6">
+            <CardTitle className="text-xl font-bold text-white flex items-center gap-3">
+              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                <CreditCard className="h-6 w-6 text-white" />
+              </div>
+              {editingBank ? "Update Bank Details" : "Add New Bank Details"}
+              {editingBank && (
+                <Badge className="ml-auto bg-white/20 text-white border border-white/30">
+                  Editing Mode
+                </Badge>
+              )}
+            </CardTitle>
+            <p className="text-primary-foreground/80 mt-2">
+              {editingBank ? "Modify existing bank information" : "Enter comprehensive bank details for registration"}
+            </p>
           </div>
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 h-4 w-4" />
-              <Input
-                placeholder="Search banks, account numbers, IFSC codes..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 border-blue-200 focus:border-blue-400 focus:ring-blue-400"
-              />
+        </CardHeader>
+        
+        <CardContent className="p-8">
+          <div className="space-y-6">
+            {/* Bank Information Section */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                <Banknote className="h-4 w-4" />
+                <span>Bank Information</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <Building2 className="h-4 w-4 text-primary" />
+                    Bank Name <span className="text-destructive">*</span>
+                  </label>
+                  <Input
+                    value={formData.bankName}
+                    onChange={(e) => handleInputChange('bankName', e.target.value)}
+                    placeholder="Enter bank name (e.g., State Bank of India)"
+                    className="h-12 border-2 border-border hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <CreditCard className="h-4 w-4 text-primary" />
+                    Account Number <span className="text-destructive">*</span>
+                  </label>
+                  <Input
+                    value={formData.accountNumber}
+                    onChange={(e) => handleInputChange('accountNumber', e.target.value)}
+                    placeholder="Enter account number"
+                    className="h-12 border-2 border-border hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Branch Information Section */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                <MapPin className="h-4 w-4" />
+                <span>Branch Information</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-3">
+                  <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <Building className="h-4 w-4 text-primary" />
+                    Branch Name <span className="text-destructive">*</span>
+                  </label>
+                  <Input
+                    value={formData.branchName}
+                    onChange={(e) => handleInputChange('branchName', e.target.value)}
+                    placeholder="Enter branch name"
+                    className="h-12 border-2 border-border hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <Hash className="h-4 w-4 text-primary" />
+                    IFSC Code <span className="text-destructive">*</span>
+                  </label>
+                  <Input
+                    value={formData.ifscCode}
+                    onChange={(e) => handleInputChange('ifscCode', e.target.value)}
+                    placeholder="Enter IFSC code (e.g., SBIN0001234)"
+                    className="h-12 border-2 border-border hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <Hash className="h-4 w-4 text-primary" />
+                    MICR Code <span className="text-destructive">*</span>
+                  </label>
+                  <Input
+                    value={formData.micrCode}
+                    onChange={(e) => handleInputChange('micrCode', e.target.value)}
+                    placeholder="Enter MICR code"
+                    className="h-12 border-2 border-border hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Photo Upload Section */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2 text-sm font-medium text-muted-foreground border-b border-border pb-2">
+                <Camera className="h-4 w-4" />
+                <span>Bank Photo (Optional)</span>
+              </div>
+              <div className="border-2 border-dashed border-border rounded-xl p-6 bg-muted/20 hover:border-primary/50 transition-all duration-200">
+                <div className="flex items-center justify-center space-x-4">
+                  <div className="relative">
+                    <input
+                      id="bank-photo-file"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                    <Button
+                      variant="outline"
+                      className="h-12 px-6 border-2 border-border hover:border-primary/30 hover:bg-primary/5 font-semibold transition-all duration-200"
+                    >
+                      <Camera className="h-5 w-5 mr-2" />
+                      Choose Photo
+                    </Button>
+                  </div>
+                  <div className="flex-1">
+                    {formData.bankPhoto ? (
+                      <div className="flex items-center gap-2 bg-background rounded-lg p-3 border border-border">
+                        <Camera className="h-5 w-5 text-primary" />
+                        <span className="text-sm font-medium text-foreground">
+                          {formData.bankPhoto.name}
+                        </span>
+                        <Badge variant="outline" className="text-xs text-muted-foreground">
+                          {(formData.bankPhoto.size / 1024 / 1024).toFixed(1)} MB
+                        </Badge>
+                      </div>
+                    ) : (
+                      <p className="text-sm text-muted-foreground font-medium">No photo chosen</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-end space-x-4 pt-6 border-t border-border">
+              <Button
+                onClick={handleReset}
+                variant="outline"
+                className="h-12 border-2 border-border hover:border-destructive/30 hover:bg-destructive/5 text-muted-foreground hover:text-destructive transition-all duration-200"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Reset Form
+              </Button>
+              <Button
+                onClick={handleSubmit}
+                className="h-12 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-semibold px-8 shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                {editingBank ? (
+                  <>
+                    <Edit className="h-5 w-5 mr-2" />
+                    Update Bank Details
+                  </>
+                ) : (
+                  <>
+                    <Plus className="h-5 w-5 mr-2" />
+                    Add Bank Details
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Search and Filter Section */}
+      <Card className="shadow-lg border border-border bg-white/95 backdrop-blur-sm">
+        <CardContent className="p-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                  placeholder="Search banks, account numbers, IFSC codes..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 h-12 border-2 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+                />
+              </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 text-blue-600">
-                <Filter className="h-4 w-4" />
-                <span className="text-sm font-medium">Filter:</span>
-              </div>
               <Select value={bankFilter} onValueChange={setBankFilter}>
-                <SelectTrigger className="w-[180px] border-blue-200 focus:border-blue-400">
+                <SelectTrigger className="w-[200px] h-12 border-2 border-border focus:border-primary">
+                  <Filter className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Filter by type" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
                     <div className="flex items-center gap-2">
-                      <Building className="h-4 w-4 text-gray-500" />
+                      <Building className="h-4 w-4 text-muted-foreground" />
                       All Banks
                     </div>
                   </SelectItem>
@@ -362,7 +535,7 @@ const BankDetailsContent = () => {
                 variant="outline"
                 size="sm"
                 onClick={() => refresh()}
-                className="border-blue-200 text-blue-600 hover:bg-blue-50"
+                className="h-12 border-2 border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-200"
               >
                 <RefreshCw className="h-4 w-4" />
               </Button>
@@ -371,379 +544,114 @@ const BankDetailsContent = () => {
         </CardContent>
       </Card>
 
-      {/* Add Bank Details Form */}
-      <Card className="shadow-lg border-l-4 border-l-green-500 bg-gradient-to-r from-green-50/50 to-white dark:from-green-950/20 dark:to-background">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-green-500 text-white rounded-lg">
-              <Plus className="h-5 w-5" />
-            </div>
-            <div>
-              <CardTitle className="text-xl font-semibold text-green-700 dark:text-green-300">
-                {editingBank ? "Update Bank Details" : "Add New Bank Details"}
-              </CardTitle>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">
-                {editingBank ? "Modify existing bank information" : "Enter comprehensive bank details for registration"}
+      {/* Bank Details Table */}
+      <Card className="shadow-2xl border-2 border-primary/20 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="p-0 overflow-hidden">
+          <div className="bg-gradient-to-r from-primary via-primary/90 to-primary/80 p-6">
+            <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
+              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                <CreditCard className="h-5 w-5 text-white" />
+              </div>
+              <span>Bank Details Records</span>
+            </CardTitle>
+            <p className="text-primary-foreground/80 mt-1">
+              {filteredBankDetails.length} bank record{filteredBankDetails.length !== 1 ? 's' : ''} found
+            </p>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          {filteredBankDetails.length === 0 ? (
+            <div className="text-center py-12">
+              <CreditCard className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
+              <p className="text-muted-foreground text-lg">No bank details found</p>
+              <p className="text-muted-foreground/70 text-sm mt-1">
+                {searchTerm || bankFilter !== "all" 
+                  ? "Try adjusting your search or filter criteria"
+                  : "Add your first bank details to get started"
+                }
               </p>
             </div>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-semibold flex items-center gap-2 text-green-700 dark:text-green-300">
-                <Banknote className="h-4 w-4" />
-                Bank Name
-              </label>
-              <div className="relative">
-                <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-500 h-4 w-4" />
-                <Input
-                  value={formData.bankName}
-                  onChange={(e) => handleInputChange('bankName', e.target.value)}
-                  placeholder="Enter bank name (e.g., State Bank of India)"
-                  className="pl-10 border-green-200 focus:border-green-400 focus:ring-green-400"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-semibold flex items-center gap-2 text-blue-700 dark:text-blue-300">
-                <Hash className="h-4 w-4" />
-                Account Number
-              </label>
-              <div className="relative">
-                <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 h-4 w-4" />
-                <Input
-                  value={formData.accountNumber}
-                  onChange={(e) => handleInputChange('accountNumber', e.target.value)}
-                  placeholder="Enter account number"
-                  className="pl-10 border-blue-200 focus:border-blue-400 focus:ring-blue-400"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-semibold flex items-center gap-2 text-purple-700 dark:text-purple-300">
-                <MapPin className="h-4 w-4" />
-                Branch Name
-              </label>
-              <div className="relative">
-                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-500 h-4 w-4" />
-                <Input
-                  value={formData.branchName}
-                  onChange={(e) => handleInputChange('branchName', e.target.value)}
-                  placeholder="Enter branch name"
-                  className="pl-10 border-purple-200 focus:border-purple-400 focus:ring-purple-400"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-semibold flex items-center gap-2 text-orange-700 dark:text-orange-300">
-                <Hash className="h-4 w-4" />
-                IFSC Code
-              </label>
-              <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500 h-4 w-4" />
-                <Input
-                  value={formData.ifscCode}
-                  onChange={(e) => handleInputChange('ifscCode', e.target.value)}
-                  placeholder="Enter IFSC code (e.g., SBIN0001234)"
-                  className="pl-10 border-orange-200 focus:border-orange-400 focus:ring-orange-400"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-semibold flex items-center gap-2 text-indigo-700 dark:text-indigo-300">
-                <Activity className="h-4 w-4" />
-                MICR Code
-              </label>
-              <div className="relative">
-                <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-500 h-4 w-4" />
-                <Input
-                  value={formData.micrCode}
-                  onChange={(e) => handleInputChange('micrCode', e.target.value)}
-                  placeholder="Enter MICR code"
-                  className="pl-10 border-indigo-200 focus:border-indigo-400 focus:ring-indigo-400"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-semibold flex items-center gap-2 text-pink-700 dark:text-pink-300">
-                <Camera className="h-4 w-4" />
-                Bank Photo
-              </label>
-              <div className="relative border-2 border-dashed border-pink-300 rounded-lg p-6 bg-pink-50/50 dark:bg-pink-950/20 hover:border-pink-400 transition-colors">
-                <input
-                  id="bank-photo-file"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                />
-                <div className="text-center">
-                  <Upload className="h-8 w-8 text-pink-500 mx-auto mb-2" />
-                  <p className="text-sm font-medium text-pink-700 dark:text-pink-300">
-                    {formData.bankPhoto ? formData.bankPhoto.name : "Click to upload bank photo"}
-                  </p>
-                  <p className="text-xs text-pink-600 dark:text-pink-400 mt-1">
-                    Drag & drop or click to browse (PNG, JPG, JPEG)
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-3 pt-6 border-t border-green-200">
-            <Button 
-              onClick={handleSubmit} 
-              className="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white"
-              size="lg"
-            >
-              {editingBank ? (
-                <>
-                  <Edit className="h-4 w-4 mr-2" />
-                  Update Bank Details
-                </>
-              ) : (
-                <>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Bank Details
-                </>
-              )}
-            </Button>
-            {editingBank && (
-              <Button onClick={handleReset} variant="outline" size="lg">
-                <Trash2 className="h-4 w-4 mr-2" />
-                Cancel
-              </Button>
-            )}
-            <Button onClick={handleReset} variant="secondary" size="lg">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Reset Form
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Bank Details Table */}
-      <Card className="shadow-lg border-l-4 border-l-indigo-500 bg-gradient-to-r from-indigo-50/50 to-white dark:from-indigo-950/20 dark:to-background">
-        <CardHeader className="pb-4 bg-gradient-to-r from-indigo-50 to-transparent dark:from-indigo-950/30">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-indigo-500 text-white rounded-lg">
-              <Building2 className="h-5 w-5" />
-            </div>
-            <div className="flex-1">
-              <CardTitle className="text-xl font-semibold text-indigo-700 dark:text-indigo-300">
-                Bank Details Registry
-              </CardTitle>
-              <div className="flex items-center justify-between mt-2">
-                <p className="text-sm text-indigo-600 dark:text-indigo-400">
-                  Complete bank information database with {filteredBankDetails.length} entries
-                </p>
-                <Badge variant="outline" className="border-indigo-300 text-indigo-700 bg-indigo-50">
-                  {filteredBankDetails.length} of {bankDetails.length} banks
-                </Badge>
-              </div>
-            </div>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
-                <TableRow className="border-b-2 border-indigo-200">
-                  <TableHead className="w-[120px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <Activity className="h-4 w-4 text-indigo-500" />
-                      Actions
-                    </div>
-                  </TableHead>
-                  <TableHead className="min-w-[200px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <Banknote className="h-4 w-4 text-green-500" />
-                      Bank Name
-                    </div>
-                  </TableHead>
-                  <TableHead className="min-w-[150px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <CreditCard className="h-4 w-4 text-blue-500" />
-                      Account Number
-                    </div>
-                  </TableHead>
-                  <TableHead className="min-w-[140px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-purple-500" />
-                      Branch
-                    </div>
-                  </TableHead>
-                  <TableHead className="min-w-[130px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-orange-500" />
-                      IFSC Code
-                    </div>
-                  </TableHead>
-                  <TableHead className="min-w-[130px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <Hash className="h-4 w-4 text-indigo-500" />
-                      MICR Code
-                    </div>
-                  </TableHead>
-                  <TableHead className="w-[100px] font-semibold text-gray-700 dark:text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <Camera className="h-4 w-4 text-pink-500" />
-                      Photo
-                    </div>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredBankDetails.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12">
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-full">
-                          <Building2 className="h-8 w-8 text-gray-400" />
-                        </div>
-                        <div className="text-center">
-                          <p className="text-lg font-medium text-gray-600 dark:text-gray-400">
-                            {searchTerm || bankFilter !== "all" ? "No banks found" : "No bank details available"}
-                          </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
-                            {searchTerm || bankFilter !== "all" 
-                              ? "Try adjusting your search criteria or filters" 
-                              : "Start by adding your first bank detail using the form above"}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
+          ) : (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-primary hover:bg-primary border-b-2 border-primary">
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4 min-w-[120px]">Actions</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Bank Name</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Account Number</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">Branch</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">IFSC Code</TableHead>
+                    <TableHead className="border-r border-primary/30 text-primary-foreground font-bold text-center py-4">MICR Code</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4">Photo</TableHead>
                   </TableRow>
-                ) : (
-                  filteredBankDetails.map((detail, index) => (
+                </TableHeader>
+                <TableBody>
+                  {filteredBankDetails.map((bank, index) => (
                     <TableRow 
-                      key={detail.id} 
-                      className={`hover:bg-indigo-50/50 dark:hover:bg-indigo-950/20 transition-colors ${
-                        index % 2 === 0 ? 'bg-white dark:bg-background' : 'bg-gray-50/50 dark:bg-gray-950/30'
-                      }`}
+                      key={bank.id} 
+                      className={`${index % 2 === 0 ? "bg-muted/30" : "bg-background"} hover:bg-primary/5 transition-colors border-b border-border`}
                     >
-                      <TableCell className="py-4">
-                        <div className="flex gap-1">
+                      <TableCell className="border-r border-border p-4">
+                        <div className="flex justify-center space-x-2">
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleEdit(detail)}
-                            className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
-                            title="Edit bank details"
+                            onClick={() => handleEdit(bank)}
+                            className="text-primary hover:text-primary/80 hover:bg-primary/10 p-2 rounded-md transition-all duration-200"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleDelete(detail.id)}
-                            className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                            title="Delete bank details"
+                            onClick={() => handleDelete(bank.id)}
+                            className="text-destructive hover:text-destructive/80 hover:bg-destructive/10 p-2 rounded-md transition-all duration-200"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
-                      <TableCell className="py-4">
-                        <div className="flex items-start gap-3">
-                          <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                            <Building2 className="h-4 w-4 text-green-600" />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="font-semibold text-gray-900 dark:text-gray-100">
-                              {detail.bank_name}
-                            </span>
-                            <Badge 
-                              variant={
-                                detail.bank_name.toLowerCase().includes('state bank') || 
-                                detail.bank_name.toLowerCase().includes('punjab national') ||
-                                detail.bank_name.toLowerCase().includes('bank of baroda') ||
-                                detail.bank_name.toLowerCase().includes('canara bank') ||
-                                detail.bank_name.toLowerCase().includes('union bank') ||
-                                detail.bank_name.toLowerCase().includes('central bank') ||
-                                detail.bank_name.toLowerCase().includes('indian bank') ||
-                                detail.bank_name.toLowerCase().includes('bank of maharashtra')
-                                ? "default" : "secondary"
-                              } 
-                              className="w-fit text-xs mt-1"
-                            >
-                              {detail.bank_name.toLowerCase().includes('state bank') || 
-                               detail.bank_name.toLowerCase().includes('punjab national') ||
-                               detail.bank_name.toLowerCase().includes('bank of baroda') ||
-                               detail.bank_name.toLowerCase().includes('canara bank') ||
-                               detail.bank_name.toLowerCase().includes('union bank') ||
-                               detail.bank_name.toLowerCase().includes('central bank') ||
-                               detail.bank_name.toLowerCase().includes('indian bank') ||
-                               detail.bank_name.toLowerCase().includes('bank of maharashtra')
-                               ? (
-                                 <div className="flex items-center gap-1">
-                                   <Shield className="h-3 w-3" />
-                                   Public Bank
-                                 </div>
-                               ) : (
-                                 <div className="flex items-center gap-1">
-                                   <Users className="h-3 w-3" />
-                                   Private Bank
-                                 </div>
-                               )}
-                            </Badge>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-4">
+                      <TableCell className="border-r border-border p-4">
                         <div className="flex items-center gap-2">
-                          <CreditCard className="h-4 w-4 text-blue-500" />
-                          <span className="font-mono text-sm font-medium">{detail.account_number}</span>
+                          <Building2 className="h-4 w-4 text-primary" />
+                          <span className="font-semibold text-foreground">{bank.bank_name}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="py-4">
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-purple-500" />
-                          <span className="font-medium">{detail.branch_name}</span>
-                        </div>
+                      <TableCell className="border-r border-border p-4 text-center">
+                        <span className="font-mono text-sm font-medium text-foreground">{bank.account_number}</span>
                       </TableCell>
-                      <TableCell className="py-4">
-                        <div className="flex items-center gap-2">
-                          <DollarSign className="h-4 w-4 text-orange-500" />
-                          <span className="font-mono text-sm font-medium">{detail.ifsc_code}</span>
-                        </div>
+                      <TableCell className="border-r border-border p-4 text-center">
+                        <span className="text-foreground font-medium">{bank.branch_name}</span>
                       </TableCell>
-                      <TableCell className="py-4">
-                        <div className="flex items-center gap-2">
-                          <Hash className="h-4 w-4 text-indigo-500" />
-                          <span className="font-mono text-sm font-medium">{detail.micr_code}</span>
-                        </div>
+                      <TableCell className="border-r border-border p-4 text-center">
+                        <span className="font-mono text-sm font-medium text-foreground">{bank.ifsc_code}</span>
                       </TableCell>
-                      <TableCell className="py-4">
-                        {detail.bank_photo_url ? (
-                          <div className="relative group">
-                            <img
-                              src={detail.bank_photo_url}
-                              alt="Bank"
-                              className="w-12 h-12 object-cover rounded-lg border-2 border-pink-200 shadow-sm group-hover:shadow-md transition-shadow"
+                      <TableCell className="border-r border-border p-4 text-center">
+                        <span className="font-mono text-sm font-medium text-foreground">{bank.micr_code}</span>
+                      </TableCell>
+                      <TableCell className="p-4 text-center">
+                        {bank.bank_photo_url ? (
+                          <div className="flex justify-center">
+                            <img 
+                              src={bank.bank_photo_url} 
+                              alt={bank.bank_name}
+                              className="w-12 h-12 object-cover rounded-lg border border-border shadow-sm"
                             />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 rounded-lg transition-colors" />
                           </div>
                         ) : (
-                          <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
-                            <Camera className="h-4 w-4 text-gray-400" />
+                          <div className="flex justify-center">
+                            <div className="w-12 h-12 bg-muted rounded-lg border border-border flex items-center justify-center">
+                              <Camera className="h-4 w-4 text-muted-foreground" />
+                            </div>
                           </div>
                         )}
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
