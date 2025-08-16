@@ -210,38 +210,42 @@ const MenuContentContent = () => {
     <div className="space-y-8">
       {/* Statistics Dashboard */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="shadow-lg border-0 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-primary/5 to-primary/10">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100">Total Content</p>
-                <p className="text-3xl font-bold">{menuItems?.length || 0}</p>
+                <p className="text-sm font-medium text-muted-foreground">Total Content</p>
+                <p className="text-3xl font-bold text-primary">{menuItems?.length || 0}</p>
               </div>
-              <BookOpen className="h-12 w-12 text-blue-200" />
+              <div className="p-3 bg-primary/10 rounded-full">
+                <BookOpen className="h-6 w-6 text-primary" />
+              </div>
             </div>
           </CardContent>
         </Card>
         
-        <Card className="shadow-lg border-0 bg-gradient-to-r from-green-500 to-green-600 text-white">
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-success/5 to-success/10">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100">With Files</p>
-                <p className="text-3xl font-bold">
+                <p className="text-sm font-medium text-muted-foreground">With Files</p>
+                <p className="text-3xl font-bold text-success">
                   {menuItems?.filter(item => item.course_file).length || 0}
                 </p>
               </div>
-              <FileText className="h-12 w-12 text-green-200" />
+              <div className="p-3 bg-success/10 rounded-full">
+                <FileText className="h-6 w-6 text-success" />
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="shadow-lg border-0 bg-gradient-to-r from-purple-500 to-purple-600 text-white">
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-accent/5 to-accent/10">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-purple-100">This Month</p>
-                <p className="text-3xl font-bold">
+                <p className="text-sm font-medium text-muted-foreground">This Month</p>
+                <p className="text-3xl font-bold text-accent">
                   {menuItems?.filter(item => {
                     const itemDate = new Date(item.date.split('/').reverse().join('-'));
                     const currentMonth = new Date().getMonth();
@@ -249,45 +253,49 @@ const MenuContentContent = () => {
                   }).length || 0}
                 </p>
               </div>
-              <Calendar className="h-12 w-12 text-purple-200" />
+              <div className="p-3 bg-accent/10 rounded-full">
+                <Calendar className="h-6 w-6 text-accent" />
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="shadow-lg border-0 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-warning/5 to-warning/10">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-100">Filtered Results</p>
-                <p className="text-3xl font-bold">{filteredMenuItems.length}</p>
+                <p className="text-sm font-medium text-muted-foreground">Filtered Results</p>
+                <p className="text-3xl font-bold text-warning">{filteredMenuItems.length}</p>
               </div>
-              <Filter className="h-12 w-12 text-orange-200" />
+              <div className="p-3 bg-warning/10 rounded-full">
+                <Filter className="h-6 w-6 text-warning" />
+              </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Add/Edit Menu Content Form */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
-          <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-            <div className="p-2 bg-blue-500 rounded-lg">
-              <Menu className="h-6 w-6 text-white" />
+      <Card className="border-0 shadow-xl bg-card">
+        <CardHeader className="p-6 border-b">
+          <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <div className="p-2 bg-primary rounded-lg">
+              <Menu className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span>{editingItem ? 'Edit Menu Content' : 'Add New Menu Content'}</span>
+            {editingItem ? 'Edit Menu Content' : 'Add New Menu Content'}
           </CardTitle>
         </CardHeader>
         
-        <CardContent className="p-8">
+        <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Course */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Course *</label>
+              <label className="text-sm font-medium text-foreground">Course *</label>
               <Select value={formData.course} onValueChange={(value) => handleInputChange('course', value)}>
-                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white">
+                <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select Course" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-300 shadow-lg z-50">
+                <SelectContent>
                   {courses.map((course) => (
                     <SelectItem key={course} value={course}>
                       {course}
@@ -299,19 +307,19 @@ const MenuContentContent = () => {
 
             {/* Upload File Title */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Upload File Title *</label>
+              <label className="text-sm font-medium text-foreground">Upload File Title *</label>
               <Input
                 value={formData.uploadFileTitle}
                 onChange={(e) => handleInputChange('uploadFileTitle', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
+                className="h-11"
                 placeholder="Enter descriptive file title"
               />
             </div>
 
             {/* Upload File */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Upload File</label>
-              <div className="border border-gray-300 rounded p-4 bg-white">
+              <label className="text-sm font-medium text-foreground">Upload File</label>
+              <div className="border border-border rounded-lg p-4 bg-background">
                 <div className="flex items-center space-x-4">
                   <div className="relative">
                     <input
@@ -323,16 +331,16 @@ const MenuContentContent = () => {
                     />
                     <Button
                       variant="outline"
-                      className="h-10 px-6 border-gray-300 hover:bg-gray-50 font-medium text-gray-700"
+                      className="h-10"
                     >
                       Choose File
                     </Button>
                   </div>
-                  <span className="text-gray-500 font-medium">
+                  <span className="text-sm text-muted-foreground">
                     {formData.uploadFile ? formData.uploadFile.name : "No file chosen"}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-muted-foreground mt-2">
                   Supported formats: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX
                 </p>
               </div>
@@ -340,7 +348,7 @@ const MenuContentContent = () => {
 
             {/* Date */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Date</label>
+              <label className="text-sm font-medium text-foreground">Date</label>
               <Input
                 type="date"
                 value={formData.date.split('/').reverse().join('-')}
@@ -349,35 +357,35 @@ const MenuContentContent = () => {
                   const formattedDate = dateValue.split('-').reverse().join('/');
                   handleInputChange('date', formattedDate);
                 }}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
+                className="h-11"
               />
             </div>
 
             {/* Write Note */}
             <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-medium text-gray-700">Notes/Description</label>
+              <label className="text-sm font-medium text-foreground">Notes/Description</label>
               <Textarea
                 value={formData.writeNote}
                 onChange={(e) => handleInputChange('writeNote', e.target.value)}
-                className="min-h-[120px] border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white resize-none"
+                className="min-h-[120px] resize-none"
                 placeholder="Add detailed description or notes about this content..."
               />
             </div>
           </div>
 
           {/* Submit Buttons */}
-          <div className="flex space-x-4 pt-8">
+          <div className="flex gap-4 pt-6">
             <Button
               onClick={handleUpload}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+              className="h-11 px-8"
             >
-              <Upload className="h-5 w-5 mr-2" />
+              <Upload className="h-4 w-4 mr-2" />
               {editingItem ? "Update Content" : "Upload Content"}
             </Button>
             <Button
               onClick={handleReset}
               variant="outline"
-              className="border-gray-300 text-gray-600 hover:bg-gray-50 px-8 py-3 rounded-lg"
+              className="h-11 px-8"
             >
               Reset Form
             </Button>
@@ -386,25 +394,25 @@ const MenuContentContent = () => {
       </Card>
 
       {/* Search and Filter */}
-      <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
+      <Card className="border-0 shadow-lg bg-card">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search by title, course, or notes..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded"
+                className="pl-10 h-11"
               />
             </div>
             <div className="w-full md:w-64">
               <Select value={courseFilter} onValueChange={setCourseFilter}>
-                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded">
+                <SelectTrigger className="h-11">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Filter by course" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-300 shadow-lg z-50">
+                <SelectContent>
                   <SelectItem value="all">All Courses</SelectItem>
                   <SelectItem value="pgdca">PGDCA</SelectItem>
                   <SelectItem value="bca">BCA</SelectItem>
@@ -426,97 +434,147 @@ const MenuContentContent = () => {
       </Card>
 
       {/* Menu Content Table */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-6 border-b border-gray-100">
-          <CardTitle className="text-xl font-bold text-gray-800 flex items-center justify-between">
-            <span>Menu Content Library ({filteredMenuItems.length})</span>
-            <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-              Total: {menuItems?.length || 0}
+      <Card className="border-0 shadow-xl bg-card">
+        <CardHeader className="p-6 border-b">
+          <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <div className="p-2 bg-primary rounded-lg">
+              <Menu className="h-5 w-5 text-primary-foreground" />
+            </div>
+            Menu Content Library
+            <Badge variant="secondary" className="ml-auto">
+              {filteredMenuItems.length} of {menuItems?.length || 0} items
             </Badge>
           </CardTitle>
         </CardHeader>
         
         <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Actions</th>
-                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Course</th>
-                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Title</th>
-                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">File</th>
-                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Date</th>
-                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredMenuItems.map((item, index) => (
-                  <tr key={item.id} className={`hover:bg-blue-50 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}`}>
-                    <td className="border border-gray-200 px-6 py-4">
-                      <div className="flex gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleEdit(item)}
-                          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(item.id)}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-2"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </td>
-                    <td className="border border-gray-200 px-6 py-4">
-                      <Badge variant="outline" className="border-blue-200 text-blue-700 bg-blue-50">
-                        {item.course.split(' - ')[0] || item.course}
-                      </Badge>
-                    </td>
-                    <td className="border border-gray-200 px-6 py-4">
-                      <div className="font-semibold text-gray-800">{item.upload_file_title}</div>
-                    </td>
-                    <td className="border border-gray-200 px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        {getFileIcon(item.course_file)}
-                        <span className="text-sm text-gray-600">
-                          {item.course_file || "No file"}
-                        </span>
-                        {item.course_file && (
-                          <Button variant="ghost" size="sm" className="p-1">
-                            <Download className="h-3 w-3 text-gray-500" />
+          {filteredMenuItems.length === 0 ? (
+            <div className="p-12 text-center">
+              <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-foreground mb-2">No content found</h3>
+              <p className="text-muted-foreground">
+                {searchTerm || courseFilter !== "all" ? "Try adjusting your search or filter criteria" : "Start by adding your first menu content"}
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-24">Actions</TableHead>
+                    <TableHead className="min-w-[200px]">Course</TableHead>
+                    <TableHead className="min-w-[180px]">File Title</TableHead>
+                    <TableHead className="w-32">File</TableHead>
+                    <TableHead className="w-28">Date</TableHead>
+                    <TableHead className="min-w-[250px]">Notes</TableHead>
+                    <TableHead className="w-20">Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredMenuItems.map((item) => (
+                    <TableRow key={item.id} className="hover:bg-muted/50">
+                      <TableCell>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(item)}
+                            className="h-8 w-8 p-0 text-primary hover:text-primary hover:bg-primary/10"
+                            title="Edit content"
+                          >
+                            <Edit className="h-4 w-4" />
                           </Button>
-                        )}
-                      </div>
-                    </td>
-                    <td className="border border-gray-200 px-6 py-4">
-                      <div className="text-sm text-gray-600">{item.date}</div>
-                    </td>
-                    <td className="border border-gray-200 px-6 py-4">
-                      <div className="text-sm text-gray-600 max-w-xs truncate">
-                        {item.notes || "-"}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-                {filteredMenuItems.length === 0 && (
-                  <tr>
-                    <td colSpan={6} className="border border-gray-200 px-6 py-12 text-center">
-                      <div className="text-gray-500">
-                        {searchTerm || courseFilter !== "all" 
-                          ? "No content matches your search criteria" 
-                          : "No menu content found"}
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(item.id)}
+                            className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                            title="Delete content"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="space-y-1">
+                          <p className="font-medium text-sm leading-tight">
+                            {item.course.split(' - ')[0]}
+                          </p>
+                          <p className="text-xs text-muted-foreground leading-tight">
+                            {item.course.split(' - ')[1] || ''}
+                          </p>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="space-y-1">
+                          <p className="font-medium text-sm leading-tight">
+                            {item.upload_file_title}
+                          </p>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          {getFileIcon(item.course_file)}
+                          <div className="flex flex-col">
+                            {item.course_file ? (
+                              <>
+                                <span className="text-xs font-medium truncate max-w-24" title={item.course_file}>
+                                  {item.course_file.length > 15 ? 
+                                    `${item.course_file.substring(0, 12)}...` : 
+                                    item.course_file
+                                  }
+                                </span>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-6 w-fit p-1 text-xs text-primary hover:text-primary hover:bg-primary/10"
+                                  title="Download file"
+                                >
+                                  <Download className="h-3 w-3" />
+                                </Button>
+                              </>
+                            ) : (
+                              <span className="text-xs text-muted-foreground">No file</span>
+                            )}
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3 text-muted-foreground" />
+                          <span className="text-xs font-medium">
+                            {item.date}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="max-w-[250px]">
+                          {item.notes ? (
+                            <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                              {item.notes.length > 100 ? 
+                                `${item.notes.substring(0, 100)}...` : 
+                                item.notes
+                              }
+                            </p>
+                          ) : (
+                            <span className="text-xs text-muted-foreground italic">No notes</span>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge 
+                          variant={item.course_file ? "default" : "outline"}
+                          className="text-xs"
+                        >
+                          {item.course_file ? "Complete" : "Pending"}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
