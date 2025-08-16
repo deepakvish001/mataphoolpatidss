@@ -16,6 +16,7 @@ interface DirectorMessage {
 }
 
 const AddDirectorMessageContent = () => {
+  console.log("AddDirectorMessageContent rendered - no User icon should be referenced");
   const {
     data: messages,
     loading,
