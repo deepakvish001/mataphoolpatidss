@@ -322,22 +322,24 @@ const StudentManagementRealTime = () => {
                   <div className="space-y-4 mt-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-sm font-medium text-gray-700">Full Name *</label>
+                        <label className="text-sm font-medium text-foreground">Full Name *</label>
                         <Input
                           value={formData.fullName}
                           onChange={(e) => handleInputChange('fullName', e.target.value)}
                           placeholder="Enter full name"
                           disabled={formLoading}
+                          className="border-border bg-background"
                         />
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">Email *</label>
+                        <label className="text-sm font-medium text-foreground">Email *</label>
                         <Input
                           type="email"
                           value={formData.email}
                           onChange={(e) => handleInputChange('email', e.target.value)}
                           placeholder="Enter email"
                           disabled={formLoading}
+                          className="border-border bg-background"
                         />
                       </div>
                     </div>
@@ -426,12 +428,12 @@ const StudentManagementRealTime = () => {
           {/* Search and Filter Controls */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 placeholder="Search students..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-background border-border"
               />
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
@@ -452,120 +454,136 @@ const StudentManagementRealTime = () => {
             </div>
           </div>
           
-          <div className="border rounded-lg overflow-hidden">
+          <div className="overflow-x-auto rounded-lg border border-border">
             <Table>
               <TableHeader>
-                <TableRow className="bg-purple-600 hover:bg-purple-600">
-                  <TableHead className="text-white font-bold">Actions</TableHead>
-                  <TableHead className="text-white font-bold">Student Details</TableHead>
-                  <TableHead className="text-white font-bold">Course</TableHead>
-                  <TableHead className="text-white font-bold">Location</TableHead>
-                  <TableHead className="text-white font-bold">Status</TableHead>
-                  <TableHead className="text-white font-bold">Enrollment</TableHead>
+                <TableRow className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary">
+                  <TableHead className="text-primary-foreground font-bold py-4 border-r border-primary/30">Student Details</TableHead>
+                  <TableHead className="text-primary-foreground font-bold py-4 border-r border-primary/30">Contact</TableHead>
+                  <TableHead className="text-primary-foreground font-bold py-4 border-r border-primary/30">Course</TableHead>
+                  <TableHead className="text-primary-foreground font-bold py-4 border-r border-primary/30">Location</TableHead>
+                  <TableHead className="text-primary-foreground font-bold py-4 border-r border-primary/30">Status</TableHead>
+                  <TableHead className="text-primary-foreground font-bold py-4 border-r border-primary/30">Enrollment</TableHead>
+                  <TableHead className="text-primary-foreground font-bold py-4">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredStudents.map((student, index) => (
-                  <TableRow key={student.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                    <TableCell className="p-4">
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => openEditDialog(student)}
-                          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(student.id)}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                    <TableCell className="p-4">
-                      <div className="space-y-1">
-                        <div className="font-medium text-gray-900 flex items-center space-x-2">
-                          <Users className="h-4 w-4 text-blue-600" />
-                          <span>{student.full_name}</span>
-                        </div>
-                        <div className="text-sm text-gray-500 flex items-center space-x-2">
-                          <Mail className="h-3 w-3 text-green-600" />
-                          <span>{student.email}</span>
-                        </div>
-                        {student.phone && (
-                          <div className="text-sm text-gray-500 flex items-center space-x-2">
-                            <Phone className="h-3 w-3 text-purple-600" />
-                            <span>{student.phone}</span>
-                          </div>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell className="p-4">
-                      <div className="flex items-center space-x-2">
-                        <GraduationCap className="h-4 w-4 text-purple-600" />
-                        <span className="text-sm font-medium">
-                          {student.course_name || "Not assigned"}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="p-4">
-                      <div className="text-sm space-y-1">
-                        {student.city && (
-                          <div className="flex items-center space-x-2">
-                            <MapPin className="h-3 w-3 text-indigo-600" />
-                            <span>{student.city}</span>
-                          </div>
-                        )}
-                        {student.state && (
-                          <div className="text-gray-500 ml-5">{student.state}</div>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell className="p-4">
-                      <div className="flex items-center space-x-2">
-                        <Badge 
-                          className={
-                            student.status === 'active' ? 'bg-green-100 text-green-800' :
-                            student.status === 'graduated' ? 'bg-blue-100 text-blue-800' :
-                            'bg-gray-100 text-gray-800'
-                          }
-                        >
-                          {student.status === 'active' ? '✅ Active' :
-                           student.status === 'graduated' ? '🎓 Graduated' :
-                           '⏸️ Inactive'}
-                        </Badge>
-                        <Select
-                          value={student.status}
-                          onValueChange={(value: "active" | "inactive" | "graduated") => 
-                            handleStatusUpdate(student.id, value)
-                          }
-                        >
-                          <SelectTrigger className="h-8 w-32">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="inactive">Inactive</SelectItem>
-                            <SelectItem value="graduated">Graduated</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </TableCell>
-                    <TableCell className="p-4">
-                      <div className="text-sm text-gray-600">
-                        {student.enrollment_date ? 
-                          new Date(student.enrollment_date).toLocaleDateString() : 
-                          "Not available"
-                        }
+                {filteredStudents.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                      <div className="flex flex-col items-center space-y-4">
+                        <Users className="h-12 w-12 text-muted-foreground/50" />
+                        <p className="text-lg font-medium">No students found</p>
+                        <p className="text-sm">
+                          {searchTerm || statusFilter !== "all" 
+                            ? "Try adjusting your search or filter criteria" 
+                            : "Add your first student to get started"}
+                        </p>
                       </div>
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  filteredStudents.map((student, index) => (
+                    <TableRow 
+                      key={student.id} 
+                      className={`${index % 2 === 0 ? "bg-accent/10" : "bg-background"} hover:bg-accent/20 transition-colors duration-200`}
+                    >
+                      <TableCell className="p-4 border-r border-border">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                            <Users className="h-5 w-5 text-primary" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-foreground">{student.full_name}</p>
+                            <p className="text-sm text-muted-foreground">ID: {student.id.slice(0, 8)}...</p>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="p-4 border-r border-border">
+                        <div className="space-y-1">
+                          <div className="flex items-center space-x-2">
+                            <Mail className="h-4 w-4 text-accent" />
+                            <span className="text-sm text-foreground">{student.email}</span>
+                          </div>
+                          {student.phone && (
+                            <div className="flex items-center space-x-2">
+                              <Phone className="h-4 w-4 text-secondary" />
+                              <span className="text-sm text-foreground">{student.phone}</span>
+                            </div>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className="p-4 border-r border-border">
+                        <div className="flex items-center space-x-2">
+                          <GraduationCap className="h-4 w-4 text-primary" />
+                          <span className="text-sm font-medium text-foreground">
+                            {student.course_name || "Not assigned"}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="p-4 border-r border-border">
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm text-foreground">
+                            {student.city && student.state 
+                              ? `${student.city}, ${student.state}` 
+                              : student.state || student.city || "-"}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="p-4 border-r border-border">
+                        <Select
+                          value={student.status}
+                          onValueChange={(newStatus: "active" | "inactive" | "graduated") => 
+                            handleStatusUpdate(student.id, newStatus)
+                          }
+                        >
+                          <SelectTrigger className={`w-32 border-0 ${
+                            student.status === 'active' 
+                              ? 'bg-accent/20 text-accent-foreground hover:bg-accent/30' 
+                              : student.status === 'graduated'
+                              ? 'bg-secondary/20 text-secondary-foreground hover:bg-secondary/30'
+                              : 'bg-muted/20 text-muted-foreground hover:bg-muted/30'
+                          }`}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="active">✅ Active</SelectItem>
+                            <SelectItem value="inactive">⏸️ Inactive</SelectItem>
+                            <SelectItem value="graduated">🎓 Graduated</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="p-4 border-r border-border">
+                        <span className="text-sm text-foreground">
+                          {student.enrollment_date 
+                            ? new Date(student.enrollment_date).toLocaleDateString() 
+                            : "Not available"}
+                        </span>
+                      </TableCell>
+                      <TableCell className="p-4">
+                        <div className="flex space-x-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => openEditDialog(student)}
+                            className="text-primary hover:text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(student.id)}
+                            className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded-lg transition-colors"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </div>
