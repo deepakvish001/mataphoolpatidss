@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Edit, Trash2, FileText, Users, GraduationCap, Award, MapPin, User, Calendar, Image, FileCheck, Download, Printer, Share } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const VerificationReportContent = () => {
@@ -159,86 +160,199 @@ const VerificationReportContent = () => {
   const referenceNumber = "1234567";
 
   return (
-    <div className="w-full max-w-none bg-white">
-      {/* Header */}
-      <div className="bg-gray-400 px-4 py-3 mb-4 border border-gray-500">
-        <h1 className="text-lg font-medium text-gray-800">Verification Report</h1>
-      </div>
-
-      {/* Verification Report Table */}
-      <div className="border-2 border-gray-600 bg-white">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse min-w-[1800px]">
-            <thead>
-              <tr className="bg-blue-600 text-white">
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[80px]">State</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[80px]">Distt</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[120px]">center_code</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[130px]">Enrollment_no</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[100px]">dob</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[150px]">Name</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[280px]">Course_Name</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[200px]">Photo</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[200px]">Certificate</th>
-                <th className="border-2 border-gray-600 px-3 py-3 text-sm font-medium text-left min-w-[250px]">Marksheet</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student, index) => (
-                <tr key={student.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">
-                    <div className="flex gap-1 mb-2">
-                      <Button
-                        variant="link"
-                        onClick={() => handleEdit(student.id)}
-                        className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs"
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="link"
-                        onClick={() => handleDelete(student.id)}
-                        className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs"
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                    <div className="font-medium">{student.state}</div>
-                  </td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.district}</td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.centerCode}</td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.enrollmentNo}</td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.dob}</td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.name}</td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs">{student.courseName}</td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs break-all">{student.photo}</td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs break-all">{student.certificate}</td>
-                  <td className="border-2 border-gray-600 px-3 py-3 text-xs break-all">{student.marksheet}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-primary/5 p-6">
+      <div className="w-full max-w-7xl mx-auto space-y-6">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-primary to-primary/80 px-6 py-4 rounded-lg shadow-lg">
+          <div className="flex items-center gap-3">
+            <FileText className="h-6 w-6 text-primary-foreground" />
+            <h1 className="text-xl font-bold text-primary-foreground">Verification Report</h1>
+          </div>
         </div>
-      </div>
 
-      {/* Reference Number Footer */}
-      <div className="mt-4">
-        <div className="bg-blue-600 text-white text-center py-3 text-lg font-medium">
-          {referenceNumber}
+        {/* Statistics Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg">
+            <CardContent className="flex items-center justify-between p-6">
+              <div>
+                <p className="text-blue-100 text-sm font-medium">Total Students</p>
+                <p className="text-2xl font-bold">{students.length}</p>
+              </div>
+              <Users className="h-8 w-8 text-blue-200" />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0 shadow-lg">
+            <CardContent className="flex items-center justify-between p-6">
+              <div>
+                <p className="text-green-100 text-sm font-medium">Verified Students</p>
+                <p className="text-2xl font-bold">{students.filter(s => s.enrollmentNo && s.name).length}</p>
+              </div>
+              <FileCheck className="h-8 w-8 text-green-200" />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0 shadow-lg">
+            <CardContent className="flex items-center justify-between p-6">
+              <div>
+                <p className="text-purple-100 text-sm font-medium">Courses</p>
+                <p className="text-2xl font-bold">{new Set(students.map(s => s.courseName)).size}</p>
+              </div>
+              <GraduationCap className="h-8 w-8 text-purple-200" />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0 shadow-lg">
+            <CardContent className="flex items-center justify-between p-6">
+              <div>
+                <p className="text-orange-100 text-sm font-medium">Districts</p>
+                <p className="text-2xl font-bold">{new Set(students.map(s => s.district)).size}</p>
+              </div>
+              <MapPin className="h-8 w-8 text-orange-200" />
+            </CardContent>
+          </Card>
         </div>
-      </div>
 
-      {/* Action Buttons */}
-      <div className="mt-4 flex gap-4">
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-          Export Report
-        </Button>
-        <Button variant="outline" className="border-gray-400">
-          Print Report
-        </Button>
-        <Button variant="outline" className="border-gray-400">
-          Download PDF
-        </Button>
+        {/* Verification Report Table */}
+        <Card className="shadow-lg border-0 bg-card/50 backdrop-blur">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-primary" />
+              Student Verification Report ({students.length} records)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="border border-border rounded-lg bg-background/50 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse min-w-[1800px]">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[120px]">
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4" />
+                          State & Actions
+                        </div>
+                      </th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[120px]">
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4" />
+                          District
+                        </div>
+                      </th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[140px]">Center Code</th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[150px]">Enrollment No</th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[120px]">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          DOB
+                        </div>
+                      </th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[160px]">
+                        <div className="flex items-center gap-1">
+                          <User className="h-4 w-4" />
+                          Student Name
+                        </div>
+                      </th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[300px]">
+                        <div className="flex items-center gap-1">
+                          <Award className="h-4 w-4" />
+                          Course Name
+                        </div>
+                      </th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[220px]">
+                        <div className="flex items-center gap-1">
+                          <Image className="h-4 w-4" />
+                          Photo
+                        </div>
+                      </th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[220px]">
+                        <div className="flex items-center gap-1">
+                          <FileCheck className="h-4 w-4" />
+                          Certificate
+                        </div>
+                      </th>
+                      <th className="border border-border px-4 py-3 text-sm font-semibold text-left min-w-[250px]">
+                        <div className="flex items-center gap-1">
+                          <FileText className="h-4 w-4" />
+                          Marksheet
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {students.map((student, index) => (
+                      <tr key={student.id} className={index % 2 === 0 ? "bg-background hover:bg-accent/30" : "bg-accent/10 hover:bg-accent/40"}>
+                        <td className="border border-border px-4 py-3 text-sm">
+                          <div className="flex gap-2 mb-3">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(student.id)}
+                              className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                            >
+                              <Edit className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(student.id)}
+                              className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                          <div className="font-medium text-primary">{student.state}</div>
+                        </td>
+                        <td className="border border-border px-4 py-3 text-sm font-medium">{student.district}</td>
+                        <td className="border border-border px-4 py-3 text-sm font-mono">{student.centerCode}</td>
+                        <td className="border border-border px-4 py-3 text-sm font-mono text-blue-600">{student.enrollmentNo}</td>
+                        <td className="border border-border px-4 py-3 text-sm">{student.dob}</td>
+                        <td className="border border-border px-4 py-3 text-sm font-medium text-green-600">{student.name}</td>
+                        <td className="border border-border px-4 py-3 text-sm">{student.courseName}</td>
+                        <td className="border border-border px-4 py-3 text-sm text-muted-foreground break-all">{student.photo}</td>
+                        <td className="border border-border px-4 py-3 text-sm text-muted-foreground break-all">{student.certificate}</td>
+                        <td className="border border-border px-4 py-3 text-sm text-muted-foreground break-all">{student.marksheet}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Reference Number Footer */}
+        <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg border-0">
+          <CardContent className="text-center py-6">
+            <div className="flex items-center justify-center gap-3">
+              <FileCheck className="h-6 w-6" />
+              <div>
+                <p className="text-sm opacity-90">Report Reference Number</p>
+                <p className="text-2xl font-bold tracking-wider">{referenceNumber}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Action Buttons */}
+        <Card className="shadow-lg border-0 bg-card/50 backdrop-blur">
+          <CardContent className="p-6">
+            <div className="flex flex-wrap gap-4">
+              <Button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg">
+                <Share className="h-4 w-4 mr-2" />
+                Export Report
+              </Button>
+              <Button variant="outline" className="border-2 hover:bg-accent/50 shadow-md">
+                <Printer className="h-4 w-4 mr-2" />
+                Print Report
+              </Button>
+              <Button variant="outline" className="border-2 hover:bg-accent/50 shadow-md">
+                <Download className="h-4 w-4 mr-2" />
+                Download PDF
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
