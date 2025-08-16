@@ -329,75 +329,109 @@ const StudentVerificationContent = () => {
           </Card>
         </div>
 
-        {/* Main Verification Form */}
-        <Card className="shadow-xl border-0 bg-card/60 backdrop-blur animate-scale-in">
-          <CardHeader className="border-b border-border bg-gradient-to-r from-card to-card/50">
-            <CardTitle className="flex items-center gap-3">
-              <div className="p-3 bg-gradient-to-r from-primary to-primary/80 rounded-xl">
-                <Shield className="h-6 w-6 text-primary-foreground" />
+        {/* Enhanced Main Verification Form */}
+        <Card className="shadow-xl border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur animate-scale-in">
+          <CardHeader className="border-b border-border bg-gradient-to-r from-primary/10 via-primary/5 to-transparent">
+            <CardTitle className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-gradient-to-r from-primary to-primary/80 rounded-xl shadow-lg">
+                  <Shield className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <div>
+                  <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    {editingVerification ? 'Edit Verification Request' : 'Student Verification Form'}
+                  </span>
+                  <p className="text-sm text-muted-foreground font-normal">Complete all sections to submit your verification request</p>
+                </div>
               </div>
-              <div>
-                <span className="text-xl font-bold">{editingVerification ? 'Edit Verification Request' : 'Student Verification Form'}</span>
-                <p className="text-sm text-muted-foreground font-normal">Complete all required fields to submit verification request</p>
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground">Step 1 of 3</div>
+                <div className="w-32 h-2 bg-muted rounded-full mt-1">
+                  <div className="w-1/3 h-full bg-gradient-to-r from-primary to-primary/80 rounded-full transition-all duration-500"></div>
+                </div>
               </div>
             </CardTitle>
           </CardHeader>
           
           <CardContent className="p-8">
-            {/* Form Sections */}
             <div className="space-y-8">
               {/* Personal Information Section */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-border">
-                  <User className="h-5 w-5 text-primary" />
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b-2 border-gradient-to-r from-primary/20 to-transparent">
+                  <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg">
+                    <User className="h-5 w-5 text-white" />
+                  </div>
                   <h3 className="text-lg font-semibold text-foreground">Personal Information</h3>
+                  <div className="ml-auto">
+                    <div className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">Required</div>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Student Name *</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      Student Full Name
+                    </label>
                     <Input
                       value={formData.studentName}
                       onChange={(e) => handleInputChange('studentName', e.target.value)}
-                      placeholder="Enter Full Name"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12"
+                      placeholder="Enter student's complete name"
+                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
                     />
+                    <div className="text-xs text-muted-foreground">As per official documents</div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Father's Name *</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      Father's Name
+                    </label>
                     <Input
                       value={formData.fatherName}
                       onChange={(e) => handleInputChange('fatherName', e.target.value)}
-                      placeholder="Enter Father's Name"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12"
+                      placeholder="Enter father's complete name"
+                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Date of Birth</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      Date of Birth
+                    </label>
                     <Input
                       type="date"
                       value={formData.dateOfBirth}
                       onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12"
+                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Location Information Section */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-border">
-                  <MapPin className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-semibold text-foreground">Location Details</h3>
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b-2 border-gradient-to-r from-green-500/20 to-transparent">
+                  <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
+                    <MapPin className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">Location & Center Details</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">State *</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      State
+                    </label>
                     <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
-                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
-                        <SelectValue placeholder="Select State" />
+                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50">
+                        <SelectValue placeholder="Select your state" />
                       </SelectTrigger>
                       <SelectContent className="bg-background border-border shadow-xl">
-                        <SelectItem value="Uttar Pradesh">Uttar Pradesh</SelectItem>
+                        <SelectItem value="Uttar Pradesh">
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4 text-green-600" />
+                            Uttar Pradesh
+                          </div>
+                        </SelectItem>
                         <SelectItem value="Bihar">Bihar</SelectItem>
                         <SelectItem value="Madhya Pradesh">Madhya Pradesh</SelectItem>
                         <SelectItem value="Rajasthan">Rajasthan</SelectItem>
@@ -405,11 +439,14 @@ const StudentVerificationContent = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">District *</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      District
+                    </label>
                     <Select value={formData.district} onValueChange={(value) => handleInputChange('district', value)}>
-                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
-                        <SelectValue placeholder="Select District" />
+                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50">
+                        <SelectValue placeholder="Select your district" />
                       </SelectTrigger>
                       <SelectContent className="bg-background border-border shadow-xl">
                         <SelectItem value="Azamgarh">Azamgarh</SelectItem>
@@ -420,178 +457,387 @@ const StudentVerificationContent = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Center Code *</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      Training Center Code
+                    </label>
                     <Input
                       value={formData.centerCode}
                       onChange={(e) => handleInputChange('centerCode', e.target.value)}
-                      placeholder="Enter Center Code"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12"
+                      placeholder="e.g., SM11101"
+                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
                     />
+                    <div className="text-xs text-muted-foreground">Check with your training center</div>
                   </div>
                 </div>
               </div>
 
               {/* Academic Information Section */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-border">
-                  <GraduationCap className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-semibold text-foreground">Academic Details</h3>
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b-2 border-gradient-to-r from-purple-500/20 to-transparent">
+                  <div className="p-2 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg">
+                    <GraduationCap className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">Academic Credentials</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Enrollment Number *</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      Enrollment Number
+                    </label>
                     <Input
                       value={formData.enrollmentNo}
                       onChange={(e) => handleInputChange('enrollmentNo', e.target.value)}
-                      placeholder="Enter Enrollment Number"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12"
+                      placeholder="Enter enrollment number"
+                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Course Name *</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      Course Program
+                    </label>
                     <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
-                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
-                        <SelectValue placeholder="Select Course" />
+                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50">
+                        <SelectValue placeholder="Select your course" />
                       </SelectTrigger>
                       <SelectContent className="bg-background border-border shadow-xl">
-                        <SelectItem value="Diploma in Computer Application (DCA)">DCA</SelectItem>
-                        <SelectItem value="Advance Diploma in Computer Application (ADCA)">ADCA</SelectItem>
-                        <SelectItem value="Post Graduate Diploma in Computer Application (PGDCA)">PGDCA</SelectItem>
+                        <SelectItem value="Diploma in Computer Application (DCA)">
+                          <div className="flex items-center gap-2">
+                            <GraduationCap className="h-4 w-4 text-blue-600" />
+                            DCA - Diploma in Computer Application
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="Advance Diploma in Computer Application (ADCA)">
+                          <div className="flex items-center gap-2">
+                            <GraduationCap className="h-4 w-4 text-green-600" />
+                            ADCA - Advanced Diploma in Computer Application
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="Post Graduate Diploma in Computer Application (PGDCA)">PGDCA - Post Graduate Diploma</SelectItem>
                         <SelectItem value="Diploma in Computer Hardware and Networking">Hardware & Networking</SelectItem>
                         <SelectItem value="Web Design & Development">Web Design & Development</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Course Duration</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      Course Duration
+                    </label>
                     <Input
                       value={formData.courseDuration}
                       onChange={(e) => handleInputChange('courseDuration', e.target.value)}
-                      placeholder="e.g., 1 Year"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12"
+                      placeholder="e.g., 1 Year, 6 Months"
+                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Rank/Marks</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      Performance/Marks
+                    </label>
                     <Input
                       value={formData.rankOrMarks}
                       onChange={(e) => handleInputChange('rankOrMarks', e.target.value)}
-                      placeholder="e.g., First Class, 85%"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12"
+                      placeholder="e.g., First Class, 85%, A Grade"
+                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Admission Date</label>
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      Admission Date
+                    </label>
                     <Input
                       type="date"
                       value={formData.admissionDate}
                       onChange={(e) => handleInputChange('admissionDate', e.target.value)}
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12"
+                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex items-center gap-4 pt-6 border-t border-border">
-                <Button
-                  onClick={handleSubmit}
-                  className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground px-8 py-3 h-12 shadow-lg hover-scale"
-                >
-                  <Shield className="h-5 w-5 mr-2" />
-                  {editingVerification ? 'Update Verification' : 'Submit for Verification'}
-                </Button>
-                
-                {editingVerification && (
-                  <Button
-                    onClick={handleReset}
-                    variant="outline"
-                    className="border-2 hover:bg-accent/50 px-8 py-3 h-12"
-                  >
-                    <XCircle className="h-4 w-4 mr-2" />
-                    Cancel Edit
-                  </Button>
-                )}
+              {/* Document Upload Section */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b-2 border-gradient-to-r from-orange-500/20 to-transparent">
+                  <div className="p-2 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg">
+                    <FileText className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">Document Attachments</h3>
+                  <div className="ml-auto">
+                    <div className="px-3 py-1 bg-orange-100 text-orange-600 text-xs rounded-full">Optional</div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Student Photo</label>
+                    <div className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
+                      <div className="space-y-2">
+                        <div className="mx-auto w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                          <Plus className="h-6 w-6 text-primary" />
+                        </div>
+                        <div className="text-sm text-muted-foreground">Upload Photo</div>
+                        <div className="text-xs text-muted-foreground">JPG, PNG (Max 2MB)</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Certificate/Marksheet</label>
+                    <div className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
+                      <div className="space-y-2">
+                        <div className="mx-auto w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center">
+                          <FileCheck className="h-6 w-6 text-green-600" />
+                        </div>
+                        <div className="text-sm text-muted-foreground">Upload Document</div>
+                        <div className="text-xs text-muted-foreground">PDF, JPG (Max 5MB)</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">ID Proof</label>
+                    <div className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
+                      <div className="space-y-2">
+                        <div className="mx-auto w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                          <Shield className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div className="text-sm text-muted-foreground">Upload ID</div>
+                        <div className="text-xs text-muted-foreground">Aadhar, PAN, Passport</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                <Button
-                  variant="outline"
-                  className="border-2 hover:bg-accent/50 px-8 py-3 h-12 ml-auto"
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Save as Draft
-                </Button>
+              {/* Enhanced Action Buttons */}
+              <div className="flex items-center justify-between pt-8 border-t-2 border-gradient-to-r from-primary/10 to-transparent">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Shield className="h-4 w-4" />
+                  All information will be securely stored and verified
+                </div>
+                <div className="flex items-center gap-4">
+                  <Button
+                    variant="outline"
+                    className="border-2 hover:bg-accent/50 px-6 py-3 h-12 hover-scale"
+                  >
+                    <FileText className="h-4 w-4 mr-2" />
+                    Save Draft
+                  </Button>
+                  
+                  {editingVerification && (
+                    <Button
+                      onClick={handleReset}
+                      variant="outline"
+                      className="border-2 hover:bg-red-50 text-red-600 border-red-200 px-6 py-3 h-12 hover-scale"
+                    >
+                      <XCircle className="h-4 w-4 mr-2" />
+                      Cancel Edit
+                    </Button>
+                  )}
+
+                  <Button
+                    onClick={handleSubmit}
+                    className="bg-gradient-to-r from-primary via-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground px-8 py-3 h-12 shadow-lg hover-scale"
+                  >
+                    <Shield className="h-5 w-5 mr-2" />
+                    {editingVerification ? 'Update Verification' : 'Submit for Verification'}
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Quick Search and Recent Activities */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Quick Search */}
-          <Card className="shadow-lg border-0 bg-card/50 backdrop-blur animate-fade-in">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Search className="h-5 w-5 text-primary" />
-                Quick Verification Lookup
+        {/* Enhanced Quick Search and Activities */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Enhanced Quick Search */}
+          <Card className="lg:col-span-2 shadow-xl border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur animate-fade-in">
+            <CardHeader className="border-b border-border bg-gradient-to-r from-blue-500/10 via-blue-500/5 to-transparent">
+              <CardTitle className="flex items-center gap-3">
+                <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg">
+                  <Search className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <span className="text-lg font-bold">Advanced Verification Lookup</span>
+                  <p className="text-sm text-muted-foreground font-normal">Search and verify student credentials instantly</p>
+                </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search by enrollment number, student name..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 border-2 bg-background/50 focus:bg-background transition-all h-12"
-                />
-              </div>
-              <div className="flex gap-2">
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all">
-                    <Filter className="h-4 w-4 mr-2" />
-                    <SelectValue placeholder="Filter status" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background border-border shadow-xl">
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="verified">Verified</SelectItem>
-                    <SelectItem value="rejected">Rejected</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button className="bg-gradient-to-r from-primary to-primary/80 hover-scale">
-                  <Search className="h-4 w-4" />
-                </Button>
+            <CardContent className="p-6 space-y-6">
+              <div className="space-y-4">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+                  <Input
+                    placeholder="Search by enrollment number, student name, or center code..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-12 pr-4 border-2 bg-background/50 focus:bg-background transition-all h-14 text-base"
+                  />
+                  <Button 
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-10 bg-gradient-to-r from-primary to-primary/80 hover-scale"
+                  >
+                    <Search className="h-4 w-4" />
+                  </Button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
+                      <Filter className="h-4 w-4 mr-2" />
+                      <SelectValue placeholder="Status Filter" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border shadow-xl">
+                      <SelectItem value="all">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+                          All Status
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="pending">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                          Pending Review
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="verified">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          Verified ✓
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="rejected">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                          Rejected ✗
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select>
+                    <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
+                      <GraduationCap className="h-4 w-4 mr-2" />
+                      <SelectValue placeholder="Course Filter" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border shadow-xl">
+                      <SelectItem value="all">All Courses</SelectItem>
+                      <SelectItem value="dca">DCA</SelectItem>
+                      <SelectItem value="adca">ADCA</SelectItem>
+                      <SelectItem value="pgdca">PGDCA</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select>
+                    <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
+                      <MapPin className="h-4 w-4 mr-2" />
+                      <SelectValue placeholder="Location" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border shadow-xl">
+                      <SelectItem value="all">All Locations</SelectItem>
+                      <SelectItem value="up">Uttar Pradesh</SelectItem>
+                      <SelectItem value="bihar">Bihar</SelectItem>
+                      <SelectItem value="mp">Madhya Pradesh</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="outline" size="sm" className="border-2 hover-scale">
+                    <Clock className="h-3 w-3 mr-1" />
+                    Recent
+                  </Button>
+                  <Button variant="outline" size="sm" className="border-2 hover-scale">
+                    <CheckCircle className="h-3 w-3 mr-1" />
+                    Verified
+                  </Button>
+                  <Button variant="outline" size="sm" className="border-2 hover-scale">
+                    <AlertCircle className="h-3 w-3 mr-1" />
+                    Pending
+                  </Button>
+                  <Button variant="outline" size="sm" className="border-2 hover-scale">
+                    <FileText className="h-3 w-3 mr-1" />
+                    Export Results
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Recent Activities */}
-          <Card className="shadow-lg border-0 bg-card/50 backdrop-blur animate-fade-in">
-            <CardHeader>
+          {/* Enhanced Recent Activities */}
+          <Card className="shadow-xl border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur animate-fade-in">
+            <CardHeader className="border-b border-border bg-gradient-to-r from-green-500/10 via-green-500/5 to-transparent">
               <CardTitle className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-primary" />
-                Recent Verification Requests
+                <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
+                  <Clock className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <span className="text-base font-bold">Live Activity Feed</span>
+                  <div className="flex items-center gap-2 mt-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-xs text-muted-foreground">Real-time updates</span>
+                  </div>
+                </div>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {filteredVerifications.slice(0, 3).map((verification) => (
-                  <div key={verification.id} className="flex items-center justify-between p-3 bg-background/50 rounded-lg border hover:bg-accent/30 transition-colors">
-                    <div>
-                      <div className="font-medium text-sm">{verification.student_name}</div>
-                      <div className="text-xs text-muted-foreground">{verification.enrollment_no}</div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {getStatusIcon(verification.status)}
-                      {getStatusBadge(verification.status)}
+            <CardContent className="p-4">
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {filteredVerifications.slice(0, 5).map((verification, index) => (
+                  <div key={verification.id} className={`p-4 rounded-xl border-2 transition-all hover:shadow-md hover-scale cursor-pointer animate-fade-in ${
+                    verification.status === 'verified' ? 'bg-green-50 border-green-200 hover:bg-green-100' :
+                    verification.status === 'rejected' ? 'bg-red-50 border-red-200 hover:bg-red-100' :
+                    'bg-yellow-50 border-yellow-200 hover:bg-yellow-100'
+                  }`} style={{ animationDelay: `${index * 100}ms` }}>
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-1">
+                        <div className="font-semibold text-sm text-foreground">{verification.student_name}</div>
+                        <div className="text-xs text-muted-foreground font-mono">{verification.enrollment_no}</div>
+                        <div className="text-xs text-muted-foreground">{verification.course_name}</div>
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {verification.district}, {verification.state}
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex items-center gap-1">
+                          {getStatusIcon(verification.status)}
+                          <div className={`text-xs px-2 py-1 rounded-full font-medium ${
+                            verification.status === 'verified' ? 'bg-green-100 text-green-700' :
+                            verification.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                            'bg-yellow-100 text-yellow-700'
+                          }`}>
+                            {verification.status}
+                          </div>
+                        </div>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-6 text-xs hover-scale"
+                          onClick={() => handleEdit(verification)}
+                        >
+                          <Edit className="h-3 w-3 mr-1" />
+                          Quick Edit
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 ))}
                 {filteredVerifications.length === 0 && (
-                  <div className="text-center py-6 text-muted-foreground">
-                    <AlertCircle className="h-8 w-8 mx-auto mb-2" />
-                    <p>No verification requests found</p>
+                  <div className="text-center py-8 space-y-3">
+                    <div className="mx-auto w-16 h-16 bg-muted/30 rounded-full flex items-center justify-center">
+                      <AlertCircle className="h-8 w-8 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground">No Activity Yet</h3>
+                      <p className="text-sm text-muted-foreground">Recent verification requests will appear here</p>
+                    </div>
+                    <Button variant="outline" size="sm" className="hover-scale">
+                      <Plus className="h-3 w-3 mr-1" />
+                      Create First Request
+                    </Button>
                   </div>
                 )}
               </div>
