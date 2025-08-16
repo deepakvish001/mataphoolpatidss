@@ -174,16 +174,7 @@ const GenerateStudentAdmitCardContent = () => {
     window.print();
   };
 
-  const generatePDF = async () => {
-    if (!admitCardRef.current) {
-      toast({
-        title: "Error",
-        description: "Admit card template not found",
-        variant: "destructive"
-      });
-      return;
-    }
-
+  const generateProfessionalPDF = async () => {
     if (!selectedCard) {
       toast({
         title: "Error",
@@ -193,8 +184,29 @@ const GenerateStudentAdmitCardContent = () => {
       return;
     }
 
+    if (!admitCardRef.current) {
+      toast({
+        title: "Error",
+        description: "Admit card template not found",
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
       setIsGeneratingPDF(true);
+      
+      // First generate the admit card (simulate generation process)
+      setGenerating(true);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Update the selected card status locally
+      setSelectedCard({
+        ...selectedCard,
+        status: 'generated'
+      });
+      setGenerating(false);
+
       toast({
         title: "Generating PDF",
         description: "Creating Professional Admit Card PDF...",
@@ -329,26 +341,12 @@ const GenerateStudentAdmitCardContent = () => {
         </div>
         <div className="flex gap-2">
           <Button 
-            onClick={handleGenerateAdmitCard}
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2"
-            disabled={!selectedCard || generating}
-          >
-            {generating ? "Generating..." : "Generate Admit Card"}
-          </Button>
-          <Button 
-            onClick={generatePDF}
-            disabled={!selectedCard || isGeneratingPDF}
+            onClick={generateProfessionalPDF}
+            disabled={!selectedCard || isGeneratingPDF || generating}
             className="bg-gradient-to-r from-green-600 via-green-700 to-emerald-700 hover:from-green-700 hover:via-green-800 hover:to-emerald-800 text-white px-6 py-2 flex items-center gap-2 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             <FileDown className="h-4 w-4" />
-            {isGeneratingPDF ? "Generating PDF..." : "Generate Professional PDF"}
-          </Button>
-          <Button 
-            onClick={handlePrintAdmitCard}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2"
-            disabled={!selectedCard}
-          >
-            Print Admit Card
+            {isGeneratingPDF || generating ? "Generating PDF..." : "Generate Professional PDF"}
           </Button>
         </div>
       </div>
