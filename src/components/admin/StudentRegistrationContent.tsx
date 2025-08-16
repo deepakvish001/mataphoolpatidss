@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
-import { Loader2 } from "lucide-react";
+import { Loader2, UserPlus, Search, Users, Calendar, MapPin, GraduationCap, Mail, Phone, Edit, Trash2 } from "lucide-react";
 
 interface StudentProfile {
   id: string;
@@ -61,6 +63,30 @@ const StudentRegistrationContent = () => {
     password: "58742318",
     declaration: false
   });
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filtered students based on search
+  const filteredStudents = studentProfiles.filter(student =>
+    student.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (student.phone && student.phone.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (student.course_name && student.course_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (student.city && student.city.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (student.state && student.state.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
+  // Calculate statistics
+  const totalStudents = studentProfiles.length;
+  const activeStudents = studentProfiles.filter(student => student.status === 'active').length;
+  const recentStudents = studentProfiles.filter(student => {
+    if (!student.enrollment_date) return false;
+    const enrollmentDate = new Date(student.enrollment_date);
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    return enrollmentDate >= threeDaysAgo;
+  }).length;
+  const uniqueCourses = [...new Set(studentProfiles.filter(s => s.course_name).map(s => s.course_name))].length;
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -136,13 +162,194 @@ const StudentRegistrationContent = () => {
   }
 
   return (
-    <div className="w-full max-w-none bg-white">
-      {/* Header */}
-      <div className="bg-gray-400 px-4 py-3 mb-4 border border-gray-500">
-        <h1 className="text-lg font-medium text-gray-800">Student Registration</h1>
+    <div className="space-y-8">
+      {/* Statistics Dashboard */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-blue-100 text-sm font-medium">Total Students</p>
+                <p className="text-3xl font-bold">{totalStudents}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <Users className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-green-100 text-sm font-medium">Active Students</p>
+                <p className="text-3xl font-bold">{activeStudents}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <UserPlus className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-purple-100 text-sm font-medium">Recent Students</p>
+                <p className="text-3xl font-bold">{recentStudents}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <Calendar className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-orange-100 text-sm font-medium">Available Courses</p>
+                <p className="text-3xl font-bold">{uniqueCourses}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <GraduationCap className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      <div className="space-y-0 border-2 border-gray-600">
+      {/* Search and Student Management Table */}
+      <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="bg-gradient-to-r from-gray-700 to-gray-800 text-white p-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+            <CardTitle className="text-xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-white/20 rounded-lg">
+                <Users className="h-5 w-5" />
+              </div>
+              <span>Student Management ({filteredStudents.length} students)</span>
+            </CardTitle>
+            <div className="relative w-full sm:w-80">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search students..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-white/90 border-white/20 focus:border-white focus:ring-white/20"
+              />
+            </div>
+          </div>
+        </CardHeader>
+        
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Name</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Email</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Phone</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Course</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Location</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Status</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredStudents.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                      {searchTerm ? "No students found matching your search." : "No students registered yet."}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filteredStudents.map((student, index) => (
+                    <TableRow key={student.id} className={`${index % 2 === 0 ? "bg-blue-50/50" : "bg-white"} hover:bg-blue-100/50 transition-colors`}>
+                      <TableCell className="p-4 border-r border-gray-200">
+                        <div className="flex items-center space-x-2">
+                          <Users className="h-4 w-4 text-blue-600" />
+                          <span className="font-medium text-gray-800">{student.full_name}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <div className="flex items-center justify-center space-x-2">
+                          <Mail className="h-4 w-4 text-green-600" />
+                          <span className="text-gray-700">{student.email}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <div className="flex items-center justify-center space-x-2">
+                          <Phone className="h-4 w-4 text-purple-600" />
+                          <span className="text-gray-700">{student.phone || "-"}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <div className="flex items-center justify-center space-x-2">
+                          <GraduationCap className="h-4 w-4 text-orange-600" />
+                          <span className="text-gray-700">{student.course_name || "-"}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <div className="flex items-center justify-center space-x-2">
+                          <MapPin className="h-4 w-4 text-indigo-600" />
+                          <span className="text-gray-700">
+                            {student.city && student.state ? `${student.city}, ${student.state}` : student.state || student.city || "-"}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          student.status === 'active' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-gray-100 text-gray-800'
+                        }`}>
+                          {student.status || 'Pending'}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-center p-4">
+                        <div className="flex space-x-2 justify-center">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-blue-600 hover:text-blue-800 hover:bg-blue-100 p-2 rounded-lg transition-colors"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteItem(student.id)}
+                            className="text-red-600 hover:text-red-800 hover:bg-red-100 p-2 rounded-lg transition-colors"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Student Registration Form */}
+      <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
+          <CardTitle className="text-xl font-bold flex items-center space-x-3">
+            <div className="p-2 bg-white/20 rounded-lg">
+              <UserPlus className="h-5 w-5" />
+            </div>
+            <span>Student Registration Form</span>
+          </CardTitle>
+        </CardHeader>
+        
+        <CardContent className="p-6">
+          <div className="space-y-0 border-2 border-gray-600">
         {/* Examination Details */}
         <div className="border-collapse">
           <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
@@ -631,7 +838,9 @@ const StudentRegistrationContent = () => {
             </Button>
           </div>
         </div>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
