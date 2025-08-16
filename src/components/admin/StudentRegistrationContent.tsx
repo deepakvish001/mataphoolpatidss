@@ -222,121 +222,6 @@ const StudentRegistrationContent = () => {
         </Card>
       </div>
 
-      {/* Search and Student Management Table */}
-      <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
-        <CardHeader className="bg-gradient-to-r from-gray-700 to-gray-800 text-white p-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
-            <CardTitle className="text-xl font-bold flex items-center space-x-3">
-              <div className="p-2 bg-white/20 rounded-lg">
-                <Users className="h-5 w-5" />
-              </div>
-              <span>Student Management ({filteredStudents.length} students)</span>
-            </CardTitle>
-            <div className="relative w-full sm:w-80">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search students..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/90 border-white/20 focus:border-white focus:ring-white/20"
-              />
-            </div>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Name</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Email</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Phone</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Course</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Location</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Status</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredStudents.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
-                      {searchTerm ? "No students found matching your search." : "No students registered yet."}
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  filteredStudents.map((student, index) => (
-                    <TableRow key={student.id} className={`${index % 2 === 0 ? "bg-blue-50/50" : "bg-white"} hover:bg-blue-100/50 transition-colors`}>
-                      <TableCell className="p-4 border-r border-gray-200">
-                        <div className="flex items-center space-x-2">
-                          <Users className="h-4 w-4 text-blue-600" />
-                          <span className="font-medium text-gray-800">{student.full_name}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <div className="flex items-center justify-center space-x-2">
-                          <Mail className="h-4 w-4 text-green-600" />
-                          <span className="text-gray-700">{student.email}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <div className="flex items-center justify-center space-x-2">
-                          <Phone className="h-4 w-4 text-purple-600" />
-                          <span className="text-gray-700">{student.phone || "-"}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <div className="flex items-center justify-center space-x-2">
-                          <GraduationCap className="h-4 w-4 text-orange-600" />
-                          <span className="text-gray-700">{student.course_name || "-"}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <div className="flex items-center justify-center space-x-2">
-                          <MapPin className="h-4 w-4 text-indigo-600" />
-                          <span className="text-gray-700">
-                            {student.city && student.state ? `${student.city}, ${student.state}` : student.state || student.city || "-"}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                          student.status === 'active' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-gray-100 text-gray-800'
-                        }`}>
-                          {student.status || 'Pending'}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-center p-4">
-                        <div className="flex space-x-2 justify-center">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-blue-600 hover:text-blue-800 hover:bg-blue-100 p-2 rounded-lg transition-colors"
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => deleteItem(student.id)}
-                            className="text-red-600 hover:text-red-800 hover:bg-red-100 p-2 rounded-lg transition-colors"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Student Registration Form */}
       <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
         <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
@@ -838,6 +723,121 @@ const StudentRegistrationContent = () => {
             </Button>
           </div>
         </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Search and Student Management Table */}
+      <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
+        <CardHeader className="bg-gradient-to-r from-gray-700 to-gray-800 text-white p-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+            <CardTitle className="text-xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-white/20 rounded-lg">
+                <Users className="h-5 w-5" />
+              </div>
+              <span>Student Management ({filteredStudents.length} students)</span>
+            </CardTitle>
+            <div className="relative w-full sm:w-80">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search students..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-white/90 border-white/20 focus:border-white focus:ring-white/20"
+              />
+            </div>
+          </div>
+        </CardHeader>
+        
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Name</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Email</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Phone</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Course</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Location</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Status</TableHead>
+                  <TableHead className="text-white font-bold text-center py-4">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredStudents.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                      {searchTerm ? "No students found matching your search." : "No students registered yet."}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filteredStudents.map((student, index) => (
+                    <TableRow key={student.id} className={`${index % 2 === 0 ? "bg-blue-50/50" : "bg-white"} hover:bg-blue-100/50 transition-colors`}>
+                      <TableCell className="p-4 border-r border-gray-200">
+                        <div className="flex items-center space-x-2">
+                          <Users className="h-4 w-4 text-blue-600" />
+                          <span className="font-medium text-gray-800">{student.full_name}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <div className="flex items-center justify-center space-x-2">
+                          <Mail className="h-4 w-4 text-green-600" />
+                          <span className="text-gray-700">{student.email}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <div className="flex items-center justify-center space-x-2">
+                          <Phone className="h-4 w-4 text-purple-600" />
+                          <span className="text-gray-700">{student.phone || "-"}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <div className="flex items-center justify-center space-x-2">
+                          <GraduationCap className="h-4 w-4 text-orange-600" />
+                          <span className="text-gray-700">{student.course_name || "-"}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <div className="flex items-center justify-center space-x-2">
+                          <MapPin className="h-4 w-4 text-indigo-600" />
+                          <span className="text-gray-700">
+                            {student.city && student.state ? `${student.city}, ${student.state}` : student.state || student.city || "-"}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center p-4 border-r border-gray-200">
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          student.status === 'active' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-gray-100 text-gray-800'
+                        }`}>
+                          {student.status || 'Pending'}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-center p-4">
+                        <div className="flex space-x-2 justify-center">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-blue-600 hover:text-blue-800 hover:bg-blue-100 p-2 rounded-lg transition-colors"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteItem(student.id)}
+                            className="text-red-600 hover:text-red-800 hover:bg-red-100 p-2 rounded-lg transition-colors"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
           </div>
         </CardContent>
       </Card>
