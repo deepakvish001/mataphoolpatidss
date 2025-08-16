@@ -1554,6 +1554,78 @@ export type Database = {
         }
         Relationships: []
       }
+      student_verifications: {
+        Row: {
+          admission_date: string | null
+          center_code: string
+          certificate_url: string | null
+          course_duration: string | null
+          course_name: string
+          created_at: string
+          date_of_birth: string | null
+          district: string
+          enrollment_no: string
+          father_name: string
+          id: string
+          marksheet_url: string | null
+          notes: string | null
+          photo_url: string | null
+          rank_or_marks: string | null
+          state: string
+          status: string
+          student_name: string
+          updated_at: string
+          verification_date: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          admission_date?: string | null
+          center_code: string
+          certificate_url?: string | null
+          course_duration?: string | null
+          course_name: string
+          created_at?: string
+          date_of_birth?: string | null
+          district: string
+          enrollment_no: string
+          father_name: string
+          id?: string
+          marksheet_url?: string | null
+          notes?: string | null
+          photo_url?: string | null
+          rank_or_marks?: string | null
+          state: string
+          status?: string
+          student_name: string
+          updated_at?: string
+          verification_date?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          admission_date?: string | null
+          center_code?: string
+          certificate_url?: string | null
+          course_duration?: string | null
+          course_name?: string
+          created_at?: string
+          date_of_birth?: string | null
+          district?: string
+          enrollment_no?: string
+          father_name?: string
+          id?: string
+          marksheet_url?: string | null
+          notes?: string | null
+          photo_url?: string | null
+          rank_or_marks?: string | null
+          state?: string
+          status?: string
+          student_name?: string
+          updated_at?: string
+          verification_date?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       user_assignments: {
         Row: {
           assignment_id: string

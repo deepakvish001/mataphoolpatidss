@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Shield, Edit, Trash2, Loader2, Plus } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Shield, Edit, Trash2, Loader2, Plus, Search, Filter, CheckCircle, XCircle, Clock, Users, FileCheck, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
@@ -65,6 +67,8 @@ const StudentVerificationContent = () => {
   });
 
   const [editingVerification, setEditingVerification] = useState<StudentVerification | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -194,6 +198,50 @@ const StudentVerificationContent = () => {
     }
   };
 
+  // Filter and search functionality
+  const filteredVerifications = useMemo(() => {
+    let filtered = verifications || [];
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(item =>
+        item.enrollment_no.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.student_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.father_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.course_name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Apply status filter
+    if (statusFilter !== "all") {
+      filtered = filtered.filter(item => item.status === statusFilter);
+    }
+
+    return filtered;
+  }, [verifications, searchTerm, statusFilter]);
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'verified':
+        return <CheckCircle className="h-4 w-4 text-green-600" />;
+      case 'rejected':
+        return <XCircle className="h-4 w-4 text-red-600" />;
+      default:
+        return <Clock className="h-4 w-4 text-yellow-600" />;
+    }
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'verified':
+        return <Badge className="bg-green-100 text-green-800 border-green-200">Verified</Badge>;
+      case 'rejected':
+        return <Badge className="bg-red-100 text-red-800 border-red-200">Rejected</Badge>;
+      default:
+        return <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">Pending</Badge>;
+    }
+  };
+
   if (loading) {
     return (
       <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
@@ -209,14 +257,71 @@ const StudentVerificationContent = () => {
 
   return (
     <div className="space-y-8">
-      {/* Form Card */}
+      {/* Statistics Dashboard */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card className="shadow-lg border-0 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-blue-100">Total Verifications</p>
+                <p className="text-3xl font-bold">{verifications?.length || 0}</p>
+              </div>
+              <Users className="h-12 w-12 text-blue-200" />
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="shadow-lg border-0 bg-gradient-to-r from-green-500 to-green-600 text-white">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-green-100">Verified</p>
+                <p className="text-3xl font-bold">
+                  {verifications?.filter(v => v.status === 'verified').length || 0}
+                </p>
+              </div>
+              <CheckCircle className="h-12 w-12 text-green-200" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-lg border-0 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-yellow-100">Pending</p>
+                <p className="text-3xl font-bold">
+                  {verifications?.filter(v => v.status === 'pending').length || 0}
+                </p>
+              </div>
+              <Clock className="h-12 w-12 text-yellow-200" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-lg border-0 bg-gradient-to-r from-red-500 to-red-600 text-white">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-red-100">Rejected</p>
+                <p className="text-3xl font-bold">
+                  {verifications?.filter(v => v.status === 'rejected').length || 0}
+                </p>
+              </div>
+              <XCircle className="h-12 w-12 text-red-200" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Add/Edit Form */}
       <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100">
-          <CardTitle className="text-2xl font-bold text-blue-600 flex items-center space-x-3">
+        <CardHeader className="p-8 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+          <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
             <div className="p-2 bg-blue-500 rounded-lg">
               <Shield className="h-6 w-6 text-white" />
             </div>
-            <span>{editingVerification ? 'Edit' : 'Add'} Student Verification</span>
+            <span>{editingVerification ? 'Edit Student Verification' : 'Add New Student Verification'}</span>
           </CardTitle>
         </CardHeader>
         
@@ -226,15 +331,15 @@ const StudentVerificationContent = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">State *</label>
               <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
-                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white">
+                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white">
                   <SelectValue placeholder="Select State" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="uttar-pradesh">Uttar Pradesh</SelectItem>
-                  <SelectItem value="bihar">Bihar</SelectItem>
-                  <SelectItem value="madhya-pradesh">Madhya Pradesh</SelectItem>
-                  <SelectItem value="rajasthan">Rajasthan</SelectItem>
-                  <SelectItem value="haryana">Haryana</SelectItem>
+                <SelectContent className="bg-white border border-gray-300 shadow-lg z-50">
+                  <SelectItem value="Uttar Pradesh">Uttar Pradesh</SelectItem>
+                  <SelectItem value="Bihar">Bihar</SelectItem>
+                  <SelectItem value="Madhya Pradesh">Madhya Pradesh</SelectItem>
+                  <SelectItem value="Rajasthan">Rajasthan</SelectItem>
+                  <SelectItem value="Haryana">Haryana</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -243,15 +348,19 @@ const StudentVerificationContent = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">District *</label>
               <Select value={formData.district} onValueChange={(value) => handleInputChange('district', value)}>
-                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white">
+                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white">
                   <SelectValue placeholder="Select District" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="azamgarh">Azamgarh</SelectItem>
-                  <SelectItem value="mau">Mau</SelectItem>
-                  <SelectItem value="baliya">Baliya</SelectItem>
-                  <SelectItem value="hardoi">Hardoi</SelectItem>
-                  <SelectItem value="lucknow">Lucknow</SelectItem>
+                <SelectContent className="bg-white border border-gray-300 shadow-lg z-50">
+                  <SelectItem value="Azamgarh">Azamgarh</SelectItem>
+                  <SelectItem value="Mau">Mau</SelectItem>
+                  <SelectItem value="Baliya">Baliya</SelectItem>
+                  <SelectItem value="Hardoi">Hardoi</SelectItem>
+                  <SelectItem value="Lucknow">Lucknow</SelectItem>
+                  <SelectItem value="Patna">Patna</SelectItem>
+                  <SelectItem value="Jaipur">Jaipur</SelectItem>
+                  <SelectItem value="Bhopal">Bhopal</SelectItem>
+                  <SelectItem value="Gurgaon">Gurgaon</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -262,8 +371,8 @@ const StudentVerificationContent = () => {
               <Input
                 value={formData.centerCode}
                 onChange={(e) => handleInputChange('centerCode', e.target.value)}
-                placeholder="Center Code"
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
+                placeholder="Enter Center Code"
+                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
               />
             </div>
 
@@ -273,8 +382,8 @@ const StudentVerificationContent = () => {
               <Input
                 value={formData.enrollmentNo}
                 onChange={(e) => handleInputChange('enrollmentNo', e.target.value)}
-                placeholder="Enter Enrollment No"
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
+                placeholder="Enter Enrollment Number"
+                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
               />
             </div>
 
@@ -284,8 +393,8 @@ const StudentVerificationContent = () => {
               <Input
                 value={formData.studentName}
                 onChange={(e) => handleInputChange('studentName', e.target.value)}
-                placeholder="Enter Student Name"
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
+                placeholder="Enter Student Full Name"
+                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
               />
             </div>
 
@@ -295,8 +404,8 @@ const StudentVerificationContent = () => {
               <Input
                 value={formData.fatherName}
                 onChange={(e) => handleInputChange('fatherName', e.target.value)}
-                placeholder="Enter Father's Name"
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
+                placeholder="Enter Father's Full Name"
+                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
               />
             </div>
 
@@ -304,17 +413,39 @@ const StudentVerificationContent = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Course Name *</label>
               <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
-                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white">
+                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white">
                   <SelectValue placeholder="Select Course" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="dca">Diploma in Computer Application (DCA)</SelectItem>
-                  <SelectItem value="adca">Advance Diploma in Computer Application (ADCA)</SelectItem>
-                  <SelectItem value="pgdca">Post Graduate Diploma in Computer Application (PGDCA)</SelectItem>
-                  <SelectItem value="dchn">Diploma in Computer Hardware and Networking</SelectItem>
-                  <SelectItem value="web-design">Web Design & Development</SelectItem>
+                <SelectContent className="bg-white border border-gray-300 shadow-lg z-50">
+                  <SelectItem value="Diploma in Computer Application (DCA)">Diploma in Computer Application (DCA)</SelectItem>
+                  <SelectItem value="Advance Diploma in Computer Application (ADCA)">Advance Diploma in Computer Application (ADCA)</SelectItem>
+                  <SelectItem value="Post Graduate Diploma in Computer Application (PGDCA)">Post Graduate Diploma in Computer Application (PGDCA)</SelectItem>
+                  <SelectItem value="Diploma in Computer Hardware and Networking">Diploma in Computer Hardware and Networking</SelectItem>
+                  <SelectItem value="Web Design & Development">Web Design & Development</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            {/* Rank or Marks */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Rank/Marks</label>
+              <Input
+                value={formData.rankOrMarks}
+                onChange={(e) => handleInputChange('rankOrMarks', e.target.value)}
+                placeholder="e.g., First Class with 85%"
+                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
+              />
+            </div>
+
+            {/* Course Duration */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Course Duration</label>
+              <Input
+                value={formData.courseDuration}
+                onChange={(e) => handleInputChange('courseDuration', e.target.value)}
+                placeholder="e.g., 1 Year, 6 Months"
+                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
+              />
             </div>
 
             {/* Date of Birth */}
@@ -324,7 +455,7 @@ const StudentVerificationContent = () => {
                 type="date"
                 value={formData.dateOfBirth}
                 onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
+                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
               />
             </div>
 
@@ -335,25 +466,26 @@ const StudentVerificationContent = () => {
                 type="date"
                 value={formData.admissionDate}
                 onChange={(e) => handleInputChange('admissionDate', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 bg-white"
+                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
               />
             </div>
           </div>
 
-          <div className="pt-6 flex space-x-4">
+          {/* Submit Buttons */}
+          <div className="flex space-x-4 pt-8">
             <Button
               onClick={handleSubmit}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
             >
               <Plus className="h-5 w-5 mr-2" />
-              {editingVerification ? 'Update' : 'Submit'} Verification
+              {editingVerification ? 'Update Verification' : 'Submit Verification'}
             </Button>
             
             {editingVerification && (
               <Button
                 onClick={handleReset}
                 variant="outline"
-                className="border-gray-600 text-gray-600 hover:bg-gray-50 px-6 py-3"
+                className="border-gray-300 text-gray-600 hover:bg-gray-50 px-8 py-3 rounded-lg"
               >
                 Cancel Edit
               </Button>
@@ -362,78 +494,160 @@ const StudentVerificationContent = () => {
         </CardContent>
       </Card>
 
+      {/* Search and Filter */}
+      <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                placeholder="Search by enrollment, student name, father name, or course..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded"
+              />
+            </div>
+            <div className="w-full md:w-64">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded">
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Filter by status" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-300 shadow-lg z-50">
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="pending">Pending Only</SelectItem>
+                  <SelectItem value="verified">Verified Only</SelectItem>
+                  <SelectItem value="rejected">Rejected Only</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Verifications Table */}
-      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+        <CardHeader className="p-6 border-b border-gray-100">
+          <CardTitle className="text-xl font-bold text-gray-800 flex items-center justify-between">
+            <span>Student Verifications ({filteredVerifications.length})</span>
+            <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+              Total: {verifications?.length || 0}
+            </Badge>
+          </CardTitle>
+        </CardHeader>
+        
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Enrollment No</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Student Name</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Course</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">State</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">District</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {verifications.map((verification, index) => (
-                <TableRow key={verification.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                  <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex justify-center space-x-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEdit(verification)}
-                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Actions</th>
+                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Enrollment No</th>
+                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Student Name</th>
+                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Father's Name</th>
+                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Course</th>
+                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">State</th>
+                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Status</th>
+                  <th className="border border-blue-400 px-6 py-4 text-sm font-semibold text-left">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredVerifications.map((verification, index) => (
+                  <tr key={verification.id} className={`hover:bg-blue-50 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}`}>
+                    <td className="border border-gray-200 px-6 py-4">
+                      <div className="flex gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEdit(verification)}
+                          className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDelete(verification.id)}
+                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-2"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </td>
+                    <td className="border border-gray-200 px-6 py-4">
+                      <div className="font-semibold text-gray-800">{verification.enrollment_no}</div>
+                    </td>
+                    <td className="border border-gray-200 px-6 py-4">
+                      <div className="font-medium text-gray-800">{verification.student_name}</div>
+                      {verification.rank_or_marks && (
+                        <div className="text-sm text-gray-500">{verification.rank_or_marks}</div>
+                      )}
+                    </td>
+                    <td className="border border-gray-200 px-6 py-4">
+                      <div className="text-gray-700">{verification.father_name}</div>
+                    </td>
+                    <td className="border border-gray-200 px-6 py-4">
+                      <div className="text-sm text-gray-600">{verification.course_name}</div>
+                      {verification.course_duration && (
+                        <div className="text-xs text-gray-500">{verification.course_duration}</div>
+                      )}
+                    </td>
+                    <td className="border border-gray-200 px-6 py-4">
+                      <div className="text-sm text-gray-600">{verification.state}</div>
+                      <div className="text-xs text-gray-500">{verification.district}</div>
+                    </td>
+                    <td className="border border-gray-200 px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        {getStatusIcon(verification.status)}
+                        {getStatusBadge(verification.status)}
+                      </div>
+                    </td>
+                    <td className="border border-gray-200 px-6 py-4">
+                      <Select
+                        value={verification.status}
+                        onValueChange={(value) => handleStatusChange(verification.id, value as any)}
                       >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(verification.id)}
-                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {verification.enrollment_no}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {verification.student_name}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {verification.course_name}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {verification.state}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {verification.district}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4">
-                    <Select
-                      value={verification.status}
-                      onValueChange={(value) => handleStatusChange(verification.id, value as any)}
-                    >
-                      <SelectTrigger className="w-32 h-8 text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="verified">Verified</SelectItem>
-                        <SelectItem value="rejected">Rejected</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                        <SelectTrigger className="w-36 h-8 text-xs">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white border border-gray-300 shadow-lg z-50">
+                          <SelectItem value="pending">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-3 w-3 text-yellow-600" />
+                              Pending
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="verified">
+                            <div className="flex items-center gap-2">
+                              <CheckCircle className="h-3 w-3 text-green-600" />
+                              Verified
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="rejected">
+                            <div className="flex items-center gap-2">
+                              <XCircle className="h-3 w-3 text-red-600" />
+                              Rejected
+                            </div>
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                  </tr>
+                ))}
+                {filteredVerifications.length === 0 && (
+                  <tr>
+                    <td colSpan={8} className="border border-gray-200 px-6 py-12 text-center">
+                      <div className="text-gray-500">
+                        {searchTerm || statusFilter !== "all" 
+                          ? "No verifications match your search criteria" 
+                          : "No student verifications found"}
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </CardContent>
       </Card>
     </div>
