@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,8 +6,9 @@ import { useToast } from "@/hooks/use-toast";
 import { FileDown } from "lucide-react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { supabase } from "@/integrations/supabase/client";
 
-// Mock data for student admit cards
+// Mock data for student admit cards (using mock data since table types aren't available)
 const mockStudentData = [
   {
     id: "1",
@@ -88,7 +89,7 @@ const GenerateStudentAdmitCardContent = () => {
     if (!searchValue.trim()) {
       toast({
         title: "Error",
-        description: "Please enter a student ID or roll number to search",
+        description: "Please enter a student ID, roll number, or name to search",
         variant: "destructive"
       });
       return;
