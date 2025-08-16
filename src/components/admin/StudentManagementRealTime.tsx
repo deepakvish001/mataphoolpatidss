@@ -295,43 +295,51 @@ const StudentManagementRealTime = () => {
         </Card>
       </div>
 
-      <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-border/10">
+      <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
           <div className="flex justify-between items-center">
-            <CardTitle className="text-2xl font-bold text-foreground flex items-center space-x-3">
-              <div className="p-2 bg-gradient-to-r from-primary to-primary/80 rounded-lg">
-                <Users className="h-6 w-6 text-primary-foreground" />
+            <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <Users className="h-6 w-6" />
               </div>
               <span>Student Management</span>
-              <Badge className="bg-primary/10 text-primary">
+              <Badge className="bg-background/20 text-primary-foreground border-background/30">
                 Real-time
               </Badge>
             </CardTitle>
             <div className="flex space-x-3">
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button onClick={resetForm} className="bg-gradient-to-r from-accent to-accent/80">
+                  <Button 
+                    onClick={resetForm} 
+                    className="bg-background/20 text-primary-foreground border-background/30 hover:bg-background/30 backdrop-blur-sm shadow-lg"
+                  >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Student
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle>{editingStudent ? "Edit Student" : "Add New Student"}</DialogTitle>
+                <DialogContent className="max-w-2xl shadow-elegant border-0">
+                  <DialogHeader className="pb-6 border-b border-border/20">
+                    <DialogTitle className="text-xl font-semibold text-foreground flex items-center space-x-2">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Users className="h-5 w-5 text-primary" />
+                      </div>
+                      <span>{editingStudent ? "Edit Student" : "Add New Student"}</span>
+                    </DialogTitle>
                   </DialogHeader>
-                  <div className="space-y-4 mt-4">
+                  <div className="space-y-6 mt-6">
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
+                      <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground">Full Name *</label>
                         <Input
                           value={formData.fullName}
                           onChange={(e) => handleInputChange('fullName', e.target.value)}
                           placeholder="Enter full name"
                           disabled={formLoading}
-                          className="border-border bg-background"
+                          className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
                         />
                       </div>
-                      <div>
+                      <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground">Email *</label>
                         <Input
                           type="email"
@@ -339,29 +347,30 @@ const StudentManagementRealTime = () => {
                           onChange={(e) => handleInputChange('email', e.target.value)}
                           placeholder="Enter email"
                           disabled={formLoading}
-                          className="border-border bg-background"
+                          className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
                         />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">Phone</label>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-foreground">Phone</label>
                         <Input
                           value={formData.phone}
                           onChange={(e) => handleInputChange('phone', e.target.value)}
                           placeholder="Enter phone number"
                           disabled={formLoading}
+                          className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
                         />
                       </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">Course</label>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-foreground">Course</label>
                         <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
-                          <SelectTrigger disabled={formLoading}>
+                          <SelectTrigger disabled={formLoading} className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
                             <SelectValue placeholder="Select course" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="bg-card border-border/40">
                             {courses.map((course) => (
-                              <SelectItem key={course} value={course}>
+                              <SelectItem key={course} value={course} className="hover:bg-accent/50">
                                 {course}
                               </SelectItem>
                             ))}
@@ -370,24 +379,25 @@ const StudentManagementRealTime = () => {
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">City</label>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-foreground">City</label>
                         <Input
                           value={formData.city}
                           onChange={(e) => handleInputChange('city', e.target.value)}
                           placeholder="Enter city"
                           disabled={formLoading}
+                          className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
                         />
                       </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700">State</label>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-foreground">State</label>
                         <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
-                          <SelectTrigger disabled={formLoading}>
+                          <SelectTrigger disabled={formLoading} className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
                             <SelectValue placeholder="Select state" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="bg-card border-border/40">
                             {states.map((state) => (
-                              <SelectItem key={state} value={state}>
+                              <SelectItem key={state} value={state} className="hover:bg-accent/50">
                                 {state}
                               </SelectItem>
                             ))}
@@ -395,24 +405,33 @@ const StudentManagementRealTime = () => {
                         </Select>
                       </div>
                     </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700">Status</label>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground">Status</label>
                       <Select value={formData.status} onValueChange={(value: "active" | "inactive" | "graduated") => handleInputChange('status', value)}>
-                        <SelectTrigger disabled={formLoading}>
+                        <SelectTrigger disabled={formLoading} className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="active">Active</SelectItem>
-                          <SelectItem value="inactive">Inactive</SelectItem>
-                          <SelectItem value="graduated">Graduated</SelectItem>
+                        <SelectContent className="bg-card border-border/40">
+                          <SelectItem value="active" className="hover:bg-accent/50">Active</SelectItem>
+                          <SelectItem value="inactive" className="hover:bg-accent/50">Inactive</SelectItem>
+                          <SelectItem value="graduated" className="hover:bg-accent/50">Graduated</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="flex justify-end space-x-3 pt-4">
-                      <Button variant="outline" onClick={() => setIsDialogOpen(false)} disabled={formLoading}>
+                    <div className="flex justify-end space-x-3 pt-6 border-t border-border/20">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => setIsDialogOpen(false)} 
+                        disabled={formLoading}
+                        className="border-border/40 hover:bg-accent/20"
+                      >
                         Cancel
                       </Button>
-                      <Button onClick={handleSubmit} disabled={formLoading}>
+                      <Button 
+                        onClick={handleSubmit} 
+                        disabled={formLoading}
+                        className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg"
+                      >
                         {formLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                         {editingStudent ? "Update" : "Create"} Student
                       </Button>
@@ -426,31 +445,31 @@ const StudentManagementRealTime = () => {
 
         <CardContent className="p-8">
           {/* Search and Filter Controls */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 placeholder="Search students..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-background border-border"
+                className="pl-10 bg-background border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
               />
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger>
+              <SelectTrigger className="bg-background border-border/40 focus:border-primary/50 focus:ring-primary/20">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-                <SelectItem value="graduated">Graduated</SelectItem>
+              <SelectContent className="bg-card border-border/40">
+                <SelectItem value="all" className="hover:bg-accent/50">All Status</SelectItem>
+                <SelectItem value="active" className="hover:bg-accent/50">Active</SelectItem>
+                <SelectItem value="inactive" className="hover:bg-accent/50">Inactive</SelectItem>
+                <SelectItem value="graduated" className="hover:bg-accent/50">Graduated</SelectItem>
               </SelectContent>
             </Select>
-            <div className="flex items-center space-x-2">
-              <p className="text-sm text-muted-foreground">
-                Showing {filteredStudents.length} of {students.length} students
-              </p>
+            <div className="flex items-center justify-end space-x-2">
+              <Badge variant="outline" className="text-muted-foreground border-border/40">
+                {filteredStudents.length} of {students.length} students
+              </Badge>
             </div>
           </div>
           
