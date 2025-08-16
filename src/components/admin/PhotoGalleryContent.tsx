@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Image, Upload, Trash2, Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Image, Upload, Trash2, Loader2, Search, TrendingUp, Calendar, BarChart3, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
@@ -12,6 +14,8 @@ interface PhotoGallery {
   id: string;
   title: string;
   image_url?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 const PhotoGalleryContent = () => {
@@ -33,6 +37,53 @@ const PhotoGalleryContent = () => {
     photo: null as File | null
   });
   const [editingItem, setEditingItem] = useState<PhotoGallery | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("newest");
+
+  // Statistics calculation
+  const stats = useMemo(() => {
+    const total = galleryItems.length;
+    const withImages = galleryItems.filter(item => item.image_url).length;
+    const withoutImages = total - withImages;
+    
+    return {
+      total,
+      withImages,
+      withoutImages
+    };
+  }, [galleryItems]);
+
+  // Filtered and sorted data
+  const filteredData = useMemo(() => {
+    let filtered = galleryItems.filter(item =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    // Sort data
+    switch (sortBy) {
+      case "newest":
+        filtered.sort((a, b) => {
+          const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return dateB - dateA;
+        });
+        break;
+      case "oldest":
+        filtered.sort((a, b) => {
+          const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return dateA - dateB;
+        });
+        break;
+      case "title":
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      default:
+        break;
+    }
+
+    return filtered;
+  }, [galleryItems, searchTerm, sortBy]);
 
   const handleInputChange = (field: string, value: string | File | null) => {
     setFormData(prev => ({
@@ -104,38 +155,83 @@ const PhotoGalleryContent = () => {
 
   return (
     <div className="space-y-8">
-      {/* Add Photo To Gallery Form */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100">
-          <CardTitle className="text-2xl font-bold text-blue-600 flex items-center space-x-3">
-            <div className="p-2 bg-blue-500 rounded-lg">
-              <Image className="h-6 w-6 text-white" />
+      {/* Statistics Dashboard */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-primary/5 to-primary/10">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Total Photos</p>
+                <p className="text-3xl font-bold text-primary">{stats.total}</p>
+              </div>
+              <div className="p-3 bg-primary/10 rounded-full">
+                <Image className="h-6 w-6 text-primary" />
+              </div>
             </div>
-            <span>Add Photo To Gallery</span>
+          </CardContent>
+        </Card>
+
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-success/5 to-success/10">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">With Images</p>
+                <p className="text-3xl font-bold text-success">{stats.withImages}</p>
+              </div>
+              <div className="p-3 bg-success/10 rounded-full">
+                <Eye className="h-6 w-6 text-success" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-warning/5 to-warning/10">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Without Images</p>
+                <p className="text-3xl font-bold text-warning">{stats.withoutImages}</p>
+              </div>
+              <div className="p-3 bg-warning/10 rounded-full">
+                <BarChart3 className="h-6 w-6 text-warning" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Add Photo To Gallery Form */}
+      <Card className="border-0 shadow-xl bg-card">
+        <CardHeader className="p-6 border-b">
+          <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <div className="p-2 bg-primary rounded-lg">
+              <Upload className="h-5 w-5 text-primary-foreground" />
+            </div>
+            Add Photo To Gallery
           </CardTitle>
         </CardHeader>
         
-        <CardContent className="p-8">
-          <div className="space-y-6">
+        <CardContent className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Title */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
+              <label className="text-sm font-medium text-foreground">
                 Title
               </label>
               <Input
                 value={formData.title}
                 onChange={(e) => handleInputChange('title', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
+                className="h-11"
                 placeholder="Enter photo title"
               />
             </div>
 
             {/* Photo Upload */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
+              <label className="text-sm font-medium text-foreground">
                 Photo
               </label>
-              <div className="border border-gray-300 rounded p-4 bg-white">
+              <div className="border border-border rounded-lg p-4 bg-background">
                 <div className="flex items-center space-x-4">
                   <div className="relative">
                     <input
@@ -147,78 +243,134 @@ const PhotoGalleryContent = () => {
                     />
                     <Button
                       variant="outline"
-                      className="h-10 px-4 border-gray-300 hover:bg-gray-50 font-medium text-gray-700"
+                      className="h-10"
                     >
                       Choose file
                     </Button>
                   </div>
-                  <span className="text-gray-500 font-medium">
+                  <span className="text-sm text-muted-foreground">
                     {formData.photo ? formData.photo.name : "No file chosen"}
                   </span>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Upload Button */}
-            <div className="pt-4">
-              <Button
-                onClick={handleUpload}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                <Upload className="h-5 w-5 mr-2" />
-                Upload
-              </Button>
+          {/* Upload Button */}
+          <div className="pt-6">
+            <Button
+              onClick={handleUpload}
+              className="h-11 px-8"
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              Upload Photo
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Search and Filter Controls */}
+      <Card className="border-0 shadow-lg bg-card">
+        <CardContent className="p-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search photos by title..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 h-11"
+              />
             </div>
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-full sm:w-48 h-11">
+                <SelectValue placeholder="Sort by..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">Newest First</SelectItem>
+                <SelectItem value="oldest">Oldest First</SelectItem>
+                <SelectItem value="title">By Title</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
 
       {/* Photo Gallery Table */}
-      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
+      <Card className="border-0 shadow-xl bg-card">
+        <CardHeader className="p-6 border-b">
+          <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <div className="p-2 bg-primary rounded-lg">
+              <Image className="h-5 w-5 text-primary-foreground" />
+            </div>
+            Photo Gallery
+            <Badge variant="secondary" className="ml-auto">
+              {filteredData.length} {filteredData.length === 1 ? 'Photo' : 'Photos'}
+            </Badge>
+          </CardTitle>
+        </CardHeader>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-500 hover:bg-blue-500">
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4 w-24">Delete</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Title</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">IMAGE</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {galleryItems.map((item, index) => (
-                <TableRow key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                  <TableCell className="border-2 border-gray-600 text-center p-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(item.id)}
-                      className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2"
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </Button>
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {item.title}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4">
-                    <div className="flex justify-center">
-                      {item.image_url ? (
-                        <img
-                          src={item.image_url}
-                          alt={item.title}
-                          className="w-24 h-16 object-cover rounded border border-gray-200"
-                        />
-                      ) : (
-                        <div className="w-24 h-16 bg-gray-200 border border-gray-200 rounded flex items-center justify-center">
-                          <span className="text-xs text-gray-500">No Image</span>
+          {filteredData.length === 0 ? (
+            <div className="p-12 text-center">
+              <Image className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-foreground mb-2">No photos found</h3>
+              <p className="text-muted-foreground">
+                {searchTerm ? "Try adjusting your search terms" : "Start by uploading your first photo"}
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-16">Actions</TableHead>
+                    <TableHead>Title</TableHead>
+                    <TableHead className="w-32">Image</TableHead>
+                    <TableHead className="w-24">Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredData.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDelete(item.id)}
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {item.title}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex justify-center">
+                          {item.image_url ? (
+                            <img
+                              src={item.image_url}
+                              alt={item.title}
+                              className="w-16 h-12 object-cover rounded-lg border"
+                            />
+                          ) : (
+                            <div className="w-16 h-12 bg-muted border rounded-lg flex items-center justify-center">
+                              <span className="text-xs text-muted-foreground">No Image</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={item.image_url ? "default" : "outline"}>
+                          {item.image_url ? "Has Image" : "No Image"}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
