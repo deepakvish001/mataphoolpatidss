@@ -321,15 +321,15 @@ const VerificationReportContent = () => {
                           </div>
                           <div className="font-medium text-primary">{student.state}</div>
                         </td>
-                        <td className="border border-border px-4 py-3 text-sm font-medium">{student.district}</td>
-                        <td className="border border-border px-4 py-3 text-sm font-mono">{student.centerCode}</td>
-                        <td className="border border-border px-4 py-3 text-sm font-mono text-blue-600">{student.enrollmentNo}</td>
-                        <td className="border border-border px-4 py-3 text-sm">{student.dob}</td>
-                        <td className="border border-border px-4 py-3 text-sm font-medium text-green-600">{student.name}</td>
-                        <td className="border border-border px-4 py-3 text-sm">{student.courseName}</td>
-                        <td className="border border-border px-4 py-3 text-sm text-muted-foreground break-all">{student.photo}</td>
-                        <td className="border border-border px-4 py-3 text-sm text-muted-foreground break-all">{student.certificate}</td>
-                        <td className="border border-border px-4 py-3 text-sm text-muted-foreground break-all">{student.marksheet}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm font-medium">{student.district}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm font-mono">{student.centerCode}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm font-mono text-blue-600">{student.enrollmentNo}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm">{student.dob}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm font-medium text-green-600">{student.name}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm">{student.courseName}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm text-muted-foreground break-all">{student.photo}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm text-muted-foreground break-all">{student.certificate}</td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm text-muted-foreground break-all">{student.marksheet}</td>
                       </tr>
                     ))}
                   </tbody>
