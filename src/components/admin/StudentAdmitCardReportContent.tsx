@@ -97,182 +97,181 @@ const StudentAdmitCardReportContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5">
-      {/* Professional Header */}
-      <div className="bg-card/95 backdrop-blur-sm border-b border-border/20 shadow-elegant">
-        <div className="px-6 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <FileText className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">Student Admit Card Report</h1>
-                <p className="text-sm text-muted-foreground">Comprehensive admit card management and reporting</p>
-              </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 p-6">
+      <div className="w-full max-w-7xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <FileText className="h-8 w-8 text-primary" />
             </div>
-            <div className="flex gap-2">
-              <Button
-                onClick={handleExport}
-                variant="outline"
-                size="sm"
-                className="text-primary hover:bg-primary/10"
-              >
-                <FileSpreadsheet className="w-4 h-4 mr-2" />
-                Export
-              </Button>
-              <Button
-                onClick={handlePrint}
-                variant="outline"
-                size="sm"
-                className="text-primary hover:bg-primary/10"
-              >
-                <Printer className="w-4 h-4 mr-2" />
-                Print
-              </Button>
-            </div>
+            <span>Student Admit Card Report</span>
+          </h1>
+          <div className="flex gap-2">
+            <Button onClick={handleExport} variant="outline" size="sm" className="border-border/40 hover:bg-accent/20">
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              Export
+            </Button>
+            <Button onClick={handlePrint} variant="outline" size="sm" className="border-border/40 hover:bg-accent/20">
+              <Printer className="w-4 h-4 mr-2" />
+              Print
+            </Button>
           </div>
         </div>
-      </div>
 
-      {/* Statistics Dashboard */}
-      <div className="px-6 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <Card className="admin-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Total Admit Cards
-              </CardTitle>
-              <FileText className="w-4 h-4 text-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-foreground">{totalAdmitCards}</div>
-              <p className="text-xs text-muted-foreground">
-                Generated admit cards
-              </p>
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {/* Total */}
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-primary-foreground/80 text-sm font-medium">Total Admit Cards</p>
+                  <p className="text-3xl font-bold">{totalAdmitCards}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <FileText className="h-6 w-6" />
+                </div>
+              </div>
             </CardContent>
           </Card>
 
-          <Card className="admin-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Completed Cards
-              </CardTitle>
-              <Users className="w-4 h-4 text-green-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-green-600">{completedCards}</div>
-              <p className="text-xs text-muted-foreground">
-                With exam details
-              </p>
+          {/* Completed */}
+          <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-secondary-foreground/80 text-sm font-medium">Completed Cards</p>
+                  <p className="text-3xl font-bold">{completedCards}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Users className="h-6 w-6" />
+                </div>
+              </div>
             </CardContent>
           </Card>
 
-          <Card className="admin-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Pending Cards
-              </CardTitle>
-              <Calendar className="w-4 h-4 text-orange-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-orange-500">{pendingCards}</div>
-              <p className="text-xs text-muted-foreground">
-                Awaiting completion
-              </p>
+          {/* Pending */}
+          <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-accent-foreground/80 text-sm font-medium">Pending Cards</p>
+                  <p className="text-3xl font-bold">{pendingCards}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Calendar className="h-6 w-6" />
+                </div>
+              </div>
             </CardContent>
           </Card>
 
-          <Card className="admin-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Active Courses
-              </CardTitle>
-              <GraduationCap className="w-4 h-4 text-blue-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-blue-600">{activeCourses}</div>
-              <p className="text-xs text-muted-foreground">
-                Course programs
-              </p>
+          {/* Active Courses */}
+          <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground/80 text-sm font-medium">Active Courses</p>
+                  <p className="text-3xl font-bold text-foreground">{activeCourses}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <GraduationCap className="h-6 w-6 text-foreground" />
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Enhanced Data Table */}
-        <Card className="admin-card">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-foreground">Admit Card Records</CardTitle>
+        {/* Data Table */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                  <FileText className="h-6 w-6" />
+                </div>
+                <span>Admit Card Records ({totalAdmitCards})</span>
+              </div>
+              <Badge className="bg-background/20 text-primary-foreground border-background/30">
+                Completed: {completedCards} / Total: {totalAdmitCards}
+              </Badge>
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-primary text-primary-foreground">
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[120px]">Actions</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[100px]">Course</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[120px]">Roll Number</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[180px]">Student Name</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[180px]">Mother's Name</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[180px]">Father's Name</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[150px]">Center Code</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[80px]">PWD</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[180px]">Center Address</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[120px]">Exam Date</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[100px]">Batch</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[120px]">Reporting Time</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[130px]">Gate Closing</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[120px]">Exam Start</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[120px]">Duration</th>
-                    <th className="border border-border px-3 py-3 text-sm font-semibold text-left min-w-[150px]">Photo Path</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reportData.map((item, index) => (
-                    <tr key={item.id} className={`${index % 2 === 0 ? "bg-accent/30" : "bg-background"} hover:bg-accent/50 transition-colors`}>
-                      <td className="border border-border px-3 py-3">
-                        <div className="flex gap-2">
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => handleEdit(item.id)}
-                            className="h-8 w-8 p-0 text-primary hover:bg-primary/10"
-                          >
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => handleDelete(item.id)}
-                            className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
+
+          <CardContent className="p-8">
+            <div className="border border-border/40 rounded-lg bg-background/50 overflow-hidden shadow-inner">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground">
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <Edit className="h-4 w-4" />
+                          Actions
                         </div>
-                      </td>
-                      <td className="border border-border px-3 py-3">
-                        <Badge variant="secondary" className="text-xs">
-                          {item.course}
-                        </Badge>
-                      </td>
-                      <td className="border border-border px-3 py-3 text-sm font-medium text-foreground">{item.rollNumber}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-foreground">{item.studentName}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.motherName}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.fatherName}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-foreground">{item.examCenterCode || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.pwd || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.examCenterAddress || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-foreground">{item.examDate || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.batch || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.reportingTime || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.gateClosingTime || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.examStartTime || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground">{item.examDuration || "-"}</td>
-                      <td className="border border-border px-3 py-3 text-sm text-muted-foreground font-mono">{item.photo}</td>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[100px]">Course</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[140px]">Roll Number</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[220px]">Student Name</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[220px]">Mother's Name</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[220px]">Father's Name</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[150px]">Center Code</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[80px]">PWD</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[220px]">Center Address</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[140px]">Exam Date</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[100px]">Batch</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[140px]">Reporting Time</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[140px]">Gate Closing</th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[140px]">Exam Start</th>
+                      <th className="px-6 py-4 text-sm font-bold text-left min-w-[140px]">Duration</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {reportData.map((item, index) => (
+                      <tr key={item.id} className={`${index % 2 === 0 ? "bg-accent/30" : "bg-background"} hover:bg-accent/50 transition-colors`}>
+                        <td className="border-t border-border/30 px-6 py-3">
+                          <div className="flex gap-2 justify-center">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => handleEdit(item.id)}
+                              className="h-8 w-8 p-0 text-primary hover:bg-primary/10"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => handleDelete(item.id)}
+                              className="h-8 w-8 p-0 text-destructive hover:bg-destructive/10"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </td>
+                        <td className="border-t border-border/30 px-6 py-3">
+                          <Badge variant="secondary" className="text-xs">
+                            {item.course}
+                          </Badge>
+                        </td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm font-medium text-foreground">{item.rollNumber}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-foreground">{item.studentName}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.motherName}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.fatherName}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-foreground">{item.examCenterCode || "-"}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.pwd || "-"}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.examCenterAddress || "-"}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-foreground">{item.examDate || "-"}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.batch || "-"}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.reportingTime || "-"}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.gateClosingTime || "-"}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.examStartTime || "-"}</td>
+                        <td className="border-t border-border/30 px-6 py-3 text-sm text-muted-foreground">{item.examDuration || "-"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </CardContent>
         </Card>
