@@ -6,7 +6,36 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Users, Edit, Trash2, Loader2, Search, TrendingUp, UserCheck, UserX, BarChart3, IndianRupee } from "lucide-react";
+import { 
+  Users, 
+  Edit, 
+  Trash2, 
+  Loader2, 
+  Search, 
+  TrendingUp, 
+  UserCheck, 
+  UserX, 
+  BarChart3, 
+  IndianRupee,
+  Plus,
+  Filter,
+  RefreshCw,
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  Calendar,
+  Camera,
+  Upload,
+  Building,
+  Home,
+  CreditCard,
+  Shield,
+  Activity,
+  Hash,
+  IdCard,
+  Lock
+} from "lucide-react";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
@@ -305,57 +334,61 @@ const EmployeeMasterContent = () => {
     <div className="space-y-8">
       {/* Statistics Dashboard */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-primary/5 to-primary/10">
+        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl transition-shadow">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Employees</p>
-                <p className="text-3xl font-bold text-primary">{stats.total}</p>
+                <p className="text-blue-100 text-sm font-medium">Total Employees</p>
+                <p className="text-3xl font-bold">{stats.total}</p>
+                <p className="text-xs text-blue-200 mt-1">Registered staff</p>
               </div>
-              <div className="p-3 bg-primary/10 rounded-full">
-                <Users className="h-6 w-6 text-primary" />
+              <div className="p-3 bg-white/20 rounded-full">
+                <Users className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-success/5 to-success/10">
+        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg hover:shadow-xl transition-shadow">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Active</p>
-                <p className="text-3xl font-bold text-success">{stats.active}</p>
+                <p className="text-green-100 text-sm font-medium">Active Employees</p>
+                <p className="text-3xl font-bold">{stats.active}</p>
+                <p className="text-xs text-green-200 mt-1">Currently working</p>
               </div>
-              <div className="p-3 bg-success/10 rounded-full">
-                <UserCheck className="h-6 w-6 text-success" />
+              <div className="p-3 bg-white/20 rounded-full">
+                <UserCheck className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-warning/5 to-warning/10">
+        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Inactive</p>
-                <p className="text-3xl font-bold text-warning">{stats.inactive}</p>
+                <p className="text-orange-100 text-sm font-medium">Inactive</p>
+                <p className="text-3xl font-bold">{stats.inactive}</p>
+                <p className="text-xs text-orange-200 mt-1">Not working</p>
               </div>
-              <div className="p-3 bg-warning/10 rounded-full">
-                <UserX className="h-6 w-6 text-warning" />
+              <div className="p-3 bg-white/20 rounded-full">
+                <UserX className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-accent/5 to-accent/10">
+        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Avg Salary</p>
-                <p className="text-3xl font-bold text-accent">₹{stats.avgSalary.toLocaleString()}</p>
+                <p className="text-purple-100 text-sm font-medium">Average Salary</p>
+                <p className="text-3xl font-bold">₹{stats.avgSalary.toLocaleString()}</p>
+                <p className="text-xs text-purple-200 mt-1">Monthly average</p>
               </div>
-              <div className="p-3 bg-accent/10 rounded-full">
-                <IndianRupee className="h-6 w-6 text-accent" />
+              <div className="p-3 bg-white/20 rounded-full">
+                <IndianRupee className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
@@ -363,123 +396,162 @@ const EmployeeMasterContent = () => {
       </div>
 
       {/* Employee Master Form */}
-      <Card className="border-0 shadow-xl bg-card">
-        <CardHeader className="p-6 border-b">
-          <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-3">
-            <div className="p-2 bg-primary rounded-lg">
-              <Users className="h-5 w-5 text-primary-foreground" />
+      <Card className="shadow-lg border-l-4 border-l-emerald-500 bg-gradient-to-r from-emerald-50/50 to-white dark:from-emerald-950/20 dark:to-background">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 bg-emerald-500 text-white rounded-lg">
+              <Plus className="h-5 w-5" />
             </div>
-            {editingEmployee ? 'Edit Employee' : 'Add New Employee'}
-          </CardTitle>
+            <div>
+              <CardTitle className="text-xl font-semibold text-emerald-700 dark:text-emerald-300">
+                {editingEmployee ? 'Edit Employee Details' : 'Add New Employee'}
+              </CardTitle>
+              <p className="text-sm text-emerald-600 dark:text-emerald-400 mt-1">
+                {editingEmployee ? "Update employee information" : "Enter comprehensive employee details for registration"}
+              </p>
+            </div>
+          </div>
         </CardHeader>
         
-        <CardContent className="p-6">
+        <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Employee ID */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-blue-700 dark:text-blue-300">
+                <IdCard className="h-4 w-4" />
                 Employee ID
               </label>
-              <Input
-                value={formData.employeeId}
-                onChange={(e) => handleInputChange('employeeId', e.target.value)}
-                className="h-11 bg-muted"
-                readOnly
-              />
+              <div className="relative">
+                <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 h-4 w-4" />
+                <Input
+                  value={formData.employeeId}
+                  onChange={(e) => handleInputChange('employeeId', e.target.value)}
+                  className="pl-10 bg-gray-100 dark:bg-gray-800 border-blue-200 focus:border-blue-400"
+                  readOnly
+                />
+              </div>
             </div>
 
             {/* Employee Password */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-red-700 dark:text-red-300">
+                <Lock className="h-4 w-4" />
                 Employee Password
               </label>
-              <Input
-                value={formData.employeePassword}
-                onChange={(e) => handleInputChange('employeePassword', e.target.value)}
-                className="h-11 bg-muted"
-                readOnly
-              />
+              <div className="relative">
+                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 text-red-500 h-4 w-4" />
+                <Input
+                  value={formData.employeePassword}
+                  onChange={(e) => handleInputChange('employeePassword', e.target.value)}
+                  className="pl-10 bg-gray-100 dark:bg-gray-800 border-red-200 focus:border-red-400"
+                  readOnly
+                />
+              </div>
             </div>
 
             {/* Full Name */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-green-700 dark:text-green-300">
+                <User className="h-4 w-4" />
                 Full Name *
               </label>
-              <Input
-                value={formData.fullName}
-                onChange={(e) => handleInputChange('fullName', e.target.value)}
-                className="h-11"
-                placeholder="Enter full name"
-              />
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-500 h-4 w-4" />
+                <Input
+                  value={formData.fullName}
+                  onChange={(e) => handleInputChange('fullName', e.target.value)}
+                  placeholder="Enter full name"
+                  className="pl-10 border-green-200 focus:border-green-400 focus:ring-green-400"
+                />
+              </div>
             </div>
 
             {/* Father Name */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-purple-700 dark:text-purple-300">
+                <Users className="h-4 w-4" />
                 Father Name
               </label>
-              <Input
-                value={formData.fatherName}
-                onChange={(e) => handleInputChange('fatherName', e.target.value)}
-                className="h-11"
-                placeholder="Enter father name"
-              />
+              <div className="relative">
+                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-500 h-4 w-4" />
+                <Input
+                  value={formData.fatherName}
+                  onChange={(e) => handleInputChange('fatherName', e.target.value)}
+                  placeholder="Enter father name"
+                  className="pl-10 border-purple-200 focus:border-purple-400 focus:ring-purple-400"
+                />
+              </div>
             </div>
 
             {/* Contact No */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-orange-700 dark:text-orange-300">
+                <Phone className="h-4 w-4" />
                 Contact No *
               </label>
-              <Input
-                value={formData.contactNo}
-                onChange={(e) => handleInputChange('contactNo', e.target.value)}
-                className="h-11"
-                placeholder="Enter contact number"
-              />
+              <div className="relative">
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500 h-4 w-4" />
+                <Input
+                  value={formData.contactNo}
+                  onChange={(e) => handleInputChange('contactNo', e.target.value)}
+                  placeholder="Enter contact number"
+                  className="pl-10 border-orange-200 focus:border-orange-400 focus:ring-orange-400"
+                />
+              </div>
             </div>
 
             {/* Email ID */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-blue-700 dark:text-blue-300">
+                <Mail className="h-4 w-4" />
                 Email ID *
               </label>
-              <Input
-                type="email"
-                value={formData.emailId}
-                onChange={(e) => handleInputChange('emailId', e.target.value)}
-                className="h-11"
-                placeholder="Enter email address"
-              />
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500 h-4 w-4" />
+                <Input
+                  type="email"
+                  value={formData.emailId}
+                  onChange={(e) => handleInputChange('emailId', e.target.value)}
+                  placeholder="Enter email address"
+                  className="pl-10 border-blue-200 focus:border-blue-400 focus:ring-blue-400"
+                />
+              </div>
             </div>
 
             {/* Country */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-indigo-700 dark:text-indigo-300">
+                <Building className="h-4 w-4" />
                 Country
               </label>
-              <Input
-                value={formData.country}
-                onChange={(e) => handleInputChange('country', e.target.value)}
-                className="h-11 bg-muted"
-                readOnly
-              />
+              <div className="relative">
+                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-500 h-4 w-4" />
+                <Input
+                  value={formData.country}
+                  onChange={(e) => handleInputChange('country', e.target.value)}
+                  className="pl-10 bg-gray-100 dark:bg-gray-800 border-indigo-200 focus:border-indigo-400"
+                  readOnly
+                />
+              </div>
             </div>
 
             {/* State */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-pink-700 dark:text-pink-300">
+                <MapPin className="h-4 w-4" />
                 State
               </label>
               <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
-                <SelectTrigger className="h-11">
+                <SelectTrigger className="border-pink-200 focus:border-pink-400">
                   <SelectValue placeholder="---Please Select---" />
                 </SelectTrigger>
                 <SelectContent>
                   {states.map((state) => (
                     <SelectItem key={state} value={state}>
-                      {state}
+                      <div className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4 text-pink-500" />
+                        {state}
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -488,17 +560,21 @@ const EmployeeMasterContent = () => {
 
             {/* District */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-teal-700 dark:text-teal-300">
+                <MapPin className="h-4 w-4" />
                 District
               </label>
               <Select value={formData.district} onValueChange={(value) => handleInputChange('district', value)}>
-                <SelectTrigger className="h-11">
+                <SelectTrigger className="border-teal-200 focus:border-teal-400">
                   <SelectValue placeholder="---Please Select---" />
                 </SelectTrigger>
                 <SelectContent>
                   {districts.map((district) => (
                     <SelectItem key={district} value={district}>
-                      {district}
+                      <div className="flex items-center gap-2">
+                        <Building className="h-4 w-4 text-teal-500" />
+                        {district}
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -507,196 +583,342 @@ const EmployeeMasterContent = () => {
 
             {/* Pincode */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-cyan-700 dark:text-cyan-300">
+                <Hash className="h-4 w-4" />
                 Pincode
               </label>
-              <Input
-                value={formData.pincode}
-                onChange={(e) => handleInputChange('pincode', e.target.value)}
-                className="h-11"
-                placeholder="Enter pincode"
-              />
+              <div className="relative">
+                <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 text-cyan-500 h-4 w-4" />
+                <Input
+                  value={formData.pincode}
+                  onChange={(e) => handleInputChange('pincode', e.target.value)}
+                  placeholder="Enter pincode"
+                  className="pl-10 border-cyan-200 focus:border-cyan-400 focus:ring-cyan-400"
+                />
+              </div>
             </div>
 
             {/* Salary */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-emerald-700 dark:text-emerald-300">
+                <CreditCard className="h-4 w-4" />
                 Salary
               </label>
-              <Input
-                value={formData.salary}
-                onChange={(e) => handleInputChange('salary', e.target.value)}
-                className="h-11"
-                placeholder="Enter salary"
-              />
+              <div className="relative">
+                <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-500 h-4 w-4" />
+                <Input
+                  value={formData.salary}
+                  onChange={(e) => handleInputChange('salary', e.target.value)}
+                  placeholder="Enter salary amount"
+                  className="pl-10 border-emerald-200 focus:border-emerald-400 focus:ring-emerald-400"
+                />
+              </div>
             </div>
 
             {/* Registration Date */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-violet-700 dark:text-violet-300">
+                <Calendar className="h-4 w-4" />
                 Registration Date
               </label>
-              <Input
-                type="date"
-                value={formData.registrationDate}
-                onChange={(e) => handleInputChange('registrationDate', e.target.value)}
-                className="h-11"
-              />
+              <div className="relative">
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-violet-500 h-4 w-4" />
+                <Input
+                  type="date"
+                  value={formData.registrationDate}
+                  onChange={(e) => handleInputChange('registrationDate', e.target.value)}
+                  className="pl-10 border-violet-200 focus:border-violet-400 focus:ring-violet-400"
+                />
+              </div>
             </div>
 
             {/* Address */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-amber-700 dark:text-amber-300">
+                <Home className="h-4 w-4" />
                 Address
               </label>
-              <Textarea
-                value={formData.address}
-                onChange={(e) => handleInputChange('address', e.target.value)}
-                className="min-h-[80px] resize-none"
-                placeholder="Enter address"
-              />
+              <div className="relative">
+                <Home className="absolute left-3 top-3 text-amber-500 h-4 w-4" />
+                <Textarea
+                  value={formData.address}
+                  onChange={(e) => handleInputChange('address', e.target.value)}
+                  className="pl-10 min-h-[80px] resize-none border-amber-200 focus:border-amber-400 focus:ring-amber-400"
+                  placeholder="Enter complete address"
+                />
+              </div>
             </div>
 
             {/* Other Details */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+              <label className="text-sm font-semibold flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                <Activity className="h-4 w-4" />
                 Other Details
               </label>
-              <Textarea
-                value={formData.otherDetails}
-                onChange={(e) => handleInputChange('otherDetails', e.target.value)}
-                className="min-h-[80px] resize-none"
-                placeholder="Enter other details"
-              />
+              <div className="relative">
+                <Activity className="absolute left-3 top-3 text-slate-500 h-4 w-4" />
+                <Textarea
+                  value={formData.otherDetails}
+                  onChange={(e) => handleInputChange('otherDetails', e.target.value)}
+                  className="pl-10 min-h-[80px] resize-none border-slate-200 focus:border-slate-400 focus:ring-slate-400"
+                  placeholder="Enter additional details"
+                />
+              </div>
             </div>
 
             {/* Photo Upload */}
             <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-medium text-foreground">
-                Photo Upload
+              <label className="text-sm font-semibold flex items-center gap-2 text-rose-700 dark:text-rose-300">
+                <Camera className="h-4 w-4" />
+                Employee Photo
               </label>
-              <div className="border border-border rounded-lg p-4 bg-background">
-                <div className="flex items-center space-x-4">
-                  <div className="relative">
-                    <input
-                      id="employee-photo-file"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    />
-                    <Button
-                      variant="outline"
-                      className="h-10"
-                    >
-                      Choose file
-                    </Button>
-                  </div>
-                  <span className="text-sm text-muted-foreground">
-                    {formData.photoUpload ? formData.photoUpload.name : "No file chosen"}
-                  </span>
+              <div className="relative border-2 border-dashed border-rose-300 rounded-lg p-6 bg-rose-50/50 dark:bg-rose-950/20 hover:border-rose-400 transition-colors">
+                <input
+                  id="employee-photo-file"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                <div className="text-center">
+                  <Upload className="h-8 w-8 text-rose-500 mx-auto mb-2" />
+                  <p className="text-sm font-medium text-rose-700 dark:text-rose-300">
+                    {formData.photoUpload ? formData.photoUpload.name : "Click to upload employee photo"}
+                  </p>
+                  <p className="text-xs text-rose-600 dark:text-rose-400 mt-1">
+                    Drag & drop or click to browse (PNG, JPG, JPEG)
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Submit and Reset Buttons */}
-          <div className="flex gap-4 pt-6">
-            <Button onClick={handleSubmit} className="h-11 px-8">
-              {editingEmployee ? 'Update Employee' : 'Add Employee'}
+          <div className="flex gap-4 pt-6 border-t border-emerald-200">
+            <Button 
+              onClick={handleSubmit} 
+              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              size="lg"
+            >
+              {editingEmployee ? (
+                <>
+                  <Edit className="h-4 w-4 mr-2" />
+                  Update Employee
+                </>
+              ) : (
+                <>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Employee
+                </>
+              )}
             </Button>
-            <Button variant="outline" onClick={handleReset} className="h-11 px-8">
-              Reset
+            <Button variant="outline" onClick={handleReset} size="lg">
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Reset Form
             </Button>
           </div>
         </CardContent>
       </Card>
 
       {/* Search and Filter Controls */}
-      <Card className="border-0 shadow-lg bg-card">
+      <Card className="shadow-lg border-l-4 border-l-indigo-500 bg-gradient-to-r from-indigo-50/50 to-white dark:from-indigo-950/20 dark:to-background">
         <CardContent className="p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-indigo-500 text-white rounded-lg">
+              <Search className="h-5 w-5" />
+            </div>
+            <h3 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">Search & Filter Employees</h3>
+          </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-indigo-500" />
               <Input
                 placeholder="Search employees by name, ID, email, or phone..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-11"
+                className="pl-10 border-indigo-200 focus:border-indigo-400 focus:ring-indigo-400"
               />
             </div>
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full sm:w-40 h-11">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full sm:w-48 h-11">
-                <SelectValue placeholder="Sort by..." />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest First</SelectItem>
-                <SelectItem value="oldest">Oldest First</SelectItem>
-                <SelectItem value="name">By Name</SelectItem>
-                <SelectItem value="salary">By Salary</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex gap-3">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full sm:w-40 border-indigo-200 focus:border-indigo-400">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-gray-500" />
+                      All Status
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="active">
+                    <div className="flex items-center gap-2">
+                      <UserCheck className="h-4 w-4 text-green-500" />
+                      Active
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="inactive">
+                    <div className="flex items-center gap-2">
+                      <UserX className="h-4 w-4 text-orange-500" />
+                      Inactive
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-full sm:w-48 border-indigo-200 focus:border-indigo-400">
+                  <SelectValue placeholder="Sort by..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="newest">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-blue-500" />
+                      Newest First
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oldest">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-gray-500" />
+                      Oldest First
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="name">
+                    <div className="flex items-center gap-2">
+                      <User className="h-4 w-4 text-purple-500" />
+                      By Name
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="salary">
+                    <div className="flex items-center gap-2">
+                      <IndianRupee className="h-4 w-4 text-emerald-500" />
+                      By Salary
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => refresh()}
+                className="border-indigo-200 text-indigo-600 hover:bg-indigo-50"
+              >
+                <RefreshCw className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Employee Master Table */}
-      <Card className="border-0 shadow-xl bg-card">
-        <CardHeader className="p-6 border-b">
-          <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-3">
-            <div className="p-2 bg-primary rounded-lg">
-              <Users className="h-5 w-5 text-primary-foreground" />
+      <Card className="shadow-lg border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50/50 to-white dark:from-purple-950/20 dark:to-background">
+        <CardHeader className="pb-4 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-950/30">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 bg-purple-500 text-white rounded-lg">
+              <Users className="h-5 w-5" />
             </div>
-            Employee Master
-            <Badge variant="secondary" className="ml-auto">
-              {filteredData.length} {filteredData.length === 1 ? 'Employee' : 'Employees'}
-            </Badge>
-          </CardTitle>
+            <div className="flex-1">
+              <CardTitle className="text-xl font-semibold text-purple-700 dark:text-purple-300">
+                Employee Master Registry
+              </CardTitle>
+              <div className="flex items-center justify-between mt-2">
+                <p className="text-sm text-purple-600 dark:text-purple-400">
+                  Complete employee database with {filteredData.length} registered staff members
+                </p>
+                <Badge variant="outline" className="border-purple-300 text-purple-700 bg-purple-50">
+                  {filteredData.length} {filteredData.length === 1 ? 'Employee' : 'Employees'}
+                </Badge>
+              </div>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           {filteredData.length === 0 ? (
             <div className="p-12 text-center">
-              <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-foreground mb-2">No employees found</h3>
-              <p className="text-muted-foreground">
-                {searchTerm ? "Try adjusting your search terms" : "Start by adding your first employee"}
-              </p>
+              <div className="flex flex-col items-center gap-3">
+                <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-full">
+                  <Users className="h-8 w-8 text-gray-400" />
+                </div>
+                <div className="text-center">
+                  <p className="text-lg font-medium text-gray-600 dark:text-gray-400">
+                    {searchTerm ? "No employees found" : "No employees available"}
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
+                    {searchTerm ? "Try adjusting your search criteria or filters" : "Start by adding your first employee using the form above"}
+                  </p>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-20">Actions</TableHead>
-                    <TableHead>Employee ID</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>State</TableHead>
-                    <TableHead>Salary</TableHead>
-                    <TableHead className="w-24">Status</TableHead>
+                <TableHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
+                  <TableRow className="border-b-2 border-purple-200">
+                    <TableHead className="w-[120px] font-semibold text-gray-700 dark:text-gray-300">
+                      <div className="flex items-center gap-2">
+                        <Activity className="h-4 w-4 text-purple-500" />
+                        Actions
+                      </div>
+                    </TableHead>
+                    <TableHead className="min-w-[120px] font-semibold text-gray-700 dark:text-gray-300">
+                      <div className="flex items-center gap-2">
+                        <IdCard className="h-4 w-4 text-blue-500" />
+                        Employee ID
+                      </div>
+                    </TableHead>
+                    <TableHead className="min-w-[180px] font-semibold text-gray-700 dark:text-gray-300">
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-green-500" />
+                        Name
+                      </div>
+                    </TableHead>
+                    <TableHead className="min-w-[140px] font-semibold text-gray-700 dark:text-gray-300">
+                      <div className="flex items-center gap-2">
+                        <Phone className="h-4 w-4 text-orange-500" />
+                        Contact
+                      </div>
+                    </TableHead>
+                    <TableHead className="min-w-[200px] font-semibold text-gray-700 dark:text-gray-300">
+                      <div className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-blue-500" />
+                        Email
+                      </div>
+                    </TableHead>
+                    <TableHead className="min-w-[120px] font-semibold text-gray-700 dark:text-gray-300">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4 text-pink-500" />
+                        State
+                      </div>
+                    </TableHead>
+                    <TableHead className="min-w-[120px] font-semibold text-gray-700 dark:text-gray-300">
+                      <div className="flex items-center gap-2">
+                        <IndianRupee className="h-4 w-4 text-emerald-500" />
+                        Salary
+                      </div>
+                    </TableHead>
+                    <TableHead className="w-[100px] font-semibold text-gray-700 dark:text-gray-300">
+                      <div className="flex items-center gap-2">
+                        <Shield className="h-4 w-4 text-indigo-500" />
+                        Status
+                      </div>
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredData.map((employee) => (
-                    <TableRow key={employee.id}>
-                      <TableCell>
+                  {filteredData.map((employee, index) => (
+                    <TableRow 
+                      key={employee.id} 
+                      className={`hover:bg-purple-50/50 dark:hover:bg-purple-950/20 transition-colors ${
+                        index % 2 === 0 ? 'bg-white dark:bg-background' : 'bg-gray-50/50 dark:bg-gray-950/30'
+                      }`}
+                    >
+                      <TableCell className="py-4">
                         <div className="flex gap-1">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEdit(employee)}
-                            className="h-8 w-8 p-0 text-primary hover:text-primary hover:bg-primary/10"
+                            className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                            title="Edit employee"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
@@ -704,33 +926,80 @@ const EmployeeMasterContent = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleDelete(employee.id)}
-                            className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                            className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                            title="Delete employee"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
-                      <TableCell className="font-mono text-sm">
-                        {employee.employee_id}
+                      <TableCell className="py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 bg-blue-100 dark:bg-blue-900/30 rounded">
+                            <IdCard className="h-3 w-3 text-blue-600" />
+                          </div>
+                          <span className="font-mono text-sm font-medium">{employee.employee_id}</span>
+                        </div>
                       </TableCell>
-                      <TableCell className="font-medium">
-                        {employee.full_name}
+                      <TableCell className="py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 bg-green-100 dark:bg-green-900/30 rounded">
+                            <User className="h-3 w-3 text-green-600" />
+                          </div>
+                          <span className="font-medium text-gray-900 dark:text-gray-100">{employee.full_name}</span>
+                        </div>
                       </TableCell>
-                      <TableCell className="text-sm">
-                        {employee.contact_no}
+                      <TableCell className="py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 bg-orange-100 dark:bg-orange-900/30 rounded">
+                            <Phone className="h-3 w-3 text-orange-600" />
+                          </div>
+                          <span className="font-mono text-sm">{employee.contact_no}</span>
+                        </div>
                       </TableCell>
-                      <TableCell className="text-sm">
-                        {employee.email_id}
+                      <TableCell className="py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 bg-blue-100 dark:bg-blue-900/30 rounded">
+                            <Mail className="h-3 w-3 text-blue-600" />
+                          </div>
+                          <span className="text-sm text-gray-700 dark:text-gray-300">{employee.email_id}</span>
+                        </div>
                       </TableCell>
-                      <TableCell className="text-sm">
-                        {employee.state || 'N/A'}
+                      <TableCell className="py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 bg-pink-100 dark:bg-pink-900/30 rounded">
+                            <MapPin className="h-3 w-3 text-pink-600" />
+                          </div>
+                          <span className="text-sm">{employee.state || 'N/A'}</span>
+                        </div>
                       </TableCell>
-                      <TableCell className="text-sm font-medium">
-                        {employee.salary ? `₹${parseFloat(employee.salary).toLocaleString()}` : 'N/A'}
+                      <TableCell className="py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 bg-emerald-100 dark:bg-emerald-900/30 rounded">
+                            <IndianRupee className="h-3 w-3 text-emerald-600" />
+                          </div>
+                          <span className="text-sm font-medium">
+                            {employee.salary ? `₹${parseFloat(employee.salary).toLocaleString()}` : 'N/A'}
+                          </span>
+                        </div>
                       </TableCell>
-                      <TableCell>
-                        <Badge variant={employee.status === 'active' ? "default" : "secondary"}>
-                          {employee.status || 'Active'}
+                      <TableCell className="py-4">
+                        <Badge 
+                          variant={employee.status === 'active' ? "default" : "secondary"}
+                          className={`${
+                            employee.status === 'active' 
+                              ? 'bg-green-100 text-green-800 border-green-200' 
+                              : 'bg-orange-100 text-orange-800 border-orange-200'
+                          }`}
+                        >
+                          <div className="flex items-center gap-1">
+                            {employee.status === 'active' ? (
+                              <UserCheck className="h-3 w-3" />
+                            ) : (
+                              <UserX className="h-3 w-3" />
+                            )}
+                            {employee.status || 'Active'}
+                          </div>
                         </Badge>
                       </TableCell>
                     </TableRow>
