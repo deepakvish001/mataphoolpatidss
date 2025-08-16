@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Edit, Trash2, BookOpen, Users, GraduationCap, Award, Search, Filter, BarChart3 } from "lucide-react";
+import { toast } from "sonner";
 
 const EditCRTContent = () => {
-  const { toast } = useToast();
-
   // Sample edit CRT data based on screenshots
   const [crtData] = useState([
     {
@@ -97,105 +100,279 @@ const EditCRTContent = () => {
     }
   ]);
 
-  const handleEdit = (id: number) => {
-    toast({
-      title: "Edit",
-      description: `Edit CRT record ID: ${id}`,
-      variant: "default"
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterCourse, setFilterCourse] = useState("all");
+
+  // Filter and search logic
+  const filteredData = useMemo(() => {
+    return crtData.filter(item => {
+      const matchesSearch = !searchTerm || 
+        item.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.studentVerificationNo.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesCourse = filterCourse === "all" || item.coursename === filterCourse;
+      
+      return matchesSearch && matchesCourse;
     });
+  }, [crtData, searchTerm, filterCourse]);
+
+  // Statistics calculations
+  const stats = useMemo(() => {
+    const totalRecords = crtData.length;
+    const uniqueStudents = new Set(crtData.map(item => item.studentId)).size;
+    const uniqueCourses = new Set(crtData.map(item => item.coursename)).size;
+    const uniqueSubjects = new Set(crtData.map(item => item.subject)).size;
+    const avgTheoryMarks = crtData.reduce((sum, item) => sum + parseInt(item.obtainTheoryMarks), 0) / crtData.length;
+
+    return {
+      total: totalRecords,
+      students: uniqueStudents,
+      courses: uniqueCourses,
+      subjects: uniqueSubjects,
+      avgTheory: Math.round(avgTheoryMarks),
+      filtered: filteredData.length
+    };
+  }, [crtData, filteredData]);
+
+  const handleEdit = (id: number) => {
+    toast.success(`Edit CRT record ID: ${id}`);
   };
 
   const handleDelete = (id: number) => {
-    toast({
-      title: "Delete",
-      description: `Delete CRT record ID: ${id}`,
-      variant: "destructive"
-    });
+    toast.error(`Delete CRT record ID: ${id}`);
   };
 
   return (
-    <div className="w-full max-w-none bg-gray-200 min-h-screen">
-      {/* Header */}
-      <div className="bg-gray-400 px-6 py-4 border-b border-gray-500">
-        <h1 className="text-xl font-medium text-gray-800">Edit CRT</h1>
-      </div>
-
-      {/* Data Table */}
-      <div className="px-8 py-6">
-        <div className="border-2 border-gray-600 bg-white">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs">
-              <thead>
-                <tr className="bg-blue-600 text-white">
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[60px]">id</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[80px]">student_id</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">coursename</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[80px]">sem_year</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[120px]">subject</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">theory_marks</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">practical_marks</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[120px]">obtain_theory_marks</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[120px]">obtain_practical_marks</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">issue_date</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">place</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">student_name</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">student_fname</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">student_mname</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[120px]">student_varification_no</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">examintion_date</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">center_name</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[100px]">center_code</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">photo</th>
-                  <th className="border-2 border-gray-600 px-2 py-3 text-xs font-medium text-left min-w-[150px]">direct_sign</th>
-                </tr>
-              </thead>
-              <tbody>
-                {crtData.map((item, index) => (
-                  <tr key={item.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">
-                      <div className="flex gap-1 mb-1">
-                        <Button
-                          variant="link"
-                          onClick={() => handleEdit(item.id)}
-                          className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs"
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          variant="link"
-                          onClick={() => handleDelete(item.id)}
-                          className="p-0 h-auto text-blue-600 hover:text-blue-800 text-xs"
-                        >
-                          Delete
-                        </Button>
-                      </div>
-                      <div>{item.id}</div>
-                    </td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.studentId}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.coursename}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.semYear}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.subject}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.theoryMarks}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.practicalMarks}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.obtainTheoryMarks}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.obtainPracticalMarks}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.issueDate}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.place}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.studentName}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.studentFname}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.studentMname}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.studentVerificationNo}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.examinationDate}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.centerName}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.centerCode}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.photo}</td>
-                    <td className="border-2 border-gray-600 px-2 py-3 text-xs">{item.directSign}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-primary/3 to-primary/5 p-6">
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center space-x-4 mb-8">
+          <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg">
+            <Edit className="h-6 w-6 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              Edit CRT Records
+            </h1>
+            <p className="text-muted-foreground mt-1">Manage and edit Certificate and Result Transcript records</p>
           </div>
         </div>
+
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <BarChart3 className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-blue-700">Total Records</p>
+                  <p className="text-2xl font-bold text-blue-900">{stats.total}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Users className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-green-700">Students</p>
+                  <p className="text-2xl font-bold text-green-900">{stats.students}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <GraduationCap className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-orange-700">Courses</p>
+                  <p className="text-2xl font-bold text-orange-900">{stats.courses}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <BookOpen className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-purple-700">Subjects</p>
+                  <p className="text-2xl font-bold text-purple-900">{stats.subjects}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Award className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-indigo-700">Avg Theory</p>
+                  <p className="text-2xl font-bold text-indigo-900">{stats.avgTheory}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-pink-50 to-pink-100 border-pink-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Filter className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-pink-700">Filtered</p>
+                  <p className="text-2xl font-bold text-pink-900">{stats.filtered}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Search and Filter Controls */}
+        <Card className="bg-background/95 backdrop-blur-sm border border-primary/10 shadow-2xl">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl font-semibold text-foreground flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center">
+                <Search className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <span>Search & Filter</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="h-12 bg-background border-input"
+                placeholder="Search by student name, ID, subject, or verification number..."
+              />
+              <Select value={filterCourse} onValueChange={setFilterCourse}>
+                <SelectTrigger className="h-12 bg-background">
+                  <SelectValue placeholder="Filter by course" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Courses</SelectItem>
+                  <SelectItem value="ADCA">ADCA</SelectItem>
+                  <SelectItem value="DCA">DCA</SelectItem>
+                  <SelectItem value="PGDCA">PGDCA</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Data Table */}
+        <Card className="bg-background/95 backdrop-blur-sm border border-primary/10 shadow-2xl">
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-gradient-to-r from-primary/90 to-primary/80 hover:from-primary hover:to-primary/90">
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[120px]">Actions</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[80px]">ID</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[100px]">Student ID</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[100px]">Course</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[100px]">Duration</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[120px]">Subject</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[100px]">Theory Max</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[100px]">Practical Max</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[120px]">Theory Obtained</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[120px]">Practical Obtained</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[100px]">Issue Date</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[100px]">Place</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[200px]">Student Name</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[120px]">Verification No</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[100px]">Exam Date</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 border-r border-primary-foreground/20 min-w-[200px]">Center Name</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4">Center Code</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredData.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={17} className="text-center py-12 text-muted-foreground">
+                        <div className="flex flex-col items-center space-y-2">
+                          <Edit className="h-12 w-12 text-muted-foreground/50" />
+                          <p className="text-lg font-medium">No CRT records found</p>
+                          <p className="text-sm">
+                            {searchTerm || filterCourse !== "all" 
+                              ? "Try adjusting your search or filter criteria" 
+                              : "No CRT records available"}
+                          </p>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    filteredData.map((item, index) => (
+                      <TableRow 
+                        key={item.id}
+                        className={`hover:bg-muted/50 transition-colors ${
+                          index % 2 === 0 ? "bg-background" : "bg-muted/20"
+                        }`}
+                      >
+                        <TableCell className="text-center p-4 border-r border-border">
+                          <div className="flex justify-center space-x-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(item.id)}
+                              className="hover:bg-primary/10 hover:text-primary"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(item.id)}
+                              className="hover:bg-destructive/10 hover:text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.id}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.studentId}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.coursename}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.semYear}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.subject}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.theoryMarks}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.practicalMarks}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border text-green-600">{item.obtainTheoryMarks}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border text-green-600">{item.obtainPracticalMarks}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.issueDate}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.place}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.studentName}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.studentVerificationNo}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.examinationDate}</TableCell>
+                        <TableCell className="text-center p-4 font-medium border-r border-border">{item.centerName}</TableCell>
+                        <TableCell className="text-center p-4 font-medium">{item.centerCode}</TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
