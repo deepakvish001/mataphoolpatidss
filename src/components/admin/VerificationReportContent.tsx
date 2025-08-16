@@ -247,10 +247,16 @@ const VerificationReportContent = () => {
                 <table className="w-full border-collapse min-w-[1800px]">
                   <thead>
                     <tr className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground">
-                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[120px]">
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[140px]">
                         <div className="flex items-center gap-2">
                           <MapPin className="h-4 w-4" />
-                          State & Actions
+                          State
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-center min-w-[120px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <Edit className="h-4 w-4" />
+                          Actions
                         </div>
                       </th>
                       <th className="border-r border-primary/30 px-4 py-4 text-sm font-bold text-left min-w-[120px]">
@@ -303,12 +309,19 @@ const VerificationReportContent = () => {
                     {students.map((student, index) => (
                       <tr key={student.id} className={`${index % 2 === 0 ? "bg-background/80" : "bg-accent/5"} hover:bg-accent/20 transition-colors duration-200 border-b border-border/30`}>
                         <td className="border-r border-border/30 px-4 py-4 text-sm">
-                          <div className="flex gap-2 mb-3">
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-primary rounded-full"></div>
+                            <span className="font-medium text-primary">{student.state}</span>
+                          </div>
+                        </td>
+                        <td className="border-r border-border/30 px-4 py-4 text-sm">
+                          <div className="flex items-center justify-center gap-2">
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleEdit(student.id)}
-                              className="text-primary hover:text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors"
+                              className="text-primary hover:text-primary hover:bg-primary/10 p-2 rounded-lg transition-all duration-200 hover:scale-105"
+                              title="Edit Student"
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
@@ -316,12 +329,12 @@ const VerificationReportContent = () => {
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDelete(student.id)}
-                              className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded-lg transition-colors"
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded-lg transition-all duration-200 hover:scale-105"
+                              title="Delete Student"
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
-                          <div className="font-medium text-primary">{student.state}</div>
                         </td>
                         <td className="border-r border-border/30 px-4 py-4 text-sm font-medium">{student.district}</td>
                         <td className="border-r border-border/30 px-4 py-4 text-sm font-mono">{student.centerCode}</td>
