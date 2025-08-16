@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2, Save, RefreshCw } from "lucide-react";
+import { Loader2, Save, RefreshCw, User, Mail, Phone, Lock, Shield, Eye, EyeOff } from "lucide-react";
 
 const EditProfileContent = () => {
   const { user, profile, updateProfile } = useAuth();
@@ -19,6 +19,8 @@ const EditProfileContent = () => {
   });
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Load profile data on component mount
   useEffect(() => {
@@ -162,137 +164,242 @@ const EditProfileContent = () => {
 
   if (initialLoading) {
     return (
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
-          <div className="flex flex-col items-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-            <p className="text-gray-600">Loading profile data...</p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-primary/5 p-6">
+        <div className="w-full max-w-4xl mx-auto">
+          <Card className="shadow-2xl border-0 bg-card/50 backdrop-blur-sm">
+            <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+              <div className="flex flex-col items-center space-y-4">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <p className="text-muted-foreground">Loading profile data...</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-      <CardHeader className="p-8 border-b border-gray-100">
-        <div className="flex justify-between items-center">
-          <CardTitle className="text-2xl font-bold text-gray-800">
-            Admin Profile
-          </CardTitle>
-          <Button
-            onClick={handleRefresh}
-            variant="outline"
-            size="sm"
-            className="flex items-center space-x-2"
-          >
-            <RefreshCw className="h-4 w-4" />
-            <span>Refresh</span>
-          </Button>
-        </div>
-      </CardHeader>
-      
-      <CardContent className="p-8">
-        <div className="space-y-6">
-          {/* Full Name */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              Full Name <span className="text-red-500">*</span>
-            </label>
-            <Input
-              value={formData.fullName}
-              onChange={(e) => handleInputChange('fullName', e.target.value)}
-              className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg text-gray-700 font-medium bg-gray-50"
-              placeholder="Enter full name"
-            />
-          </div>
-
-          {/* Phone */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              Phone Number
-            </label>
-            <Input
-              value={formData.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
-              className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg text-gray-700 font-medium bg-gray-50"
-              placeholder="Enter phone number"
-            />
-          </div>
-
-          {/* Email */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              Email <span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg text-gray-700 font-medium bg-gray-50"
-              placeholder="Enter email address"
-            />
-          </div>
-
-          {/* Password */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              New Password <span className="text-gray-500">(leave blank to keep current)</span>
-            </label>
-            <Input
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange('password', e.target.value)}
-              className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg text-gray-700 font-medium bg-gray-50"
-              placeholder="Enter new password"
-            />
-          </div>
-
-          {/* Retype Password */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              Confirm New Password
-            </label>
-            <Input
-              type="password"
-              value={formData.retypePassword}
-              onChange={(e) => handleInputChange('retypePassword', e.target.value)}
-              className="h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg text-gray-700 font-medium bg-gray-50"
-              placeholder="Confirm new password"
-            />
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex space-x-4 pt-6">
-            <Button
-              onClick={handleUpdateData}
-              disabled={loading}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center space-x-2"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Updating...</span>
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  <span>Update Profile</span>
-                </>
-              )}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={handleReset}
-              disabled={loading}
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold px-8 py-3 rounded-lg transition-all duration-200"
-            >
-              Reset
-            </Button>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-primary/5 p-6">
+      <div className="w-full max-w-4xl mx-auto space-y-8">
+        {/* Enhanced Header */}
+        <div className="bg-gradient-to-r from-primary to-primary/80 px-8 py-6 rounded-xl shadow-lg animate-fade-in">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-primary-foreground/20 rounded-lg">
+              <User className="h-8 w-8 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-primary-foreground">Edit Profile</h1>
+              <p className="text-primary-foreground/80">Update your personal information and account settings</p>
+            </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+
+        {/* Enhanced Profile Form */}
+        <Card className="shadow-xl border-0 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm animate-scale-in">
+          <CardHeader className="border-b border-border bg-gradient-to-r from-primary/10 via-primary/5 to-transparent">
+            <div className="flex justify-between items-center">
+              <CardTitle className="flex items-center gap-3">
+                <div className="p-3 bg-gradient-to-r from-primary to-primary/80 rounded-xl shadow-lg">
+                  <Shield className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <div>
+                  <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    Profile Settings
+                  </span>
+                  <p className="text-sm text-muted-foreground font-normal">Manage your account information securely</p>
+                </div>
+              </CardTitle>
+              <Button
+                onClick={handleRefresh}
+                variant="outline"
+                size="sm"
+                className="border-2 hover:bg-accent/50 px-4 py-2 h-10 hover-scale"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                <span>Refresh</span>
+              </Button>
+            </div>
+          </CardHeader>
+          
+          <CardContent className="p-8">
+            <div className="space-y-8">
+              {/* Personal Information Section */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b-2 border-gradient-to-r from-blue-500/20 to-transparent">
+                  <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg">
+                    <User className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">Personal Information</h3>
+                  <div className="ml-auto">
+                    <div className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">Required</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Full Name */}
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      Full Name
+                    </label>
+                    <Input
+                      value={formData.fullName}
+                      onChange={(e) => handleInputChange('fullName', e.target.value)}
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
+                      placeholder="Enter your full name"
+                    />
+                    <div className="text-xs text-muted-foreground">This will be displayed on your profile</div>
+                  </div>
+
+                  {/* Phone */}
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      Phone Number
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+                      <Input
+                        value={formData.phone}
+                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        className="pl-12 border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
+                        placeholder="Enter phone number"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Account Security Section */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 pb-3 border-b-2 border-gradient-to-r from-green-500/20 to-transparent">
+                  <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
+                    <Shield className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">Account Security</h3>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Email */}
+                  <div className="space-y-2 group">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+                      <Input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        className="pl-12 border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
+                        placeholder="Enter email address"
+                      />
+                    </div>
+                    <div className="text-xs text-muted-foreground">Changes to email will require verification</div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Password */}
+                    <div className="space-y-2 group">
+                      <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                        <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                        New Password
+                      </label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          value={formData.password}
+                          onChange={(e) => handleInputChange('password', e.target.value)}
+                          className="pl-12 pr-12 border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
+                          placeholder="Enter new password"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent/50"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </Button>
+                      </div>
+                      <div className="text-xs text-muted-foreground">Leave blank to keep current password</div>
+                    </div>
+
+                    {/* Confirm Password */}
+                    <div className="space-y-2 group">
+                      <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                        <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                        Confirm Password
+                      </label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+                        <Input
+                          type={showConfirmPassword ? "text" : "password"}
+                          value={formData.retypePassword}
+                          onChange={(e) => handleInputChange('retypePassword', e.target.value)}
+                          className="pl-12 pr-12 border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
+                          placeholder="Confirm new password"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent/50"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        >
+                          {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Enhanced Action Buttons */}
+              <div className="flex items-center justify-between pt-8 border-t-2 border-gradient-to-r from-primary/10 to-transparent">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Shield className="h-4 w-4" />
+                  All changes are saved securely and immediately
+                </div>
+                <div className="flex items-center gap-4">
+                  <Button
+                    variant="outline"
+                    onClick={handleReset}
+                    disabled={loading}
+                    className="border-2 hover:bg-accent/50 px-6 py-3 h-12 hover-scale"
+                  >
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Reset Form
+                  </Button>
+                  
+                  <Button
+                    onClick={handleUpdateData}
+                    disabled={loading}
+                    className="bg-gradient-to-r from-primary via-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground px-8 py-3 h-12 shadow-lg hover-scale"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                        Updating Profile...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-5 w-5 mr-2" />
+                        Update Profile
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 };
 
