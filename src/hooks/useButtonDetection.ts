@@ -14,12 +14,22 @@ export const useButtonDetection = (tableName: string) => {
         const className = target.className?.toLowerCase() || '';
         const ariaLabel = target.getAttribute('aria-label')?.toLowerCase() || '';
         
-        // Detect CRUD operations based on button text, class, or aria-label
+        // Skip sidebar-related buttons to prevent false notifications
         const allText = `${buttonText} ${className} ${ariaLabel}`;
+        if (allText.includes('sidebar') || allText.includes('menu') || allText.includes('toggle') || allText.includes('collapse')) {
+          return;
+        }
         
-        if (allText.includes('save') || allText.includes('submit') || allText.includes('create') || allText.includes('add')) {
+        // Only detect operations within admin forms or tables, not navigation
+        const isInAdminForm = target.closest('form') || target.closest('table') || target.closest('[data-admin-action]');
+        if (!isInAdminForm) {
+          return;
+        }
+        
+        // Detect CRUD operations based on button text, class, or aria-label (more specific)
+        if (allText.includes('save') || allText.includes('submit') || allText.includes('create') || (allText.includes('add') && !allText.includes('sidebar'))) {
           notifyOperation('Save/Create operation', tableName);
-        } else if (allText.includes('update') || allText.includes('edit') || allText.includes('modify')) {
+        } else if (allText.includes('update') || (allText.includes('edit') && !allText.includes('sidebar')) || allText.includes('modify')) {
           notifyOperation('Update/Edit operation', tableName);
         } else if (allText.includes('delete') || allText.includes('remove') || allText.includes('trash')) {
           notifyOperation('Delete operation', tableName);

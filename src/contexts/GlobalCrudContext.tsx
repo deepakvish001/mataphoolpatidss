@@ -30,16 +30,11 @@ export const GlobalCrudProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [lastEvent, setLastEvent] = useState<CrudEvent | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  // Button operation notification
+  // Button operation notification (disabled to prevent false notifications)
   const notifyOperation = (operation: string, table: string) => {
-    const emoji = operation.includes('save') || operation.includes('submit') || operation.includes('create') ? '💾' :
-                  operation.includes('update') || operation.includes('edit') ? '⚡' :
-                  operation.includes('delete') ? '🗑️' : '🔄';
-    
-    toast.success(`${emoji} ${operation} detected - updating ${table.replace('_', ' ')}...`, {
-      duration: 2000,
-      position: 'bottom-right'
-    });
+    // Disabled to prevent false notifications from sidebar interactions
+    // Only console log for debugging purposes
+    console.log(`Button operation detected: ${operation} on ${table}`);
   };
 
   useEffect(() => {
@@ -94,26 +89,8 @@ export const GlobalCrudProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           console.log(`🔄 Global CRUD Event: ${event.operation} on ${event.table}`, event.data);
           setLastEvent(event);
           
-          // Show instant notification for real-time updates
-          if (event.operation === 'INSERT') {
-            toast.success(`✨ New ${table.replace('_', ' ')} added instantly!`, { 
-              duration: 3000,
-              position: 'bottom-right',
-              style: { background: '#10B981', color: 'white' }
-            });
-          } else if (event.operation === 'UPDATE') {
-            toast.success(`⚡ ${table.replace('_', ' ')} updated instantly!`, { 
-              duration: 3000,
-              position: 'bottom-right',
-              style: { background: '#3B82F6', color: 'white' }
-            });
-          } else if (event.operation === 'DELETE') {
-            toast.success(`🗑️ ${table.replace('_', ' ')} removed instantly!`, { 
-              duration: 3000,
-              position: 'bottom-right',
-              style: { background: '#EF4444', color: 'white' }
-            });
-          }
+          // Disable automatic notifications to prevent spam from sidebar interactions
+          // Only actual database operations should trigger notifications, not button clicks
         })
         .subscribe((status) => {
           if (status === 'SUBSCRIBED') {
@@ -131,16 +108,10 @@ export const GlobalCrudProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setIsConnected(status === 'SUBSCRIBED');
         if (status === 'SUBSCRIBED') {
           console.log('🌐 Global CRUD monitoring connected');
-          toast.success('🌐 Real-time sync active', { 
-            duration: 3000,
-            position: 'bottom-right'
-          });
+          // Removed automatic connection toast to reduce notification spam
         } else if (status === 'CLOSED') {
           console.log('❌ Global CRUD monitoring disconnected');
-          toast.error('❌ Real-time sync disconnected', { 
-            duration: 3000,
-            position: 'bottom-right'
-          });
+          // Only show disconnection errors, not routine connection changes
         }
       });
 
