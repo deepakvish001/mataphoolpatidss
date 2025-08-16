@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Menu, Upload, Edit, Trash2, Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Menu, Upload, Edit, Trash2, Loader2, Search, Filter, BookOpen, Calendar, FileText, Download, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
@@ -41,14 +42,22 @@ const MenuContentContent = () => {
     writeNote: ""
   });
   const [editingItem, setEditingItem] = useState<MenuContent | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [courseFilter, setCourseFilter] = useState("all");
 
   const courses = [
-    "PGDCA",
-    "BCA", 
-    "MCA",
-    "DCA",
-    "O Level",
-    "CCC"
+    "PGDCA - Post Graduate Diploma in Computer Application",
+    "BCA - Bachelor of Computer Applications", 
+    "MCA - Master of Computer Applications",
+    "DCA - Diploma in Computer Application",
+    "ADCA - Advanced Diploma in Computer Application",
+    "O Level - NIELIT O Level",
+    "CCC - Course on Computer Concepts",
+    "DCHN - Diploma in Computer Hardware & Networking",
+    "Web Development",
+    "Digital Marketing",
+    "Graphic Design",
+    "Data Entry Operations"
   ];
 
   const handleInputChange = (field: string, value: string | File | null) => {
