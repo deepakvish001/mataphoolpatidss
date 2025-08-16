@@ -383,203 +383,244 @@ const GenerateStudentAdmitCardContent = () => {
 
       {/* Main Content */}
       <div className="px-6 py-8 max-w-5xl mx-auto">
-        <div ref={admitCardRef} className="bg-white p-8 shadow-lg border">
+        <div ref={admitCardRef} className="bg-white shadow-2xl border-4 border-orange-500 rounded-lg overflow-hidden">
           
-          {/* Institute Header */}
-          <div className="text-center mb-6">
-            <h1 className="text-xl font-bold text-gray-800 mb-2">
-              B. Soft Computer & Technical Institute
-            </h1>
-            <p className="text-sm text-gray-600 mb-4">
-              Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121
-            </p>
-            <h2 className="text-lg font-bold text-gray-800 mb-2">
-              B. Soft Computer & Technical Institute EXAMINATION
-            </h2>
-            <h3 className="text-base font-bold text-gray-800 mb-6">
-              CANDIDATE ADMIT CARD
-            </h3>
+          {/* Header with Institute Logo and Title */}
+          <div className="bg-gradient-to-r from-orange-600 via-orange-700 to-red-600 text-white p-8 text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-black/10"></div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mr-6 shadow-lg">
+                  <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">BSI</span>
+                  </div>
+                </div>
+                <div className="text-left">
+                  <h1 className="text-3xl font-bold mb-2 text-shadow">
+                    B. Soft Computer & Technical Institute
+                  </h1>
+                  <p className="text-lg opacity-90">
+                    An ISO 9001:2015 Certified Institute
+                  </p>
+                </div>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 mt-4">
+                <p className="text-lg font-medium">
+                  Near Union Bank Of India, Bina Soft Educational & Welfare Society
+                </p>
+                <p className="text-base opacity-90">
+                  Vill & Post BILARIYAGAN J, AZAMGARH-276121
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Candidate Information Table */}
-          <div className="mb-6">
-            <p className="text-sm font-medium text-gray-700 mb-3 text-center">
-              Name of the Candidate ( AS FILLED BY THE CANDIDATE IN OEAF)
-            </p>
-            
-            <div className="flex gap-4">
-              {/* Left side - Form fields */}
-              <div className="flex-1">
-                <table className="w-full border-2 border-gray-800">
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm w-1/3">
-                        ROLL NO
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.roll_number || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        NAME
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.student_name || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        MOTHER'S NAME
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.mothers_name || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        FATHER'S NAME
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.fathers_name || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        EXAM CENTER CODE
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.exam_center_code || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        PWD :
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.pwd_status || ""}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          {/* Admit Card Title */}
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-6 text-center">
+            <h2 className="text-2xl font-bold tracking-wide">
+              EXAMINATION ADMIT CARD
+            </h2>
+            <p className="text-lg mt-2 opacity-90">Academic Session 2024-25</p>
+          </div>
 
-              {/* Right side - Photo placeholder */}
-              <div className="w-32">
-                <div className="border-2 border-gray-800 h-40 bg-gray-50 flex items-center justify-center">
-                  {selectedCard?.student_photo_url ? (
-                    <img 
-                      src={selectedCard.student_photo_url} 
-                      alt="Student" 
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-4 h-4 border border-gray-400"></div>
-                  )}
+          {/* Main Content Area */}
+          <div className="p-8">
+            {/* Student Information Section */}
+            <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6 mb-8 border-l-4 border-blue-500">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white text-sm font-bold">👤</span>
+                </div>
+                CANDIDATE INFORMATION
+              </h3>
+              
+              <div className="flex gap-8">
+                {/* Left side - Student Details */}
+                <div className="flex-1">
+                  <div className="grid grid-cols-1 gap-4">
+                    <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Roll Number</span>
+                        <span className="text-lg font-bold text-blue-600">{selectedCard?.roll_number || "N/A"}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Student Name</span>
+                        <span className="text-lg font-bold text-gray-800">{selectedCard?.student_name || "N/A"}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Mother's Name</span>
+                        <span className="text-lg font-medium text-gray-700">{selectedCard?.mothers_name || "N/A"}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Father's Name</span>
+                        <span className="text-lg font-medium text-gray-700">{selectedCard?.fathers_name || "N/A"}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Course</span>
+                        <span className="text-lg font-bold text-green-600">{selectedCard?.course_name || "N/A"}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">PWD Status</span>
+                        <span className="text-lg font-medium text-gray-700">{selectedCard?.pwd_status || "No"}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right side - Photo */}
+                <div className="w-40 flex-shrink-0">
+                  <div className="bg-white border-4 border-gray-300 rounded-lg shadow-lg overflow-hidden">
+                    {selectedCard?.student_photo_url ? (
+                      <img 
+                        src={selectedCard.student_photo_url} 
+                        alt="Student" 
+                        className="w-full h-48 object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+                        <div className="text-center text-gray-400">
+                          <div className="text-4xl mb-2">📷</div>
+                          <p className="text-sm">Photo</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Valid For Section */}
-          <div className="text-center mb-6">
-            <div className="border-2 border-gray-800 py-2 bg-gray-100">
-              <p className="font-medium text-sm">
-                VALID FOR ( Every Month Exam Cycle ) EXAMINATION ONLY
-              </p>
+            {/* Examination Details Section */}
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 mb-8 border-l-4 border-green-500">
+              <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white text-sm font-bold">📋</span>
+                </div>
+                EXAMINATION SCHEDULE
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">Exam Center Code</div>
+                    <div className="text-xl font-bold text-blue-600">{selectedCard?.exam_center_code || "N/A"}</div>
+                  </div>
+                  
+                  <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">Exam Date</div>
+                    <div className="text-xl font-bold text-red-600">{selectedCard?.exam_date || "N/A"}</div>
+                  </div>
+                  
+                  <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">Batch</div>
+                    <div className="text-lg font-medium text-gray-700">{selectedCard?.batch || "N/A"}</div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">Reporting Time</div>
+                    <div className="text-xl font-bold text-orange-600">{selectedCard?.reporting_time || "N/A"}</div>
+                  </div>
+                  
+                  <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">Exam Start Time</div>
+                    <div className="text-xl font-bold text-purple-600">{selectedCard?.exam_start_time || "N/A"}</div>
+                  </div>
+                  
+                  <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                    <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">Duration</div>
+                    <div className="text-lg font-medium text-gray-700">{selectedCard?.exam_duration || "N/A"}</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                <div className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-2">Exam Center Address</div>
+                <div className="text-lg font-medium text-gray-700">{selectedCard?.exam_center_address || "N/A"}</div>
+              </div>
             </div>
-          </div>
 
-          {/* Batch Schedule */}
-          <div className="mb-6">
-            <div className="border-2 border-gray-800 bg-gray-100 text-center py-2 mb-0">
-              <h4 className="font-bold text-sm">BATCH SCHEDULE</h4>
+            {/* Important Instructions */}
+            <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-6 mb-8 border-l-4 border-red-500">
+              <h3 className="text-xl font-bold text-red-700 mb-4 flex items-center">
+                <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white text-sm font-bold">⚠️</span>
+                </div>
+                IMPORTANT INSTRUCTIONS
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-white rounded-lg p-4 border border-red-200">
+                  <h4 className="font-bold text-red-600 mb-2">Gate Closing Time</h4>
+                  <p className="text-lg font-bold text-red-700">{selectedCard?.gate_closing_time || "N/A"}</p>
+                  <p className="text-sm text-gray-600 mt-1">No entry after this time</p>
+                </div>
+                
+                <div className="bg-white rounded-lg p-4 border border-red-200">
+                  <h4 className="font-bold text-red-600 mb-2">Required Documents</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• This Admit Card</li>
+                    <li>• Valid Photo ID</li>
+                    <li>• Pen/Pencil</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="mt-4 p-4 bg-yellow-100 border border-yellow-300 rounded-lg">
+                <p className="text-sm font-medium text-yellow-800">
+                  <strong>Note:</strong> Candidates must arrive at least 30 minutes before the exam start time. 
+                  Late arrivals will not be permitted to enter the examination hall.
+                </p>
+              </div>
             </div>
-            
-            <table className="w-full border-2 border-gray-800 border-t-0">
-              <tbody>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm w-1/2">
-                    EXAM CENTRE CODE:
-                  </td>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                    EXAM DATE :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm">
-                    {selectedCard?.exam_center_code || ""}
-                  </td>
-                  <td className="border border-gray-800 px-3 py-3 text-sm">
-                    {selectedCard?.exam_date || ""}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                    EXAM CENTRE ADDRESS:
-                  </td>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                    BATCH :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm">
-                    {selectedCard?.exam_center_address || ""}
-                  </td>
-                  <td className="border border-gray-800 px-3 py-3 text-sm">
-                    {selectedCard?.batch || ""}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm" colSpan={2}>
-                    REPORTING TIME :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm" colSpan={2}>
-                    {selectedCard?.reporting_time || ""}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm" colSpan={2}>
-                    GATE CLOSING TIME :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-4 text-sm" colSpan={2}>
-                    {selectedCard?.gate_closing_time || ""} - No candidate will be allowed to enter the examination center after the gate closing time.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm" colSpan={2}>
-                    EXAM START TIME:
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm" colSpan={2}>
-                    {selectedCard?.exam_start_time || ""}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm" colSpan={2}>
-                    EXAM DURATION :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm" colSpan={2}>
-                    {selectedCard?.exam_duration || ""}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
 
-          {/* Instructions Footer */}
-          <div className="text-center">
-            <div className="border-2 border-gray-800 py-3 bg-gray-100">
-              <p className="font-bold text-sm">
-                INSTRUCTIONS TO BE FOLLOWED BY CANDIDATES AT B. Soft Computer & Technical Institute EXAMINATION
-              </p>
+            {/* Footer */}
+            <div className="border-t-2 border-gray-300 pt-6">
+              <div className="flex justify-between items-end">
+                <div className="text-center">
+                  <div className="w-40 h-16 border-b-2 border-gray-400 mb-2"></div>
+                  <p className="text-sm font-semibold text-gray-600">Candidate Signature</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-40 h-16 border-b-2 border-gray-400 mb-2"></div>
+                  <p className="text-sm font-semibold text-gray-600">Invigilator Signature</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-40 h-16 border-b-2 border-gray-400 mb-2 flex items-end justify-center">
+                    <div className="w-20 h-20 bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center">
+                      <span className="text-xs text-gray-500">SEAL</span>
+                    </div>
+                  </div>
+                  <p className="text-sm font-semibold text-gray-600">Institute Seal</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Information */}
+            <div className="mt-8 text-center bg-gray-50 rounded-lg p-4">
+              <h4 className="font-bold text-gray-700 mb-2">Contact Information</h4>
+              <div className="text-sm text-gray-600 space-y-1">
+                <p>📞 Phone: +91-XXXXX-XXXXX | 📧 Email: info@bsoftinstitute.com</p>
+                <p>🌐 Website: www.bsoftinstitute.com</p>
+                <p className="font-medium text-red-600 mt-2">For any queries, contact the institute immediately</p>
+              </div>
             </div>
           </div>
         </div>
