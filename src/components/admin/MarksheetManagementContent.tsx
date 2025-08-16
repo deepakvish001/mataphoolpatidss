@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText, Edit, Trash2, Loader2, Plus, Search, Calendar, CheckCircle, Clock, Calculator, TrendingUp, Users, Award, BarChart3 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { Loader2, Edit, Trash2, Search, Filter, FileText, Calculator, TrendingUp, Users, Award, BarChart3, CheckCircle, Plus, BookOpen } from "lucide-react";
 
 interface MarksheetManagement {
   id: string;
@@ -195,214 +195,217 @@ const MarksheetManagementContent = () => {
     return { total, passed, averagePercentage, highPerformers };
   }, [marksheets]);
 
+  const courseCategories = [
+    "ADCA",
+    "DCA", 
+    "PGDCA",
+    "BCA",
+    "MCA"
+  ];
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
-        <div className="admin-gradient rounded-2xl p-8 mx-4 shadow-premium border border-border/20">
-          <div className="flex items-center justify-center min-h-[400px]">
-            <div className="flex flex-col items-center space-y-4">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <p className="text-muted-foreground">Loading marksheets...</p>
-            </div>
+      <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
+        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-muted-foreground">Loading marksheets...</p>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 p-6">
-      <div className="space-y-8 max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="admin-gradient rounded-2xl p-8 shadow-premium border border-border/20">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-r from-primary to-primary/80 rounded-xl shadow-lg">
-                <FileText className="h-8 w-8 text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gradient-enhanced">Marksheet Management</h1>
-                <p className="text-muted-foreground mt-1">Manage student marksheets and academic records</p>
-              </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 p-6">
+      <div className="w-full max-w-7xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <FileText className="h-8 w-8 text-primary" />
             </div>
-          </div>
-
-          {/* Statistics Dashboard */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <Card className="stats-card hover-lift">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Total Marksheets</p>
-                    <p className="text-2xl font-bold text-primary">{stats.total}</p>
-                  </div>
-                  <div className="p-3 bg-gradient-to-r from-primary/10 to-primary/20 rounded-xl">
-                    <FileText className="h-6 w-6 text-primary" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="stats-card hover-lift">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Passed Students</p>
-                    <p className="text-2xl font-bold text-green-600">{stats.passed}</p>
-                  </div>
-                  <div className="p-3 bg-gradient-to-r from-green-500/10 to-green-500/20 rounded-xl">
-                    <CheckCircle className="h-6 w-6 text-green-600" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="stats-card hover-lift">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Average Percentage</p>
-                    <p className="text-2xl font-bold text-blue-600">{stats.averagePercentage.toFixed(1)}%</p>
-                  </div>
-                  <div className="p-3 bg-gradient-to-r from-blue-500/10 to-blue-500/20 rounded-xl">
-                    <TrendingUp className="h-6 w-6 text-blue-600" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="stats-card hover-lift">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">High Performers</p>
-                    <p className="text-2xl font-bold text-purple-600">{stats.highPerformers}</p>
-                  </div>
-                  <div className="p-3 bg-gradient-to-r from-purple-500/10 to-purple-500/20 rounded-xl">
-                    <Award className="h-6 w-6 text-purple-600" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+            <span>Marksheet Management</span>
+          </h1>
         </div>
 
-        {/* Add Marksheet Form */}
-        <Card className="admin-card shadow-premium border border-border/20">
-          <CardHeader className="border-b border-border/20 bg-gradient-to-r from-primary/5 to-secondary/5">
-            <CardTitle className="text-xl font-semibold text-foreground flex items-center space-x-3">
-              <Plus className="h-5 w-5 text-primary" />
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-primary-foreground/80 text-sm font-medium">Total Marksheets</p>
+                  <p className="text-3xl font-bold">{stats.total}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <FileText className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-accent-foreground/80 text-sm font-medium">Passed Students</p>
+                  <p className="text-3xl font-bold">{stats.passed}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <CheckCircle className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-secondary-foreground/80 text-sm font-medium">Average Percentage</p>
+                  <p className="text-3xl font-bold">{stats.averagePercentage.toFixed(1)}%</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <TrendingUp className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground/80 text-sm font-medium">High Performers</p>
+                  <p className="text-3xl font-bold text-foreground">{stats.highPerformers}</p>
+                </div>
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Award className="h-6 w-6 text-foreground" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Add/Edit Form */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <Plus className="h-6 w-6" />
+              </div>
               <span>{editingMarksheet ? 'Edit Marksheet' : 'Add New Marksheet'}</span>
             </CardTitle>
           </CardHeader>
-        
-          <CardContent className="p-6">
+          
+          <CardContent className="p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="form-field">
-                <label className="form-label">Student ID *</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Student ID *</label>
                 <Input
                   value={formData.studentId}
                   onChange={(e) => handleInputChange('studentId', e.target.value)}
-                  className="form-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
                   placeholder="Enter student ID"
                 />
               </div>
 
-              <div className="form-field">
-                <label className="form-label">Student Name *</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Student Name *</label>
                 <Input
                   value={formData.studentName}
                   onChange={(e) => handleInputChange('studentName', e.target.value)}
-                  className="form-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
                   placeholder="Enter student name"
                 />
               </div>
 
-              <div className="form-field">
-                <label className="form-label">Course Name *</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Course Name *</label>
                 <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
-                  <SelectTrigger className="form-input">
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
                     <SelectValue placeholder="Select course" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="ADCA">ADCA</SelectItem>
-                    <SelectItem value="DCA">DCA</SelectItem>
-                    <SelectItem value="PGDCA">PGDCA</SelectItem>
-                    <SelectItem value="BCA">BCA</SelectItem>
-                    <SelectItem value="MCA">MCA</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    {courseCategories.map((category) => (
+                      <SelectItem key={category} value={category} className="hover:bg-accent/50">
+                        {category}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              <div className="form-field">
-                <label className="form-label">Roll Number *</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Roll Number *</label>
                 <Input
                   value={formData.rollNumber}
                   onChange={(e) => handleInputChange('rollNumber', e.target.value)}
-                  className="form-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
                   placeholder="Enter roll number"
                 />
               </div>
 
-              <div className="form-field">
-                <label className="form-label">Examination Date *</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Examination Date *</label>
                 <Input
                   type="date"
                   value={formData.examinationDate}
                   onChange={(e) => handleInputChange('examinationDate', e.target.value)}
-                  className="form-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
                 />
               </div>
 
-              <div className="form-field">
-                <label className="form-label">Total Marks *</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Total Marks *</label>
                 <Input
                   type="number"
                   value={formData.totalMarks}
                   onChange={(e) => handleInputChange('totalMarks', e.target.value)}
-                  className="form-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
                   placeholder="Enter total marks"
                 />
               </div>
 
-              <div className="form-field">
-                <label className="form-label">Obtained Marks *</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Obtained Marks *</label>
                 <Input
                   type="number"
                   value={formData.obtainedMarks}
                   onChange={(e) => handleInputChange('obtainedMarks', e.target.value)}
-                  className="form-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
                   placeholder="Enter obtained marks"
                 />
               </div>
 
-              <div className="form-field">
-                <label className="form-label">Grade (Auto-calculated)</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Grade (Auto-calculated)</label>
                 <Select value={formData.grade} onValueChange={(value) => handleInputChange('grade', value)}>
-                  <SelectTrigger className="form-input">
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
                     <SelectValue placeholder="Auto-calculated" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="A+">A+</SelectItem>
-                    <SelectItem value="A">A</SelectItem>
-                    <SelectItem value="B+">B+</SelectItem>
-                    <SelectItem value="B">B</SelectItem>
-                    <SelectItem value="C">C</SelectItem>
-                    <SelectItem value="F">F</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    <SelectItem value="A+" className="hover:bg-accent/50">A+</SelectItem>
+                    <SelectItem value="A" className="hover:bg-accent/50">A</SelectItem>
+                    <SelectItem value="B+" className="hover:bg-accent/50">B+</SelectItem>
+                    <SelectItem value="B" className="hover:bg-accent/50">B</SelectItem>
+                    <SelectItem value="C" className="hover:bg-accent/50">C</SelectItem>
+                    <SelectItem value="F" className="hover:bg-accent/50">F</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              <div className="form-field">
-                <label className="form-label">Result Status</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Result Status</label>
                 <Select value={formData.resultStatus} onValueChange={(value) => handleInputChange('resultStatus', value)}>
-                  <SelectTrigger className="form-input">
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
                     <SelectValue placeholder="Select result status" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pass">Pass</SelectItem>
-                    <SelectItem value="fail">Fail</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    <SelectItem value="pass" className="hover:bg-accent/50">Pass</SelectItem>
+                    <SelectItem value="fail" className="hover:bg-accent/50">Fail</SelectItem>
+                    <SelectItem value="pending" className="hover:bg-accent/50">Pending</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -425,20 +428,20 @@ const MarksheetManagementContent = () => {
               </div>
             )}
 
-            <div className="pt-6 flex space-x-4">
-              <Button
+            {/* Submit Buttons */}
+            <div className="flex space-x-4 pt-8 border-t border-border/20">
+              <Button 
                 onClick={handleSubmit}
-                className="btn-primary"
+                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg px-8"
               >
-                <Plus className="h-5 w-5 mr-2" />
-                {editingMarksheet ? 'Update' : 'Create'} Marksheet
+                {editingMarksheet ? 'Update Marksheet' : 'Create Marksheet'}
               </Button>
               
               {editingMarksheet && (
-                <Button
+                <Button 
                   onClick={handleReset}
                   variant="outline"
-                  className="btn-secondary"
+                  className="border-border/40 hover:bg-accent/20 px-8"
                 >
                   Cancel Edit
                 </Button>
@@ -447,35 +450,32 @@ const MarksheetManagementContent = () => {
           </CardContent>
         </Card>
 
-        {/* Search and Filter Section */}
-        <Card className="admin-card shadow-premium border border-border/20">
+        {/* Search and Filter */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
           <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row gap-4 items-end">
-              <div className="flex-1">
-                <label className="form-label">Search Marksheets</label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    placeholder="Search by student name, ID, or roll number..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="form-input pl-10"
-                  />
-                </div>
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                  placeholder="Search by student name, ID, or roll number..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20"
+                />
               </div>
               <div className="w-full md:w-64">
-                <label className="form-label">Filter by Course</label>
                 <Select value={filterCourse} onValueChange={setFilterCourse}>
-                  <SelectTrigger className="form-input">
-                    <SelectValue placeholder="All courses" />
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
+                    <Filter className="h-4 w-4 mr-2" />
+                    <SelectValue placeholder="Filter by course" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Courses</SelectItem>
-                    <SelectItem value="ADCA">ADCA</SelectItem>
-                    <SelectItem value="DCA">DCA</SelectItem>
-                    <SelectItem value="PGDCA">PGDCA</SelectItem>
-                    <SelectItem value="BCA">BCA</SelectItem>
-                    <SelectItem value="MCA">MCA</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    <SelectItem value="all" className="hover:bg-accent/50">All Courses</SelectItem>
+                    {courseCategories.map((category) => (
+                      <SelectItem key={category} value={category} className="hover:bg-accent/50">
+                        {category}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -483,129 +483,184 @@ const MarksheetManagementContent = () => {
           </CardContent>
         </Card>
 
-        {/* Marksheets Table */}
-        <Card className="admin-card shadow-premium border border-border/20 overflow-hidden">
-          <CardHeader className="border-b border-border/20 bg-gradient-to-r from-primary/5 to-secondary/5">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-lg font-semibold text-foreground flex items-center space-x-2">
-                <BarChart3 className="h-5 w-5 text-primary" />
-                <span>Marksheets Overview</span>
-              </CardTitle>
-              <div className="text-sm text-muted-foreground">
-                Showing {filteredMarksheets.length} of {marksheets.length} marksheets
+        {/* Data Table */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                  <BarChart3 className="h-6 w-6" />
+                </div>
+                <span>Marksheet Records ({filteredMarksheets.length})</span>
               </div>
-            </div>
+              <Badge className="bg-background/20 text-primary-foreground border-background/30">
+                Total: {marksheets.length}
+              </Badge>
+            </CardTitle>
           </CardHeader>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary/80">
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Actions</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Student ID</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Student Name</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Course</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Roll No.</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Total Marks</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Obtained</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Percentage</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center border-r border-primary-foreground/20">Grade</TableHead>
-                    <TableHead className="text-primary-foreground font-bold text-center">Result</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredMarksheets.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={10} className="text-center py-12 text-muted-foreground">
-                        <div className="flex flex-col items-center space-y-3">
-                          <FileText className="h-12 w-12 text-muted-foreground/30" />
-                          <p className="text-lg font-medium">No marksheets found</p>
-                          <p className="text-sm">Try adjusting your search or filter criteria</p>
+          
+          <CardContent className="p-8">
+            <div className="border border-border/40 rounded-lg bg-background/50 overflow-hidden shadow-inner">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground">
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <Edit className="h-4 w-4" />
+                          Actions
                         </div>
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    filteredMarksheets.map((marksheet, index) => (
-                      <TableRow 
-                        key={marksheet.id} 
-                        className={`hover:bg-muted/50 transition-colors ${
-                          index % 2 === 0 ? "bg-background" : "bg-muted/30"
-                        }`}
-                      >
-                        <TableCell className="border-r border-border/20 p-4">
-                          <div className="flex justify-center space-x-2">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleEdit(marksheet)}
-                              className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8 p-0"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleDelete(marksheet.id)}
-                              className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[120px]">
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4" />
+                          Student ID
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[200px]">
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4" />
+                          Student Name
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <BookOpen className="h-4 w-4" />
+                          Course
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[100px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <FileText className="h-4 w-4" />
+                          Roll No.
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[100px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <BarChart3 className="h-4 w-4" />
+                          Total
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[100px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <TrendingUp className="h-4 w-4" />
+                          Obtained
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[100px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <Calculator className="h-4 w-4" />
+                          Percentage
+                        </div>
+                      </th>
+                      <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[80px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <Award className="h-4 w-4" />
+                          Grade
+                        </div>
+                      </th>
+                      <th className="px-6 py-4 text-sm font-bold text-center min-w-[100px]">
+                        <div className="flex items-center justify-center gap-2">
+                          <CheckCircle className="h-4 w-4" />
+                          Result
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredMarksheets.length === 0 ? (
+                      <tr>
+                        <td colSpan={10} className="text-center py-12 text-muted-foreground bg-background/30">
+                          <div className="flex flex-col items-center space-y-3">
+                            <FileText className="h-12 w-12 text-muted-foreground/30" />
+                            <p className="text-lg font-medium">No marksheets found</p>
+                            <p className="text-sm">Try adjusting your search or filter criteria</p>
                           </div>
-                        </TableCell>
-                        <TableCell className="border-r border-border/20 text-center p-4 font-medium">
-                          {marksheet.student_id}
-                        </TableCell>
-                        <TableCell className="border-r border-border/20 text-center p-4 font-medium">
-                          {marksheet.student_name}
-                        </TableCell>
-                        <TableCell className="border-r border-border/20 text-center p-4">
-                          <span className="px-2 py-1 bg-secondary/20 text-secondary-foreground rounded-md text-sm font-medium">
-                            {marksheet.course_name}
-                          </span>
-                        </TableCell>
-                        <TableCell className="border-r border-border/20 text-center p-4 font-medium">
-                          {marksheet.roll_number}
-                        </TableCell>
-                        <TableCell className="border-r border-border/20 text-center p-4 font-bold text-primary">
-                          {marksheet.total_marks}
-                        </TableCell>
-                        <TableCell className="border-r border-border/20 text-center p-4 font-bold text-secondary">
-                          {marksheet.obtained_marks}
-                        </TableCell>
-                        <TableCell className="border-r border-border/20 text-center p-4">
-                          <span className={`px-2 py-1 rounded-md text-sm font-bold ${
-                            marksheet.percentage >= 80 ? 'bg-green-100 text-green-800' :
-                            marksheet.percentage >= 60 ? 'bg-blue-100 text-blue-800' :
-                            marksheet.percentage >= 40 ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-red-100 text-red-800'
-                          }`}>
-                            {marksheet.percentage}%
-                          </span>
-                        </TableCell>
-                        <TableCell className="border-r border-border/20 text-center p-4">
-                          <span className={`px-2 py-1 rounded-md text-sm font-bold ${
-                            marksheet.grade === 'A+' || marksheet.grade === 'A' ? 'bg-green-100 text-green-800' :
-                            marksheet.grade === 'B+' || marksheet.grade === 'B' ? 'bg-blue-100 text-blue-800' :
-                            marksheet.grade === 'C' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-red-100 text-red-800'
-                          }`}>
-                            {marksheet.grade}
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-center p-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            marksheet.result_status === 'pass' ? 'bg-green-100 text-green-800' :
-                            marksheet.result_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-red-100 text-red-800'
-                          }`}>
-                            {marksheet.result_status}
-                          </span>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredMarksheets.map((marksheet, index) => (
+                        <tr 
+                          key={marksheet.id} 
+                          className={`hover:bg-accent/20 transition-colors ${
+                            index % 2 === 0 ? "bg-background" : "bg-accent/5"
+                          }`}
+                        >
+                          <td className="border-r border-border/20 px-6 py-4 text-center">
+                            <div className="flex justify-center space-x-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleEdit(marksheet)}
+                                className="text-primary hover:text-primary hover:bg-primary/10 h-8 w-8 p-0"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleDelete(marksheet.id)}
+                                className="text-destructive hover:text-destructive hover:bg-destructive/10 h-8 w-8 p-0"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-foreground font-medium">
+                            {marksheet.student_id}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-foreground font-medium">
+                            {marksheet.student_name}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center">
+                            <span className="px-2 py-1 bg-secondary/20 text-secondary-foreground rounded-md text-sm font-medium">
+                              {marksheet.course_name}
+                            </span>
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground font-medium">
+                            {marksheet.roll_number}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-primary font-bold">
+                            {marksheet.total_marks}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-secondary font-bold">
+                            {marksheet.obtained_marks}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center">
+                            <span className={`px-2 py-1 rounded-md text-sm font-bold ${
+                              marksheet.percentage >= 80 ? 'bg-green-100 text-green-800' :
+                              marksheet.percentage >= 60 ? 'bg-blue-100 text-blue-800' :
+                              marksheet.percentage >= 40 ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {marksheet.percentage}%
+                            </span>
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center">
+                            <span className={`px-2 py-1 rounded-md text-sm font-bold ${
+                              marksheet.grade === 'A+' || marksheet.grade === 'A' ? 'bg-green-100 text-green-800' :
+                              marksheet.grade === 'B+' || marksheet.grade === 'B' ? 'bg-blue-100 text-blue-800' :
+                              marksheet.grade === 'C' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {marksheet.grade}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                              marksheet.result_status === 'pass' ? 'bg-green-100 text-green-800' :
+                              marksheet.result_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {marksheet.result_status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </CardContent>
         </Card>
