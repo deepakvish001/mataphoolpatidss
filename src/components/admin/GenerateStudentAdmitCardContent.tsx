@@ -47,6 +47,10 @@ const GenerateStudentAdmitCardContent = () => {
     orderBy: { column: 'created_at', ascending: false }
   });
 
+  // Debug logging
+  console.log('GenerateStudentAdmitCardContent - Admit Cards:', admitCards);
+  console.log('GenerateStudentAdmitCardContent - Loading:', loading);
+
   useAdminRealTime({
     tableName: 'student_admit_cards'
   });
