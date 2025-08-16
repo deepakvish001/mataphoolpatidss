@@ -191,16 +191,16 @@ const DashboardContent = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input 
                   placeholder="Email to:" 
-                  className="border-gray-300 focus:border-cyan-500 focus:ring-cyan-500 transition-all duration-200"
+                  className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 h-12 shadow-sm"
                 />
                 <Input 
                   placeholder="CC/BCC" 
-                  className="border-gray-300 focus:border-cyan-500 focus:ring-cyan-500 transition-all duration-200"
+                  className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 h-12 shadow-sm"
                 />
               </div>
               <Input 
                 placeholder="Subject" 
-                className="border-gray-300 focus:border-cyan-500 focus:ring-cyan-500 transition-all duration-200"
+                className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 h-12 shadow-sm"
               />
               
               {/* Enhanced Rich Text Editor Toolbar */}
@@ -229,7 +229,7 @@ const DashboardContent = () => {
               
               <Textarea 
                 placeholder="Compose your message..." 
-                className="min-h-[180px] resize-none border-gray-300 focus:border-cyan-500 focus:ring-cyan-500 transition-all duration-200"
+                className="min-h-[180px] resize-none border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 shadow-sm"
               />
               
               <div className="flex justify-between items-center">
