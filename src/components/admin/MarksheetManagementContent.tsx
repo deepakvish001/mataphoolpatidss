@@ -55,7 +55,7 @@ const MarksheetManagementContent = () => {
 
   const [editingMarksheet, setEditingMarksheet] = useState<MarksheetManagement | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterCourse, setFilterCourse] = useState("");
+  const [filterCourse, setFilterCourse] = useState("all");
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -177,7 +177,7 @@ const MarksheetManagementContent = () => {
         marksheet.student_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         marksheet.roll_number.toLowerCase().includes(searchTerm.toLowerCase());
       
-      const matchesCourse = filterCourse === "" || marksheet.course_name === filterCourse;
+      const matchesCourse = filterCourse === "all" || filterCourse === "" || marksheet.course_name === filterCourse;
       
       return matchesSearch && matchesCourse;
     });
@@ -470,7 +470,7 @@ const MarksheetManagementContent = () => {
                     <SelectValue placeholder="All courses" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Courses</SelectItem>
+                    <SelectItem value="all">All Courses</SelectItem>
                     <SelectItem value="ADCA">ADCA</SelectItem>
                     <SelectItem value="DCA">DCA</SelectItem>
                     <SelectItem value="PGDCA">PGDCA</SelectItem>
