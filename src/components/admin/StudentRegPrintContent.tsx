@@ -105,6 +105,18 @@ const StudentRegPrintContent = () => {
     });
   };
 
+  const handlePrintReceipt = () => {
+    if (!selectedStudent) {
+      toast({
+        title: "Error",
+        description: "Please search and select a student first",
+        variant: "destructive"
+      });
+      return;
+    }
+    window.print();
+  };
+
   const generateProfessionalPDF = async () => {
     if (!selectedStudent) {
       toast({
@@ -129,112 +141,97 @@ const StudentRegPrintContent = () => {
       
       toast({
         title: "Generating PDF",
-        description: "Creating high-quality Registration Form PDF...",
+        description: "Creating Professional Registration Form PDF...",
       });
 
-      // Wait for any pending renders
-      await new Promise(resolve => setTimeout(resolve, 100));
-
-      // Ensure fonts are loaded
+      // Ensure layout and webfonts are fully ready
       if ((document as any).fonts?.ready) {
         await (document as any).fonts.ready;
       }
+      await new Promise((resolve) => setTimeout(resolve, 400));
 
       const element = registrationFormRef.current;
 
-      // Hide screen-only elements for PDF
-      const screenOnlyElements = element.querySelectorAll('.screen-only');
-      screenOnlyElements.forEach(el => {
-        (el as HTMLElement).style.display = 'none';
-      });
-
-      // Wait a bit more for layout to settle
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      console.log('Capturing element:', element);
-      console.log('Element dimensions:', element.offsetWidth, 'x', element.offsetHeight);
-
-      // Enhanced capture settings for better quality
+      // High-DPI capture for crisp text
       const canvas = await html2canvas(element, {
-        scale: 3, // High quality
+        scale: Math.min(3, window.devicePixelRatio * 2),
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        logging: true, // Enable logging for debugging
-        imageTimeout: 30000,
+        logging: false,
+        imageTimeout: 12000,
         scrollX: 0,
         scrollY: 0,
-        width: element.scrollWidth,
-        height: element.scrollHeight,
-        foreignObjectRendering: true,
-        removeContainer: false,
-        ignoreElements: (element) => {
-          return element.classList?.contains('screen-only') || false;
-        }
-      });
-
-      console.log('Canvas captured:', canvas.width, 'x', canvas.height);
-
-      // Restore screen-only elements
-      screenOnlyElements.forEach(el => {
-        (el as HTMLElement).style.display = '';
       });
 
       if (canvas.width === 0 || canvas.height === 0) {
-        throw new Error('Canvas capture failed - no content captured');
+        throw new Error('Captured canvas has zero size');
       }
 
-      // Create PDF with exact A4 dimensions
       const pdf = new jsPDF({ 
         orientation: 'portrait', 
         unit: 'mm', 
-        format: 'a4',
-        compress: true,
-        precision: 16
+        format: 'a4', 
+        compress: true 
       });
       
-      const pdfWidth = 210; // A4 width in mm
-      const pdfHeight = 297; // A4 height in mm
-      
-      // Convert canvas to high-quality image
-      const imgData = canvas.toDataURL('image/png', 1.0);
-      
-      // Calculate scaling to fit A4 page
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+      const margin = 10;
+      const usableWidthMm = pdfWidth - margin * 2;
+      const usableHeightMm = pdfHeight - margin * 2;
+
+      // Calculate how to fit the content
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
       const aspectRatio = canvas.height / canvas.width;
-      let imgWidth = pdfWidth;
-      let imgHeight = pdfWidth * aspectRatio;
-      
-      // If too tall, scale down to fit height
-      if (imgHeight > pdfHeight) {
-        imgHeight = pdfHeight;
-        imgWidth = pdfHeight / aspectRatio;
+      const heightMm = usableWidthMm * aspectRatio;
+
+      if (heightMm <= usableHeightMm) {
+        // Fits on one page
+        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
+      } else {
+        // Multi-page handling
+        const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
+        let currentY = 0;
+        let pageNumber = 1;
+
+        while (currentY < canvas.height) {
+          if (pageNumber > 1) pdf.addPage();
+          
+          const sliceHeight = Math.min(pageHeightPx, canvas.height - currentY);
+          
+          const pageCanvas = document.createElement('canvas');
+          pageCanvas.width = canvas.width;
+          pageCanvas.height = sliceHeight;
+          const ctx = pageCanvas.getContext('2d');
+          if (!ctx) throw new Error('2D context not available');
+
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+          ctx.drawImage(canvas, 0, currentY, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
+
+          const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+          const pageHeightMm = (sliceHeight / canvas.width) * usableWidthMm;
+          pdf.addImage(pageImgData, 'JPEG', margin, margin, usableWidthMm, pageHeightMm, undefined, 'FAST');
+
+          // Add page number
+          pdf.setTextColor(120, 120, 120);
+          pdf.setFontSize(8);
+          pdf.text(`Page ${pageNumber}`, pdfWidth - 15, pdfHeight - 5, { align: 'right' });
+
+          currentY += sliceHeight;
+          pageNumber++;
+        }
       }
-      
-      // Center the image on the page
-      const xOffset = (pdfWidth - imgWidth) / 2;
-      const yOffset = (pdfHeight - imgHeight) / 2;
-      
-      pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight, undefined, 'FAST');
 
-      // Add metadata
-      pdf.setProperties({
-        title: `Registration Form - ${selectedStudent.student_name}`,
-        subject: 'Student Registration Form',
-        author: 'B SOFT Computer & Technical Institute',
-        creator: 'Student Management System'
-      });
-
-      // Generate filename
       const currentDate = new Date().toISOString().split('T')[0];
       const sanitizedName = selectedStudent.student_name?.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_') || 'Student';
-      const fileName = `${sanitizedName}_Registration_Form_${currentDate}.pdf`;
-      
-      console.log('Saving PDF:', fileName);
+      const fileName = `${sanitizedName}_RegistrationForm_${currentDate}.pdf`;
       pdf.save(fileName);
 
       toast({
-        title: "Success!",
-        description: "High-quality Registration Form PDF generated successfully!",
+        title: "Success",
+        description: "Professional Registration Form PDF generated successfully!",
       });
     } catch (error: any) {
       console.error('PDF generation error:', error);
@@ -371,23 +368,33 @@ const StudentRegPrintContent = () => {
                   </Button>
                 </div>
               </div>
-              <Button 
-                onClick={generateProfessionalPDF}
-                disabled={!selectedStudent || isGeneratingPDF}
-                className="bg-gradient-to-r from-green-600 via-green-700 to-emerald-700 hover:from-green-700 hover:via-green-800 hover:to-emerald-800 text-white px-8 py-3 flex items-center gap-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg"
-              >
-                {isGeneratingPDF ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Generating High-Quality PDF...
-                  </>
-                ) : (
-                  <>
-                    <FileDown className="h-5 w-5" />
-                    Generate Professional PDF
-                  </>
-                )}
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={handlePrintReceipt}
+                  disabled={!selectedStudent}
+                  className="bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary text-secondary-foreground shadow-lg px-6"
+                >
+                  <Printer className="h-4 w-4 mr-2" />
+                  Print Receipt
+                </Button>
+                <Button 
+                  onClick={generateProfessionalPDF}
+                  disabled={!selectedStudent || isGeneratingPDF}
+                  className="bg-gradient-to-r from-green-600 via-green-700 to-emerald-700 hover:from-green-700 hover:via-green-800 hover:to-emerald-800 text-white px-6 py-2 flex items-center gap-2 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  {isGeneratingPDF ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Generating PDF...
+                    </>
+                  ) : (
+                    <>
+                      <FileDown className="h-4 w-4" />
+                      Generate PDF
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -450,289 +457,203 @@ const StudentRegPrintContent = () => {
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="p-0">
-            {/* Selected Student Info - Only show on screen, not in PDF */}
-            <div className="screen-only p-6 bg-blue-50 border-b">
-              {selectedStudent ? (
-                <>
-                  <h3 className="text-lg font-semibold text-blue-800 mb-3 flex items-center space-x-2">
-                    <UserCheck className="h-5 w-5" />
+          <CardContent className="p-8">
+            <div ref={registrationFormRef}>
+              {/* Selected Student Info */}
+              {selectedStudent && (
+                <div className="mb-6 p-4 bg-accent/10 rounded-lg border border-accent/20">
+                  <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center space-x-2">
+                    <UserCheck className="h-5 w-5 text-primary" />
                     <span>Selected Student Information</span>
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <span className="font-medium text-blue-600">Name:</span>
-                      <p className="text-blue-800">{selectedStudent.student_name}</p>
+                      <span className="font-medium text-muted-foreground">Name:</span>
+                      <p className="text-foreground">{selectedStudent.student_name}</p>
                     </div>
                     <div>
-                      <span className="font-medium text-blue-600">ID:</span>
-                      <p className="text-blue-800">{selectedStudent.student_id}</p>
+                      <span className="font-medium text-muted-foreground">ID:</span>
+                      <p className="text-foreground">{selectedStudent.student_id}</p>
                     </div>
                     <div>
-                      <span className="font-medium text-blue-600">Course:</span>
-                      <p className="text-blue-800">{selectedStudent.course_name}</p>
+                      <span className="font-medium text-muted-foreground">Course:</span>
+                      <p className="text-foreground">{selectedStudent.course_name}</p>
                     </div>
                     <div>
-                      <span className="font-medium text-blue-600">Center:</span>
-                      <p className="text-blue-800">{selectedStudent.center_name}</p>
+                      <span className="font-medium text-muted-foreground">Center:</span>
+                      <p className="text-foreground">{selectedStudent.center_name}</p>
                     </div>
                   </div>
-                </>
-              ) : (
-                <div className="text-center py-8">
-                  <p className="text-blue-600 text-lg">🔍 Please search and select a student to generate registration form</p>
                 </div>
               )}
-            </div>
 
-            {/* PDF Content Container */}
-            <div 
-              ref={registrationFormRef} 
-              className="pdf-container"
-              style={{ 
-                background: 'white',
-                width: '210mm', 
-                minHeight: '297mm', 
-                margin: '0 auto',
-                padding: '15mm',
-                fontFamily: '"Times New Roman", serif',
-                fontSize: '14px',
-                lineHeight: '1.5',
-                color: '#000000',
-                boxSizing: 'border-box'
-              }}
-            >
               {/* Institute Header */}
-              <div className="flex items-start justify-between mb-12" style={{ pageBreakInside: 'avoid' }}>
+              <div className="flex items-center justify-between mb-8">
                 {/* Logo */}
                 <div className="flex-shrink-0">
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #1e40af, #3b82f6)',
-                    border: '3px solid #1e40af',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    fontSize: '10px',
-                    textAlign: 'center',
-                    lineHeight: '1.2'
-                  }}>
-                    <div>
-                      <div style={{ fontSize: '12px', fontWeight: 'bold' }}>B SOFT</div>
-                      <div style={{ fontSize: '9px' }}>Computer &</div>
-                      <div style={{ fontSize: '9px' }}>Technical Institute</div>
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 border-4 border-primary/30 flex items-center justify-center shadow-lg">
+                    <div className="text-center">
+                      <div className="text-xs font-bold text-primary">B SOFT</div>
+                      <div className="text-xs text-primary/80">Computer & Technical</div>
+                      <div className="text-xs text-primary/80">Institute</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Institute Details */}
                 <div className="flex-1 text-center px-8">
-                  <h1 style={{
-                    fontSize: '24px',
-                    fontWeight: 'bold',
-                    color: '#1e40af',
-                    marginBottom: '12px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px'
-                  }}>
+                  <h1 className="text-2xl font-bold text-primary mb-2">
                     B SOFT Computer & Technical Institute
                   </h1>
-                  <p style={{
-                    fontSize: '12px',
-                    color: '#374151',
-                    lineHeight: '1.4',
-                    marginBottom: '8px',
-                    maxWidth: '400px',
-                    margin: '0 auto'
-                  }}>
-                    Near Union Bank Of India, Bina Soft Educational & Welfare Society<br />
-                    Vill & Post BILARIYAGAN J, AZAMGARH-276121
-                  </p>
+                  <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground mb-1">
+                    <MapPin className="h-4 w-4" />
+                    <p>Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121</p>
+                  </div>
                 </div>
 
                 {/* Contact Info */}
-                <div className="flex-shrink-0 text-right">
-                  <p style={{
-                    fontSize: '12px',
-                    color: '#374151',
-                    fontWeight: '500'
-                  }}>
-                    📧 infobinasoft@gmail.com
-                  </p>
+                <div className="flex-shrink-0 text-right space-y-2">
+                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <Mail className="h-4 w-4" />
+                    <p>infobinasoft@gmail.com</p>
+                  </div>
                 </div>
               </div>
 
               {/* Student Registration Form */}
-              <div style={{ 
-                borderTop: '2px solid #1e40af', 
-                paddingTop: '30px',
-                pageBreakInside: 'avoid'
-              }}>
-                <h2 style={{
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  marginBottom: '30px',
-                  textDecoration: 'underline',
-                  color: '#1e40af',
-                  textTransform: 'uppercase',
-                  letterSpacing: '2px'
-                }}>
-                  Student Registration Form
+              <div className="border-t border-border/40 pt-8">
+                <h2 className="text-lg font-bold text-center mb-8 underline text-foreground flex items-center justify-center space-x-2">
+                  <FileText className="h-5 w-5" />
+                  <span>Student Registration Print</span>
                 </h2>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px 60px' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
                   {/* Left Column */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Name:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        {selectedStudent?.student_name || ''}
-                      </span>
+                  <div className="space-y-8">
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <User className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Name :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
+                          <span className="text-foreground">{selectedStudent?.student_name || ''}</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Course Category:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        {selectedStudent?.course_name || ''}
-                      </span>
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <GraduationCap className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Course Category :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
+                          <span className="text-foreground">{selectedStudent?.course_name || ''}</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Course Name:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        {selectedStudent?.course_name || ''}
-                      </span>
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <Award className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Course Name :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
+                          <span className="text-foreground">{selectedStudent?.course_name || ''}</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Father's Name:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        {selectedStudent?.student_father_name || ''}
-                      </span>
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <User className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Father's Name :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
+                          <span className="text-foreground">{selectedStudent?.student_father_name || ''}</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Mother's Name:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        {selectedStudent?.student_mother_name || ''}
-                      </span>
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <User className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Mother's Name :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
+                          <span className="text-foreground">{selectedStudent?.student_mother_name || ''}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
                   {/* Right Column */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Study Center Code:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        {selectedStudent?.center_code || ''}
-                      </span>
+                  <div className="space-y-8">
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <Building className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Study Center Code :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
+                          <span className="text-foreground">{selectedStudent?.center_code || ''}</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Date of Birth:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        ________________________
-                      </span>
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <Calendar className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Date of Birth :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors"></div>
+                      </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Mobile No.:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        ________________________
-                      </span>
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <Phone className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Mobile No. :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors"></div>
+                      </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #d1d5db', paddingBottom: '8px' }}>
-                      <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151', width: '140px' }}>Student ID:</label>
-                      <span style={{ fontSize: '14px', color: '#000', borderBottom: '1px dotted #6b7280', flexGrow: 1, paddingLeft: '10px' }}>
-                        {selectedStudent?.student_id || ''}
-                      </span>
+                    <div className="group">
+                      <div className="flex items-center hover:bg-accent/20 p-3 rounded-lg transition-colors">
+                        <CreditCard className="h-4 w-4 text-primary mr-3" />
+                        <label className="text-sm font-medium text-foreground w-32">Student ID :</label>
+                        <div className="border-b border-border/60 flex-1 h-6 hover:border-primary/40 transition-colors px-2 flex items-center">
+                          <span className="text-foreground">{selectedStudent?.student_id || ''}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Signature Section */}
-                <div style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: 'repeat(3, 1fr)', 
-                  gap: '40px', 
-                  marginTop: '60px', 
-                  paddingTop: '30px', 
-                  borderTop: '1px solid #d1d5db',
-                  pageBreakInside: 'avoid'
-                }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ borderBottom: '1px solid #000', height: '60px', marginBottom: '10px' }}></div>
-                    <p style={{ fontSize: '14px', fontWeight: '600', color: '#374151' }}>Student Signature</p>
+                <div className="grid grid-cols-3 gap-8 mt-16 pt-8 border-t border-border/40">
+                  <div className="text-center">
+                    <div className="border-b border-border/60 pb-2 mb-2 h-16"></div>
+                    <p className="text-sm font-medium text-foreground">Student Signature</p>
                   </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ borderBottom: '1px solid #000', height: '60px', marginBottom: '10px' }}></div>
-                    <p style={{ fontSize: '14px', fontWeight: '600', color: '#374151' }}>Parent/Guardian Signature</p>
+                  <div className="text-center">
+                    <div className="border-b border-border/60 pb-2 mb-2 h-16"></div>
+                    <p className="text-sm font-medium text-foreground">Parent/Guardian Signature</p>
                   </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ borderBottom: '1px solid #000', height: '60px', marginBottom: '10px' }}></div>
-                    <p style={{ fontSize: '14px', fontWeight: '600', color: '#374151' }}>Institute Signature</p>
+                  <div className="text-center">
+                    <div className="border-b border-border/60 pb-2 mb-2 h-16"></div>
+                    <p className="text-sm font-medium text-foreground">Institute Signature</p>
                   </div>
                 </div>
 
                 {/* Footer Information */}
-                <div style={{ 
-                  marginTop: '50px', 
-                  paddingTop: '30px', 
-                  borderTop: '2px solid #1e40af', 
-                  background: '#f8fafc', 
-                  padding: '25px', 
-                  borderRadius: '8px',
-                  pageBreakInside: 'avoid'
-                }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+                <div className="mt-12 pt-8 border-t border-border/40 bg-accent/10 p-6 rounded-lg">
+                  <div className="grid grid-cols-2 gap-8 text-sm text-muted-foreground">
                     <div>
-                      <h4 style={{ fontSize: '16px', fontWeight: 'bold', color: '#1e40af', marginBottom: '15px' }}>Document Details:</h4>
-                      <div style={{ fontSize: '12px', color: '#4b5563', lineHeight: '1.6' }}>
-                        <p>• This is an official registration document</p>
-                        <p>• Valid for academic purposes</p>
-                        <p>• Keep this document safe for future reference</p>
-                        <p>• Any alterations will make this document invalid</p>
-                      </div>
+                      <h4 className="font-semibold text-foreground mb-2">Document Details:</h4>
+                      <p>• This is an official registration document</p>
+                      <p>• Valid for academic purposes</p>
+                      <p>• Keep this document safe for future reference</p>
                     </div>
                     <div>
-                      <h4 style={{ fontSize: '16px', fontWeight: 'bold', color: '#1e40af', marginBottom: '15px' }}>Verification Details:</h4>
-                      <div style={{ 
-                        background: 'white', 
-                        padding: '15px', 
-                        border: '2px dashed #1e40af', 
-                        borderRadius: '8px',
-                        textAlign: 'center',
-                        fontFamily: 'Courier New, monospace',
-                        fontSize: '14px',
-                        fontWeight: 'bold',
-                        color: '#1e40af'
-                      }}>
-                        REG-{new Date().getFullYear()}-{selectedStudent?.student_id || 'XXXXXX'}
+                      <h4 className="font-semibold text-foreground mb-2">Verification Code:</h4>
+                      <div className="bg-background p-3 rounded border border-border/40 font-mono text-center">
+                        REG-{new Date().getFullYear()}-{selectedStudent?.student_id || Math.random().toString(36).substr(2, 6).toUpperCase()}
                       </div>
-                      <p style={{ fontSize: '10px', color: '#6b7280', textAlign: 'center', marginTop: '8px' }}>
-                        Generated on: {new Date().toLocaleDateString('en-IN')}
-                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Screen-only controls */}
-            <div className="screen-only p-6 bg-gray-50 border-t">
-              <div className="text-center">
-                <p className="text-sm text-gray-600 mb-4">
-                  {selectedStudent ? 
-                    `Registration form ready for: ${selectedStudent.student_name}` : 
-                    'Select a student to generate registration form'
-                  }
-                </p>
               </div>
             </div>
           </CardContent>
