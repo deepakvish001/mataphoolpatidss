@@ -74,175 +74,230 @@ const EnquiryContent = () => {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Statistics Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg border-0">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-100 text-sm font-medium">Total Enquiries</p>
-                <p className="text-3xl font-bold">{totalEnquiries}</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <HelpCircle className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg border-0">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-green-100 text-sm font-medium">Unique States</p>
-                <p className="text-3xl font-bold">{uniqueStates}</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <MapPin className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg border-0">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-purple-100 text-sm font-medium">With Organizations</p>
-                <p className="text-3xl font-bold">{enquiriesWithOrganizations}</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <Building className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg border-0">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-orange-100 text-sm font-medium">Recent Enquiries</p>
-                <p className="text-3xl font-bold">{recentEnquiries}</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <Calendar className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Search and Enquiry Table */}
-      <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
-        <CardHeader className="bg-gradient-to-r from-gray-700 to-gray-800 text-white p-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
-            <CardTitle className="text-xl font-bold flex items-center space-x-3">
-              <div className="p-2 bg-white/20 rounded-lg">
-                <HelpCircle className="h-5 w-5" />
-              </div>
-              <span>Enquiry Management ({filteredEnquiries.length} items)</span>
-            </CardTitle>
-            <div className="relative w-full sm:w-80">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search enquiries..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/90 border-white/20 focus:border-white focus:ring-white/20"
-              />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-primary/5 p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Header Section */}
+        <div className="text-center space-y-4 py-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-2xl mb-4 shadow-lg">
+            <HelpCircle className="w-8 h-8 text-primary-foreground" />
           </div>
-        </CardHeader>
-        
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Name</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Email</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Phone</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Location</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Organization</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Address</TableHead>
-                  <TableHead className="text-white font-bold text-center py-4">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredEnquiries.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8 text-gray-500">
-                      {searchTerm ? "No enquiries found matching your search." : "No enquiries submitted yet."}
-                    </TableCell>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-primary/90 to-accent bg-clip-text text-transparent">
+            Enquiry Management
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Comprehensive dashboard for tracking and managing customer enquiries and business prospects
+          </p>
+        </div>
+
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-primary-foreground/80 text-sm font-medium">Total Enquiries</p>
+                  <p className="text-3xl font-bold">{totalEnquiries}</p>
+                  <div className="h-1 w-12 bg-primary-foreground/30 rounded-full">
+                    <div className="h-full w-8 bg-primary-foreground rounded-full" />
+                  </div>
+                </div>
+                <div className="p-3 bg-primary-foreground/20 rounded-xl backdrop-blur-sm">
+                  <HelpCircle className="w-6 h-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-accent via-accent/90 to-accent/80 text-accent-foreground shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-accent-foreground/80 text-sm font-medium">Unique States</p>
+                  <p className="text-3xl font-bold">{uniqueStates}</p>
+                  <div className="h-1 w-12 bg-accent-foreground/30 rounded-full">
+                    <div className="h-full w-6 bg-accent-foreground rounded-full" />
+                  </div>
+                </div>
+                <div className="p-3 bg-accent-foreground/20 rounded-xl backdrop-blur-sm">
+                  <MapPin className="w-6 h-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-secondary via-secondary/90 to-secondary/80 text-secondary-foreground shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-secondary-foreground/80 text-sm font-medium">With Organizations</p>
+                  <p className="text-3xl font-bold">{enquiriesWithOrganizations}</p>
+                  <div className="h-1 w-12 bg-secondary-foreground/30 rounded-full">
+                    <div className="h-full w-10 bg-secondary-foreground rounded-full" />
+                  </div>
+                </div>
+                <div className="p-3 bg-secondary-foreground/20 rounded-xl backdrop-blur-sm">
+                  <Building className="w-6 h-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-destructive via-destructive/90 to-destructive/80 text-destructive-foreground shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-destructive-foreground/80 text-sm font-medium">Recent Enquiries</p>
+                  <p className="text-3xl font-bold">{recentEnquiries}</p>
+                  <div className="h-1 w-12 bg-destructive-foreground/30 rounded-full">
+                    <div className="h-full w-7 bg-destructive-foreground rounded-full" />
+                  </div>
+                </div>
+                <div className="p-3 bg-destructive-foreground/20 rounded-xl backdrop-blur-sm">
+                  <Calendar className="w-6 h-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Search and Enquiry Table */}
+        <Card className="border-0 bg-card/80 backdrop-blur-xl shadow-2xl overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+              <CardTitle className="text-2xl font-bold flex items-center gap-4">
+                <div className="p-3 bg-primary-foreground/20 rounded-xl backdrop-blur-sm">
+                  <HelpCircle className="w-6 h-6" />
+                </div>
+                <div>
+                  <span>Enquiry Management</span>
+                  <p className="text-sm font-normal text-primary-foreground/80 mt-1">
+                    {filteredEnquiries.length} enquir{filteredEnquiries.length !== 1 ? 'ies' : 'y'} found
+                  </p>
+                </div>
+              </CardTitle>
+              <div className="relative w-full lg:w-80">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-foreground/60" />
+                <Input
+                  placeholder="Search enquiries..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-12 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:border-primary-foreground/40 focus:ring-primary-foreground/20 h-12"
+                />
+              </div>
+            </div>
+          </CardHeader>
+          
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-gradient-to-r from-muted via-muted/80 to-muted/60 hover:from-muted/90 hover:to-muted/70 border-none">
+                    <TableHead className="text-foreground font-bold text-center py-6 border-r border-border/50 bg-muted/50">Name</TableHead>
+                    <TableHead className="text-foreground font-bold text-center py-6 border-r border-border/50 bg-muted/50">Email</TableHead>
+                    <TableHead className="text-foreground font-bold text-center py-6 border-r border-border/50 bg-muted/50">Phone</TableHead>
+                    <TableHead className="text-foreground font-bold text-center py-6 border-r border-border/50 bg-muted/50">Location</TableHead>
+                    <TableHead className="text-foreground font-bold text-center py-6 border-r border-border/50 bg-muted/50">Organization</TableHead>
+                    <TableHead className="text-foreground font-bold text-center py-6 border-r border-border/50 bg-muted/50">Address</TableHead>
+                    <TableHead className="text-foreground font-bold text-center py-6 bg-muted/50">Actions</TableHead>
                   </TableRow>
-                ) : (
-                  filteredEnquiries.map((enquiry, index) => (
-                    <TableRow key={enquiry.id} className={`${index % 2 === 0 ? "bg-blue-50/50" : "bg-white"} hover:bg-blue-100/50 transition-colors`}>
-                      <TableCell className="p-4 border-r border-gray-200">
-                        <div className="flex items-center space-x-2">
-                          <Users className="h-4 w-4 text-blue-600" />
-                          <span className="font-medium text-gray-800">
-                            {enquiry.first_name} {enquiry.last_name}
-                          </span>
+                </TableHeader>
+                <TableBody>
+                  {filteredEnquiries.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center py-16">
+                        <div className="space-y-6">
+                          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-muted via-muted/80 to-muted/60 rounded-2xl flex items-center justify-center">
+                            {searchTerm ? (
+                              <Search className="w-10 h-10 text-muted-foreground/50" />
+                            ) : (
+                              <HelpCircle className="w-10 h-10 text-muted-foreground/50" />
+                            )}
+                          </div>
+                          <div className="space-y-2">
+                            <h3 className="text-xl font-semibold text-foreground">
+                              {searchTerm ? "No enquiries found" : "No enquiries yet"}
+                            </h3>
+                            <p className="text-muted-foreground">
+                              {searchTerm ? "Try adjusting your search terms to find what you're looking for." : "Customer enquiries will appear here once they start coming in."}
+                            </p>
+                          </div>
                         </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <div className="flex items-center justify-center space-x-2">
-                          <Mail className="h-4 w-4 text-green-600" />
-                          <span className="text-gray-700">{enquiry.email}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <div className="flex items-center justify-center space-x-2">
-                          <Phone className="h-4 w-4 text-purple-600" />
-                          <span className="text-gray-700">{enquiry.phone}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <div className="flex items-center justify-center space-x-2">
-                          <MapPin className="h-4 w-4 text-orange-600" />
-                          <span className="text-gray-700">
-                            {enquiry.city ? `${enquiry.city}, ${enquiry.state}` : enquiry.state}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <div className="flex items-center justify-center space-x-2">
-                          <Building className="h-4 w-4 text-indigo-600" />
-                          <span className="text-gray-700">{enquiry.organization || "-"}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center p-4 border-r border-gray-200">
-                        <span className="text-gray-700 max-w-xs truncate block">
-                          {enquiry.address || "-"}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-center p-4">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(enquiry.id)}
-                          className="text-red-600 hover:text-red-800 hover:bg-red-100 p-2 rounded-lg transition-colors"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Pagination */}
-      <div className="flex justify-center">
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 rounded-lg text-white font-medium shadow-lg">
-          Page {Math.ceil(filteredEnquiries.length / 10) || 1}
-        </div>
+                  ) : (
+                    filteredEnquiries.map((enquiry, index) => (
+                      <TableRow key={enquiry.id} className={`group transition-all duration-200 hover:bg-muted/30 ${index % 2 === 0 ? "bg-background" : "bg-muted/10"}`}>
+                        <TableCell className="p-6 border-r border-border/30">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                              <Users className="w-4 h-4 text-primary" />
+                            </div>
+                            <span className="font-semibold text-foreground">
+                              {enquiry.first_name} {enquiry.last_name}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center p-6 border-r border-border/30">
+                          <div className="flex items-center justify-center gap-3">
+                            <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                              <Mail className="w-4 h-4 text-accent" />
+                            </div>
+                            <span className="text-muted-foreground">{enquiry.email}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center p-6 border-r border-border/30">
+                          <div className="flex items-center justify-center gap-3">
+                            <div className="p-2 bg-secondary/10 rounded-lg group-hover:bg-secondary/20 transition-colors">
+                              <Phone className="w-4 h-4 text-secondary" />
+                            </div>
+                            <span className="text-muted-foreground">{enquiry.phone}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center p-6 border-r border-border/30">
+                          <div className="flex items-center justify-center gap-3">
+                            <div className="p-2 bg-destructive/10 rounded-lg group-hover:bg-destructive/20 transition-colors">
+                              <MapPin className="w-4 h-4 text-destructive" />
+                            </div>
+                            <span className="text-muted-foreground">
+                              {enquiry.city ? `${enquiry.city}, ${enquiry.state}` : enquiry.state}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center p-6 border-r border-border/30">
+                          <div className="flex items-center justify-center gap-3">
+                            <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                              <Building className="w-4 h-4 text-primary" />
+                            </div>
+                            <span className="text-muted-foreground">{enquiry.organization || "-"}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center p-6 border-r border-border/30">
+                          <span className="text-muted-foreground max-w-xs truncate block">
+                            {enquiry.address || "-"}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-center p-6">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(enquiry.id)}
+                            className="text-destructive hover:text-destructive-foreground hover:bg-destructive/20 p-3 rounded-xl transition-all duration-200 hover:scale-110"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
