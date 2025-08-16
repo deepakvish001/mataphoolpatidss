@@ -73,7 +73,7 @@ const StudentApprovalContent = () => {
         status: newStatus
       });
 
-      toast.success(`${student.full_name} ${approved ? 'approved' : 'marked as pending'} successfully!`);
+      // Note: Success notification is handled automatically by the real-time hook
     } catch (error) {
       toast.error('Failed to update student approval status');
     }
