@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { CreditCard, Edit, Trash2, Loader2 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { CreditCard, Edit, Trash2, Loader2, Search, Building2, TrendingUp, FileText, Plus, Filter } from "lucide-react";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
@@ -41,6 +43,63 @@ const BankDetailsContent = () => {
     bankPhoto: null as File | null
   });
   const [editingBank, setEditingBank] = useState<BankDetails | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [bankFilter, setBankFilter] = useState<string>("all");
+
+  // Statistics
+  const stats = useMemo(() => {
+    const totalBanks = bankDetails.length;
+    const uniqueBanks = new Set(bankDetails.map(b => b.bank_name)).size;
+    const publicBanks = bankDetails.filter(b => 
+      b.bank_name.toLowerCase().includes('state bank') || 
+      b.bank_name.toLowerCase().includes('punjab national') ||
+      b.bank_name.toLowerCase().includes('bank of baroda') ||
+      b.bank_name.toLowerCase().includes('canara bank') ||
+      b.bank_name.toLowerCase().includes('union bank') ||
+      b.bank_name.toLowerCase().includes('central bank') ||
+      b.bank_name.toLowerCase().includes('indian bank') ||
+      b.bank_name.toLowerCase().includes('bank of maharashtra')
+    ).length;
+    const privateBanks = totalBanks - publicBanks;
+    
+    return { totalBanks, uniqueBanks, publicBanks, privateBanks };
+  }, [bankDetails]);
+
+  // Filtered data
+  const filteredBankDetails = useMemo(() => {
+    return bankDetails.filter(bank => {
+      const matchesSearch = 
+        bank.bank_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        bank.account_number.includes(searchTerm) ||
+        bank.branch_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        bank.ifsc_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        bank.micr_code.includes(searchTerm);
+
+      const matchesFilter = bankFilter === "all" || 
+        (bankFilter === "public" && (
+          bank.bank_name.toLowerCase().includes('state bank') || 
+          bank.bank_name.toLowerCase().includes('punjab national') ||
+          bank.bank_name.toLowerCase().includes('bank of baroda') ||
+          bank.bank_name.toLowerCase().includes('canara bank') ||
+          bank.bank_name.toLowerCase().includes('union bank') ||
+          bank.bank_name.toLowerCase().includes('central bank') ||
+          bank.bank_name.toLowerCase().includes('indian bank') ||
+          bank.bank_name.toLowerCase().includes('bank of maharashtra')
+        )) ||
+        (bankFilter === "private" && !(
+          bank.bank_name.toLowerCase().includes('state bank') || 
+          bank.bank_name.toLowerCase().includes('punjab national') ||
+          bank.bank_name.toLowerCase().includes('bank of baroda') ||
+          bank.bank_name.toLowerCase().includes('canara bank') ||
+          bank.bank_name.toLowerCase().includes('union bank') ||
+          bank.bank_name.toLowerCase().includes('central bank') ||
+          bank.bank_name.toLowerCase().includes('indian bank') ||
+          bank.bank_name.toLowerCase().includes('bank of maharashtra')
+        ));
+
+      return matchesSearch && matchesFilter;
+    });
+  }, [bankDetails, searchTerm, bankFilter]);
 
   const handleInputChange = (field: string, value: string | File | null) => {
     setFormData(prev => ({
@@ -169,91 +228,155 @@ const BankDetailsContent = () => {
 
   return (
     <div className="space-y-8">
-      {/* Add Bank Details Form */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100 bg-gray-200">
-          <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-            <div className="p-2 bg-blue-500 rounded-lg">
-              <CreditCard className="h-6 w-6 text-white" />
+      {/* Statistics Dashboard */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-blue-100 text-sm font-medium">Total Banks</p>
+                <p className="text-3xl font-bold">{stats.totalBanks}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <Building2 className="h-6 w-6" />
+              </div>
             </div>
-            <span>Add Bank Details</span>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-green-100 text-sm font-medium">Unique Banks</p>
+                <p className="text-3xl font-bold">{stats.uniqueBanks}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <TrendingUp className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-purple-100 text-sm font-medium">Public Banks</p>
+                <p className="text-3xl font-bold">{stats.publicBanks}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <FileText className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-orange-100 text-sm font-medium">Private Banks</p>
+                <p className="text-3xl font-bold">{stats.privateBanks}</p>
+              </div>
+              <div className="p-3 bg-white/20 rounded-full">
+                <CreditCard className="h-6 w-6" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Search and Filter Section */}
+      <Card className="shadow-lg border border-border">
+        <CardContent className="p-6">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                placeholder="Search banks, account numbers, IFSC codes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              <Select value={bankFilter} onValueChange={setBankFilter}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Filter by type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Banks</SelectItem>
+                  <SelectItem value="public">Public Banks</SelectItem>
+                  <SelectItem value="private">Private Banks</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Add Bank Details Form */}
+      <Card className="shadow-lg border border-border">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-semibold flex items-center gap-2">
+            <Plus className="h-5 w-5" />
+            {editingBank ? "Update Bank Details" : "Add New Bank Details"}
           </CardTitle>
         </CardHeader>
         
-        <CardContent className="p-8">
-          <div className="space-y-6">
-            {/* Bank Name */}
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Bank Name
-              </label>
+              <label className="text-sm font-medium">Bank Name</label>
               <Input
                 value={formData.bankName}
                 onChange={(e) => handleInputChange('bankName', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
                 placeholder="Enter bank name"
               />
             </div>
 
-            {/* Account Number */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Account Number
-              </label>
+              <label className="text-sm font-medium">Account Number</label>
               <Input
                 value={formData.accountNumber}
                 onChange={(e) => handleInputChange('accountNumber', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
                 placeholder="Enter account number"
               />
             </div>
 
-            {/* Branch Name */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Branch Name
-              </label>
+              <label className="text-sm font-medium">Branch Name</label>
               <Input
                 value={formData.branchName}
                 onChange={(e) => handleInputChange('branchName', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
                 placeholder="Enter branch name"
               />
             </div>
 
-            {/* IFSC Code */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                IFSC Code
-              </label>
+              <label className="text-sm font-medium">IFSC Code</label>
               <Input
                 value={formData.ifscCode}
                 onChange={(e) => handleInputChange('ifscCode', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
                 placeholder="Enter IFSC code"
               />
             </div>
 
-            {/* MICR Code */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                MICR Code
-              </label>
+              <label className="text-sm font-medium">MICR Code</label>
               <Input
                 value={formData.micrCode}
                 onChange={(e) => handleInputChange('micrCode', e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
                 placeholder="Enter MICR code"
               />
             </div>
 
-            {/* Bank Photo */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Bank Photo
-              </label>
-              <div className="border border-gray-300 rounded p-4 bg-white">
-                <div className="flex items-center space-x-4">
+              <label className="text-sm font-medium">Bank Photo</label>
+              <div className="border border-border rounded-lg p-3">
+                <div className="flex items-center gap-3">
                   <div className="relative">
                     <input
                       id="bank-photo-file"
@@ -264,120 +387,143 @@ const BankDetailsContent = () => {
                     />
                     <Button
                       variant="outline"
-                      className="h-10 px-4 border-gray-300 hover:bg-gray-50 font-medium text-gray-700"
+                      size="sm"
+                      className="pointer-events-none"
                     >
-                      Choose file
+                      Choose File
                     </Button>
                   </div>
-                  <span className="text-gray-500 font-medium">
+                  <span className="text-sm text-muted-foreground">
                     {formData.bankPhoto ? formData.bankPhoto.name : "No file chosen"}
                   </span>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Submit and Reset Buttons */}
-            <div className="flex space-x-4 pt-4">
-              <Button
-                onClick={handleSubmit}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                {editingBank ? "Update" : "Submit Now"}
+          <div className="flex gap-3 pt-4">
+            <Button onClick={handleSubmit} className="flex-1 md:flex-none">
+              {editingBank ? "Update Bank" : "Add Bank"}
+            </Button>
+            {editingBank && (
+              <Button onClick={handleReset} variant="outline">
+                Cancel
               </Button>
-              {editingBank && (
-                <Button
-                  onClick={handleReset}
-                  variant="outline"
-                  className="border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3"
-                >
-                  Cancel
-                </Button>
-              )}
-              <Button
-                onClick={handleReset}
-                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                Reset
-              </Button>
-            </div>
+            )}
+            <Button onClick={handleReset} variant="secondary">
+              Reset
+            </Button>
           </div>
         </CardContent>
       </Card>
 
       {/* Bank Details Table */}
-      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
+      <Card className="shadow-lg border border-border">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center justify-between">
+            <span>Bank Details ({filteredBankDetails.length})</span>
+            <Badge variant="secondary" className="text-sm">
+              {filteredBankDetails.length} of {bankDetails.length} banks
+            </Badge>
+          </CardTitle>
+        </CardHeader>
+        
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-600 hover:bg-blue-600">
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Bank Name</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Account Number</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Branch Name</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">IFSC Code</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">MICR Code</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Bank Photo</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {bankDetails.map((detail, index) => (
-                <TableRow key={detail.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                  <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex space-x-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEdit(detail)}
-                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(detail.id)}
-                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.bank_name}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.account_number}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.branch_name}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.ifsc_code}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {detail.micr_code}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4">
-                    {detail.bank_photo_url ? (
-                      <div className="flex justify-center">
-                        <img
-                          src={detail.bank_photo_url}
-                          alt="Bank photo"
-                          className="w-16 h-10 object-cover rounded border-2 border-gray-400"
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex justify-center">
-                        <div className="w-16 h-10 bg-gray-200 border-2 border-gray-400 rounded flex items-center justify-center">
-                          <span className="text-xs text-gray-500">No Photo</span>
-                        </div>
-                      </div>
-                    )}
-                  </TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Actions</TableHead>
+                  <TableHead>Bank Name</TableHead>
+                  <TableHead>Account Number</TableHead>
+                  <TableHead>Branch</TableHead>
+                  <TableHead>IFSC Code</TableHead>
+                  <TableHead>MICR Code</TableHead>
+                  <TableHead>Photo</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filteredBankDetails.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                      {searchTerm || bankFilter !== "all" ? "No banks found matching your criteria" : "No bank details available"}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filteredBankDetails.map((detail) => (
+                    <TableRow key={detail.id}>
+                      <TableCell>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(detail)}
+                            className="h-8 w-8 p-0"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(detail.id)}
+                            className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        <div className="flex flex-col">
+                          <span>{detail.bank_name}</span>
+                          <Badge 
+                            variant={
+                              detail.bank_name.toLowerCase().includes('state bank') || 
+                              detail.bank_name.toLowerCase().includes('punjab national') ||
+                              detail.bank_name.toLowerCase().includes('bank of baroda') ||
+                              detail.bank_name.toLowerCase().includes('canara bank') ||
+                              detail.bank_name.toLowerCase().includes('union bank') ||
+                              detail.bank_name.toLowerCase().includes('central bank') ||
+                              detail.bank_name.toLowerCase().includes('indian bank') ||
+                              detail.bank_name.toLowerCase().includes('bank of maharashtra')
+                              ? "default" : "secondary"
+                            } 
+                            className="w-fit text-xs mt-1"
+                          >
+                            {detail.bank_name.toLowerCase().includes('state bank') || 
+                             detail.bank_name.toLowerCase().includes('punjab national') ||
+                             detail.bank_name.toLowerCase().includes('bank of baroda') ||
+                             detail.bank_name.toLowerCase().includes('canara bank') ||
+                             detail.bank_name.toLowerCase().includes('union bank') ||
+                             detail.bank_name.toLowerCase().includes('central bank') ||
+                             detail.bank_name.toLowerCase().includes('indian bank') ||
+                             detail.bank_name.toLowerCase().includes('bank of maharashtra')
+                             ? "Public" : "Private"}
+                          </Badge>
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-mono text-sm">{detail.account_number}</TableCell>
+                      <TableCell>{detail.branch_name}</TableCell>
+                      <TableCell className="font-mono text-sm">{detail.ifsc_code}</TableCell>
+                      <TableCell className="font-mono text-sm">{detail.micr_code}</TableCell>
+                      <TableCell>
+                        {detail.bank_photo_url ? (
+                          <img
+                            src={detail.bank_photo_url}
+                            alt="Bank"
+                            className="w-12 h-8 object-cover rounded border"
+                          />
+                        ) : (
+                          <div className="w-12 h-8 bg-muted rounded border flex items-center justify-center">
+                            <span className="text-xs text-muted-foreground">No photo</span>
+                          </div>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>
