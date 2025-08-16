@@ -79,17 +79,27 @@ const StudentRegPrintContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
-      {/* Modern Header */}
-      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border/40">
-        <div className="px-6 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-grid-white/10 bg-grid-16 [mask-image:radial-gradient(white,transparent_70%)]" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+
+      {/* Enhanced Modern Header */}
+      <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/40 shadow-lg">
+        <div className="px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <FileText className="h-6 w-6 text-primary" />
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                  Student Registration Print
-                </h1>
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 shadow-lg">
+                  <FileText className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+                    Student Registration Print
+                  </h1>
+                  <p className="text-sm text-muted-foreground mt-1">Generate and manage registration certificates</p>
+                </div>
               </div>
             </div>
             
@@ -99,45 +109,50 @@ const StudentRegPrintContent = () => {
                 <Input
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  className="pl-10 w-64 bg-background/50 border-border/40 focus:border-primary/40 focus:bg-background"
-                  placeholder="Search students..."
+                  className="pl-10 w-72 bg-background/50 border-border/40 focus:border-primary/40 focus:bg-background shadow-sm"
+                  placeholder="Search student records..."
                 />
               </div>
-              <Button variant="outline" className="border-border/40 hover:border-primary/40">
+              <Button 
+                variant="outline" 
+                className="border-border/40 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 shadow-sm"
+              >
                 <Search className="h-4 w-4 mr-2" />
                 Search
               </Button>
               <Button 
                 onClick={handlePrintReceipt}
-                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 px-6"
               >
                 <Printer className="h-4 w-4 mr-2" />
-                Print Receipt
+                Print Certificate
               </Button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="px-6 py-8">
+      <div className="relative px-8 py-8">
         {/* Enhanced Statistics Dashboard */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <Card key={index} className={`transition-all duration-300 hover:shadow-lg hover:scale-105 ${getStatCardClasses(stat.color)}`}>
+            <Card key={index} className={`group transition-all duration-500 hover:shadow-xl hover:scale-105 ${getStatCardClasses(stat.color)} backdrop-blur-sm`}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-muted-foreground mb-1">{stat.label}</p>
-                    <p className="text-2xl font-bold mb-1">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground">{stat.subtitle}</p>
+                    <p className="text-sm font-medium text-muted-foreground mb-2 group-hover:text-foreground transition-colors">{stat.label}</p>
+                    <p className="text-3xl font-bold mb-1 group-hover:scale-105 transition-transform origin-left">{stat.value}</p>
+                    <p className="text-xs text-muted-foreground opacity-80">{stat.subtitle}</p>
                   </div>
-                  <div className="flex flex-col items-end gap-2">
-                    <stat.icon className={`h-8 w-8 ${getIconClasses(stat.color)}`} />
-                    <div className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full ${
+                  <div className="flex flex-col items-end gap-3">
+                    <div className={`p-3 rounded-xl ${getIconClasses(stat.color)} group-hover:scale-110 transition-all duration-300`}>
+                      <stat.icon className="h-6 w-6" />
+                    </div>
+                    <div className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full font-medium transition-all duration-300 ${
                       stat.trend.startsWith('+') 
-                        ? 'bg-green-500/10 text-green-600' 
-                        : 'bg-red-500/10 text-red-600'
-                    }`}>
+                        ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' 
+                        : 'bg-red-500/10 text-red-600 border border-red-500/20'
+                    } group-hover:scale-105`}>
                       <TrendingUp className={`h-3 w-3 ${
                         stat.trend.startsWith('+') ? 'rotate-0' : 'rotate-180'
                       }`} />
@@ -145,22 +160,46 @@ const StudentRegPrintContent = () => {
                     </div>
                   </div>
                 </div>
+                <div className="w-full bg-muted/30 rounded-full h-1.5 overflow-hidden">
+                  <div 
+                    className={`h-full rounded-full transition-all duration-1000 ${
+                      stat.color === 'primary' ? 'bg-primary' :
+                      stat.color === 'accent' ? 'bg-accent' :
+                      stat.color === 'secondary' ? 'bg-secondary' :
+                      'bg-muted-foreground'
+                    }`}
+                    style={{ width: `${Math.random() * 40 + 60}%` }}
+                  />
+                </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Main Registration Form */}
-        <Card className="shadow-xl bg-gradient-to-br from-card to-card/50 border-border/40">
-          <CardHeader className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-b border-border/40">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-2xl font-bold flex items-center gap-3">
-                <GraduationCap className="h-6 w-6 text-primary" />
-                Student Registration Certificate
+        {/* Enhanced Main Registration Form */}
+        <Card className="group shadow-2xl bg-gradient-to-br from-card via-card/95 to-card/90 border-border/40 hover:shadow-3xl transition-all duration-500 backdrop-blur-sm">
+          <CardHeader className="bg-gradient-to-r from-primary/15 via-primary/8 to-primary/5 border-b border-border/40 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-50" />
+            <div className="relative flex items-center justify-between">
+              <CardTitle className="text-2xl font-bold flex items-center gap-3 group-hover:scale-105 transition-transform">
+                <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                  <GraduationCap className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    Student Registration Certificate
+                  </span>
+                  <p className="text-sm font-normal text-muted-foreground mt-1">Official academic document</p>
+                </div>
               </CardTitle>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                Official Document
-              </Badge>
+              <div className="flex items-center gap-3">
+                <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 px-3 py-1">
+                  ✓ Verified
+                </Badge>
+                <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 px-3 py-1">
+                  Official Document
+                </Badge>
+              </div>
             </div>
           </CardHeader>
 
