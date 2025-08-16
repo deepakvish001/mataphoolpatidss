@@ -7,6 +7,8 @@ import { FileDown } from "lucide-react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { supabase } from "@/integrations/supabase/client";
+import indiaEmblem from "@/assets/india-emblem.png";
+import nabardLogo from "@/assets/nabard-logo.png";
 
 type StudentAdmitCard = {
   id: string;
@@ -218,13 +220,13 @@ const GenerateStudentAdmitCardContent = () => {
       const usableHeightMm = pdfHeight - margin * 2;
 
       // Calculate how to fit the content
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const imgData = canvas.toDataURL('image/png');
       const aspectRatio = canvas.height / canvas.width;
       const heightMm = usableWidthMm * aspectRatio;
 
       if (heightMm <= usableHeightMm) {
         // Fits on one page
-        pdf.addImage(imgData, 'JPEG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
+        pdf.addImage(imgData, 'PNG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
       } else {
         // Multi-page handling
         const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
@@ -246,9 +248,9 @@ const GenerateStudentAdmitCardContent = () => {
           ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
           ctx.drawImage(canvas, 0, currentY, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
 
-          const pageImgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+          const pageImgData = pageCanvas.toDataURL('image/png');
           const pageHeightMm = (sliceHeight / canvas.width) * usableWidthMm;
-          pdf.addImage(pageImgData, 'JPEG', margin, margin, usableWidthMm, pageHeightMm, undefined, 'FAST');
+          pdf.addImage(pageImgData, 'PNG', margin, margin, usableWidthMm, pageHeightMm, undefined, 'FAST');
 
           // Add page number
           pdf.setTextColor(120, 120, 120);
@@ -349,204 +351,191 @@ const GenerateStudentAdmitCardContent = () => {
 
       {/* Main Content */}
       <div className="px-6 py-8 max-w-5xl mx-auto">
-        <div ref={admitCardRef} className="bg-white p-8 shadow-lg border">
-          
-          {/* Institute Header */}
-          <div className="text-center mb-6">
-            <h1 className="text-xl font-bold text-gray-800 mb-2">
-              B. Soft Computer & Technical Institute
-            </h1>
-            <p className="text-sm text-gray-600 mb-4">
-              Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121
-            </p>
-            <h2 className="text-lg font-bold text-gray-800 mb-2">
-              B. Soft Computer & Technical Institute EXAMINATION
-            </h2>
-            <h3 className="text-base font-bold text-gray-800 mb-6">
-              CANDIDATE ADMIT CARD
+        {/* Preview panel (screen) */}
+        {selectedCard && (
+          <div className="mb-6 p-4 bg-accent/10 rounded-lg border border-accent/20">
+            <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center space-x-2">
+              <FileDown className="h-5 w-5 text-primary" />
+              <span>Selected Student Information</span>
             </h3>
-          </div>
-
-          {/* Candidate Information Table */}
-          <div className="mb-6">
-            <p className="text-sm font-medium text-gray-700 mb-3 text-center">
-              Name of the Candidate ( AS FILLED BY THE CANDIDATE IN OEAF)
-            </p>
-            
-            <div className="flex gap-4">
-              {/* Left side - Form fields */}
-              <div className="flex-1">
-                <table className="w-full border-2 border-gray-800">
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm w-1/3">
-                        ROLL NO
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.roll_number || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        NAME
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.student_name || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        MOTHER'S NAME
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.mothers_name || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        FATHER'S NAME
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.fathers_name || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        EXAM CENTER CODE
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.exam_center_code || ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                        PWD :
-                      </td>
-                      <td className="border border-gray-800 px-3 py-3 text-sm">
-                        {selectedCard?.pwd_status || ""}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="font-medium text-muted-foreground">Name:</span>
+                <p className="text-foreground">{selectedCard.student_name}</p>
               </div>
-
-              {/* Right side - Photo placeholder */}
-              <div className="w-32">
-                <div className="border-2 border-gray-800 h-40 bg-gray-50 flex items-center justify-center">
-                  {selectedCard?.student_photo_url ? (
-                    <img 
-                      src={selectedCard.student_photo_url} 
-                      alt="Student" 
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-4 h-4 border border-gray-400"></div>
-                  )}
-                </div>
+              <div>
+                <span className="font-medium text-muted-foreground">Roll No:</span>
+                <p className="text-foreground">{selectedCard.roll_number}</p>
+              </div>
+              <div>
+                <span className="font-medium text-muted-foreground">Course:</span>
+                <p className="text-foreground">{selectedCard.course_name}</p>
+              </div>
+              <div>
+                <span className="font-medium text-muted-foreground">Center:</span>
+                <p className="text-foreground">{selectedCard.exam_center_code}</p>
               </div>
             </div>
           </div>
+        )}
 
-          {/* Valid For Section */}
+        {/* A4 Admit Card Canvas (captured to PDF) */}
+        <div
+          ref={admitCardRef}
+          className="relative mx-auto bg-background w-[794px] min-h-[1123px] p-10 border-[12px] border-primary/20 rounded-md shadow-elegant"
+        >
+          {/* Inner decorative frame */}
+          <div className="absolute inset-4 border-2 border-border/60 rounded-md pointer-events-none" />
+          <div className="absolute inset-6 border border-border/30 rounded-sm pointer-events-none" />
+
+          {/* Watermark */}
+          <img
+            src={nabardLogo}
+            alt="Institute watermark logo"
+            className="absolute inset-0 m-auto opacity-5 w-[420px] h-[420px] object-contain pointer-events-none"
+          />
+
+          {/* Header */}
+          <div className="relative flex items-start justify-between mb-6">
+            <img src={indiaEmblem} alt="National emblem" className="h-16 w-auto opacity-90" />
+            <div className="text-center flex-1 px-4">
+              <h1 className="text-2xl font-extrabold text-foreground">B SOFT Computer & Technical Institute</h1>
+              <p className="text-sm text-muted-foreground">
+                Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121
+              </p>
+              <p className="text-xs text-muted-foreground">Email: infobinasoft@gmail.com</p>
+            </div>
+            <div className="h-24 w-20 border-2 border-border/60 rounded-sm overflow-hidden bg-muted/20">
+              {selectedCard?.student_photo_url ? (
+                <img
+                  src={selectedCard.student_photo_url}
+                  alt={`${selectedCard.student_name} photo`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="h-full w-full flex items-center justify-center text-[10px] text-muted-foreground">Photo</div>
+              )}
+            </div>
+          </div>
+
+          {/* Title */}
           <div className="text-center mb-6">
-            <div className="border-2 border-gray-800 py-2 bg-gray-100">
-              <p className="font-medium text-sm">
-                VALID FOR ( Every Month Exam Cycle ) EXAMINATION ONLY
-              </p>
-            </div>
+            <h2 className="text-xl font-bold tracking-wide text-primary uppercase">Examination Admit Card</h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              Valid for the examination schedule mentioned below only
+            </p>
           </div>
 
-          {/* Batch Schedule */}
+          {/* Student Details Section */}
           <div className="mb-6">
-            <div className="border-2 border-gray-800 bg-gray-100 text-center py-2 mb-0">
-              <h4 className="font-bold text-sm">BATCH SCHEDULE</h4>
+            <div className="bg-primary/10 text-center py-2 mb-4 border border-primary/20 rounded">
+              <h3 className="font-bold text-sm text-primary">CANDIDATE INFORMATION</h3>
             </div>
             
-            <table className="w-full border-2 border-gray-800 border-t-0">
-              <tbody>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm w-1/2">
-                    EXAM CENTRE CODE:
-                  </td>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                    EXAM DATE :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm">
-                    {selectedCard?.exam_center_code || ""}
-                  </td>
-                  <td className="border border-gray-800 px-3 py-3 text-sm">
-                    {selectedCard?.exam_date || ""}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                    EXAM CENTRE ADDRESS:
-                  </td>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm">
-                    BATCH :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm">
-                    {selectedCard?.exam_center_address || ""}
-                  </td>
-                  <td className="border border-gray-800 px-3 py-3 text-sm">
-                    {selectedCard?.batch || ""}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm" colSpan={2}>
-                    REPORTING TIME :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm" colSpan={2}>
-                    {selectedCard?.reporting_time || ""}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm" colSpan={2}>
-                    GATE CLOSING TIME :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-4 text-sm" colSpan={2}>
-                    {selectedCard?.gate_closing_time || ""} - No candidate will be allowed to enter the examination center after the gate closing time.
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm" colSpan={2}>
-                    EXAM START TIME:
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm" colSpan={2}>
-                    {selectedCard?.exam_start_time || ""}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-2 bg-gray-100 font-medium text-sm" colSpan={2}>
-                    EXAM DURATION :
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 px-3 py-3 text-sm" colSpan={2}>
-                    {selectedCard?.exam_duration || ""}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Roll Number</p>
+                <p className="border-b border-border/60 py-2 font-semibold">{selectedCard?.roll_number || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Student Name</p>
+                <p className="border-b border-border/60 py-2 font-semibold">{selectedCard?.student_name || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Father's Name</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.fathers_name || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Mother's Name</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.mothers_name || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Course</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.course_name || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">PWD Status</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.pwd_status || "No"}</p>
+              </div>
+            </div>
           </div>
 
-          {/* Instructions Footer */}
-          <div className="text-center">
-            <div className="border-2 border-gray-800 py-3 bg-gray-100">
-              <p className="font-bold text-sm">
-                INSTRUCTIONS TO BE FOLLOWED BY CANDIDATES AT B. Soft Computer & Technical Institute EXAMINATION
-              </p>
+          {/* Examination Details */}
+          <div className="mb-6">
+            <div className="bg-secondary/10 text-center py-2 mb-4 border border-secondary/20 rounded">
+              <h3 className="font-bold text-sm text-secondary-foreground">EXAMINATION SCHEDULE</h3>
             </div>
+            
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Exam Center Code</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.exam_center_code || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Exam Date</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.exam_date || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Reporting Time</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.reporting_time || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Gate Closing Time</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.gate_closing_time || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Exam Start Time</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.exam_start_time || "-"}</p>
+              </div>
+              <div>
+                <p className="text-[11px] text-muted-foreground font-medium">Exam Duration</p>
+                <p className="border-b border-border/60 py-2">{selectedCard?.exam_duration || "-"}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Center Address */}
+          <div className="mb-6">
+            <p className="text-[11px] text-muted-foreground font-medium">Examination Center Address</p>
+            <div className="border border-border/60 rounded p-3 bg-muted/10 min-h-[60px]">
+              <p className="text-sm">{selectedCard?.exam_center_address || "Address will be communicated separately"}</p>
+            </div>
+          </div>
+
+          {/* Important Instructions */}
+          <div className="mb-6">
+            <div className="bg-accent/10 text-center py-2 mb-4 border border-accent/20 rounded">
+              <h3 className="font-bold text-sm text-accent-foreground">IMPORTANT INSTRUCTIONS</h3>
+            </div>
+            <div className="text-xs space-y-1 text-muted-foreground">
+              <p>• Candidates must carry this admit card to the examination center</p>
+              <p>• Report to the examination center at least 30 minutes before the exam start time</p>
+              <p>• Carry a valid photo ID proof along with this admit card</p>
+              <p>• Electronic devices are strictly prohibited in the examination hall</p>
+              <p>• Late entry after gate closing time will not be permitted</p>
+            </div>
+          </div>
+
+          {/* Verification and Signatures */}
+          <div className="mt-8 grid grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="border-b border-border/60 h-12 mb-2"></div>
+              <p className="text-sm font-medium">Candidate Signature</p>
+            </div>
+            <div className="text-center">
+              <div className="border border-border/60 rounded px-3 py-2 font-mono text-center">
+                ADMIT-{new Date().getFullYear()}-{(selectedCard?.roll_number || "").toString().replace(/[^A-Z0-9]/gi, "").toUpperCase()}
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">Verification Code</p>
+            </div>
+            <div className="text-center">
+              <div className="border-b border-border/60 h-12 mb-2"></div>
+              <p className="text-sm font-medium">Controller of Examinations</p>
+            </div>
+          </div>
+
+          <div className="mt-6 text-[10px] text-muted-foreground text-center">
+            This admit card is computer generated and does not require a physical signature.
           </div>
         </div>
       </div>
