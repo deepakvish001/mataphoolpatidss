@@ -331,87 +331,105 @@ const EmployeeMasterContent = () => {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Statistics Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-100 text-sm font-medium">Total Employees</p>
-                <p className="text-3xl font-bold">{stats.total}</p>
-                <p className="text-xs text-blue-200 mt-1">Registered staff</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <Users className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg hover:shadow-xl transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-green-100 text-sm font-medium">Active Employees</p>
-                <p className="text-3xl font-bold">{stats.active}</p>
-                <p className="text-xs text-green-200 mt-1">Currently working</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <UserCheck className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-orange-100 text-sm font-medium">Inactive</p>
-                <p className="text-3xl font-bold">{stats.inactive}</p>
-                <p className="text-xs text-orange-200 mt-1">Not working</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <UserX className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-purple-100 text-sm font-medium">Average Salary</p>
-                <p className="text-3xl font-bold">₹{stats.avgSalary.toLocaleString()}</p>
-                <p className="text-xs text-purple-200 mt-1">Monthly average</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <IndianRupee className="h-6 w-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Employee Master Form */}
-      <Card className="shadow-lg border-l-4 border-l-emerald-500 bg-gradient-to-r from-emerald-50/50 to-white dark:from-emerald-950/20 dark:to-background">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-emerald-500 text-white rounded-lg">
-              <Plus className="h-5 w-5" />
-            </div>
-            <div>
-              <CardTitle className="text-xl font-semibold text-emerald-700 dark:text-emerald-300">
-                {editingEmployee ? 'Edit Employee Details' : 'Add New Employee'}
-              </CardTitle>
-              <p className="text-sm text-emerald-600 dark:text-emerald-400 mt-1">
-                {editingEmployee ? "Update employee information" : "Enter comprehensive employee details for registration"}
-              </p>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+      <div className="container mx-auto p-6 space-y-8">
+        {/* Page Header */}
+        <div className="text-center space-y-4 py-8">
+          <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-primary to-primary/80 rounded-2xl shadow-lg mb-4">
+            <Users className="h-8 w-8 text-primary-foreground" />
           </div>
-        </CardHeader>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            Employee Management System
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Comprehensive employee management with real-time tracking and analytics
+          </p>
+        </div>
+
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="relative overflow-hidden bg-gradient-to-br from-primary/90 to-primary text-primary-foreground shadow-xl hover:shadow-2xl transition-all duration-300 border-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-primary-foreground/80 text-sm font-medium">Total Employees</p>
+                  <p className="text-3xl font-bold">{stats.total}</p>
+                  <p className="text-xs text-primary-foreground/70">Registered staff</p>
+                </div>
+                <div className="p-3 bg-primary-foreground/20 rounded-xl backdrop-blur-sm">
+                  <Users className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="relative overflow-hidden bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-xl hover:shadow-2xl transition-all duration-300 border-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-emerald-100 text-sm font-medium">Active Employees</p>
+                  <p className="text-3xl font-bold">{stats.active}</p>
+                  <p className="text-xs text-emerald-200">Currently working</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                  <UserCheck className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="relative overflow-hidden bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-xl hover:shadow-2xl transition-all duration-300 border-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-amber-100 text-sm font-medium">Inactive</p>
+                  <p className="text-3xl font-bold">{stats.inactive}</p>
+                  <p className="text-xs text-amber-200">Not working</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                  <UserX className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="relative overflow-hidden bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-xl hover:shadow-2xl transition-all duration-300 border-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+            <CardContent className="relative p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-violet-100 text-sm font-medium">Average Salary</p>
+                  <p className="text-3xl font-bold">₹{stats.avgSalary.toLocaleString()}</p>
+                  <p className="text-xs text-violet-200">Monthly average</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                  <IndianRupee className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Employee Master Form */}
+        <Card className="shadow-xl border-0 bg-gradient-to-br from-card via-card to-card/80 backdrop-blur-sm">
+          <CardHeader className="space-y-4 pb-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-xl shadow-lg">
+                <Plus className="h-6 w-6" />
+              </div>
+              <div className="space-y-1">
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  {editingEmployee ? 'Edit Employee Details' : 'Employee Registration'}
+                </CardTitle>
+                <p className="text-muted-foreground">
+                  {editingEmployee ? "Update employee information" : "Enter comprehensive employee details for registration"}
+                </p>
+              </div>
+            </div>
+          </CardHeader>
         
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1010,6 +1028,7 @@ const EmployeeMasterContent = () => {
           )}
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
