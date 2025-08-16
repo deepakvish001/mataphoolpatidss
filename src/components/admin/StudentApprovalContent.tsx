@@ -263,17 +263,41 @@ const StudentApprovalContent = () => {
                       <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex justify-center">
                           <div className="relative group">
-                            <Checkbox
-                              checked={student.status === 'active'}
-                              onCheckedChange={(checked) => handleApprovalChange(student, checked as boolean)}
-                              className="w-6 h-6 data-[state=checked]:bg-accent data-[state=checked]:border-accent data-[state=checked]:text-accent-foreground border-2 transition-all duration-200 hover:scale-110 hover:shadow-lg group-hover:border-accent/50"
-                            />
-                            {/* Status indicator */}
-                            <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full transition-all duration-200 ${
+                            {/* Glow background */}
+                            <div className={`absolute inset-0 rounded-lg transition-all duration-300 ${
                               student.status === 'active' 
-                                ? 'bg-accent shadow-lg' 
-                                : 'bg-secondary shadow-sm'
+                                ? 'bg-accent/20 shadow-lg shadow-accent/25 animate-pulse' 
+                                : 'bg-secondary/10 group-hover:bg-secondary/20'
                             }`}></div>
+                            
+                            {/* Main checkbox container */}
+                            <div className="relative p-2">
+                              <Checkbox
+                                checked={student.status === 'active'}
+                                onCheckedChange={(checked) => handleApprovalChange(student, checked as boolean)}
+                                className={`w-7 h-7 border-3 transition-all duration-300 transform group-hover:scale-110 ${
+                                  student.status === 'active'
+                                    ? 'data-[state=checked]:bg-accent data-[state=checked]:border-accent data-[state=checked]:text-accent-foreground shadow-lg shadow-accent/30 border-accent'
+                                    : 'border-secondary hover:border-accent/50 hover:shadow-md'
+                                }`}
+                              />
+                              
+                              {/* Status indicator with animation */}
+                              <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full transition-all duration-300 ${
+                                student.status === 'active' 
+                                  ? 'bg-accent shadow-lg shadow-accent/50 animate-scale-in' 
+                                  : 'bg-secondary shadow-sm animate-pulse'
+                              }`}>
+                                {student.status === 'active' && (
+                                  <div className="absolute inset-0 rounded-full bg-accent animate-ping"></div>
+                                )}
+                              </div>
+                              
+                              {/* Hover tooltip */}
+                              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+                                {student.status === 'active' ? 'Student Approved' : 'Click to Approve'}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </TableCell>
@@ -311,13 +335,32 @@ const StudentApprovalContent = () => {
                       </TableCell>
                       <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex justify-center">
-                          <span className={`px-4 py-2 text-sm font-semibold rounded-full border transition-all duration-200 shadow-sm ${
-                            student.status === 'active' 
-                              ? 'bg-accent/20 text-accent-foreground border-accent/30 shadow-accent/20' 
-                              : 'bg-secondary/20 text-secondary-foreground border-secondary/30 shadow-secondary/20'
-                          }`}>
-                            {student.status === 'active' ? 'Approved' : 'Pending'}
-                          </span>
+                          <div className="relative">
+                            <span className={`px-5 py-2 text-sm font-semibold rounded-full border-2 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
+                              student.status === 'active' 
+                                ? 'bg-gradient-to-r from-accent/20 to-accent/30 text-accent-foreground border-accent/40 shadow-accent/25 animate-fade-in' 
+                                : 'bg-gradient-to-r from-secondary/20 to-secondary/30 text-secondary-foreground border-secondary/40 shadow-secondary/25 animate-pulse'
+                            }`}>
+                              <span className="flex items-center space-x-2">
+                                {student.status === 'active' ? (
+                                  <>
+                                    <CheckCircle className="h-4 w-4 animate-scale-in" />
+                                    <span>Approved</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Clock className="h-4 w-4 animate-pulse" />
+                                    <span>Pending</span>
+                                  </>
+                                )}
+                              </span>
+                            </span>
+                            
+                            {/* Success sparkle effect */}
+                            {student.status === 'active' && (
+                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-ping"></div>
+                            )}
+                          </div>
                         </div>
                       </TableCell>
                       <TableCell className="text-center p-4">
