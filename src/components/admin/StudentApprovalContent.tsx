@@ -263,11 +263,11 @@ const StudentApprovalContent = () => {
                       <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex justify-center">
                           <div className="relative group">
-                            {/* Glow background */}
+                            {/* Glow background with enhanced colors */}
                             <div className={`absolute inset-0 rounded-lg transition-all duration-300 ${
                               student.status === 'active' 
-                                ? 'bg-accent/20 shadow-lg shadow-accent/25 animate-pulse' 
-                                : 'bg-secondary/10 group-hover:bg-secondary/20'
+                                ? 'bg-slate-900/20 shadow-lg shadow-slate-900/30 animate-pulse' 
+                                : 'bg-blue-500/15 group-hover:bg-blue-500/25 shadow-md shadow-blue-500/20'
                             }`}></div>
                             
                             {/* Main checkbox container */}
@@ -275,27 +275,42 @@ const StudentApprovalContent = () => {
                               <Checkbox
                                 checked={student.status === 'active'}
                                 onCheckedChange={(checked) => handleApprovalChange(student, checked as boolean)}
-                                className={`w-7 h-7 border-3 transition-all duration-300 transform group-hover:scale-110 ${
+                                className={`w-8 h-8 border-3 transition-all duration-300 transform group-hover:scale-110 rounded-md ${
                                   student.status === 'active'
-                                    ? 'data-[state=checked]:bg-accent data-[state=checked]:border-accent data-[state=checked]:text-accent-foreground shadow-lg shadow-accent/30 border-accent'
-                                    : 'border-secondary hover:border-accent/50 hover:shadow-md'
+                                    ? 'data-[state=checked]:bg-slate-900 data-[state=checked]:border-slate-900 data-[state=checked]:text-white shadow-xl shadow-slate-900/40 border-slate-900'
+                                    : 'border-blue-500 bg-blue-50 hover:bg-blue-100 hover:border-blue-600 hover:shadow-lg hover:shadow-blue-500/30'
                                 }`}
                               />
                               
-                              {/* Status indicator with animation */}
-                              <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full transition-all duration-300 ${
+                              {/* Enhanced status indicator */}
+                              <div className={`absolute -top-2 -right-2 w-5 h-5 rounded-full transition-all duration-300 border-2 border-background ${
                                 student.status === 'active' 
-                                  ? 'bg-accent shadow-lg shadow-accent/50 animate-scale-in' 
-                                  : 'bg-secondary shadow-sm animate-pulse'
+                                  ? 'bg-slate-900 shadow-xl shadow-slate-900/50 animate-scale-in' 
+                                  : 'bg-blue-500 shadow-lg shadow-blue-500/40 animate-pulse'
                               }`}>
                                 {student.status === 'active' && (
-                                  <div className="absolute inset-0 rounded-full bg-accent animate-ping"></div>
+                                  <div className="absolute inset-0 rounded-full bg-slate-900 animate-ping opacity-75"></div>
+                                )}
+                                {student.status !== 'active' && (
+                                  <div className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-50"></div>
                                 )}
                               </div>
                               
-                              {/* Hover tooltip */}
-                              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-                                {student.status === 'active' ? 'Student Approved' : 'Click to Approve'}
+                              {/* Enhanced hover tooltip */}
+                              <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap z-10 shadow-lg ${
+                                student.status === 'active'
+                                  ? 'bg-slate-900 text-white'
+                                  : 'bg-blue-600 text-white'
+                              }`}>
+                                <span className="text-sm font-medium">
+                                  {student.status === 'active' ? '✓ Student Approved' : '○ Click to Approve'}
+                                </span>
+                                {/* Tooltip arrow */}
+                                <div className={`absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-transparent ${
+                                  student.status === 'active'
+                                    ? 'border-t-slate-900'
+                                    : 'border-t-blue-600'
+                                }`}></div>
                               </div>
                             </div>
                           </div>
@@ -336,29 +351,38 @@ const StudentApprovalContent = () => {
                       <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex justify-center">
                           <div className="relative">
-                            <span className={`px-5 py-2 text-sm font-semibold rounded-full border-2 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 ${
+                            <span className={`px-6 py-3 text-sm font-bold rounded-full border-2 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
                               student.status === 'active' 
-                                ? 'bg-gradient-to-r from-accent/20 to-accent/30 text-accent-foreground border-accent/40 shadow-accent/25 animate-fade-in' 
-                                : 'bg-gradient-to-r from-secondary/20 to-secondary/30 text-secondary-foreground border-secondary/40 shadow-secondary/25 animate-pulse'
+                                ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white border-slate-700 shadow-slate-900/40 animate-fade-in' 
+                                : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white border-blue-400 shadow-blue-500/40 animate-pulse'
                             }`}>
                               <span className="flex items-center space-x-2">
                                 {student.status === 'active' ? (
                                   <>
-                                    <CheckCircle className="h-4 w-4 animate-scale-in" />
-                                    <span>Approved</span>
+                                    <CheckCircle className="h-5 w-5 animate-scale-in" />
+                                    <span>APPROVED</span>
                                   </>
                                 ) : (
                                   <>
-                                    <Clock className="h-4 w-4 animate-pulse" />
-                                    <span>Pending</span>
+                                    <Clock className="h-5 w-5 animate-pulse" />
+                                    <span>PENDING</span>
                                   </>
                                 )}
                               </span>
                             </span>
                             
-                            {/* Success sparkle effect */}
+                            {/* Enhanced sparkle effect */}
                             {student.status === 'active' && (
-                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-ping"></div>
+                              <>
+                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-slate-900 rounded-full animate-ping"></div>
+                                <div className="absolute -top-2 -right-2 w-6 h-6 bg-slate-900/30 rounded-full animate-ping animation-delay-150"></div>
+                              </>
+                            )}
+                            {student.status !== 'active' && (
+                              <>
+                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full animate-ping"></div>
+                                <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500/30 rounded-full animate-ping animation-delay-150"></div>
+                              </>
                             )}
                           </div>
                         </div>
