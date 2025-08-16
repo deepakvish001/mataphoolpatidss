@@ -262,11 +262,19 @@ const StudentApprovalContent = () => {
                     <TableRow key={student.id} className={`${index % 2 === 0 ? "bg-accent/10" : "bg-background"} hover:bg-accent/20 transition-colors`}>
                       <TableCell className="text-center p-4 border-r border-border">
                         <div className="flex justify-center">
-                          <Checkbox
-                            checked={student.status === 'active'}
-                            onCheckedChange={(checked) => handleApprovalChange(student, checked as boolean)}
-                            className="w-5 h-5 data-[state=checked]:bg-accent data-[state=checked]:border-accent"
-                          />
+                          <div className="relative group">
+                            <Checkbox
+                              checked={student.status === 'active'}
+                              onCheckedChange={(checked) => handleApprovalChange(student, checked as boolean)}
+                              className="w-6 h-6 data-[state=checked]:bg-accent data-[state=checked]:border-accent data-[state=checked]:text-accent-foreground border-2 transition-all duration-200 hover:scale-110 hover:shadow-lg group-hover:border-accent/50"
+                            />
+                            {/* Status indicator */}
+                            <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full transition-all duration-200 ${
+                              student.status === 'active' 
+                                ? 'bg-accent shadow-lg' 
+                                : 'bg-secondary shadow-sm'
+                            }`}></div>
+                          </div>
                         </div>
                       </TableCell>
                       <TableCell className="p-4 border-r border-border">
@@ -302,13 +310,15 @@ const StudentApprovalContent = () => {
                         </div>
                       </TableCell>
                       <TableCell className="text-center p-4 border-r border-border">
-                        <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                          student.status === 'active' 
-                            ? 'bg-accent/20 text-accent-foreground' 
-                            : 'bg-secondary/20 text-secondary-foreground'
-                        }`}>
-                          {student.status}
-                        </span>
+                        <div className="flex justify-center">
+                          <span className={`px-4 py-2 text-sm font-semibold rounded-full border transition-all duration-200 shadow-sm ${
+                            student.status === 'active' 
+                              ? 'bg-accent/20 text-accent-foreground border-accent/30 shadow-accent/20' 
+                              : 'bg-secondary/20 text-secondary-foreground border-secondary/30 shadow-secondary/20'
+                          }`}>
+                            {student.status === 'active' ? 'Approved' : 'Pending'}
+                          </span>
+                        </div>
                       </TableCell>
                       <TableCell className="text-center p-4">
                         <div className="flex items-center justify-center space-x-2">
