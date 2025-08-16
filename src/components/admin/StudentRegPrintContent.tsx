@@ -132,85 +132,89 @@ const StudentRegPrintContent = () => {
         description: "Creating high-quality Registration Form PDF...",
       });
 
-      // Ensure layout and webfonts are fully ready
+      // Wait for any pending renders
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Ensure fonts are loaded
       if ((document as any).fonts?.ready) {
         await (document as any).fonts.ready;
       }
-      await new Promise((resolve) => setTimeout(resolve, 500));
 
       const element = registrationFormRef.current;
 
-      // Temporarily modify styles for better PDF output
-      const originalStyle = element.style.cssText;
-      element.style.cssText = `
-        ${originalStyle}
-        background: white !important;
-        width: 210mm !important;
-        min-height: 297mm !important;
-        margin: 0 !important;
-        padding: 20mm !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        font-family: 'Times New Roman', serif !important;
-        line-height: 1.4 !important;
-        color: #000 !important;
-      `;
+      // Hide screen-only elements for PDF
+      const screenOnlyElements = element.querySelectorAll('.screen-only');
+      screenOnlyElements.forEach(el => {
+        (el as HTMLElement).style.display = 'none';
+      });
 
-      // High-quality capture with better settings
+      // Wait a bit more for layout to settle
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      console.log('Capturing element:', element);
+      console.log('Element dimensions:', element.offsetWidth, 'x', element.offsetHeight);
+
+      // Enhanced capture settings for better quality
       const canvas = await html2canvas(element, {
-        scale: 4, // Higher scale for better quality
+        scale: 3, // High quality
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
-        logging: false,
-        imageTimeout: 15000,
+        logging: true, // Enable logging for debugging
+        imageTimeout: 30000,
         scrollX: 0,
         scrollY: 0,
         width: element.scrollWidth,
         height: element.scrollHeight,
         foreignObjectRendering: true,
-        removeContainer: true,
+        removeContainer: false,
+        ignoreElements: (element) => {
+          return element.classList?.contains('screen-only') || false;
+        }
       });
 
-      // Restore original styles
-      element.style.cssText = originalStyle;
+      console.log('Canvas captured:', canvas.width, 'x', canvas.height);
+
+      // Restore screen-only elements
+      screenOnlyElements.forEach(el => {
+        (el as HTMLElement).style.display = '';
+      });
 
       if (canvas.width === 0 || canvas.height === 0) {
-        throw new Error('Captured canvas has zero size');
+        throw new Error('Canvas capture failed - no content captured');
       }
 
+      // Create PDF with exact A4 dimensions
       const pdf = new jsPDF({ 
         orientation: 'portrait', 
         unit: 'mm', 
-        format: 'a4', 
+        format: 'a4',
         compress: true,
-        precision: 16,
-        userUnit: 1.0
+        precision: 16
       });
       
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-      const margin = 0; // No margin for full page
-      const usableWidthMm = pdfWidth - margin * 2;
-      const usableHeightMm = pdfHeight - margin * 2;
-
-      // Calculate how to fit the content perfectly
-      const imgData = canvas.toDataURL('image/png', 1.0); // Use PNG for better quality
+      const pdfWidth = 210; // A4 width in mm
+      const pdfHeight = 297; // A4 height in mm
+      
+      // Convert canvas to high-quality image
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      
+      // Calculate scaling to fit A4 page
       const aspectRatio = canvas.height / canvas.width;
-      let heightMm = usableWidthMm * aspectRatio;
-
-      // If content is too tall, scale it down to fit
-      if (heightMm > usableHeightMm) {
-        const scaleFactor = usableHeightMm / heightMm;
-        heightMm = usableHeightMm;
-        const widthMm = usableWidthMm * scaleFactor;
-        const xOffset = (pdfWidth - widthMm) / 2;
-        pdf.addImage(imgData, 'PNG', xOffset, margin, widthMm, heightMm, undefined, 'FAST');
-      } else {
-        // Center vertically if content is shorter than page
-        const yOffset = (pdfHeight - heightMm) / 2;
-        pdf.addImage(imgData, 'PNG', margin, yOffset, usableWidthMm, heightMm, undefined, 'FAST');
+      let imgWidth = pdfWidth;
+      let imgHeight = pdfWidth * aspectRatio;
+      
+      // If too tall, scale down to fit height
+      if (imgHeight > pdfHeight) {
+        imgHeight = pdfHeight;
+        imgWidth = pdfHeight / aspectRatio;
       }
+      
+      // Center the image on the page
+      const xOffset = (pdfWidth - imgWidth) / 2;
+      const yOffset = (pdfHeight - imgHeight) / 2;
+      
+      pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight, undefined, 'FAST');
 
       // Add metadata
       pdf.setProperties({
@@ -220,10 +224,12 @@ const StudentRegPrintContent = () => {
         creator: 'Student Management System'
       });
 
+      // Generate filename
       const currentDate = new Date().toISOString().split('T')[0];
       const sanitizedName = selectedStudent.student_name?.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_') || 'Student';
       const fileName = `${sanitizedName}_Registration_Form_${currentDate}.pdf`;
       
+      console.log('Saving PDF:', fileName);
       pdf.save(fileName);
 
       toast({
@@ -444,45 +450,58 @@ const StudentRegPrintContent = () => {
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="p-8">
-            <div ref={registrationFormRef} className="pdf-container bg-white shadow-2xl border border-gray-200" style={{ 
-              width: '210mm', 
-              minHeight: '297mm', 
-              margin: '0 auto',
-              padding: '20mm',
-              fontFamily: 'Times New Roman, serif',
-              fontSize: '14px',
-              lineHeight: '1.6',
-              color: '#000000'
-            }}>
-              {/* Selected Student Info */}
-              {selectedStudent && (
-                <div className="mb-6 p-4 bg-accent/10 rounded-lg border border-accent/20">
-                  <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center space-x-2">
-                    <UserCheck className="h-5 w-5 text-primary" />
+          <CardContent className="p-0">
+            {/* Selected Student Info - Only show on screen, not in PDF */}
+            <div className="screen-only p-6 bg-blue-50 border-b">
+              {selectedStudent ? (
+                <>
+                  <h3 className="text-lg font-semibold text-blue-800 mb-3 flex items-center space-x-2">
+                    <UserCheck className="h-5 w-5" />
                     <span>Selected Student Information</span>
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <span className="font-medium text-muted-foreground">Name:</span>
-                      <p className="text-foreground">{selectedStudent.student_name}</p>
+                      <span className="font-medium text-blue-600">Name:</span>
+                      <p className="text-blue-800">{selectedStudent.student_name}</p>
                     </div>
                     <div>
-                      <span className="font-medium text-muted-foreground">ID:</span>
-                      <p className="text-foreground">{selectedStudent.student_id}</p>
+                      <span className="font-medium text-blue-600">ID:</span>
+                      <p className="text-blue-800">{selectedStudent.student_id}</p>
                     </div>
                     <div>
-                      <span className="font-medium text-muted-foreground">Course:</span>
-                      <p className="text-foreground">{selectedStudent.course_name}</p>
+                      <span className="font-medium text-blue-600">Course:</span>
+                      <p className="text-blue-800">{selectedStudent.course_name}</p>
                     </div>
                     <div>
-                      <span className="font-medium text-muted-foreground">Center:</span>
-                      <p className="text-foreground">{selectedStudent.center_name}</p>
+                      <span className="font-medium text-blue-600">Center:</span>
+                      <p className="text-blue-800">{selectedStudent.center_name}</p>
                     </div>
                   </div>
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-blue-600 text-lg">🔍 Please search and select a student to generate registration form</p>
                 </div>
               )}
+            </div>
 
+            {/* PDF Content Container */}
+            <div 
+              ref={registrationFormRef} 
+              className="pdf-container"
+              style={{ 
+                background: 'white',
+                width: '210mm', 
+                minHeight: '297mm', 
+                margin: '0 auto',
+                padding: '15mm',
+                fontFamily: '"Times New Roman", serif',
+                fontSize: '14px',
+                lineHeight: '1.5',
+                color: '#000000',
+                boxSizing: 'border-box'
+              }}
+            >
               {/* Institute Header */}
               <div className="flex items-start justify-between mb-12" style={{ pageBreakInside: 'avoid' }}>
                 {/* Logo */}
@@ -702,6 +721,18 @@ const StudentRegPrintContent = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Screen-only controls */}
+            <div className="screen-only p-6 bg-gray-50 border-t">
+              <div className="text-center">
+                <p className="text-sm text-gray-600 mb-4">
+                  {selectedStudent ? 
+                    `Registration form ready for: ${selectedStudent.student_name}` : 
+                    'Select a student to generate registration form'
+                  }
+                </p>
               </div>
             </div>
           </CardContent>
