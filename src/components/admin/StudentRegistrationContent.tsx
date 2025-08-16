@@ -152,10 +152,10 @@ const StudentRegistrationContent = () => {
 
   if (loading) {
     return (
-      <div className="w-full max-w-none bg-white flex items-center justify-center min-h-[400px]">
+      <div className="w-full max-w-none bg-background flex items-center justify-center min-h-[400px]">
         <div className="flex flex-col items-center space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-          <p className="text-gray-600">Loading student registration...</p>
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-muted-foreground">Loading student registration...</p>
         </div>
       </div>
     );
@@ -165,57 +165,57 @@ const StudentRegistrationContent = () => {
     <div className="space-y-8">
       {/* Statistics Dashboard */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm font-medium">Total Students</p>
+                <p className="text-primary-foreground/80 text-sm font-medium">Total Students</p>
                 <p className="text-3xl font-bold">{totalStudents}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <Users className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100 text-sm font-medium">Active Students</p>
+                <p className="text-accent-foreground/80 text-sm font-medium">Active Students</p>
                 <p className="text-3xl font-bold">{activeStudents}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <UserPlus className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-purple-100 text-sm font-medium">Recent Students</p>
+                <p className="text-secondary-foreground/80 text-sm font-medium">Recent Students</p>
                 <p className="text-3xl font-bold">{recentStudents}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
+              <div className="p-3 bg-background/20 rounded-full">
                 <Calendar className="h-6 w-6" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg border-0">
+        <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-100 text-sm font-medium">Available Courses</p>
-                <p className="text-3xl font-bold">{uniqueCourses}</p>
+                <p className="text-muted-foreground/80 text-sm font-medium">Available Courses</p>
+                <p className="text-3xl font-bold text-foreground">{uniqueCourses}</p>
               </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <GraduationCap className="h-6 w-6" />
+              <div className="p-3 bg-background/20 rounded-full">
+                <GraduationCap className="h-6 w-6 text-foreground" />
               </div>
             </div>
           </CardContent>
@@ -223,10 +223,10 @@ const StudentRegistrationContent = () => {
       </div>
 
       {/* Student Registration Form */}
-      <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
-        <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
+      <Card className="shadow-elegant border-0 bg-card/95 backdrop-blur-sm">
+        <CardHeader className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground p-6">
           <CardTitle className="text-xl font-bold flex items-center space-x-3">
-            <div className="p-2 bg-white/20 rounded-lg">
+            <div className="p-2 bg-background/20 rounded-lg">
               <UserPlus className="h-5 w-5" />
             </div>
             <span>Student Registration Form</span>
@@ -234,10 +234,10 @@ const StudentRegistrationContent = () => {
         </CardHeader>
         
         <CardContent className="p-6">
-          <div className="space-y-0 border-2 border-gray-600">
+          <div className="space-y-0 border-2 border-border">
         {/* Examination Details */}
         <div className="border-collapse">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
             Examination Details / परीक्षा विवरण
           </div>
           
@@ -299,7 +299,7 @@ const StudentRegistrationContent = () => {
 
         {/* Applicant's Personal Details */}
         <div className="border-collapse">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
             Applicant's Personal Details /आवेदक का व्यक्तिगत विवरण
           </div>
 
@@ -458,7 +458,7 @@ const StudentRegistrationContent = () => {
 
         {/* Contact Details */}
         <div className="border-collapse">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
             Contact Details / संपर्क विवरण
           </div>
 
@@ -506,7 +506,7 @@ const StudentRegistrationContent = () => {
 
         {/* Address Details */}
         <div className="border-collapse">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
             Address Details / पता विवरण
           </div>
 
@@ -598,7 +598,7 @@ const StudentRegistrationContent = () => {
 
         {/* Educational/Qualification Details */}
         <div className="border-collapse">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
             Educational / Qualification Details / शैक्षिक / योग्यता का विवरण
           </div>
 
@@ -642,7 +642,7 @@ const StudentRegistrationContent = () => {
 
         {/* Identification Details */}
         <div className="border-collapse">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
             Identification Details / पहचान की सूचना
           </div>
 
@@ -701,7 +701,7 @@ const StudentRegistrationContent = () => {
 
         {/* Declaration */}
         <div className="border-collapse">
-          <div className="bg-blue-600 text-white px-4 py-2 text-sm font-medium border-b-2 border-gray-600">
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
             Declaration
           </div>
           <div className="p-4 bg-gray-50 flex justify-between items-center border-2 border-gray-600 border-t-0">
@@ -728,23 +728,23 @@ const StudentRegistrationContent = () => {
       </Card>
 
       {/* Search and Student Management Table */}
-      <Card className="shadow-2xl border-0 bg-white/95 backdrop-blur-sm">
-        <CardHeader className="bg-gradient-to-r from-gray-700 to-gray-800 text-white p-6">
+      <Card className="shadow-elegant border-0 bg-card/95 backdrop-blur-sm">
+        <CardHeader className="bg-gradient-to-r from-secondary to-secondary/80 text-secondary-foreground p-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
             <CardTitle className="text-xl font-bold flex items-center space-x-3">
-              <div className="p-2 bg-white/20 rounded-lg">
+              <div className="p-2 bg-background/20 rounded-lg">
                 <Users className="h-5 w-5" />
               </div>
               <span>Student Management ({filteredStudents.length} students)</span>
             </CardTitle>
             <div className="relative w-full sm:w-80">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search students..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/90 border-white/20 focus:border-white focus:ring-white/20"
-              />
+                <Input
+                  placeholder="Search students..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 bg-background/90 border-background/20 focus:border-background focus:ring-background/20"
+                />
             </div>
           </div>
         </CardHeader>
