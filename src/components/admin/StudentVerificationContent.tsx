@@ -376,7 +376,7 @@ const StudentVerificationContent = () => {
                       value={formData.studentName}
                       onChange={(e) => handleInputChange('studentName', e.target.value)}
                       placeholder="Enter student's complete name"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
                     />
                     <div className="text-xs text-muted-foreground">As per official documents</div>
                   </div>
@@ -389,7 +389,7 @@ const StudentVerificationContent = () => {
                       value={formData.fatherName}
                       onChange={(e) => handleInputChange('fatherName', e.target.value)}
                       placeholder="Enter father's complete name"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
                     />
                   </div>
                   <div className="space-y-2 group">
@@ -401,7 +401,7 @@ const StudentVerificationContent = () => {
                       type="date"
                       value={formData.dateOfBirth}
                       onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
                     />
                   </div>
                 </div>
@@ -422,7 +422,7 @@ const StudentVerificationContent = () => {
                       State
                     </label>
                     <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
-                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50">
+                      <SelectTrigger className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm">
                         <SelectValue placeholder="Select your state" />
                       </SelectTrigger>
                       <SelectContent className="bg-background border-border shadow-xl">
@@ -445,7 +445,7 @@ const StudentVerificationContent = () => {
                       District
                     </label>
                     <Select value={formData.district} onValueChange={(value) => handleInputChange('district', value)}>
-                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50">
+                      <SelectTrigger className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm">
                         <SelectValue placeholder="Select your district" />
                       </SelectTrigger>
                       <SelectContent className="bg-background border-border shadow-xl">
@@ -466,7 +466,7 @@ const StudentVerificationContent = () => {
                       value={formData.centerCode}
                       onChange={(e) => handleInputChange('centerCode', e.target.value)}
                       placeholder="e.g., SM11101"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
                     />
                     <div className="text-xs text-muted-foreground">Check with your training center</div>
                   </div>
@@ -491,7 +491,7 @@ const StudentVerificationContent = () => {
                       value={formData.enrollmentNo}
                       onChange={(e) => handleInputChange('enrollmentNo', e.target.value)}
                       placeholder="Enter enrollment number"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
                     />
                   </div>
                   <div className="space-y-2 group">
@@ -500,7 +500,7 @@ const StudentVerificationContent = () => {
                       Course Program
                     </label>
                     <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
-                      <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50">
+                      <SelectTrigger className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm">
                         <SelectValue placeholder="Select your course" />
                       </SelectTrigger>
                       <SelectContent className="bg-background border-border shadow-xl">
@@ -531,7 +531,7 @@ const StudentVerificationContent = () => {
                       value={formData.courseDuration}
                       onChange={(e) => handleInputChange('courseDuration', e.target.value)}
                       placeholder="e.g., 1 Year, 6 Months"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
                     />
                   </div>
                   <div className="space-y-2 group">
@@ -543,7 +543,7 @@ const StudentVerificationContent = () => {
                       value={formData.rankOrMarks}
                       onChange={(e) => handleInputChange('rankOrMarks', e.target.value)}
                       placeholder="e.g., First Class, 85%, A Grade"
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
                     />
                   </div>
                   <div className="space-y-2 group">
@@ -555,7 +555,7 @@ const StudentVerificationContent = () => {
                       type="date"
                       value={formData.admissionDate}
                       onChange={(e) => handleInputChange('admissionDate', e.target.value)}
-                      className="border-2 bg-background/50 focus:bg-background transition-all h-12 group-hover:border-primary/50"
+                      className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 group-hover:border-primary/50 shadow-sm"
                     />
                   </div>
                 </div>
@@ -674,7 +674,7 @@ const StudentVerificationContent = () => {
                     placeholder="Search by enrollment number, student name, or center code..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 pr-4 border-2 bg-background/50 focus:bg-background transition-all h-14 text-base"
+                    className="pl-12 pr-4 border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-14 text-base shadow-sm"
                   />
                   <Button 
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 h-10 bg-gradient-to-r from-primary to-primary/80 hover-scale"
@@ -685,7 +685,7 @@ const StudentVerificationContent = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
+                    <SelectTrigger className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 shadow-sm">
                       <Filter className="h-4 w-4 mr-2" />
                       <SelectValue placeholder="Status Filter" />
                     </SelectTrigger>
@@ -718,7 +718,7 @@ const StudentVerificationContent = () => {
                   </Select>
                   
                   <Select>
-                    <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
+                    <SelectTrigger className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 shadow-sm">
                       <GraduationCap className="h-4 w-4 mr-2" />
                       <SelectValue placeholder="Course Filter" />
                     </SelectTrigger>
@@ -731,7 +731,7 @@ const StudentVerificationContent = () => {
                   </Select>
                   
                   <Select>
-                    <SelectTrigger className="border-2 bg-background/50 focus:bg-background transition-all h-12">
+                    <SelectTrigger className="border-2 border-border/80 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all h-12 shadow-sm">
                       <MapPin className="h-4 w-4 mr-2" />
                       <SelectValue placeholder="Location" />
                     </SelectTrigger>
