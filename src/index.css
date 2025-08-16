@@ -368,7 +368,28 @@ All colors MUST be HSL. Clean white backgrounds, dark black text for maximum con
   .gradient-border::before {
     @apply content-[''] absolute inset-[1px] bg-background rounded-[calc(0.75rem-1px)];
   }
+
+  /* Shadow elegant utility - missing class */
+  .shadow-elegant {
+    box-shadow: 
+      0 4px 6px -1px hsl(220 100% 40% / 0.1), 
+      0 2px 4px -1px hsl(220 100% 40% / 0.06),
+      0 10px 15px -3px hsl(220 100% 40% / 0.1);
   }
+
+  /* Additional admin panel utilities */
+  .admin-card {
+    @apply bg-card/90 backdrop-blur-sm border border-border/40 rounded-lg shadow-elegant hover:shadow-xl transition-all duration-300;
+  }
+
+  .admin-gradient {
+    @apply bg-gradient-to-br from-background via-accent/5 to-primary/5;
+  }
+
+  .form-field {
+    @apply border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200;
+  }
+}
 
   /* Enhanced blinking animation for donate button */
   @keyframes donate-blink {
