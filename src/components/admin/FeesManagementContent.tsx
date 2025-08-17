@@ -219,31 +219,29 @@ const FeesManagementContent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
-      {/* Header */}
-      <div className="bg-background/80 backdrop-blur-sm border-b border-border/40 px-6 py-4">
-        <div className="flex items-center space-x-6">
-          <a href="/admin" className="text-primary hover:text-primary/80 font-medium transition-colors">
-            Home
-          </a>
-          <span className="text-muted-foreground">/</span>
-          <span className="text-foreground font-semibold">Fees Management</span>
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 p-6">
+      <div className="w-full max-w-7xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <Receipt className="h-8 w-8 text-primary" />
+            </div>
+            <span>Fees Management</span>
+          </h1>
         </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="p-6 space-y-8">
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Total Receipts */}
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="min-w-0 flex-1 pr-3">
+                <div>
                   <p className="text-primary-foreground/80 text-sm font-medium">Total Receipts</p>
                   <p className="text-3xl font-bold">{statistics.total}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
+                <div className="p-3 bg-background/20 rounded-full">
                   <FileText className="h-6 w-6" />
                 </div>
               </div>
@@ -251,14 +249,14 @@ const FeesManagementContent = () => {
           </Card>
 
           {/* Total Amount */}
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground">
+          <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="min-w-0 flex-1 pr-3">
-                  <p className="text-secondary-foreground/80 text-sm font-medium">Total Amount</p>
+                <div>
+                  <p className="text-accent-foreground/80 text-sm font-medium">Total Amount</p>
                   <p className="text-3xl font-bold" title={`₹${statistics.totalAmount.toLocaleString()}`}>{formatAmount(statistics.totalAmount)}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
+                <div className="p-3 bg-background/20 rounded-full">
                   <DollarSign className="h-6 w-6" />
                 </div>
               </div>
@@ -266,14 +264,14 @@ const FeesManagementContent = () => {
           </Card>
 
           {/* Amount Paid */}
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-green-500 to-green-600 text-white">
+          <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="min-w-0 flex-1 pr-3">
-                  <p className="text-white/80 text-sm font-medium">Amount Paid</p>
+                <div>
+                  <p className="text-secondary-foreground/80 text-sm font-medium">Amount Paid</p>
                   <p className="text-3xl font-bold" title={`₹${statistics.paidAmount.toLocaleString()}`}>{formatAmount(statistics.paidAmount)}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
+                <div className="p-3 bg-background/20 rounded-full">
                   <TrendingUp className="h-6 w-6" />
                 </div>
               </div>
@@ -281,141 +279,128 @@ const FeesManagementContent = () => {
           </Card>
 
           {/* Amount Due */}
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-red-500 to-red-600 text-white">
+          <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="min-w-0 flex-1 pr-3">
-                  <p className="text-white/80 text-sm font-medium">Amount Due</p>
-                  <p className="text-3xl font-bold" title={`₹${statistics.dueAmount.toLocaleString()}`}>{formatAmount(statistics.dueAmount)}</p>
+                <div>
+                  <p className="text-muted-foreground/80 text-sm font-medium">Amount Due</p>
+                  <p className="text-3xl font-bold text-foreground" title={`₹${statistics.dueAmount.toLocaleString()}`}>{formatAmount(statistics.dueAmount)}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
-                  <Users className="h-6 w-6" />
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Users className="h-6 w-6 text-foreground" />
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
-        {/* Form Card */}
-        <Card className="border-0 shadow-xl bg-card/50 backdrop-blur-sm">
-          <CardHeader className="pb-6">
-            <CardTitle className="text-2xl font-bold text-foreground flex items-center space-x-3">
-              <div className="p-2 bg-primary rounded-lg">
-                <Receipt className="h-6 w-6 text-primary-foreground" />
+        {/* Add/Edit Form */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <Receipt className="h-6 w-6" />
               </div>
-              <span>Enter Detail of Fee Receipt</span>
+              <span>{editingReceipt ? 'Edit Fee Receipt' : 'Enter Detail of Fee Receipt'}</span>
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="px-6 pb-6">
+          <CardContent className="p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Receipt No */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Receipt No *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Receipt No *</label>
                 <Input
                   type="text"
                   value={receiptNo}
                   onChange={(e) => setReceiptNo(e.target.value)}
-                  className="h-10 bg-background border-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                  placeholder="Enter receipt number"
                 />
               </div>
 
               {/* Franchise Name */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Franchise Name *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Franchise Name *</label>
                 <Select value={franchiseName} onValueChange={setFranchiseName}>
-                  <SelectTrigger className="h-10 bg-background border-input">
-                    <SelectValue placeholder="Select" />
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
+                    <SelectValue placeholder="Select franchise" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="franchise1">Franchise 001</SelectItem>
-                    <SelectItem value="franchise2">Franchise 002</SelectItem>
-                    <SelectItem value="franchise3">Franchise 003</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    <SelectItem value="franchise1" className="hover:bg-accent/50">Franchise 001</SelectItem>
+                    <SelectItem value="franchise2" className="hover:bg-accent/50">Franchise 002</SelectItem>
+                    <SelectItem value="franchise3" className="hover:bg-accent/50">Franchise 003</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {/* Franchise ID */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Franchise ID *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Franchise ID *</label>
                 <Input
                   type="text"
                   value={franchiseId}
                   onChange={(e) => setFranchiseId(e.target.value)}
-                  className="h-10 bg-background border-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                  placeholder="Enter franchise ID"
                 />
               </div>
 
               {/* Date */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Date *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Date *</label>
                 <Input
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="h-10 bg-background border-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
                 />
               </div>
 
               {/* Course */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Course *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Course *</label>
                 <Select value={course} onValueChange={setCourse}>
-                  <SelectTrigger className="h-10 bg-background border-input">
-                    <SelectValue placeholder="Select" />
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
+                    <SelectValue placeholder="Select course" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="basic-computer">Basic Computer Course</SelectItem>
-                    <SelectItem value="advanced-computer">Advanced Computer Course</SelectItem>
-                    <SelectItem value="programming">Programming Fundamentals</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    <SelectItem value="basic-computer" className="hover:bg-accent/50">Basic Computer Course</SelectItem>
+                    <SelectItem value="advanced-computer" className="hover:bg-accent/50">Advanced Computer Course</SelectItem>
+                    <SelectItem value="programming" className="hover:bg-accent/50">Programming Fundamentals</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {/* Student */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Student *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Student *</label>
                 <Select value={student} onValueChange={setStudent}>
-                  <SelectTrigger className="h-10 bg-background border-input">
-                    <SelectValue placeholder="Select Student" />
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
+                    <SelectValue placeholder="Select student" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="student1">John Doe</SelectItem>
-                    <SelectItem value="student2">Jane Smith</SelectItem>
-                    <SelectItem value="student3">Mike Johnson</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    <SelectItem value="student1" className="hover:bg-accent/50">John Doe</SelectItem>
+                    <SelectItem value="student2" className="hover:bg-accent/50">Jane Smith</SelectItem>
+                    <SelectItem value="student3" className="hover:bg-accent/50">Mike Johnson</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {/* Student ID */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Student ID *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Student ID *</label>
                 <Input
                   type="text"
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
-                  className="h-10 bg-background border-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                  placeholder="Enter student ID"
                 />
               </div>
 
               {/* Total fee Of Student */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Total fee Of Student *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Total fee Of Student *</label>
                 <Input
                   type="number"
                   value={totalFee}
@@ -423,15 +408,14 @@ const FeesManagementContent = () => {
                     setTotalFee(e.target.value);
                     calculateAmountDue();
                   }}
-                  className="h-10 bg-background border-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                  placeholder="Enter total fee"
                 />
               </div>
 
               {/* Amount Paid */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Amount Paid *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Amount Paid *</label>
                 <Input
                   type="number"
                   value={amountPaid}
@@ -439,83 +423,82 @@ const FeesManagementContent = () => {
                     setAmountPaid(e.target.value);
                     calculateAmountDue();
                   }}
-                  className="h-10 bg-background border-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                  placeholder="Enter amount paid"
                 />
               </div>
 
               {/* Amount Payment Details */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Amount Payment Details *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Amount Payment Details</label>
                 <Input
                   type="text"
                   value={paymentDetails}
                   onChange={(e) => setPaymentDetails(e.target.value)}
-                  className="h-10 bg-background border-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                  placeholder="Enter payment details"
                 />
               </div>
 
               {/* Amount Due */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Amount Due *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Amount Due</label>
                 <Input
                   type="number"
                   value={amountDue}
                   onChange={(e) => setAmountDue(e.target.value)}
-                  className="h-10 bg-background border-input"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
+                  placeholder="Calculated automatically"
                   readOnly
                 />
               </div>
 
               {/* Status */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Status *
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Status *</label>
                 <Select value={status} onValueChange={setStatus}>
-                  <SelectTrigger className="h-10 bg-background border-input">
+                  <SelectTrigger className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Paided">Paided</SelectItem>
-                    <SelectItem value="Pending">Pending</SelectItem>
-                    <SelectItem value="Partial">Partial</SelectItem>
+                  <SelectContent className="bg-card border-border/40">
+                    <SelectItem value="Paided" className="hover:bg-accent/50">Paided</SelectItem>
+                    <SelectItem value="Pending" className="hover:bg-accent/50">Pending</SelectItem>
+                    <SelectItem value="Partial" className="hover:bg-accent/50">Partial</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            
-            {/* Buttons */}
-            <div className="col-span-full flex flex-wrap gap-4 pt-6 border-t border-border/20">
+            {/* Submit Buttons */}
+            <div className="flex space-x-4 pt-8 border-t border-border/20">
               <Button 
                 onClick={handleAdd}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2 font-medium"
+                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg px-8"
               >
                 {editingReceipt ? "UPDATE" : "ADD"}
               </Button>
+              
               {editingReceipt && (
                 <Button 
                   onClick={handleReset}
                   variant="outline"
-                  className="border-border text-muted-foreground hover:bg-muted px-6 py-2"
+                  className="border-border/40 hover:bg-accent/20 px-8"
                 >
-                  Cancel
+                  Cancel Edit
                 </Button>
               )}
+              
               <Button 
                 onClick={handleReset}
-                variant="secondary"
-                className="px-8 py-2 font-medium"
+                variant="outline"
+                className="border-border/40 hover:bg-accent/20 px-8"
               >
                 RESET
               </Button>
+              
               <Button 
                 onClick={handlePrint}
-                className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-2 font-medium"
+                className="bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary shadow-lg px-8"
               >
                 Print
               </Button>
@@ -525,99 +508,113 @@ const FeesManagementContent = () => {
 
         {/* Receipts Table */}
         {feesReceipts.length > 0 ? (
-          <Card className="border-0 shadow-xl bg-card/50 backdrop-blur-sm">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-xl font-bold text-foreground flex items-center space-x-2">
-                <FileText className="h-5 w-5" />
-                <span>Fees Receipts ({feesReceipts.length})</span>
+          <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+            <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+              <CardTitle className="text-2xl font-bold flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                    <FileText className="h-6 w-6" />
+                  </div>
+                  <span>Fees Receipts ({feesReceipts.length})</span>
+                </div>
+                <div className="text-sm bg-background/20 px-3 py-1 rounded-full">
+                  Total: {feesReceipts.length}
+                </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-0">
-              <div className="overflow-hidden rounded-lg border border-border/20">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-muted/50 hover:bg-muted/50 border-b border-border/20">
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Actions</TableHead>
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Receipt No</TableHead>
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Franchise</TableHead>
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Student</TableHead>
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Course</TableHead>
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Total Fee</TableHead>
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Paid</TableHead>
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Due</TableHead>
-                      <TableHead className="font-semibold text-muted-foreground text-center py-4">Status</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {feesReceipts.map((receipt, index) => (
-                      <TableRow 
-                        key={receipt.id} 
-                        className={`hover:bg-muted/50 transition-colors border-b border-border/10 ${
-                          index % 2 === 0 ? "bg-background/50" : "bg-muted/20"
-                        }`}
-                      >
-                        <TableCell className="p-4 text-center">
-                          <div className="flex justify-center space-x-1">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleEdit(receipt)}
-                              className="h-8 w-8 p-0 text-primary hover:text-primary/80 hover:bg-primary/10"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleDelete(receipt.id)}
-                              className="h-8 w-8 p-0 text-destructive hover:text-destructive/80 hover:bg-destructive/10"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
+            <CardContent className="p-8">
+              <div className="border border-border/40 rounded-lg bg-background/50 overflow-hidden shadow-inner">
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground">
+                        <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">
+                          <div className="flex items-center justify-center gap-2">
+                            <Edit className="h-4 w-4" />
+                            Actions
                           </div>
-                        </TableCell>
-                        <TableCell className="p-4 text-center text-foreground font-medium">
-                          {receipt.receipt_no}
-                        </TableCell>
-                        <TableCell className="p-4 text-center text-foreground font-medium">
-                          {receipt.franchise_name}
-                        </TableCell>
-                        <TableCell className="p-4 text-center text-foreground font-medium">
-                          {receipt.student}
-                        </TableCell>
-                        <TableCell className="p-4 text-center text-foreground font-medium">
-                          {receipt.course}
-                        </TableCell>
-                        <TableCell className="p-4 text-center text-foreground font-medium">
-                          ₹{receipt.total_fee.toFixed(2)}
-                        </TableCell>
-                        <TableCell className="p-4 text-center text-foreground font-medium">
-                          ₹{receipt.amount_paid.toFixed(2)}
-                        </TableCell>
-                        <TableCell className="p-4 text-center text-foreground font-medium">
-                          ₹{receipt.amount_due.toFixed(2)}
-                        </TableCell>
-                        <TableCell className="p-4 text-center">
-                          <span className={`px-2 py-1 rounded text-sm font-medium ${
-                            receipt.status === 'Paided' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
-                            receipt.status === 'Pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                            'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400'
-                          }`}>
-                            {receipt.status}
-                          </span>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                        </th>
+                        <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[150px]">Receipt No</th>
+                        <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[150px]">Franchise</th>
+                        <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[150px]">Student</th>
+                        <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[150px]">Course</th>
+                        <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">Total Fee</th>
+                        <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">Paid</th>
+                        <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-center min-w-[120px]">Due</th>
+                        <th className="px-6 py-4 text-sm font-bold text-center min-w-[120px]">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {feesReceipts.map((receipt, index) => (
+                        <tr 
+                          key={receipt.id} 
+                          className={`border-b border-border/20 hover:bg-accent/20 transition-colors ${
+                            index % 2 === 0 ? "bg-background/30" : "bg-accent/5"
+                          }`}
+                        >
+                          <td className="border-r border-border/20 px-6 py-4">
+                            <div className="flex justify-center space-x-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleEdit(receipt)}
+                                className="h-8 w-8 p-0 text-primary hover:text-primary/80 hover:bg-primary/10"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleDelete(receipt.id)}
+                                className="h-8 w-8 p-0 text-destructive hover:text-destructive/80 hover:bg-destructive/10"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground font-medium">
+                            {receipt.receipt_no}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground font-medium">
+                            {receipt.franchise_name}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground font-medium">
+                            {receipt.student}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground font-medium">
+                            {receipt.course}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground font-medium">
+                            ₹{receipt.total_fee.toFixed(2)}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground font-medium">
+                            ₹{receipt.amount_paid.toFixed(2)}
+                          </td>
+                          <td className="border-r border-border/20 px-6 py-4 text-center text-foreground font-medium">
+                            ₹{receipt.amount_due.toFixed(2)}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            <span className={`px-2 py-1 rounded text-sm font-medium ${
+                              receipt.status === 'Paided' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
+                              receipt.status === 'Pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400' :
+                              'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400'
+                            }`}>
+                              {receipt.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </CardContent>
           </Card>
         ) : (
-          <Card className="border-0 shadow-xl bg-card/50 backdrop-blur-sm">
+          <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
             <CardContent className="p-12 text-center">
-              <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
-                <FileText className="w-12 h-12 text-muted-foreground" />
+              <div className="mx-auto w-24 h-24 bg-muted/20 rounded-full flex items-center justify-center mb-4">
+                <Receipt className="w-12 h-12 text-muted-foreground" />
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-2">No Receipts Found</h3>
               <p className="text-muted-foreground">No fee receipts have been added yet. Create your first receipt using the form above.</p>
