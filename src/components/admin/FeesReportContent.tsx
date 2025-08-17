@@ -124,6 +124,16 @@ const FeesReportContent = () => {
     return filtered;
   }, [feesData, searchTerm, filterCourse, filterStatus]);
 
+  // Helper function to format large numbers
+  const formatAmount = (amount: number) => {
+    if (amount >= 100000) {
+      return `₹${(amount / 100000).toFixed(1)}L`; // Lakh format
+    } else if (amount >= 1000) {
+      return `₹${(amount / 1000).toFixed(1)}K`; // Thousand format
+    }
+    return `₹${amount.toLocaleString()}`;
+  };
+
   // Calculate statistics
   const statistics = useMemo(() => {
     const total = filteredData.length;
@@ -184,7 +194,7 @@ const FeesReportContent = () => {
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1 pr-3">
                   <p className="text-accent-foreground/80 text-sm font-medium">Total Amount</p>
-                  <p className="text-3xl font-bold break-words overflow-hidden">₹{statistics.totalAmount.toLocaleString()}</p>
+                  <p className="text-3xl font-bold" title={`₹${statistics.totalAmount.toLocaleString()}`}>{formatAmount(statistics.totalAmount)}</p>
                 </div>
                 <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
                   <DollarSign className="h-6 w-6" />
@@ -198,7 +208,7 @@ const FeesReportContent = () => {
               <div className="flex items-center justify-between">
                 <div className="min-w-0 flex-1 pr-3">
                   <p className="text-secondary-foreground/80 text-sm font-medium">Amount Paid</p>
-                  <p className="text-3xl font-bold break-words overflow-hidden">₹{statistics.paidAmount.toLocaleString()}</p>
+                  <p className="text-3xl font-bold" title={`₹${statistics.paidAmount.toLocaleString()}`}>{formatAmount(statistics.paidAmount)}</p>
                 </div>
                 <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
                   <DollarSign className="h-6 w-6" />
