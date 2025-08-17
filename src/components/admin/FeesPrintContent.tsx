@@ -410,11 +410,13 @@ const FeesPrintContent = () => {
                 <span>Fee Receipt Certificate</span>
               </div>
               <Button 
-                onClick={handlePrintReceipt}
+                onClick={generateReceiptPDF}
+                disabled={!selectedRecord || isGeneratingPDF}
                 className="bg-background/20 hover:bg-background/30 text-accent-foreground border-background/30"
                 variant="outline"
               >
-                Print Receipt
+                <FileDown className="h-4 w-4 mr-2" />
+                {isGeneratingPDF ? "Generating PDF..." : "Generate Professional PDF"}
               </Button>
             </CardTitle>
           </CardHeader>
