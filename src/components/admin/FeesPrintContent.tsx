@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Search, Printer, FileText, Users, TrendingUp, Calculator, FileDown, Loader2, Receipt } from "lucide-react";
+import { Search, FileText, Users, TrendingUp, Calculator, FileDown, Loader2, Receipt } from "lucide-react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -28,6 +27,7 @@ const FeesPrintContent = () => {
   const [searchResults, setSearchResults] = useState<FeesReceiptData[]>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const receiptRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
@@ -74,28 +74,28 @@ const FeesPrintContent = () => {
 
   const stats = [
     {
-      title: "Total Receipts",
-      value: sampleReceipts.length.toString(),
-      icon: FileText,
+      title: "Search Results",
+      value: searchResults.length.toString(),
+      icon: Search,
       color: "from-primary to-primary/80"
     },
     {
-      title: "Students Enrolled",
-      value: sampleReceipts.length.toString(),
+      title: "Selected Receipt",
+      value: selectedReceipt ? '1' : '0',
       icon: Users,
-      color: "from-accent to-accent/80"
+      color: "from-secondary to-secondary/80"
     },
     {
       title: "Fees Collected",
       value: "₹" + sampleReceipts.reduce((sum, receipt) => sum + parseInt(receipt.feePaid), 0).toLocaleString(),
       icon: Calculator,
-      color: "from-secondary to-secondary/80"
+      color: "from-accent to-accent/80"
     },
     {
       title: "Pending Fees",
       value: "₹" + sampleReceipts.reduce((sum, receipt) => sum + parseInt(receipt.feeDue), 0).toLocaleString(),
       icon: TrendingUp,
-      color: "from-destructive to-destructive/80"
+      color: "from-muted to-muted/80"
     }
   ];
 
@@ -147,11 +147,34 @@ const FeesPrintContent = () => {
     });
   };
 
-  const generateProfessionalPDF = async () => {
+  const handleGenerateReceipt = () => {
     if (!selectedReceipt) {
       toast({
         title: "Error",
         description: "Please search and select a receipt first",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setGenerating(true);
+    
+    // Simulate generation process
+    setTimeout(() => {
+      toast({
+        title: "Success",
+        description: `Fee receipt generated successfully for ${selectedReceipt.studentName}`,
+      });
+      
+      setGenerating(false);
+    }, 1000);
+  };
+
+  const generateProfessionalPDF = async () => {
+    if (!selectedReceipt) {
+      toast({
+        title: "Error",
+        description: "Please select a receipt first",
         variant: "destructive"
       });
       return;
@@ -169,6 +192,11 @@ const FeesPrintContent = () => {
     try {
       setIsGeneratingPDF(true);
       
+      // First generate the receipt (simulate generation process)
+      setGenerating(true);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setGenerating(false);
+
       toast({
         title: "Generating PDF",
         description: "Creating Professional Fee Receipt PDF...",
@@ -220,7 +248,7 @@ const FeesPrintContent = () => {
         // Fits on one page
         pdf.addImage(imgData, 'PNG', margin, margin, usableWidthMm, heightMm, undefined, 'FAST');
       } else {
-        // Multi-page handling if needed
+        // Multi-page handling
         const pageHeightPx = Math.round((canvas.width * usableHeightMm) / usableWidthMm);
         let currentY = 0;
         let pageNumber = 1;
@@ -238,29 +266,36 @@ const FeesPrintContent = () => {
 
           ctx.fillStyle = '#ffffff';
           ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-          ctx.drawImage(canvas, 0, -currentY);
-          
+          ctx.drawImage(canvas, 0, currentY, canvas.width, sliceHeight, 0, 0, pageCanvas.width, pageCanvas.height);
+
           const pageImgData = pageCanvas.toDataURL('image/png');
-          pdf.addImage(pageImgData, 'PNG', margin, margin, usableWidthMm, usableHeightMm, undefined, 'FAST');
-          
+          const pageHeightMm = (sliceHeight / canvas.width) * usableWidthMm;
+          pdf.addImage(pageImgData, 'PNG', margin, margin, usableWidthMm, pageHeightMm, undefined, 'FAST');
+
+          // Add page number
+          pdf.setTextColor(120, 120, 120);
+          pdf.setFontSize(8);
+          pdf.text(`Page ${pageNumber}`, pdfWidth - 15, pdfHeight - 5, { align: 'right' });
+
           currentY += sliceHeight;
           pageNumber++;
         }
       }
 
-      const fileName = `fee_receipt_${selectedReceipt.receiptId}_${selectedReceipt.studentName.replace(/\s+/g, '_')}.pdf`;
+      const currentDate = new Date().toISOString().split('T')[0];
+      const sanitizedName = selectedReceipt.studentName?.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '_') || 'Student';
+      const fileName = `${sanitizedName}_FeeReceipt_${currentDate}.pdf`;
       pdf.save(fileName);
 
       toast({
         title: "Success",
-        description: "Fee receipt PDF generated successfully!",
+        description: "Professional Fee Receipt PDF generated successfully!",
       });
-
     } catch (error: any) {
       console.error('PDF generation error:', error);
       toast({
         title: "Error",
-        description: `Failed to generate PDF: ${error.message}`,
+        description: `Failed to generate PDF: ${error?.message || 'Unknown error'}`,
         variant: "destructive"
       });
     } finally {
@@ -292,6 +327,14 @@ const FeesPrintContent = () => {
             </div>
             <span>Fee Receipt Print</span>
           </h1>
+          <Button 
+            onClick={generateProfessionalPDF}
+            disabled={!selectedReceipt || isGeneratingPDF || generating}
+            className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-elegant px-8 py-3 text-base"
+          >
+            <FileDown className="h-5 w-5 mr-2" />
+            {isGeneratingPDF || generating ? "Generating PDF..." : "Generate Professional PDF"}
+          </Button>
         </div>
 
         {/* Statistics Dashboard */}
@@ -314,97 +357,121 @@ const FeesPrintContent = () => {
         </div>
 
         {/* Search Section */}
-        <Card className="shadow-elegant border-0 bg-card/95 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold text-foreground flex items-center space-x-2">
-              <Search className="h-5 w-5 text-primary" />
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <Search className="h-6 w-6" />
+              </div>
               <span>Search Receipt</span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex space-x-4">
-              <div className="flex-1">
-                <Label htmlFor="search" className="text-sm font-medium text-muted-foreground">
-                  Search by Student Name, ID, or Receipt ID
-                </Label>
+          <CardContent className="p-8">
+            <div className="flex gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
-                  id="search"
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  placeholder="Enter search term..."
-                  className="mt-1"
+                  className="pl-10 border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 h-12 text-base"
+                  placeholder="Enter Student Name, ID, or Receipt ID"
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
-              <div className="flex items-end">
-                <Button 
-                  onClick={handleSearch}
-                  disabled={loading}
-                  className="bg-primary hover:bg-primary/90"
-                >
-                  {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Search className="h-4 w-4 mr-2" />}
-                  Search
-                </Button>
-              </div>
+              <Button 
+                onClick={handleSearch}
+                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg px-8 h-12"
+                disabled={loading}
+              >
+                {loading ? "Searching..." : "Search"}
+              </Button>
             </div>
-
-            {/* Search Results */}
-            {showSearchResults && (
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-4">Search Results ({searchResults.length})</h3>
-                {searchResults.length > 0 ? (
-                  <div className="grid gap-4">
-                    {searchResults.map((receipt) => (
-                      <Card key={receipt.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => handleSelectReceipt(receipt)}>
-                        <CardContent className="p-4">
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <h4 className="font-semibold">{receipt.studentName}</h4>
-                              <p className="text-sm text-muted-foreground">Receipt: {receipt.receiptId} | Student ID: {receipt.studentId}</p>
-                              <p className="text-sm text-muted-foreground">Course: {receipt.course}</p>
-                            </div>
-                            <Badge variant="secondary">Click to Select</Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-muted-foreground">No receipts found matching your search criteria.</p>
-                )}
-              </div>
-            )}
           </CardContent>
         </Card>
 
-        {/* Selected Receipt Actions */}
-        {selectedReceipt && (
-          <Card className="shadow-elegant border-0 bg-card/95 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-xl font-semibold text-foreground flex items-center justify-between">
-                <span>Selected Receipt: {selectedReceipt.receiptId}</span>
-                <Button 
-                  onClick={generateProfessionalPDF}
-                  disabled={isGeneratingPDF}
-                  className="bg-secondary hover:bg-secondary/90"
-                >
-                  {isGeneratingPDF ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                      Generating PDF...
-                    </>
-                  ) : (
-                    <>
-                      <FileDown className="h-4 w-4 mr-2" />
-                      Generate PDF
-                    </>
-                  )}
-                </Button>
+        {/* Search Results */}
+        {showSearchResults && searchResults.length > 0 && (
+          <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+            <CardHeader className="bg-gradient-to-r from-secondary via-secondary/95 to-secondary/90 text-secondary-foreground p-8">
+              <CardTitle className="text-2xl font-bold flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                    <Users className="h-6 w-6" />
+                  </div>
+                  <span>Search Results ({searchResults.length})</span>
+                </div>
+                <Badge className="bg-background/20 text-secondary-foreground border-background/30">
+                  Found: {searchResults.length}
+                </Badge>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-sm text-muted-foreground mb-4">
-                Student: {selectedReceipt.studentName} | Course: {selectedReceipt.course}
+            <CardContent className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {searchResults.map((receipt) => (
+                  <Card key={receipt.id} className="hover:shadow-lg transition-all duration-300 border-border/40 bg-background/50">
+                    <CardContent className="p-6">
+                      <div className="space-y-3">
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Student Name</p>
+                          <p className="font-semibold text-foreground">{receipt.studentName}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Receipt ID</p>
+                          <p className="text-foreground">{receipt.receiptId}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Course</p>
+                          <Badge variant="secondary" className="text-xs">{receipt.course}</Badge>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Student ID</p>
+                          <p className="text-muted-foreground text-sm">{receipt.studentId}</p>
+                        </div>
+                        <Button 
+                          onClick={() => handleSelectReceipt(receipt)}
+                          className="w-full mt-4 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary"
+                          size="sm"
+                        >
+                          Select Receipt
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Selected Receipt Information */}
+        {selectedReceipt && (
+          <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+            <CardHeader className="bg-gradient-to-r from-accent via-accent/95 to-accent/90 text-accent-foreground p-8">
+              <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+                <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                  <Receipt className="h-6 w-6" />
+                </div>
+                <span>Selected Receipt: {selectedReceipt.receiptId}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Student Name</p>
+                  <p className="text-lg font-semibold text-foreground">{selectedReceipt.studentName}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Course</p>
+                  <p className="text-lg font-semibold text-foreground">{selectedReceipt.course}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Fee Paid</p>
+                  <p className="text-lg font-semibold text-green-600">₹{parseInt(selectedReceipt.feePaid).toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Payment Method</p>
+                  <Badge variant="outline" className="mt-1">{selectedReceipt.paymentMethod}</Badge>
+                </div>
               </div>
             </CardContent>
           </Card>
