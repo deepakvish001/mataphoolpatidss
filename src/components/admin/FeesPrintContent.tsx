@@ -237,14 +237,18 @@ const FeesPrintContent = () => {
             </div>
             <span>Fees Print & Receipt</span>
           </h1>
-          <Button 
-            onClick={generateReceiptPDF}
-            disabled={!selectedRecord || isGeneratingPDF}
-            className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-elegant px-8 py-3 text-base"
-          >
-            <FileDown className="h-5 w-5 mr-2" />
-            {isGeneratingPDF ? "Generating PDF..." : "Generate Professional PDF"}
-          </Button>
+          <div className="flex items-center">
+            <Button 
+              onClick={generateReceiptPDF}
+              disabled={!selectedRecord || isGeneratingPDF}
+              className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-elegant px-8 py-3 text-base h-12 min-w-[220px] flex items-center justify-center"
+            >
+              <FileDown className="h-5 w-5 mr-2 flex-shrink-0" />
+              <span className="font-medium">
+                {isGeneratingPDF ? "Generating PDF..." : "Generate Professional PDF"}
+              </span>
+            </Button>
+          </div>
         </div>
 
         {/* Statistics Dashboard */}
