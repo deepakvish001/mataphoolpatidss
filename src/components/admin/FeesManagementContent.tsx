@@ -26,8 +26,87 @@ interface FeesReceipt {
 }
 
 const FeesManagementContent = () => {
+  // Sample data for demonstration
+  const sampleData: FeesReceipt[] = [
+    {
+      id: "1",
+      receipt_no: "REC001",
+      franchise_name: "Franchise 001",
+      franchise_id: "FR001",
+      receipt_date: "2024-01-15",
+      course: "Basic Computer Course",
+      student: "John Doe",
+      student_id: "STU001",
+      total_fee: 25000,
+      amount_paid: 15000,
+      payment_details: "Online Transfer",
+      amount_due: 10000,
+      status: "Partial"
+    },
+    {
+      id: "2",
+      receipt_no: "REC002",
+      franchise_name: "Franchise 002",
+      franchise_id: "FR002",
+      receipt_date: "2024-01-16",
+      course: "Advanced Computer Course",
+      student: "Jane Smith",
+      student_id: "STU002",
+      total_fee: 35000,
+      amount_paid: 35000,
+      payment_details: "Cash Payment",
+      amount_due: 0,
+      status: "Paided"
+    },
+    {
+      id: "3",
+      receipt_no: "REC003",
+      franchise_name: "Franchise 001",
+      franchise_id: "FR001",
+      receipt_date: "2024-01-17",
+      course: "Programming Fundamentals",
+      student: "Mike Johnson",
+      student_id: "STU003",
+      total_fee: 45000,
+      amount_paid: 0,
+      payment_details: "Pending",
+      amount_due: 45000,
+      status: "Pending"
+    },
+    {
+      id: "4",
+      receipt_no: "REC004",
+      franchise_name: "Franchise 003",
+      franchise_id: "FR003",
+      receipt_date: "2024-01-18",
+      course: "Basic Computer Course",
+      student: "Sarah Wilson",
+      student_id: "STU004",
+      total_fee: 25000,
+      amount_paid: 25000,
+      payment_details: "UPI Payment",
+      amount_due: 0,
+      status: "Paided"
+    },
+    {
+      id: "5",
+      receipt_no: "REC005",
+      franchise_name: "Franchise 002",
+      franchise_id: "FR002",
+      receipt_date: "2024-01-19",
+      course: "Advanced Computer Course",
+      student: "David Brown",
+      student_id: "STU005",
+      total_fee: 35000,
+      amount_paid: 20000,
+      payment_details: "Bank Transfer",
+      amount_due: 15000,
+      status: "Partial"
+    }
+  ];
+
   const {
-    data: feesReceipts,
+    data: feesReceipts = sampleData,
     loading,
     create,
     update,
@@ -42,7 +121,7 @@ const FeesManagementContent = () => {
     tableName: 'fees_receipts'
   });
 
-  const [receiptNo, setReceiptNo] = useState("ReceiptNo 6");
+  const [receiptNo, setReceiptNo] = useState(`REC${String((sampleData.length || 0) + 1).padStart(3, '0')}`);
   const [franchiseName, setFranchiseName] = useState("");
   const [franchiseId, setFranchiseId] = useState("");
   const [date, setDate] = useState("");
@@ -53,7 +132,7 @@ const FeesManagementContent = () => {
   const [amountPaid, setAmountPaid] = useState("");
   const [paymentDetails, setPaymentDetails] = useState("");
   const [amountDue, setAmountDue] = useState("");
-  const [status, setStatus] = useState("Paided");
+  const [status, setStatus] = useState("Pending");
 
   const [editingReceipt, setEditingReceipt] = useState<FeesReceipt | null>(null);
 
@@ -144,7 +223,7 @@ const FeesManagementContent = () => {
   };
 
   const handleReset = () => {
-    setReceiptNo(`ReceiptNo ${feesReceipts.length + 2}`);
+    setReceiptNo(`REC${String(feesReceipts.length + 1).padStart(3, '0')}`);
     setFranchiseName("");
     setFranchiseId("");
     setDate("");
@@ -155,13 +234,10 @@ const FeesManagementContent = () => {
     setAmountPaid("");
     setPaymentDetails("");
     setAmountDue("");
-    setStatus("Paided");
+    setStatus("Pending");
     setEditingReceipt(null);
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this receipt?")) return;
@@ -494,13 +570,6 @@ const FeesManagementContent = () => {
                 className="border-border/40 hover:bg-accent/20 px-8"
               >
                 RESET
-              </Button>
-              
-              <Button 
-                onClick={handlePrint}
-                className="bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary shadow-lg px-8"
-              >
-                Print
               </Button>
             </div>
           </CardContent>
