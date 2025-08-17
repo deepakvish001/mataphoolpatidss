@@ -164,60 +164,58 @@ const FeesReportContent = () => {
         </div>
 
         {/* Statistics Dashboard */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
-            <CardContent className="p-4 lg:p-6">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="min-w-0 flex-1">
-                  <p className="text-primary-foreground/80 text-xs lg:text-sm font-medium truncate">Total Records</p>
-                  <p className="text-xl lg:text-3xl font-bold truncate">{statistics.total}</p>
+                <div>
+                  <p className="text-primary-foreground/80 text-sm font-medium">Total Records</p>
+                  <p className="text-3xl font-bold">{statistics.total}</p>
                 </div>
-                <div className="p-2 lg:p-3 bg-background/20 rounded-full flex-shrink-0 ml-2">
-                  <Receipt className="h-4 w-4 lg:h-6 lg:w-6" />
+                <div className="p-3 bg-background/20 rounded-full">
+                  <Receipt className="h-6 w-6" />
                 </div>
               </div>
             </CardContent>
           </Card>
           
           <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
-            <CardContent className="p-4 lg:p-6">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="min-w-0 flex-1">
-                  <p className="text-accent-foreground/80 text-xs lg:text-sm font-medium truncate">Total Amount</p>
-                  <p className="text-lg lg:text-3xl font-bold truncate">₹{(statistics.totalAmount / 1000).toFixed(0)}K</p>
-                  <p className="text-xs text-accent-foreground/60 lg:hidden">₹{statistics.totalAmount.toLocaleString()}</p>
+                <div>
+                  <p className="text-accent-foreground/80 text-sm font-medium">Total Amount</p>
+                  <p className="text-3xl font-bold">₹{statistics.totalAmount.toLocaleString()}</p>
                 </div>
-                <div className="p-2 lg:p-3 bg-background/20 rounded-full flex-shrink-0 ml-2">
-                  <DollarSign className="h-4 w-4 lg:h-6 lg:w-6" />
+                <div className="p-3 bg-background/20 rounded-full">
+                  <DollarSign className="h-6 w-6" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
-            <CardContent className="p-4 lg:p-6">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="min-w-0 flex-1">
-                  <p className="text-secondary-foreground/80 text-xs lg:text-sm font-medium truncate">Amount Paid</p>
-                  <p className="text-lg lg:text-3xl font-bold truncate">₹{(statistics.paidAmount / 1000).toFixed(0)}K</p>
-                  <p className="text-xs text-secondary-foreground/60 lg:hidden">₹{statistics.paidAmount.toLocaleString()}</p>
+                <div>
+                  <p className="text-secondary-foreground/80 text-sm font-medium">Amount Paid</p>
+                  <p className="text-3xl font-bold">₹{statistics.paidAmount.toLocaleString()}</p>
                 </div>
-                <div className="p-2 lg:p-3 bg-background/20 rounded-full flex-shrink-0 ml-2">
-                  <DollarSign className="h-4 w-4 lg:h-6 lg:w-6" />
+                <div className="p-3 bg-background/20 rounded-full">
+                  <DollarSign className="h-6 w-6" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
-            <CardContent className="p-4 lg:p-6">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div className="min-w-0 flex-1">
-                  <p className="text-muted-foreground/80 text-xs lg:text-sm font-medium truncate">Collection Rate</p>
-                  <p className="text-xl lg:text-3xl font-bold text-foreground truncate">{statistics.collectionRate}%</p>
+                <div>
+                  <p className="text-muted-foreground/80 text-sm font-medium">Collection Rate</p>
+                  <p className="text-3xl font-bold text-foreground">{statistics.collectionRate}%</p>
                 </div>
-                <div className="p-2 lg:p-3 bg-background/20 rounded-full flex-shrink-0 ml-2">
-                  <TrendingUp className="h-4 w-4 lg:h-6 lg:w-6 text-foreground" />
+                <div className="p-3 bg-background/20 rounded-full">
+                  <TrendingUp className="h-6 w-6 text-foreground" />
                 </div>
               </div>
             </CardContent>
