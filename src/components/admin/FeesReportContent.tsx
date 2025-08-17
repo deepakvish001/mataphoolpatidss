@@ -164,58 +164,60 @@ const FeesReportContent = () => {
         </div>
 
         {/* Statistics Dashboard */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
-            <CardContent className="p-6">
+            <CardContent className="p-4 lg:p-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-primary-foreground/80 text-sm font-medium">Total Records</p>
-                  <p className="text-3xl font-bold">{statistics.total}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-primary-foreground/80 text-xs lg:text-sm font-medium truncate">Total Records</p>
+                  <p className="text-xl lg:text-3xl font-bold truncate">{statistics.total}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full">
-                  <Receipt className="h-6 w-6" />
+                <div className="p-2 lg:p-3 bg-background/20 rounded-full flex-shrink-0 ml-2">
+                  <Receipt className="h-4 w-4 lg:h-6 lg:w-6" />
                 </div>
               </div>
             </CardContent>
           </Card>
           
           <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
-            <CardContent className="p-6">
+            <CardContent className="p-4 lg:p-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-accent-foreground/80 text-sm font-medium">Total Amount</p>
-                  <p className="text-3xl font-bold">₹{statistics.totalAmount.toLocaleString()}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-accent-foreground/80 text-xs lg:text-sm font-medium truncate">Total Amount</p>
+                  <p className="text-lg lg:text-3xl font-bold truncate">₹{(statistics.totalAmount / 1000).toFixed(0)}K</p>
+                  <p className="text-xs text-accent-foreground/60 lg:hidden">₹{statistics.totalAmount.toLocaleString()}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full">
-                  <DollarSign className="h-6 w-6" />
+                <div className="p-2 lg:p-3 bg-background/20 rounded-full flex-shrink-0 ml-2">
+                  <DollarSign className="h-4 w-4 lg:h-6 lg:w-6" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
-            <CardContent className="p-6">
+            <CardContent className="p-4 lg:p-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-secondary-foreground/80 text-sm font-medium">Amount Paid</p>
-                  <p className="text-3xl font-bold">₹{statistics.paidAmount.toLocaleString()}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-secondary-foreground/80 text-xs lg:text-sm font-medium truncate">Amount Paid</p>
+                  <p className="text-lg lg:text-3xl font-bold truncate">₹{(statistics.paidAmount / 1000).toFixed(0)}K</p>
+                  <p className="text-xs text-secondary-foreground/60 lg:hidden">₹{statistics.paidAmount.toLocaleString()}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full">
-                  <DollarSign className="h-6 w-6" />
+                <div className="p-2 lg:p-3 bg-background/20 rounded-full flex-shrink-0 ml-2">
+                  <DollarSign className="h-4 w-4 lg:h-6 lg:w-6" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
-            <CardContent className="p-6">
+            <CardContent className="p-4 lg:p-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-muted-foreground/80 text-sm font-medium">Collection Rate</p>
-                  <p className="text-3xl font-bold text-foreground">{statistics.collectionRate}%</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-muted-foreground/80 text-xs lg:text-sm font-medium truncate">Collection Rate</p>
+                  <p className="text-xl lg:text-3xl font-bold text-foreground truncate">{statistics.collectionRate}%</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full">
-                  <TrendingUp className="h-6 w-6 text-foreground" />
+                <div className="p-2 lg:p-3 bg-background/20 rounded-full flex-shrink-0 ml-2">
+                  <TrendingUp className="h-4 w-4 lg:h-6 lg:w-6 text-foreground" />
                 </div>
               </div>
             </CardContent>
@@ -471,22 +473,22 @@ const FeesReportContent = () => {
           </CardHeader>
           
           <CardContent className="p-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
-                <div className="text-3xl font-bold text-blue-700 mb-2">₹{statistics.totalAmount.toLocaleString()}</div>
-                <div className="text-sm font-medium text-blue-600">Total Amount</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="text-center p-4 lg:p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
+                <div className="text-xl lg:text-3xl font-bold text-blue-700 mb-2 break-words">₹{statistics.totalAmount.toLocaleString()}</div>
+                <div className="text-xs lg:text-sm font-medium text-blue-600">Total Amount</div>
               </div>
-              <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
-                <div className="text-3xl font-bold text-green-700 mb-2">₹{statistics.paidAmount.toLocaleString()}</div>
-                <div className="text-sm font-medium text-green-600">Amount Collected</div>
+              <div className="text-center p-4 lg:p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
+                <div className="text-xl lg:text-3xl font-bold text-green-700 mb-2 break-words">₹{statistics.paidAmount.toLocaleString()}</div>
+                <div className="text-xs lg:text-sm font-medium text-green-600">Amount Collected</div>
               </div>
-              <div className="text-center p-6 bg-gradient-to-br from-red-50 to-red-100 rounded-xl border border-red-200">
-                <div className="text-3xl font-bold text-red-700 mb-2">₹{statistics.dueAmount.toLocaleString()}</div>
-                <div className="text-sm font-medium text-red-600">Amount Due</div>
+              <div className="text-center p-4 lg:p-6 bg-gradient-to-br from-red-50 to-red-100 rounded-xl border border-red-200">
+                <div className="text-xl lg:text-3xl font-bold text-red-700 mb-2 break-words">₹{statistics.dueAmount.toLocaleString()}</div>
+                <div className="text-xs lg:text-sm font-medium text-red-600">Amount Due</div>
               </div>
-              <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
-                <div className="text-3xl font-bold text-purple-700 mb-2">{statistics.collectionRate}%</div>
-                <div className="text-sm font-medium text-purple-600">Collection Rate</div>
+              <div className="text-center p-4 lg:p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
+                <div className="text-xl lg:text-3xl font-bold text-purple-700 mb-2">{statistics.collectionRate}%</div>
+                <div className="text-xs lg:text-sm font-medium text-purple-600">Collection Rate</div>
               </div>
             </div>
           </CardContent>
