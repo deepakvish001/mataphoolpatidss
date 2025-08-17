@@ -168,11 +168,11 @@ const FeesReportContent = () => {
           <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="min-w-0 flex-1 pr-3">
                   <p className="text-primary-foreground/80 text-sm font-medium">Total Records</p>
-                  <p className="text-3xl font-bold">{statistics.total}</p>
+                  <p className="text-3xl font-bold break-words">{statistics.total}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full">
+                <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
                   <Receipt className="h-6 w-6" />
                 </div>
               </div>
@@ -182,11 +182,11 @@ const FeesReportContent = () => {
           <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="min-w-0 flex-1 pr-3">
                   <p className="text-accent-foreground/80 text-sm font-medium">Total Amount</p>
-                  <p className="text-3xl font-bold">₹{statistics.totalAmount.toLocaleString()}</p>
+                  <p className="text-3xl font-bold break-words overflow-hidden">₹{statistics.totalAmount.toLocaleString()}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full">
+                <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
                   <DollarSign className="h-6 w-6" />
                 </div>
               </div>
@@ -196,11 +196,11 @@ const FeesReportContent = () => {
           <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="min-w-0 flex-1 pr-3">
                   <p className="text-secondary-foreground/80 text-sm font-medium">Amount Paid</p>
-                  <p className="text-3xl font-bold">₹{statistics.paidAmount.toLocaleString()}</p>
+                  <p className="text-3xl font-bold break-words overflow-hidden">₹{statistics.paidAmount.toLocaleString()}</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full">
+                <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
                   <DollarSign className="h-6 w-6" />
                 </div>
               </div>
@@ -210,11 +210,11 @@ const FeesReportContent = () => {
           <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="min-w-0 flex-1 pr-3">
                   <p className="text-muted-foreground/80 text-sm font-medium">Collection Rate</p>
-                  <p className="text-3xl font-bold text-foreground">{statistics.collectionRate}%</p>
+                  <p className="text-3xl font-bold text-foreground break-words">{statistics.collectionRate}%</p>
                 </div>
-                <div className="p-3 bg-background/20 rounded-full">
+                <div className="p-3 bg-background/20 rounded-full flex-shrink-0">
                   <TrendingUp className="h-6 w-6 text-foreground" />
                 </div>
               </div>
