@@ -24,64 +24,64 @@ type FeeRecord = {
   created_at: string;
 };
 
+// Sample data for demonstration
+const sampleFeeRecords: FeeRecord[] = [
+  {
+    id: "1",
+    student_id: "STU001",
+    student_name: "Rahul Kumar",
+    course_name: "Computer Applications",
+    roll_number: "CA2024001",
+    total_fee: 15000,
+    fee_paid: 10000,
+    fee_due: 5000,
+    payment_date: "2024-01-15",
+    receipt_id: "RCP001",
+    payment_mode: "Online",
+    status: "Partial",
+    created_at: "2024-01-15T10:30:00Z"
+  },
+  {
+    id: "2",
+    student_id: "STU002",
+    student_name: "Priya Singh",
+    course_name: "Digital Marketing",
+    roll_number: "DM2024002",
+    total_fee: 12000,
+    fee_paid: 12000,
+    fee_due: 0,
+    payment_date: "2024-01-20",
+    receipt_id: "RCP002",
+    payment_mode: "Cash",
+    status: "Paid",
+    created_at: "2024-01-20T11:15:00Z"
+  },
+  {
+    id: "3",
+    student_id: "STU003",
+    student_name: "Amit Sharma",
+    course_name: "Web Development",
+    roll_number: "WD2024003",
+    total_fee: 18000,
+    fee_paid: 8000,
+    fee_due: 10000,
+    payment_date: "2024-01-10",
+    receipt_id: "RCP003",
+    payment_mode: "Bank Transfer",
+    status: "Partial",
+    created_at: "2024-01-10T09:45:00Z"
+  }
+];
+
 const FeesPrintContent = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [selectedRecord, setSelectedRecord] = useState<FeeRecord | null>(null);
+  const [selectedRecord, setSelectedRecord] = useState<FeeRecord | null>(sampleFeeRecords[0]); // Default to first record
   const [searchResults, setSearchResults] = useState<FeeRecord[]>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const receiptRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-
-  // Sample data for demonstration
-  const sampleFeeRecords: FeeRecord[] = [
-    {
-      id: "1",
-      student_id: "STU001",
-      student_name: "Rahul Kumar",
-      course_name: "Computer Applications",
-      roll_number: "CA2024001",
-      total_fee: 15000,
-      fee_paid: 10000,
-      fee_due: 5000,
-      payment_date: "2024-01-15",
-      receipt_id: "RCP001",
-      payment_mode: "Online",
-      status: "Partial",
-      created_at: "2024-01-15T10:30:00Z"
-    },
-    {
-      id: "2",
-      student_id: "STU002",
-      student_name: "Priya Singh",
-      course_name: "Digital Marketing",
-      roll_number: "DM2024002",
-      total_fee: 12000,
-      fee_paid: 12000,
-      fee_due: 0,
-      payment_date: "2024-01-20",
-      receipt_id: "RCP002",
-      payment_mode: "Cash",
-      status: "Paid",
-      created_at: "2024-01-20T11:15:00Z"
-    },
-    {
-      id: "3",
-      student_id: "STU003",
-      student_name: "Amit Sharma",
-      course_name: "Web Development",
-      roll_number: "WD2024003",
-      total_fee: 18000,
-      fee_paid: 8000,
-      fee_due: 10000,
-      payment_date: "2024-01-10",
-      receipt_id: "RCP003",
-      payment_mode: "Bank Transfer",
-      status: "Partial",
-      created_at: "2024-01-10T09:45:00Z"
-    }
-  ];
 
   const handleSearch = () => {
     if (!searchValue.trim()) {
@@ -399,28 +399,27 @@ const FeesPrintContent = () => {
           </Card>
         )}
 
-        {/* Selected Record Information & Receipt Preview */}
-        {selectedRecord && (
-          <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-accent via-accent/95 to-accent/90 text-accent-foreground p-8">
-              <CardTitle className="text-2xl font-bold flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
-                    <Receipt className="h-6 w-6" />
-                  </div>
-                  <span>Fee Receipt Preview</span>
+        {/* Selected Record Information & Receipt Preview - Always visible with default data */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-accent via-accent/95 to-accent/90 text-accent-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                  <Receipt className="h-6 w-6" />
                 </div>
-                <Button 
-                  onClick={handlePrintReceipt}
-                  className="bg-background/20 hover:bg-background/30 text-accent-foreground border-background/30"
-                  variant="outline"
-                >
-                  Print Receipt
-                </Button>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-8">
-              {/* Receipt Preview */}
+                <span>Fee Receipt Certificate</span>
+              </div>
+              <Button 
+                onClick={handlePrintReceipt}
+                className="bg-background/20 hover:bg-background/30 text-accent-foreground border-background/30"
+                variant="outline"
+              >
+                Print Receipt
+              </Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-8">
+            {selectedRecord && (
               <div ref={receiptRef} className="bg-white p-8 border shadow-lg max-w-4xl mx-auto">
                 
                 {/* Header Section with Logo */}
@@ -526,9 +525,9 @@ const FeesPrintContent = () => {
                 </div>
 
               </div>
-            </CardContent>
-          </Card>
-        )}
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
