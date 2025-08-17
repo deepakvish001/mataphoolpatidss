@@ -334,14 +334,6 @@ const FeesPrintContent = () => {
             </div>
             <span>Fee Receipt Print</span>
           </h1>
-          <Button 
-            onClick={generateProfessionalPDF}
-            disabled={!selectedReceipt || isGeneratingPDF || generating}
-            className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-elegant px-8 py-3 text-base"
-          >
-            <FileDown className="h-5 w-5 mr-2" />
-            {isGeneratingPDF || generating ? "Generating PDF..." : "Generate Professional PDF"}
-          </Button>
         </div>
 
         {/* Statistics Dashboard */}
