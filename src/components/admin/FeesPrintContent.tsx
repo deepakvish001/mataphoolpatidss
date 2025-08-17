@@ -339,15 +339,15 @@ const FeesPrintContent = () => {
         {/* Statistics Dashboard */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
-            <Card key={index} className={`bg-gradient-to-br ${stat.color} text-primary-foreground shadow-elegant border-0`}>
+            <Card key={index} className={`bg-gradient-to-br ${stat.color} text-primary-foreground shadow-elegant border-0 hover:shadow-xl transition-all duration-300`}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-primary-foreground/80 text-sm font-medium">{stat.title}</p>
-                    <p className="text-3xl font-bold">{stat.value}</p>
+                    <p className="text-3xl font-bold text-white">{stat.value}</p>
                   </div>
-                  <div className="p-3 bg-background/20 rounded-full">
-                    <stat.icon className="h-6 w-6" />
+                  <div className="p-3 bg-white/20 rounded-full">
+                    <stat.icon className="h-6 w-6 text-white" />
                   </div>
                 </div>
               </CardContent>
@@ -407,7 +407,7 @@ const FeesPrintContent = () => {
             <CardContent className="p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {searchResults.map((receipt) => (
-                  <Card key={receipt.id} className="hover:shadow-lg transition-all duration-300 border-border/40 bg-background/50">
+                  <Card key={receipt.id} className="hover:shadow-lg transition-all duration-300 border border-border/40 bg-background shadow-elegant">
                     <CardContent className="p-6">
                       <div className="space-y-3">
                         <div>
@@ -420,7 +420,11 @@ const FeesPrintContent = () => {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-muted-foreground">Course</p>
-                          <Badge variant="secondary" className="text-xs">{receipt.course}</Badge>
+                          <Badge variant="secondary" className="text-xs bg-secondary text-secondary-foreground">{receipt.course}</Badge>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">Amount Paid</p>
+                          <p className="text-green-600 font-bold">₹{parseInt(receipt.feePaid).toLocaleString()}</p>
                         </div>
                         <div>
                           <p className="text-sm font-medium text-muted-foreground">Student ID</p>
@@ -428,7 +432,7 @@ const FeesPrintContent = () => {
                         </div>
                         <Button 
                           onClick={() => handleSelectReceipt(receipt)}
-                          className="w-full mt-4 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary"
+                          className="w-full mt-4 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground"
                           size="sm"
                         >
                           Select Receipt
