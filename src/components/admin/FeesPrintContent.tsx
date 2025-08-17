@@ -7,6 +7,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Search, FileText, Users, TrendingUp, Calculator, FileDown, Loader2, Receipt } from "lucide-react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import indiaEmblem from "@/assets/india-emblem.png";
+import nabardLogo from "@/assets/nabard-logo.png";
 
 interface FeesReceiptData {
   id: string;
@@ -19,6 +21,11 @@ interface FeesReceiptData {
   feePaid: string;
   feeDue: string;
   paymentMethod: string;
+  transactionId?: string;
+  studentPhoto?: string;
+  academicYear?: string;
+  feesType?: string;
+  status?: string;
 }
 
 const FeesPrintContent = () => {
@@ -477,130 +484,211 @@ const FeesPrintContent = () => {
           </Card>
         )}
 
-        {/* Receipt Preview */}
-        {selectedReceipt && (
-          <Card className="shadow-elegant border-0 bg-white">
-            <CardContent className="p-0">
-              <div ref={receiptRef} className="p-8 bg-white">
-                {/* Header Section with Logo */}
-                <div className="flex items-start justify-between mb-8">
-                  {/* Logo */}
-                  <div className="flex-shrink-0">
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-pink-400 via-pink-500 to-pink-600 border-4 border-pink-700 flex items-center justify-center shadow-lg">
-                      <div className="text-center">
-                        <div className="text-sm font-bold text-white leading-tight">B.Soft</div>
-                        <div className="text-xs text-white leading-none">Computer &</div>
-                        <div className="text-xs text-white leading-none">Technical</div>
-                        <div className="text-xs text-white leading-none">Institute</div>
-                      </div>
-                    </div>
-                  </div>
+        {/* A4 Fees Receipt Preview */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-muted via-muted/95 to-muted/90 text-muted-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <Receipt className="h-6 w-6 text-foreground" />
+              </div>
+              <span className="text-foreground">Fees Receipt Preview</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-8">
+            <div className="flex justify-center mb-6">
+              <div className="flex gap-4">
+                <Button 
+                  onClick={handleGenerateReceipt}
+                  disabled={!selectedReceipt || generating}
+                  className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-elegant px-8 py-3 text-base"
+                >
+                  <Receipt className="h-5 w-5 mr-2" />
+                  {generating ? "Processing..." : "Generate Receipt"}
+                </Button>
+                <Button 
+                  onClick={generateProfessionalPDF}
+                  disabled={!selectedReceipt || generating}
+                  className="bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary shadow-elegant px-8 py-3 text-base"
+                >
+                  <FileDown className="h-5 w-5 mr-2" />
+                  {generating ? "Generating PDF..." : "Generate Professional PDF"}
+                </Button>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div
+                ref={receiptRef}
+                className="relative mx-auto bg-background w-[794px] min-h-[1123px] p-10 border-[12px] border-primary/20 rounded-md shadow-elegant"
+                style={{ transform: 'scale(0.8)', transformOrigin: 'top center' }}
+              >
+                {/* Inner decorative frame */}
+                <div className="absolute inset-4 border-2 border-border/60 rounded-md pointer-events-none" />
+                <div className="absolute inset-6 border border-border/30 rounded-sm pointer-events-none" />
 
-                  {/* Institute Header */}
-                  <div className="flex-1 text-center ml-8">
-                    <h1 className="text-3xl font-bold text-blue-600 mb-4 tracking-wider">
-                      B. Soft Computer & Technical Institute
-                    </h1>
-                    <div className="text-sm text-gray-700 mb-2">
+                {/* Watermark */}
+                <img
+                  src={nabardLogo}
+                  alt="Institute watermark logo"
+                  className="absolute inset-0 m-auto opacity-5 w-[420px] h-[420px] object-contain pointer-events-none"
+                />
+
+                {/* Header */}
+                <div className="relative flex items-start justify-between mb-6">
+                  <img src={indiaEmblem} alt="National emblem" className="h-16 w-auto opacity-90" />
+                  <div className="text-center flex-1 px-4">
+                    <h1 className="text-2xl font-extrabold text-foreground">B SOFT Computer & Technical Institute</h1>
+                    <p className="text-sm text-muted-foreground">
                       Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121
+                    </p>
+                    <p className="text-xs text-muted-foreground">Email: infobinasoft@gmail.com</p>
+                  </div>
+                  <div className="h-24 w-20 border-2 border-border/60 rounded-sm overflow-hidden bg-muted/20">
+                    {selectedReceipt?.studentPhoto ? (
+                      <img
+                        src={selectedReceipt.studentPhoto}
+                        alt={`${selectedReceipt.studentName} photo`}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-full w-full flex items-center justify-center text-[10px] text-muted-foreground">Photo</div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Title */}
+                <div className="text-center mb-6">
+                  <h2 className="text-xl font-bold tracking-wide text-primary uppercase">Fees Payment Receipt</h2>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Official Receipt for Course Fees Payment
+                  </p>
+                </div>
+
+                {/* Receipt Details Section */}
+                <div className="mb-6">
+                  <div className="bg-primary/10 text-center py-2 mb-4 border border-primary/20 rounded">
+                    <h3 className="font-bold text-sm text-primary">RECEIPT INFORMATION</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Receipt Number</p>
+                      <p className="border-b border-border/60 py-2 font-semibold">{selectedReceipt?.receiptId || "-"}</p>
                     </div>
-                    <div className="text-sm text-gray-700 mb-8">
-                      infobinasoft@gmail.com
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Receipt Date</p>
+                      <p className="border-b border-border/60 py-2 font-semibold">{selectedReceipt?.date ? new Date(selectedReceipt.date).toLocaleDateString() : "-"}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Student Name</p>
+                      <p className="border-b border-border/60 py-2">{selectedReceipt?.studentName || "-"}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Student ID</p>
+                      <p className="border-b border-border/60 py-2">{selectedReceipt?.studentId || "-"}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Course</p>
+                      <p className="border-b border-border/60 py-2">{selectedReceipt?.course || "-"}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Academic Year</p>
+                      <p className="border-b border-border/60 py-2">{selectedReceipt?.academicYear || "2024-25"}</p>
                     </div>
                   </div>
                 </div>
 
-                {/* Receipt Title */}
-                <div className="text-center mb-8">
-                  <h2 className="text-xl font-bold text-gray-800 underline">
-                    Student Fee Receipt
-                  </h2>
-                </div>
-
-                {/* Receipt Details */}
-                <div className="grid grid-cols-2 gap-8 mb-8">
-                  {/* Left Column */}
-                  <div className="space-y-4">
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-24">Receipt ID:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                        {selectedReceipt.receiptId}
-                      </span>
-                    </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-24">Name:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                        {selectedReceipt.studentName}
-                      </span>
-                    </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-24">Course:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                        {selectedReceipt.course}
-                      </span>
-                    </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-24">Student ID:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                        {selectedReceipt.studentId}
-                      </span>
-                    </div>
+                {/* Payment Details */}
+                <div className="mb-6">
+                  <div className="bg-secondary/10 text-center py-2 mb-4 border border-secondary/20 rounded">
+                    <h3 className="font-bold text-sm text-secondary-foreground">PAYMENT DETAILS</h3>
                   </div>
-
-                  {/* Right Column */}
-                  <div className="space-y-4">
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-16">Date:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                        {new Date(selectedReceipt.date).toLocaleDateString()}
-                      </span>
+                  
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Fees Type</p>
+                      <p className="border-b border-border/60 py-2">{selectedReceipt?.feesType || "Course Fees"}</p>
                     </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-20">Payment:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                        {selectedReceipt.paymentMethod}
-                      </span>
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Payment Mode</p>
+                      <p className="border-b border-border/60 py-2">{selectedReceipt?.paymentMethod || "-"}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Transaction ID</p>
+                      <p className="border-b border-border/60 py-2">{selectedReceipt?.transactionId || "N/A"}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-muted-foreground font-medium">Payment Status</p>
+                      <p className="border-b border-border/60 py-2 text-green-600 font-semibold">{selectedReceipt?.status || "Paid"}</p>
                     </div>
                   </div>
                 </div>
 
-                {/* Fee Details */}
-                <div className="space-y-4 mb-12">
-                  <div className="flex">
-                    <span className="font-medium text-gray-700 w-24">Total fee:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                      ₹{parseInt(selectedReceipt.totalFee).toLocaleString()}
-                    </span>
+                {/* Amount Breakdown */}
+                <div className="mb-6">
+                  <div className="bg-accent/10 text-center py-2 mb-4 border border-accent/20 rounded">
+                    <h3 className="font-bold text-sm text-accent-foreground">AMOUNT BREAKDOWN</h3>
                   </div>
-                  <div className="flex">
-                    <span className="font-medium text-gray-700 w-24">Fee Paid:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                      ₹{parseInt(selectedReceipt.feePaid).toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex">
-                    <span className="font-medium text-gray-700 w-24">Fee Due:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                      ₹{parseInt(selectedReceipt.feeDue).toLocaleString()}
-                    </span>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between border-b border-border/30 pb-2">
+                      <span>Course Fees:</span>
+                      <span>₹{selectedReceipt?.feePaid ? parseInt(selectedReceipt.feePaid).toLocaleString() : "0"}</span>
+                    </div>
+                    <div className="flex justify-between border-b border-border/30 pb-2">
+                      <span>GST (18%):</span>
+                      <span>₹{selectedReceipt ? (parseInt(selectedReceipt.feePaid) * 0.18).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0"}</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-lg border-t-2 border-primary/30 pt-2">
+                      <span>Total Amount:</span>
+                      <span className="text-primary">₹{selectedReceipt ? (parseInt(selectedReceipt.feePaid) * 1.18).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0"}</span>
+                    </div>
+                    {selectedReceipt && parseInt(selectedReceipt.feeDue) > 0 && (
+                      <div className="flex justify-between border-t border-border/30 pt-2 text-red-600">
+                        <span>Due Amount:</span>
+                        <span>₹{parseInt(selectedReceipt.feeDue).toLocaleString()}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                {/* Office Sign */}
-                <div className="flex justify-between">
-                  <div className="flex">
-                    <span className="font-medium text-gray-700 w-24">Student Sign:</span>
-                    <span className="border-b border-gray-400 w-40 min-h-[1.5rem]"></span>
+                {/* Payment Terms */}
+                <div className="mb-6">
+                  <div className="bg-muted/10 text-center py-2 mb-4 border border-muted/20 rounded">
+                    <h3 className="font-bold text-sm text-foreground">TERMS & CONDITIONS</h3>
                   </div>
-                  <div className="flex">
-                    <span className="font-medium text-gray-700 w-24">Office Sign:</span>
-                    <span className="border-b border-gray-400 w-40 min-h-[1.5rem]"></span>
+                  <div className="text-xs space-y-1 text-muted-foreground">
+                    <p>• This receipt is valid for official records and future reference</p>
+                    <p>• Fees once paid are non-refundable and non-transferable</p>
+                    <p>• Keep this receipt safely for all future correspondence</p>
+                    <p>• In case of any discrepancy, contact the accounts department within 7 days</p>
+                    <p>• This is a computer-generated receipt and does not require a signature</p>
                   </div>
+                </div>
+
+                {/* Verification and Signatures */}
+                <div className="mt-8 grid grid-cols-3 gap-8">
+                  <div className="text-center">
+                    <div className="border-b border-border/60 h-12 mb-2"></div>
+                    <p className="text-sm font-medium">Student Signature</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="border border-border/60 rounded px-3 py-2 font-mono text-center">
+                      FEE-{new Date().getFullYear()}-{(selectedReceipt?.receiptId || "").toString().replace(/[^A-Z0-9]/gi, "").toUpperCase()}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">Verification Code</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="border-b border-border/60 h-12 mb-2"></div>
+                    <p className="text-sm font-medium">Accounts Officer</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 text-[10px] text-muted-foreground text-center">
+                  This receipt is computer generated and does not require a physical signature. | Generated on: {new Date().toLocaleString()}
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
