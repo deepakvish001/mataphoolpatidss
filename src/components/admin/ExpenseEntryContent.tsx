@@ -42,7 +42,7 @@ const ExpenseEntryContent = () => {
 
   const [editingExpense, setEditingExpense] = useState<ExpenseEntry | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState("all");
 
   const handleEdit = (expense: ExpenseEntry) => {
     setEditingExpense(expense);
@@ -136,7 +136,7 @@ const ExpenseEntryContent = () => {
       expense.given_to.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (expense.description && expense.description.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesService = selectedService === "" || expense.service_name === selectedService;
+    const matchesService = selectedService === "all" || expense.service_name === selectedService;
     
     return matchesSearch && matchesService;
   });
@@ -395,7 +395,7 @@ const ExpenseEntryContent = () => {
                       <SelectValue placeholder="All services" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Services</SelectItem>
+                      <SelectItem value="all">All Services</SelectItem>
                       <SelectItem value="petrol">Petrol</SelectItem>
                       <SelectItem value="tea">Tea</SelectItem>
                       <SelectItem value="office-supplies">Office Supplies</SelectItem>
