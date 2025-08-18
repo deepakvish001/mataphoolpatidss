@@ -87,126 +87,218 @@ const ExpenseMasterContent = () => {
 
   if (loading) {
     return (
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardContent className="p-8 flex items-center justify-center min-h-[400px]">
-          <div className="flex flex-col items-center space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-            <p className="text-gray-600">Loading expense data...</p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background p-6">
+        <div className="max-w-7xl mx-auto">
+          <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm">
+            <CardContent className="p-12 flex items-center justify-center min-h-[600px]">
+              <div className="flex flex-col items-center space-y-6">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <p className="text-muted-foreground text-lg font-medium">Loading expense data...</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      {/* Form Card */}
-      <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-        <CardHeader className="p-8 border-b border-gray-100">
-          <CardTitle className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-            <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
-              <Receipt className="h-6 w-6 text-white" />
-            </div>
-            <span>Expense Master</span>
-          </CardTitle>
-        </CardHeader>
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Statistics Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <Card className="shadow-elegant border-0 bg-gradient-to-br from-primary/5 to-primary/10 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground text-sm font-medium">Total Services</p>
+                  <p className="text-3xl font-bold text-primary">{expenses.length}</p>
+                </div>
+                <div className="p-3 bg-primary/10 rounded-full">
+                  <Receipt className="h-6 w-6 text-primary" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-elegant border-0 bg-gradient-to-br from-secondary/5 to-secondary/10 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground text-sm font-medium">With Description</p>
+                  <p className="text-3xl font-bold text-secondary">{expenses.filter(e => e.description).length}</p>
+                </div>
+                <div className="p-3 bg-secondary/10 rounded-full">
+                  <Edit className="h-6 w-6 text-secondary" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-elegant border-0 bg-gradient-to-br from-accent/5 to-accent/10 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground text-sm font-medium">Active Services</p>
+                  <p className="text-3xl font-bold text-accent">{expenses.length}</p>
+                </div>
+                <div className="p-3 bg-accent/10 rounded-full">
+                  <Receipt className="h-6 w-6 text-accent" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-elegant border-0 bg-gradient-to-br from-destructive/5 to-destructive/10 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-muted-foreground text-sm font-medium">Management</p>
+                  <p className="text-3xl font-bold text-destructive">Active</p>
+                </div>
+                <div className="p-3 bg-destructive/10 rounded-full">
+                  <Trash2 className="h-6 w-6 text-destructive" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Form Card */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+          <CardHeader className="p-8 border-b border-border/10 bg-gradient-to-r from-primary/5 to-secondary/5">
+            <CardTitle className="text-3xl font-bold text-foreground flex items-center space-x-3">
+              <div className="p-3 bg-gradient-to-r from-primary to-primary/80 rounded-xl shadow-lg">
+                <Receipt className="h-8 w-8 text-primary-foreground" />
+              </div>
+              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Expense Master Management
+              </span>
+            </CardTitle>
+          </CardHeader>
         
-        <CardContent className="p-8">
-          <div className="space-y-6">
-            {/* Service Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Service Name *
-              </label>
-              <Input
-                type="text"
-                value={serviceName}
-                onChange={(e) => setServiceName(e.target.value)}
-                className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white"
-                placeholder="Enter service name"
-              />
-            </div>
+          <CardContent className="p-8">
+            <div className="space-y-6">
+              {/* Service Name */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-foreground">
+                  Service Name *
+                </label>
+                <Input
+                  type="text"
+                  value={serviceName}
+                  onChange={(e) => setServiceName(e.target.value)}
+                  className="h-12 border-border/20 focus:border-primary focus:ring-primary/20 rounded-lg text-foreground font-medium bg-background/50 backdrop-blur-sm transition-all duration-200"
+                  placeholder="Enter service name"
+                />
+              </div>
 
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description
-              </label>
-              <Textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="min-h-[100px] border-gray-300 focus:border-blue-500 focus:ring-blue-500/20 rounded text-gray-700 font-medium bg-white resize-none"
-                rows={4}
-                placeholder="Enter description"
-              />
-            </div>
+              {/* Description */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-foreground">
+                  Description
+                </label>
+                <Textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="min-h-[120px] border-border/20 focus:border-primary focus:ring-primary/20 rounded-lg text-foreground font-medium bg-background/50 backdrop-blur-sm resize-none transition-all duration-200"
+                  rows={4}
+                  placeholder="Enter description (optional)"
+                />
+              </div>
 
-            {/* Buttons */}
-            <div className="flex gap-4 pt-4">
-              <Button 
-                onClick={handleSubmit}
-                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                SUBMIT
-              </Button>
-              <Button 
-                onClick={handleReset}
-                variant="outline"
-                className="border-green-600 text-green-600 hover:bg-green-50 font-semibold px-8 py-3 rounded shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                RESET
-              </Button>
+              {/* Buttons */}
+              <div className="flex gap-4 pt-6">
+                <Button 
+                  onClick={handleSubmit}
+                  className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-elegant hover:shadow-lg transition-all duration-200 min-w-[120px]"
+                >
+                  {editingExpense ? "UPDATE" : "SUBMIT"}
+                </Button>
+                <Button 
+                  onClick={handleReset}
+                  variant="outline"
+                  className="border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold px-8 py-3 rounded-lg shadow-elegant hover:shadow-lg transition-all duration-200 min-w-[120px]"
+                >
+                  RESET
+                </Button>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      {/* Data Table Card */}
-      <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-500 hover:bg-blue-500">
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Service Name</TableHead>
-                <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Description</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {expenses.map((expense, index) => (
-                <TableRow key={expense.id} className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}>
-                  <TableCell className="border-2 border-gray-600 p-4">
-                    <div className="flex justify-center space-x-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEdit(expense)}
-                        className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+        {/* Data Table Card */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+          <CardHeader className="p-6 border-b border-border/10 bg-gradient-to-r from-muted/50 to-muted/30">
+            <CardTitle className="text-xl font-bold text-foreground flex items-center space-x-2">
+              <Receipt className="h-6 w-6 text-primary" />
+              <span>Expense Services Data</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="overflow-hidden rounded-b-lg">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary hover:to-primary/90 border-none">
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 text-sm">Actions</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 text-sm">Service Name</TableHead>
+                    <TableHead className="text-primary-foreground font-bold text-center py-4 text-sm">Description</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {expenses.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={3} className="text-center py-12 text-muted-foreground">
+                        <div className="flex flex-col items-center space-y-3">
+                          <Receipt className="h-12 w-12 text-muted-foreground/50" />
+                          <p className="text-lg font-medium">No expense services found</p>
+                          <p className="text-sm">Add your first expense service to get started</p>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    expenses.map((expense, index) => (
+                      <TableRow 
+                        key={expense.id} 
+                        className={`${
+                          index % 2 === 0 ? "bg-background/50" : "bg-muted/20"
+                        } hover:bg-muted/40 transition-colors duration-200 border-border/5`}
                       >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(expense.id)}
-                        className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {expense.service_name}
-                  </TableCell>
-                  <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
-                    {expense.description || "N/A"}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+                        <TableCell className="text-center p-4">
+                          <div className="flex justify-center space-x-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(expense)}
+                              className="text-primary hover:text-primary/80 hover:bg-primary/10 p-2 rounded-lg transition-all duration-200"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(expense.id)}
+                              className="text-destructive hover:text-destructive/80 hover:bg-destructive/10 p-2 rounded-lg transition-all duration-200"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center p-4 text-foreground font-medium">
+                          {expense.service_name}
+                        </TableCell>
+                        <TableCell className="text-center p-4 text-muted-foreground font-medium">
+                          {expense.description || "No description"}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
