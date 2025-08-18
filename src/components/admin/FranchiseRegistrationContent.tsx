@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Building, Edit, Trash2, Loader2 } from "lucide-react";
+import { Building, Edit, Trash2, Loader2, FileText, Users, CheckCircle, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
@@ -314,14 +314,24 @@ const FranchiseRegistrationContent = () => {
 
   if (loading) {
     return (
-      <div className="w-full max-w-none bg-gray-50 min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-none bg-gradient-to-br from-background via-background/95 to-secondary/10 min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-          <p className="text-gray-600">Loading franchise registrations...</p>
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-muted-foreground">Loading franchise registrations...</p>
         </div>
       </div>
     );
   }
+
+  // Calculate statistics
+  const totalRegistrations = franchiseRegistrations?.length || 0;
+  const pendingRegistrations = franchiseRegistrations?.filter(reg => reg.approval_status === 'pending').length || 0;
+  const approvedRegistrations = franchiseRegistrations?.filter(reg => reg.approval_status === 'approved').length || 0;
+  const thisMonthRegistrations = franchiseRegistrations?.filter(reg => {
+    const regDate = new Date(reg.created_at);
+    const now = new Date();
+    return regDate.getMonth() === now.getMonth() && regDate.getFullYear() === now.getFullYear();
+  }).length || 0;
 
   const updateInfrastructure = (roomType: string, field: string, value: string) => {
     setInfrastructureData(prev => ({
@@ -334,34 +344,104 @@ const FranchiseRegistrationContent = () => {
   };
 
   return (
-    <div className="w-full max-w-none bg-gray-50 min-h-screen">
-      {/* Header Navigation */}
-      <div className="bg-white px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-        <div className="flex items-center space-x-6">
-          <a href="/admin" className="text-blue-600 hover:text-blue-800 font-medium">
-            Home
-          </a>
+    <div className="w-full max-w-none bg-gradient-to-br from-background via-background/95 to-secondary/10 min-h-screen">
+      {/* Modern Header */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-primary-foreground">
+        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
+        <div className="relative px-6 py-8">
+          <div className="flex items-center justify-between max-w-7xl mx-auto">
+            <div className="flex items-center space-x-4">
+              <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20">
+                <Building className="h-8 w-8" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold tracking-tight">Franchise Registration</h1>
+                <p className="text-primary-foreground/80 mt-1">Manage franchise applications and registrations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Statistics Dashboard */}
+      <div className="px-6 -mt-6 relative z-10 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Total Registrations</p>
+                  <p className="text-3xl font-bold text-foreground">{totalRegistrations}</p>
+                </div>
+                <div className="p-3 rounded-full bg-primary/10">
+                  <FileText className="h-6 w-6 text-primary" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Pending Approval</p>
+                  <p className="text-3xl font-bold text-foreground">{pendingRegistrations}</p>
+                </div>
+                <div className="p-3 rounded-full bg-amber-500/10">
+                  <Users className="h-6 w-6 text-amber-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Approved</p>
+                  <p className="text-3xl font-bold text-foreground">{approvedRegistrations}</p>
+                </div>
+                <div className="p-3 rounded-full bg-green-500/10">
+                  <CheckCircle className="h-6 w-6 text-green-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">This Month</p>
+                  <p className="text-3xl font-bold text-foreground">{thisMonthRegistrations}</p>
+                </div>
+                <div className="p-3 rounded-full bg-blue-500/10">
+                  <TrendingUp className="h-6 w-6 text-blue-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="px-4 py-6 max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg">
+      <div className="px-6 max-w-7xl mx-auto space-y-8">
+        <Card className="border-0 shadow-xl bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
           
           {/* Institute Information */}
-          <div className="bg-black text-white px-6 py-3">
-            <h2 className="text-lg font-bold">Institute Information</h2>
+          <div className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground px-6 py-4 rounded-t-lg">
+            <h2 className="text-xl font-bold">Institute Information</h2>
           </div>
           
           <div className="p-6 space-y-6">
             {/* Franchise Type */}
             <div className="grid grid-cols-3 items-center gap-4">
-              <label className="text-sm font-medium bg-pink-100 p-3">
+              <label className="text-sm font-medium bg-secondary/50 text-secondary-foreground p-3 rounded-md">
                 Franchise Type *
               </label>
               <div className="col-span-2">
                 <Select value={franchiseType} onValueChange={setFranchiseType}>
-                  <SelectTrigger className="w-full border-gray-400">
+                  <SelectTrigger className="w-full border-input bg-background/60">
                     <SelectValue placeholder="Select One" />
                   </SelectTrigger>
                   <SelectContent>
@@ -374,7 +454,7 @@ const FranchiseRegistrationContent = () => {
 
             {/* Name of the Institute */}
             <div className="grid grid-cols-3 items-center gap-4">
-              <label className="text-sm font-medium bg-pink-100 p-3">
+              <label className="text-sm font-medium bg-secondary/50 text-secondary-foreground p-3 rounded-md">
                 Name of the Institute *
               </label>
               <div className="col-span-2 grid grid-cols-2 gap-4">
@@ -382,13 +462,13 @@ const FranchiseRegistrationContent = () => {
                   placeholder="Please Enter Institute Sort Name"
                   value={instituteSortName}
                   onChange={(e) => setInstituteSortName(e.target.value)}
-                  className="border-gray-400"
+                  className="border-input bg-background/60"
                 />
                 <Input
                   placeholder="Please Enter Institute Full Name"
                   value={instituteFullName}
                   onChange={(e) => setInstituteFullName(e.target.value)}
-                  className="border-gray-400"
+                  className="border-input bg-background/60"
                 />
               </div>
             </div>
@@ -1124,55 +1204,61 @@ const FranchiseRegistrationContent = () => {
               <div className="flex gap-4">
                 <Button
                   onClick={handleSubmit}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-base font-medium"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 text-base font-medium"
                 >
                   Submit Now
                 </Button>
                 <Button
                   onClick={handleReset}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-base font-medium"
+                  variant="outline"
+                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 text-base font-medium"
                 >
                   Reset Now
                 </Button>
               </div>
             </div>
           </div>
-        </div>
+        </Card>
 
         {/* Franchise Registrations Table */}
-        {franchiseRegistrations.length > 0 && (
-          <div className="mt-8">
-            <Card className="shadow-2xl border-2 border-gray-600 bg-white/90 backdrop-blur-sm">
-              <CardHeader className="p-6 border-b border-gray-100">
-                <CardTitle className="text-xl font-bold text-gray-800 flex items-center space-x-3">
-                  <div className="p-2 bg-blue-500 rounded-lg">
-                    <Building className="h-5 w-5 text-white" />
-                  </div>
-                  <span>Franchise Registrations</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
+        {franchiseRegistrations && franchiseRegistrations.length > 0 && (
+          <Card className="border-0 shadow-xl bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+            <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 border-b border-border/50">
+              <CardTitle className="text-xl font-bold text-foreground flex items-center space-x-3">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Building className="h-5 w-5 text-primary" />
+                </div>
+                <span>Franchise Registrations</span>
+                <span className="ml-auto text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">
+                  {totalRegistrations} total
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="overflow-hidden">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-blue-600 hover:bg-blue-600">
-                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Actions</TableHead>
-                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Institute</TableHead>
-                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Type</TableHead>
-                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Centre Head</TableHead>
-                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Contact</TableHead>
-                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Status</TableHead>
-                      <TableHead className="border-2 border-gray-600 text-white font-bold text-center py-4">Approval</TableHead>
+                    <TableRow className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary hover:to-primary/90">
+                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Actions</TableHead>
+                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Institute</TableHead>
+                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Type</TableHead>
+                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Centre Head</TableHead>
+                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Contact</TableHead>
+                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Status</TableHead>
+                      <TableHead className="text-primary-foreground font-semibold text-center py-4">Approval</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {franchiseRegistrations.map((registration, index) => (
-                      <TableRow key={registration.id} className={index % 2 === 0 ? "bg-blue-50" : "bg-white"}>
-                        <TableCell className="border-2 border-gray-600 p-4">
-                          <div className="flex space-x-2">
+                      <TableRow key={registration.id} className={`hover:bg-muted/50 transition-colors ${
+                        index % 2 === 0 ? "bg-background" : "bg-muted/20"
+                      }`}>
+                        <TableCell className="p-4 border-r border-border/50">
+                          <div className="flex justify-center space-x-2">
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-1"
+                              className="h-8 w-8 p-0 text-primary hover:text-primary-foreground hover:bg-primary/10"
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
@@ -1180,47 +1266,47 @@ const FranchiseRegistrationContent = () => {
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDelete(registration.id)}
-                              className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1"
+                              className="h-8 w-8 p-0 text-destructive hover:text-destructive-foreground hover:bg-destructive/10"
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
                         </TableCell>
-                        <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                        <TableCell className="text-center p-4 border-r border-border/50">
                           <div>
-                            <div className="font-bold">{registration.institute_sort_name}</div>
-                            <div className="text-sm text-gray-500">{registration.institute_full_name}</div>
+                            <div className="font-semibold text-foreground">{registration.institute_sort_name}</div>
+                            <div className="text-sm text-muted-foreground truncate max-w-[200px]">{registration.institute_full_name}</div>
                           </div>
                         </TableCell>
-                        <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                        <TableCell className="text-center p-4 border-r border-border/50 font-medium text-foreground">
                           {registration.franchise_type}
                         </TableCell>
-                        <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                        <TableCell className="text-center p-4 border-r border-border/50">
                           <div>
-                            <div className="font-medium">{registration.centre_head_name}</div>
-                            <div className="text-sm text-gray-500">{registration.designation}</div>
+                            <div className="font-medium text-foreground">{registration.centre_head_name}</div>
+                            <div className="text-sm text-muted-foreground">{registration.designation}</div>
                           </div>
                         </TableCell>
-                        <TableCell className="border-2 border-gray-600 text-center p-4 text-gray-700 font-medium">
+                        <TableCell className="text-center p-4 border-r border-border/50">
                           <div>
-                            <div>{registration.email}</div>
-                            <div className="text-sm text-gray-500">{registration.mobile_number}</div>
+                            <div className="text-sm text-foreground">{registration.email}</div>
+                            <div className="text-sm text-muted-foreground">{registration.mobile_number}</div>
                           </div>
                         </TableCell>
-                        <TableCell className="border-2 border-gray-600 text-center p-4">
-                          <span className={`px-2 py-1 rounded text-sm font-medium ${
-                            registration.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            registration.status === 'active' ? 'bg-green-100 text-green-800' :
-                            'bg-red-100 text-red-800'
+                        <TableCell className="text-center p-4 border-r border-border/50">
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                            registration.status === 'pending' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400' :
+                            registration.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
+                            'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
                           }`}>
                             {registration.status}
                           </span>
                         </TableCell>
-                        <TableCell className="border-2 border-gray-600 text-center p-4">
-                          <span className={`px-2 py-1 rounded text-sm font-medium ${
-                            registration.approval_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            registration.approval_status === 'approved' ? 'bg-green-100 text-green-800' :
-                            'bg-red-100 text-red-800'
+                        <TableCell className="text-center p-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                            registration.approval_status === 'pending' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400' :
+                            registration.approval_status === 'approved' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
+                            'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
                           }`}>
                             {registration.approval_status}
                           </span>
@@ -1229,9 +1315,26 @@ const FranchiseRegistrationContent = () => {
                     ))}
                   </TableBody>
                 </Table>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Empty State */}
+        {(!franchiseRegistrations || franchiseRegistrations.length === 0) && (
+          <Card className="border-0 shadow-xl bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+            <CardContent className="p-12 text-center">
+              <div className="flex flex-col items-center space-y-4">
+                <div className="p-4 bg-muted/20 rounded-full">
+                  <Building className="h-12 w-12 text-muted-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">No registrations found</h3>
+                  <p className="text-muted-foreground">Submit your first franchise registration to get started.</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>
