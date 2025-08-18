@@ -37,14 +37,14 @@ const DayBookContent = () => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [serviceName, setServiceName] = useState("");
+  const [serviceName, setServiceName] = useState("all");
   const [filteredEntries, setFilteredEntries] = useState<DayBookEntry[]>([]);
 
   // Filter entries based on search criteria
   useEffect(() => {
     let filtered = dayBookEntries;
 
-    if (serviceName) {
+    if (serviceName && serviceName !== "all") {
       filtered = filtered.filter(entry => 
         entry.service_name.toLowerCase().includes(serviceName.toLowerCase())
       );
@@ -160,7 +160,7 @@ const DayBookContent = () => {
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Services</SelectItem>
+                    <SelectItem value="all">All Services</SelectItem>
                     <SelectItem value="petrol">Petrol</SelectItem>
                     <SelectItem value="tea">Tea</SelectItem>
                     <SelectItem value="office-supplies">Office Supplies</SelectItem>
