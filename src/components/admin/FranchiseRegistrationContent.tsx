@@ -345,28 +345,10 @@ const FranchiseRegistrationContent = () => {
 
   return (
     <div className="w-full max-w-none bg-gradient-to-br from-background via-background/95 to-secondary/10 min-h-screen">
-      {/* Modern Header */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-primary via-primary/90 to-primary/80 text-primary-foreground">
-        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
-        <div className="relative px-6 py-8">
-          <div className="flex items-center justify-between max-w-7xl mx-auto">
-            <div className="flex items-center space-x-4">
-              <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20">
-                <Building className="h-8 w-8" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight">Franchise Registration</h1>
-                <p className="text-primary-foreground/80 mt-1">Manage franchise applications and registrations</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Statistics Dashboard */}
       <div className="px-6 -mt-6 relative z-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-muted to-muted/80 text-muted-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -380,7 +362,7 @@ const FranchiseRegistrationContent = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -394,7 +376,7 @@ const FranchiseRegistrationContent = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-accent to-accent/80 text-accent-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -408,7 +390,7 @@ const FranchiseRegistrationContent = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-secondary to-secondary/80 text-secondary-foreground shadow-elegant border-0">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -429,8 +411,8 @@ const FranchiseRegistrationContent = () => {
         <Card className="border-0 shadow-xl bg-gradient-to-br from-background to-background/95 backdrop-blur-sm">
           
           {/* Institute Information */}
-          <div className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground px-6 py-4 rounded-t-lg">
-            <h2 className="text-xl font-bold">Institute Information</h2>
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border rounded-t-lg">
+            Institute Information
           </div>
           
           <div className="p-6 space-y-6">
@@ -641,8 +623,8 @@ const FranchiseRegistrationContent = () => {
           </div>
 
           {/* Information About Centre Head */}
-          <div className="bg-black text-white px-6 py-3">
-            <h2 className="text-lg font-bold">Information About Centre Head</h2>
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
+            Information About Centre Head
           </div>
 
           <div className="p-6 space-y-6">
@@ -844,8 +826,8 @@ const FranchiseRegistrationContent = () => {
           </div>
 
           {/* Available Infrastructure Facility */}
-          <div className="bg-black text-white px-6 py-3">
-            <h2 className="text-lg font-bold">Available Infrastructure Facility of the Centre</h2>
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
+            Available Infrastructure Facility of the Centre
           </div>
 
           <div className="p-6">
@@ -931,8 +913,8 @@ const FranchiseRegistrationContent = () => {
           </div>
 
           {/* Connectivity & Software */}
-          <div className="bg-black text-white px-6 py-3">
-            <h2 className="text-lg font-bold">Connectivity & Software of the Centre</h2>
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
+            Connectivity & Software of the Centre
           </div>
 
           <div className="p-6 space-y-6">
@@ -1093,8 +1075,8 @@ const FranchiseRegistrationContent = () => {
           </div>
 
           {/* Faculty Details */}
-          <div className="bg-black text-white px-6 py-3">
-            <h2 className="text-lg font-bold">Faculty Details (Please see eligibility in the Guidelines):</h2>
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
+            Faculty Details (Please see eligibility in the Guidelines):
           </div>
 
           <div className="p-6 space-y-6">
@@ -1152,8 +1134,8 @@ const FranchiseRegistrationContent = () => {
           </div>
 
           {/* Upload Documents */}
-          <div className="bg-black text-white px-6 py-3">
-            <h2 className="text-lg font-bold">Upload Documents</h2>
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
+            Upload Documents
           </div>
 
           <div className="p-6 space-y-6">
@@ -1185,8 +1167,8 @@ const FranchiseRegistrationContent = () => {
           </div>
 
           {/* Declaration */}
-          <div className="bg-black text-white px-6 py-3">
-            <h2 className="text-lg font-bold">Declaration</h2>
+          <div className="bg-primary text-primary-foreground px-4 py-2 text-sm font-medium border-b-2 border-border">
+            Declaration
           </div>
 
           <div className="p-6">
@@ -1238,21 +1220,19 @@ const FranchiseRegistrationContent = () => {
               <div className="overflow-hidden">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary hover:to-primary/90">
-                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Actions</TableHead>
-                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Institute</TableHead>
-                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Type</TableHead>
-                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Centre Head</TableHead>
-                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Contact</TableHead>
-                      <TableHead className="text-primary-foreground font-semibold text-center py-4 border-r border-primary-foreground/20">Status</TableHead>
-                      <TableHead className="text-primary-foreground font-semibold text-center py-4">Approval</TableHead>
+                    <TableRow className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
+                      <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Actions</TableHead>
+                      <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Institute</TableHead>
+                      <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Type</TableHead>
+                      <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Centre Head</TableHead>
+                      <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Contact</TableHead>
+                      <TableHead className="text-white font-bold text-center py-4 border-r border-blue-500">Status</TableHead>
+                      <TableHead className="text-white font-bold text-center py-4">Approval</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {franchiseRegistrations.map((registration, index) => (
-                      <TableRow key={registration.id} className={`hover:bg-muted/50 transition-colors ${
-                        index % 2 === 0 ? "bg-background" : "bg-muted/20"
-                      }`}>
+                      <TableRow key={registration.id} className={`${index % 2 === 0 ? "bg-blue-50/50" : "bg-white"} hover:bg-blue-100/50 transition-colors`}>
                         <TableCell className="p-4 border-r border-border/50">
                           <div className="flex justify-center space-x-2">
                             <Button
