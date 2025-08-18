@@ -55,6 +55,7 @@ const ExpenseMasterContent = () => {
 
     return items;
   }, [expenses, searchTerm, filterOption]);
+
   const handleSubmit = async () => {
     if (!serviceName.trim()) {
       toast.error("Please enter a service name");
@@ -125,8 +126,8 @@ const ExpenseMasterContent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 p-6">
+      <div className="w-full max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold text-foreground flex items-center space-x-3">
@@ -136,6 +137,7 @@ const ExpenseMasterContent = () => {
             <span>Expense Master Management</span>
           </h1>
         </div>
+
         {/* Statistics Dashboard */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-elegant border-0">
@@ -195,65 +197,60 @@ const ExpenseMasterContent = () => {
           </Card>
         </div>
 
-        {/* Form Card */}
-        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-          <CardHeader className="p-8 border-b border-border/10 bg-gradient-to-r from-primary/5 to-secondary/5">
-            <CardTitle className="text-3xl font-bold text-foreground flex items-center space-x-3">
-              <div className="p-3 bg-gradient-to-r from-primary to-primary/80 rounded-xl shadow-lg">
-                <Receipt className="h-8 w-8 text-primary-foreground" />
+        {/* Add/Edit Form */}
+        <Card className="shadow-elegant border-0 bg-card/90 backdrop-blur-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-primary-foreground p-8">
+            <CardTitle className="text-2xl font-bold flex items-center space-x-3">
+              <div className="p-2 bg-background/20 rounded-lg backdrop-blur-sm">
+                <Receipt className="h-6 w-6" />
               </div>
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Expense Master Management
-              </span>
+              <span>{editingExpense ? 'Edit Expense Service' : 'Add New Expense Service'}</span>
             </CardTitle>
           </CardHeader>
-        
+          
           <CardContent className="p-8">
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Service Name */}
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-foreground">
-                  Service Name *
-                </label>
+                <label className="text-sm font-medium text-foreground">Service Name*</label>
                 <Input
-                  type="text"
                   value={serviceName}
                   onChange={(e) => setServiceName(e.target.value)}
-                  className="h-12 border-border/20 focus:border-primary focus:ring-primary/20 rounded-lg text-foreground font-medium bg-background/50 backdrop-blur-sm transition-all duration-200"
+                  className="border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 transition-all duration-200"
                   placeholder="Enter service name"
                 />
               </div>
 
               {/* Description */}
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-foreground">
-                  Description
-                </label>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-sm font-medium text-foreground">Description</label>
                 <Textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="min-h-[120px] border-border/20 focus:border-primary focus:ring-primary/20 rounded-lg text-foreground font-medium bg-background/50 backdrop-blur-sm resize-none transition-all duration-200"
-                  rows={4}
+                  className="min-h-[100px] border-border/40 bg-background focus:border-primary/50 focus:ring-primary/20 resize-none"
                   placeholder="Enter description (optional)"
                 />
               </div>
+            </div>
 
-              {/* Buttons */}
-              <div className="flex gap-4 pt-6">
-                <Button 
-                  onClick={handleSubmit}
-                  className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground font-semibold px-8 py-3 rounded-lg shadow-elegant hover:shadow-lg transition-all duration-200 min-w-[120px]"
-                >
-                  {editingExpense ? "UPDATE" : "SUBMIT"}
-                </Button>
+            {/* Submit Buttons */}
+            <div className="flex space-x-4 pt-8 border-t border-border/20">
+              <Button 
+                onClick={handleSubmit}
+                className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-lg px-8"
+              >
+                {editingExpense ? 'Update Service' : 'Add Service'}
+              </Button>
+              
+              {editingExpense && (
                 <Button 
                   onClick={handleReset}
                   variant="outline"
-                  className="border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold px-8 py-3 rounded-lg shadow-elegant hover:shadow-lg transition-all duration-200 min-w-[120px]"
+                  className="border-border/40 hover:bg-accent/20 px-8"
                 >
-                  RESET
+                  Cancel Edit
                 </Button>
-              </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -303,6 +300,7 @@ const ExpenseMasterContent = () => {
               </Badge>
             </CardTitle>
           </CardHeader>
+          
           <CardContent className="p-8">
             <div className="border border-border/40 rounded-lg bg-background/50 overflow-hidden shadow-inner">
               <div className="overflow-x-auto">
@@ -316,58 +314,54 @@ const ExpenseMasterContent = () => {
                         </div>
                       </th>
                       <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[200px]">
-                        Service Name
+                        <div className="flex items-center gap-2">
+                          <Receipt className="h-4 w-4" />
+                          Service Name
+                        </div>
                       </th>
                       <th className="border-r border-primary/30 px-6 py-4 text-sm font-bold text-left min-w-[300px]">
-                        Description
+                        <div className="flex items-center gap-2">
+                          <Edit className="h-4 w-4" />
+                          Description
+                        </div>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredExpenses.length === 0 ? (
-                      <tr>
-                        <td colSpan={3} className="text-center py-12 text-muted-foreground">
-                          <div className="flex flex-col items-center space-y-3">
-                            <Receipt className="h-12 w-12 text-muted-foreground/50" />
-                            <p className="text-lg font-medium">No matching services found</p>
-                            <p className="text-sm">Try adjusting your search or filters</p>
+                    {filteredExpenses.map((expense, index) => (
+                      <tr key={expense.id} className={`${index % 2 === 0 ? "bg-background/80" : "bg-accent/5"} hover:bg-accent/20 transition-colors duration-200 border-b border-border/30`}>
+                        <td className="border-r border-border/30 px-6 py-4">
+                          <div className="flex items-center justify-center gap-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(expense)}
+                              className="text-primary hover:text-primary hover:bg-primary/10 p-2 rounded-lg transition-all duration-200 hover:scale-105"
+                              title="Edit Service"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(expense.id)}
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded-lg transition-all duration-200 hover:scale-105"
+                              title="Delete Service"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </td>
+                        <td className="border-r border-border/30 px-6 py-4">
+                          <div className="font-semibold text-foreground">{expense.service_name}</div>
+                        </td>
+                        <td className="border-r border-border/30 px-6 py-4">
+                          <div className="text-sm text-muted-foreground max-w-xs truncate">
+                            {expense.description || "No description provided"}
                           </div>
                         </td>
                       </tr>
-                    ) : (
-                      filteredExpenses.map((expense, index) => (
-                        <tr key={expense.id} className={`${index % 2 === 0 ? "bg-background/80" : "bg-accent/5"} hover:bg-accent/20 transition-colors duration-200 border-b border-border/30`}>
-                          <td className="border-r border-border/30 px-6 py-4">
-                            <div className="flex items-center justify-center gap-2">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleEdit(expense)}
-                                className="text-primary hover:text-primary hover:bg-primary/10 p-2 rounded-lg transition-all duration-200 hover:scale-105"
-                                title="Edit"
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleDelete(expense.id)}
-                                className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded-lg transition-all duration-200 hover:scale-105"
-                                title="Delete"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </td>
-                          <td className="border-r border-border/30 px-6 py-4">
-                            <div className="font-semibold text-foreground">{expense.service_name}</div>
-                          </td>
-                          <td className="border-r border-border/30 px-6 py-4">
-                            <div className="text-sm text-muted-foreground max-w-[60ch] truncate">{expense.description || "No description"}</div>
-                          </td>
-                        </tr>
-                      ))
-                    )}
+                    ))}
                   </tbody>
                 </table>
               </div>
