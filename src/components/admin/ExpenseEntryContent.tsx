@@ -404,7 +404,7 @@ const ExpenseEntryContent = () => {
                   </Select>
                 </div>
               </div>
-              {(searchTerm || selectedService) && (
+              {(searchTerm || selectedService !== "all") && (
                 <div className="mt-4 text-sm text-muted-foreground">
                   Showing {filteredExpenses.length} of {totalExpenses} expenses
                 </div>
