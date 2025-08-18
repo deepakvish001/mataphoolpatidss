@@ -8,6 +8,7 @@ import { DollarSign, Edit, Trash2, Loader2, TrendingUp, Calendar, FileText, Sear
 import { toast } from "sonner";
 import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
+import { formatIndianCurrency } from "@/lib/utils";
 
 interface OpeningBalance {
   id: string;
@@ -164,7 +165,7 @@ const OpeningBalanceContent = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-emerald-100 text-sm font-medium">Total Balance</p>
-                    <p className="text-2xl font-bold">₹{totalBalance.toFixed(2)}</p>
+                    <p className="text-2xl font-bold">{formatIndianCurrency(totalBalance)}</p>
                   </div>
                   <div className="p-3 bg-white/20 rounded-full">
                     <DollarSign className="h-6 w-6" />
@@ -192,7 +193,7 @@ const OpeningBalanceContent = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-purple-100 text-sm font-medium">Average Balance</p>
-                    <p className="text-2xl font-bold">₹{avgBalance.toFixed(2)}</p>
+                    <p className="text-2xl font-bold">{formatIndianCurrency(avgBalance)}</p>
                   </div>
                   <div className="p-3 bg-white/20 rounded-full">
                     <TrendingUp className="h-6 w-6" />
@@ -351,7 +352,7 @@ const OpeningBalanceContent = () => {
               </div>
               {(searchTerm || startDate || endDate) && (
                 <div className="mt-4 text-sm text-muted-foreground">
-                  Showing {filteredBalances.length} of {openingBalances.length} entries | Total: ₹{totalBalance.toFixed(2)}
+                  Showing {filteredBalances.length} of {openingBalances.length} entries | Total: {formatIndianCurrency(totalBalance)}
                 </div>
               )}
             </CardContent>
@@ -404,7 +405,7 @@ const OpeningBalanceContent = () => {
                             </div>
                           </td>
                           <td className="border border-border/20 px-4 py-3 text-foreground font-semibold text-emerald-600">
-                            ₹{balance.amount.toFixed(2)}
+                            {formatIndianCurrency(balance.amount)}
                           </td>
                           <td className="border border-border/20 px-4 py-3 text-foreground">
                             {new Date(balance.entry_date).toLocaleDateString()}
