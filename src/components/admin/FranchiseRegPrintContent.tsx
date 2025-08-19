@@ -557,121 +557,214 @@ const FranchiseRegPrintContent = () => {
                 <span className="text-foreground">Registration Print Preview</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-8 print:p-0">
+            <CardContent className="p-8 print:p-4">
               <div 
                 ref={franchiseCardRef}
-                className="bg-white text-black p-12 max-w-4xl mx-auto border border-gray-300 print:border-0 print:max-w-none print:mx-0 print:p-8"
+                className="bg-white p-12 rounded-lg border border-border/20 print:border-0 print:rounded-none print:p-8 min-h-[800px] relative"
                 style={{ 
-                  aspectRatio: '210/297', // A4 aspect ratio 
-                  minHeight: '29.7cm',
-                  width: '21cm',
-                  margin: '0 auto'
+                  width: '210mm', 
+                  minHeight: '297mm',
+                  margin: '0 auto',
+                  fontSize: '14px',
+                  lineHeight: '1.6'
                 }}
               >
-                {/* Institute Header */}
-                <div className="text-center mb-8 space-y-2">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-20 h-20 rounded-full bg-pink-100 border-4 border-pink-500 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-xs font-bold text-pink-700">B.Soft</div>
+                {/* Header Section */}
+                <div className="text-center mb-12 relative">
+                  {/* Government Emblem */}
+                  <div className="flex justify-center mb-6">
+                    <img 
+                      src="/lovable-uploads/f15af816-2dc8-45f6-9e1a-10ca186f8a09.png" 
+                      alt="Government Emblem"
+                      className="h-20 w-20"
+                    />
+                  </div>
+                  
+                  <h1 className="text-4xl font-bold text-primary mb-2 print:text-black">
+                    CERTIFICATE OF FRANCHISE REGISTRATION
+                  </h1>
+                  <div className="w-48 h-1 bg-primary mx-auto mb-4 print:bg-black"></div>
+                  <p className="text-xl text-muted-foreground font-semibold print:text-black">
+                    Government of India
+                  </p>
+                  <p className="text-lg text-muted-foreground print:text-black">
+                    Ministry of Skill Development & Entrepreneurship
+                  </p>
+                  
+                  {/* Certificate Number */}
+                  <div className="absolute top-0 right-0 text-right">
+                    <p className="text-sm font-medium print:text-black">Certificate No.</p>
+                    <p className="text-lg font-bold text-primary print:text-black">{selectedFranchise.id}</p>
+                  </div>
+                </div>
+
+                {/* Certificate Content */}
+                <div className="mb-12">
+                  <p className="text-lg text-center mb-8 print:text-black leading-relaxed">
+                    This is to certify that <strong className="text-primary print:text-black text-xl">{selectedFranchise.instituteName}</strong> 
+                    has been duly registered as an authorized franchise partner under the 
+                    <strong> Skill Development and Training Program</strong> for the provision of 
+                    <strong> {selectedFranchise.franchiseType}</strong> services.
+                  </p>
+                </div>
+
+                {/* Details Section */}
+                <div className="grid grid-cols-2 gap-12 mb-12">
+                  {/* Left Column */}
+                  <div className="space-y-6">
+                    <div className="bg-gray-50 p-6 rounded-lg print:bg-transparent print:border print:border-gray-300">
+                      <h3 className="font-bold text-lg mb-4 text-primary print:text-black border-b border-primary/20 pb-2 print:border-black">
+                        Franchise Details
+                      </h3>
+                      <div className="space-y-3 text-base">
+                        <div className="flex justify-between">
+                          <span className="font-medium">Registration ID:</span>
+                          <span className="font-bold">{selectedFranchise.id}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">Centre Head:</span>
+                          <span>{selectedFranchise.centreHead}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">Designation:</span>
+                          <span>{selectedFranchise.designation}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">Franchise Type:</span>
+                          <span className="font-semibold">{selectedFranchise.franchiseType}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">Established:</span>
+                          <span>{selectedFranchise.yearEstablishment}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 p-6 rounded-lg print:bg-transparent print:border print:border-gray-300">
+                      <h3 className="font-bold text-lg mb-4 text-primary print:text-black border-b border-primary/20 pb-2 print:border-black">
+                        Contact Information
+                      </h3>
+                      <div className="space-y-3 text-base">
+                        <div>
+                          <span className="font-medium">Email:</span>
+                          <p className="text-sm mt-1">{selectedFranchise.email}</p>
+                        </div>
+                        <div>
+                          <span className="font-medium">Phone:</span>
+                          <p className="text-sm mt-1">{selectedFranchise.phone}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <h2 className="text-2xl font-bold text-blue-600">B. Soft Computer & Technical Institute</h2>
-                  <p className="text-sm text-blue-500 max-w-2xl mx-auto">
-                    Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121
+
+                  {/* Right Column */}
+                  <div className="space-y-6">
+                    <div className="bg-gray-50 p-6 rounded-lg print:bg-transparent print:border print:border-gray-300">
+                      <h3 className="font-bold text-lg mb-4 text-primary print:text-black border-b border-primary/20 pb-2 print:border-black">
+                        Location Details
+                      </h3>
+                      <div className="space-y-3 text-base">
+                        <div>
+                          <span className="font-medium">Address:</span>
+                          <p className="text-sm mt-1 leading-relaxed">{selectedFranchise.postalAddress}</p>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">City:</span>
+                          <span>{selectedFranchise.city}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">District:</span>
+                          <span>{selectedFranchise.district}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">State:</span>
+                          <span>{selectedFranchise.state}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">Pin Code:</span>
+                          <span className="font-bold">{selectedFranchise.pinCode}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 p-6 rounded-lg print:bg-transparent print:border print:border-gray-300">
+                      <h3 className="font-bold text-lg mb-4 text-primary print:text-black border-b border-primary/20 pb-2 print:border-black">
+                        Registration Info
+                      </h3>
+                      <div className="space-y-3 text-base">
+                        <div className="flex justify-between">
+                          <span className="font-medium">Registration Date:</span>
+                          <span className="font-semibold">{new Date(selectedFranchise.dateOfRegistration).toLocaleDateString('en-IN')}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">Valid From:</span>
+                          <span>{new Date(selectedFranchise.dateOfRegistration).toLocaleDateString('en-IN')}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="font-medium">Status:</span>
+                          <Badge className="bg-green-100 text-green-800 print:bg-transparent print:text-black print:border print:border-green-800">
+                            {selectedFranchise.status.toUpperCase()}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Authority Section */}
+                <div className="border-t-2 border-primary/20 pt-12 print:border-black">
+                  <div className="grid grid-cols-3 gap-8 items-end">
+                    {/* Authorized Signature */}
+                    <div className="text-center">
+                      <div className="mb-8">
+                        <div className="w-32 h-16 border-b-2 border-gray-400 mx-auto mb-2"></div>
+                        <p className="text-sm font-semibold">Authorized Signature</p>
+                        <p className="text-xs text-muted-foreground print:text-black">Registration Officer</p>
+                      </div>
+                    </div>
+                    
+                    {/* Official Seal */}
+                    <div className="text-center">
+                      <div className="mb-4">
+                        <img 
+                          src="/lovable-uploads/d6577713-1ec2-4c09-ace0-65aa6e97f4fc.png" 
+                          alt="Official Seal"
+                          className="h-24 w-24 mx-auto mb-2"
+                        />
+                        <p className="text-sm font-semibold">Official Seal</p>
+                        <p className="text-xs text-muted-foreground print:text-black">Government of India</p>
+                      </div>
+                    </div>
+                    
+                    {/* Date */}
+                    <div className="text-center">
+                      <div className="mb-8">
+                        <p className="text-sm font-semibold mb-2">Date of Issue</p>
+                        <p className="text-lg font-bold border-b-2 border-gray-400 pb-2 inline-block">
+                          {new Date().toLocaleDateString('en-IN')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="mt-12 text-center border-t border-gray-300 pt-6">
+                  <p className="text-sm text-muted-foreground print:text-black font-medium">
+                    This certificate is issued under the authority of the Government of India
                   </p>
-                  <p className="text-sm text-blue-500">infobinasoft@gmail.com</p>
+                  <p className="text-xs text-muted-foreground print:text-black mt-2">
+                    For verification and inquiries, please contact the issuing authority
+                  </p>
+                  <p className="text-xs text-muted-foreground print:text-black mt-1">
+                    Certificate ID: {selectedFranchise.id} | Issued on: {new Date().toLocaleDateString('en-IN')}
+                  </p>
                 </div>
 
-                {/* Registration Print Form */}
-                <div className="text-center mb-8">
-                  <h3 className="text-xl font-bold underline text-black">Franchise Registration Print</h3>
-                </div>
-
-                <div className="space-y-4 text-sm">
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Franchise ID:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.id}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">State Name:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.state}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">City / Town / Village:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.city}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">District Name:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.district}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Date.Of.Registration:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{new Date(selectedFranchise.dateOfRegistration).toLocaleDateString()}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Name of the Institute:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.instituteName}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Year of Establishment:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.yearEstablishment}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Pin Code:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.pinCode}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Postal Address of the Institute:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.postalAddress}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Phone1:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.phone}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Email Address:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.email}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Name of the Centre Head:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.centreHead}</span>
-                  </div>
-                  
-                  <div className="flex">
-                    <span className="font-medium w-48 text-black">Designing / Position Hold:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.designation}</span>
-                  </div>
-                  
-                  <div className="mt-8 space-y-4">
-                    <div className="flex">
-                      <span className="font-medium w-48 text-black">Franchise ID:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">{selectedFranchise.id}</span>
-                    </div>
-                    <div className="flex">
-                      <span className="font-medium w-48 text-black">Franchise Password:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[20px] pl-2">**********</span>
-                    </div>
-                  </div>
-
-                  {/* Footer */}
-                  <div className="mt-12 pt-8 border-t border-gray-300 text-center text-xs text-gray-600">
-                    <p>This registration print is computer generated and does not require a physical signature.</p>
-                    <p className="mt-2">
-                      Registration ID: REG-{new Date().getFullYear()}-{selectedFranchise.id}
-                    </p>
+                {/* Watermark */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5 print:opacity-10">
+                  <div className="transform rotate-45 text-8xl font-bold text-primary print:text-black">
+                    OFFICIAL
                   </div>
                 </div>
               </div>
