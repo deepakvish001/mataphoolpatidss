@@ -91,8 +91,8 @@ const FranchiseRegPrintContent = () => {
     }
   ];
 
-  // Start with no selected franchise - user must search and select
-  const [selectedFranchise, setSelectedFranchise] = useState<FranchiseData | null>(null);
+  // Set default selected franchise to show sample preview
+  const [selectedFranchise, setSelectedFranchise] = useState<FranchiseData | null>(allFranchises[0]);
 
   const handleSearch = () => {
     if (!searchValue.trim()) {
@@ -134,14 +134,12 @@ const FranchiseRegPrintContent = () => {
   };
 
   const handleSelectFranchise = (franchise: FranchiseData) => {
-    console.log("Selecting franchise:", franchise);
     setSelectedFranchise(franchise);
     setShowSearchResults(false);
     toast({
       title: "Franchise Selected",
       description: `Selected ${franchise.instituteName} for registration print`,
     });
-    console.log("Selected franchise state updated:", franchise);
   };
 
   const handleGenerateRegistrationPrint = () => {
