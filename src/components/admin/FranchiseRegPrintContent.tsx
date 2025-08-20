@@ -91,8 +91,8 @@ const FranchiseRegPrintContent = () => {
     }
   ];
 
-  // Set default selected franchise to show sample preview
-  const [selectedFranchise, setSelectedFranchise] = useState<FranchiseData | null>(allFranchises[0]);
+  // Start with no selected franchise - user must search and select
+  const [selectedFranchise, setSelectedFranchise] = useState<FranchiseData | null>(null);
 
   const handleSearch = () => {
     if (!searchValue.trim()) {
