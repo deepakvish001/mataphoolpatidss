@@ -28,7 +28,6 @@ type FranchiseData = {
 
 const FranchiseRegPrintContent = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [selectedFranchise, setSelectedFranchise] = useState<FranchiseData | null>(null);
   const [searchResults, setSearchResults] = useState<FranchiseData[]>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,19 +41,19 @@ const FranchiseRegPrintContent = () => {
     {
       id: "FR001",
       instituteName: "B. Soft Computer & Technical Institute",
-      centreHead: "John Doe",
+      centreHead: "Rahul Kumar",
       state: "Uttar Pradesh",
       district: "Azamgarh",
       city: "Bilariyagan",
       pinCode: "276121",
-      dateOfRegistration: "2023-01-15",
+      dateOfRegistration: "2024-01-15",
       yearEstablishment: "2020",
       email: "infobinasoft@gmail.com",
       phone: "9876543210",
       designation: "Director",
       status: "active",
       postalAddress: "Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J",
-      franchiseType: "Computer Training"
+      franchiseType: "Computer Applications"
     },
     {
       id: "FR002", 
@@ -91,6 +90,9 @@ const FranchiseRegPrintContent = () => {
       franchiseType: "Technical Training"
     }
   ];
+
+  // Set default selected franchise to show sample preview
+  const [selectedFranchise, setSelectedFranchise] = useState<FranchiseData | null>(allFranchises[0]);
 
   const handleSearch = () => {
     if (!searchValue.trim()) {
