@@ -91,7 +91,7 @@ const FranchiseRegPrintContent = () => {
     }
   ];
 
-  // Set default selected franchise to show sample preview
+  // Auto-fill mode - automatically select first franchise
   const [selectedFranchise, setSelectedFranchise] = useState<FranchiseData | null>(allFranchises[0]);
 
   const handleSearch = () => {
