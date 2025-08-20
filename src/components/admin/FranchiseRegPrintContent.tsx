@@ -134,12 +134,14 @@ const FranchiseRegPrintContent = () => {
   };
 
   const handleSelectFranchise = (franchise: FranchiseData) => {
+    console.log("Selecting franchise:", franchise);
     setSelectedFranchise(franchise);
     setShowSearchResults(false);
     toast({
       title: "Franchise Selected",
       description: `Selected ${franchise.instituteName} for registration print`,
     });
+    console.log("Selected franchise state updated:", franchise);
   };
 
   const handleGenerateRegistrationPrint = () => {
