@@ -1041,6 +1041,45 @@ export type Database = {
         }
         Relationships: []
       }
+      franchise_uploads: {
+        Row: {
+          center_code: string
+          created_at: string
+          file_name: string | null
+          file_url: string | null
+          id: string
+          message: string
+          status: string
+          updated_at: string
+          upload_date: string
+          upload_type: string
+        }
+        Insert: {
+          center_code: string
+          created_at?: string
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          message: string
+          status?: string
+          updated_at?: string
+          upload_date?: string
+          upload_type?: string
+        }
+        Update: {
+          center_code?: string
+          created_at?: string
+          file_name?: string | null
+          file_url?: string | null
+          id?: string
+          message?: string
+          status?: string
+          updated_at?: string
+          upload_date?: string
+          upload_type?: string
+        }
+        Relationships: []
+      }
       head_offices: {
         Row: {
           address: string
