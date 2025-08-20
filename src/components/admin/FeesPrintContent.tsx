@@ -417,108 +417,104 @@ const FeesPrintContent = () => {
           </CardHeader>
           <CardContent className="p-8">
             {selectedRecord && (
-              <div ref={receiptRef} className="bg-white p-8 border shadow-lg max-w-4xl mx-auto">
+              <div ref={receiptRef} className="bg-white min-h-[297mm] w-[210mm] mx-auto p-8 border shadow-lg print:shadow-none print:border-none" style={{ aspectRatio: '1/1.414' }}>
                 
-                {/* Header Section with Logo */}
-                <div className="flex items-start justify-between mb-8">
-                  {/* Logo */}
+                {/* Header with Logo and Institute Info */}
+                <div className="flex items-start gap-6 mb-6">
+                  {/* Institute Logo */}
                   <div className="flex-shrink-0">
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-pink-400 via-pink-500 to-pink-600 border-4 border-pink-700 flex items-center justify-center shadow-lg">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-400 via-pink-500 to-pink-600 border-3 border-pink-700 flex items-center justify-center shadow-lg">
                       <div className="text-center">
-                        <div className="text-sm font-bold text-white leading-tight">B.Soft</div>
-                        <div className="text-xs text-white leading-none">Computer &</div>
-                        <div className="text-xs text-white leading-none">Technical</div>
-                        <div className="text-xs text-white leading-none">Institute</div>
+                        <div className="text-xs font-bold text-white leading-tight">B.Soft</div>
+                        <div className="text-[10px] text-white leading-none">Computer &</div>
+                        <div className="text-[10px] text-white leading-none">Technical</div>
+                        <div className="text-[10px] text-white leading-none">Institute</div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Institute Header */}
-                  <div className="flex-1 text-center ml-8">
-                    <h1 className="text-3xl font-bold text-blue-600 mb-4 tracking-wider">
+                  {/* Institute Details */}
+                  <div className="flex-1">
+                    <h1 className="text-2xl font-bold text-blue-600 mb-2 tracking-wide">
                       B. Soft Computer & Technical Institute
                     </h1>
-                    <div className="text-sm text-gray-700 mb-2">
-                      Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J, AZAMGARH-276121
-                    </div>
-                    <div className="text-sm text-gray-700 mb-8">
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      Near Union Bank Of India Bina Soft Educational & Welfare Society Vill & Post BILARIYAGAN J,<br />
+                      AZAMGARH-276121
+                    </p>
+                    <p className="text-sm text-gray-700 mt-1">
                       infobinasoft@gmail.com
-                    </div>
+                    </p>
                   </div>
                 </div>
 
-                {/* Receipt Title */}
-                <div className="text-center mb-8">
-                  <h2 className="text-xl font-bold text-gray-800 underline">
+                {/* Certificate Title */}
+                <div className="text-center mb-8 py-4">
+                  <h2 className="text-xl font-bold text-gray-800 underline decoration-2 underline-offset-4 tracking-wide">
                     Student Fee Receipt
                   </h2>
                 </div>
 
-                {/* Receipt Details */}
+                {/* Receipt Details in Two Columns */}
                 <div className="grid grid-cols-2 gap-8 mb-8">
                   {/* Left Column */}
-                  <div className="space-y-4">
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-24">Receipt ID:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">{selectedRecord.receipt_id}</span>
+                  <div className="space-y-6">
+                    <div className="flex items-center">
+                      <span className="w-20 font-medium text-gray-800 text-sm">Receipt ID:</span>
+                      <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-gray-700 text-sm">{selectedRecord.receipt_id}</span>
                     </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-24">Name:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">{selectedRecord.student_name}</span>
+                    <div className="flex items-center">
+                      <span className="w-20 font-medium text-gray-800 text-sm">Name:</span>
+                      <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-gray-700 text-sm">{selectedRecord.student_name}</span>
                     </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-24">Course:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">{selectedRecord.course_name}</span>
+                    <div className="flex items-center">
+                      <span className="w-20 font-medium text-gray-800 text-sm">Course:</span>
+                      <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-gray-700 text-sm">{selectedRecord.course_name}</span>
                     </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-24">Student ID:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">{selectedRecord.student_id}</span>
+                    <div className="flex items-center">
+                      <span className="w-20 font-medium text-gray-800 text-sm">Student ID:</span>
+                      <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-gray-700 text-sm">{selectedRecord.student_id}</span>
                     </div>
                   </div>
 
                   {/* Right Column */}
-                  <div className="space-y-4">
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-16">Date:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">
-                        {new Date(selectedRecord.payment_date).toLocaleDateString()}
-                      </span>
+                  <div className="space-y-6">
+                    <div className="flex items-center">
+                      <span className="w-16 font-medium text-gray-800 text-sm">Date:</span>
+                      <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-gray-700 text-sm">{new Date(selectedRecord.payment_date).toLocaleDateString()}</span>
                     </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-16">Roll No:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">{selectedRecord.roll_number}</span>
+                    <div className="flex items-center">
+                      <span className="w-16 font-medium text-gray-800 text-sm">Roll No:</span>
+                      <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-gray-700 text-sm">{selectedRecord.roll_number}</span>
                     </div>
-                    <div className="flex">
-                      <span className="font-medium text-gray-700 w-20">Payment Mode:</span>
-                      <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">{selectedRecord.payment_mode}</span>
+                    <div className="flex items-center">
+                      <span className="w-20 font-medium text-gray-800 text-sm">Payment Mode:</span>
+                      <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-gray-700 text-sm">{selectedRecord.payment_mode}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Fee Details */}
-                <div className="space-y-4 mb-12">
-                  <div className="flex">
-                    <span className="font-medium text-gray-700 w-24">Total fee:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2">₹{selectedRecord.total_fee.toLocaleString()}</span>
+                {/* Fee Details Section */}
+                <div className="mb-12 space-y-6">
+                  <div className="flex items-center">
+                    <span className="w-24 font-medium text-gray-800 text-sm">Total fee:</span>
+                    <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-gray-700 text-sm">₹{selectedRecord.total_fee.toLocaleString()}</span>
                   </div>
-                  <div className="flex">
-                    <span className="font-medium text-gray-700 w-24">Fee Paid:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2 font-semibold text-green-600">
-                      ₹{selectedRecord.fee_paid.toLocaleString()}
-                    </span>
+                  <div className="flex items-center">
+                    <span className="w-24 font-medium text-gray-800 text-sm">Fee Paid:</span>
+                    <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-green-600 font-medium text-sm">₹{selectedRecord.fee_paid.toLocaleString()}</span>
                   </div>
-                  <div className="flex">
-                    <span className="font-medium text-gray-700 w-24">Fee Due:</span>
-                    <span className="border-b border-gray-400 flex-1 min-h-[1.5rem] pl-2 font-semibold text-red-600">
-                      ₹{selectedRecord.fee_due.toLocaleString()}
-                    </span>
+                  <div className="flex items-center">
+                    <span className="w-24 font-medium text-gray-800 text-sm">Fee Due:</span>
+                    <span className="flex-1 border-b border-gray-400 pb-1 ml-4 text-red-600 font-medium text-sm">₹{selectedRecord.fee_due.toLocaleString()}</span>
                   </div>
                 </div>
 
-                {/* Office Sign */}
-                <div className="flex">
-                  <span className="font-medium text-gray-700 w-24">Office sign:</span>
-                  <span className="border-b border-gray-400 flex-1 min-h-[1.5rem]"></span>
+                {/* Office Signature Section */}
+                <div className="mt-20 mb-8">
+                  <div className="text-left">
+                    <span className="font-medium text-gray-800 text-sm">Office sign:</span>
+                  </div>
                 </div>
 
               </div>
