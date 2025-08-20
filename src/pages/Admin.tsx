@@ -325,7 +325,7 @@ const Admin = () => {
     color: "text-teal-400",
     submenuItems: [
       { label: "Make Franchise Certificate", icon: Award },
-      { label: "Generate Franchise Certificat", icon: FileOutput }
+      { label: "Generate Franchise Certificate", icon: FileOutput }
     ]
   }, {
     icon: CreditCard,
