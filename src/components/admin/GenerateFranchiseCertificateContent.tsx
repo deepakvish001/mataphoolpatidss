@@ -1,12 +1,11 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { FileDown, Search, Users, FileText, Building, Calendar, Printer, Award, CheckCircle, Filter, Plus, Edit, Trash2 } from "lucide-react";
+import { FileDown, Search, Users, FileText, Building, Calendar, Printer, Award, CheckCircle } from "lucide-react";
 import { useOptimisticCrud } from "@/hooks/useOptimisticCrud";
-import { useAdminRealTime } from "@/hooks/useAdminRealTime";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -31,192 +30,87 @@ type FranchiseCertificate = {
 const GenerateFranchiseCertificateContent = () => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedFranchise, setSelectedFranchise] = useState<FranchiseCertificate | null>(null);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [editingCertificate, setEditingCertificate] = useState<FranchiseCertificate | null>(null);
-  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [showSearch, setShowSearch] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const certificateRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  // Form data for creating/editing
-  const [formData, setFormData] = useState({
-    franchise_id: "",
-    franchise_name: "",
-    centre_head: "",
-    certificate_number: "",
-    issue_date: "",
-    valid_from: "",
-    valid_to: "",
-    operating_area: "",
-    location: "",
-    registration_number: "",
-    certificate_type: "Franchise Authorization",
-    status: "active"
-  });
-
-  // Database operations with optimistic updates
-  const {
-    data: certificates,
-    loading,
-    actionLoading,
-    create,
-    update,
-    delete: deleteCertificate,
-    refresh
-  } = useOptimisticCrud<FranchiseCertificate>({
-    tableName: "franchise_certificates",
-    orderBy: { column: "created_at", ascending: false },
-    onSuccess: (action, data) => {
-      if (action === "create") {
-        toast({
-          title: "Success",
-          description: "Certificate created successfully",
-        });
-        setShowAddForm(false);
-        resetForm();
-      } else if (action === "update") {
-        toast({
-          title: "Success", 
-          description: "Certificate updated successfully",
-        });
-        setEditingCertificate(null);
-      } else if (action === "delete") {
-        toast({
-          title: "Success",
-          description: "Certificate deleted successfully", 
-        });
-      }
-    },
-    onError: (action, error) => {
-      toast({
-        title: "Error",
-        description: `Failed to ${action} certificate: ${error.message}`,
-        variant: "destructive"
-      });
-    }
-  });
-
-  // Real-time updates
-  useAdminRealTime({
-    tableName: "franchise_certificates",
-    onInsert: () => {
-      toast({
-        title: "New Certificate Added",
-        description: "A new franchise certificate has been created",
-      });
-    },
-    onUpdate: () => {
-      toast({
-        title: "Certificate Updated", 
-        description: "A franchise certificate has been updated",
-      });
-    },
-    onDelete: () => {
-      toast({
-        title: "Certificate Deleted",
-        description: "A franchise certificate has been removed",
-      });
-    }
-  });
-
-  // Filter and search logic
-  const filteredCertificates = useMemo(() => {
-    return certificates.filter(cert => {
-      const matchesSearch = searchValue === "" || 
-        cert.franchise_id.toLowerCase().includes(searchValue.toLowerCase()) ||
-        cert.franchise_name.toLowerCase().includes(searchValue.toLowerCase()) ||
-        cert.centre_head.toLowerCase().includes(searchValue.toLowerCase());
-      
-      const matchesStatus = filterStatus === "all" || cert.status === filterStatus;
-      
-      return matchesSearch && matchesStatus;
-    });
-  }, [certificates, searchValue, filterStatus]);
-
-  const resetForm = () => {
-    setFormData({
-      franchise_id: "",
-      franchise_name: "",
-      centre_head: "",
-      certificate_number: "",
-      issue_date: "",
-      valid_from: "",
-      valid_to: "",
-      operating_area: "",
-      location: "",
-      registration_number: "",
+  // Sample data - to be replaced with actual Supabase data
+  const sampleCertificates: FranchiseCertificate[] = [
+    {
+      id: "1",
+      franchise_id: "FR001",
+      franchise_name: "B. Soft Computer & Technical Institute",
+      centre_head: "Rahul Kumar",
+      certificate_number: "CERT001/2024",
+      issue_date: "2024-01-15",
+      valid_from: "2024-01-15",
+      valid_to: "2025-01-14",
+      operating_area: "Azamgarh",
+      location: "Bilariyagan, Uttar Pradesh",
+      registration_number: "REG001/2024",
       certificate_type: "Franchise Authorization",
-      status: "active"
-    });
-  };
+      status: "active",
+      created_at: "2024-01-15T00:00:00Z",
+      updated_at: "2024-01-15T00:00:00Z"
+    },
+    {
+      id: "2",
+      franchise_id: "FR002",
+      franchise_name: "Tech Learning Center",
+      centre_head: "Jane Smith",
+      certificate_number: "CERT002/2024",
+      issue_date: "2024-02-10",
+      valid_from: "2024-02-10",
+      valid_to: "2025-02-09",
+      operating_area: "Mumbai",
+      location: "Andheri, Maharashtra",
+      registration_number: "REG002/2024",
+      certificate_type: "Franchise Authorization",
+      status: "active",
+      created_at: "2024-02-10T00:00:00Z",
+      updated_at: "2024-02-10T00:00:00Z"
+    }
+  ];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
+  const [certificates] = useState<FranchiseCertificate[]>(sampleCertificates);
+  const [filteredCertificates, setFilteredCertificates] = useState<FranchiseCertificate[]>([]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.franchise_id || !formData.franchise_name || !formData.centre_head) {
+  const handleSearch = () => {
+    if (!searchValue.trim()) {
       toast({
         title: "Error",
-        description: "Please fill in all required fields",
+        description: "Please enter a franchise ID to search",
         variant: "destructive"
       });
       return;
     }
 
-    const certificateData = {
-      ...formData,
-      certificate_number: formData.certificate_number || `CERT${Date.now()}`,
-      issue_date: formData.issue_date || new Date().toISOString().split('T')[0],
-      valid_from: formData.valid_from || new Date().toISOString().split('T')[0],
-      valid_to: formData.valid_to || new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-    };
+    const results = certificates.filter(cert =>
+      cert.franchise_id.toLowerCase().includes(searchValue.toLowerCase()) ||
+      cert.franchise_name.toLowerCase().includes(searchValue.toLowerCase())
+    );
 
-    if (editingCertificate) {
-      await update(editingCertificate.id, certificateData);
+    setFilteredCertificates(results);
+    setShowSearch(true);
+
+    if (results.length > 0) {
+      toast({
+        title: "Success",
+        description: `Found ${results.length} franchise(s)`,
+      });
     } else {
-      await create(certificateData);
+      toast({
+        title: "No Results",
+        description: "No franchises found with the given criteria",
+        variant: "destructive"
+      });
     }
-  };
-
-  const handleEdit = (certificate: FranchiseCertificate) => {
-    setEditingCertificate(certificate);
-    setFormData({
-      franchise_id: certificate.franchise_id,
-      franchise_name: certificate.franchise_name,
-      centre_head: certificate.centre_head,
-      certificate_number: certificate.certificate_number,
-      issue_date: certificate.issue_date,
-      valid_from: certificate.valid_from,
-      valid_to: certificate.valid_to,
-      operating_area: certificate.operating_area,
-      location: certificate.location,
-      registration_number: certificate.registration_number,
-      certificate_type: certificate.certificate_type,
-      status: certificate.status
-    });
-    setShowAddForm(true);
-  };
-
-  const handleDelete = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this certificate?")) {
-      await deleteCertificate(id);
-    }
-  };
-
-  const handleReset = () => {
-    setEditingCertificate(null);
-    setShowAddForm(false);
-    resetForm();
   };
 
   const handleSelectFranchise = (certificate: FranchiseCertificate) => {
     setSelectedFranchise(certificate);
+    setShowSearch(false);
     toast({
       title: "Franchise Selected",
       description: `Selected ${certificate.franchise_name} for certificate generation`,
@@ -407,72 +301,47 @@ const GenerateFranchiseCertificateContent = () => {
           </Card>
         </div>
 
-        {/* Search & Filter Section */}
+        {/* Search Section */}
         <Card className="shadow-elegant border-border/50">
           <CardHeader className="bg-gradient-to-r from-primary/10 to-secondary/10 border-b border-border/50">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-xl font-semibold text-foreground flex items-center space-x-2">
-                <Search className="h-5 w-5 text-primary" />
-                <span>Search & Manage Certificates</span>
-              </CardTitle>
-              <Button 
-                onClick={() => setShowAddForm(true)}
-                className="bg-primary hover:bg-primary/90"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Certificate
-              </Button>
-            </div>
+            <CardTitle className="text-xl font-semibold text-foreground flex items-center space-x-2">
+              <Search className="h-5 w-5 text-primary" />
+              <span>Search Franchise</span>
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="flex gap-4 items-end mb-6">
+            <div className="flex gap-4 items-end">
               <div className="flex-1">
                 <label className="block text-sm font-medium text-foreground mb-2">
-                  Search by Franchise ID, Name, or Centre Head
+                  Franchise ID or Name
                 </label>
                 <Input 
                   type="text" 
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   className="w-full"
-                  placeholder="Enter search term..."
+                  placeholder="Enter Franchise ID or Name"
+                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Filter by Status
-                </label>
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  className="px-3 py-2 border border-border rounded-md bg-background"
-                >
-                  <option value="all">All Status</option>
-                  <option value="active">Active</option>
-                  <option value="expired">Expired</option>
-                  <option value="revoked">Revoked</option>
-                  <option value="pending">Pending</option>
-                </select>
-              </div>
+              <Button 
+                onClick={handleSearch}
+                className="bg-primary hover:bg-primary/90 px-8"
+              >
+                <Search className="h-4 w-4 mr-2" />
+                Search
+              </Button>
             </div>
           </CardContent>
         </Card>
 
-        {/* Certificate List */}
-        {loading ? (
-          <Card className="shadow-elegant border-border/50">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-center h-32">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-              </div>
-            </CardContent>
-          </Card>
-        ) : (
+        {/* Search Results */}
+        {showSearch && filteredCertificates.length > 0 && (
           <Card className="shadow-elegant border-border/50">
             <CardHeader className="bg-gradient-to-r from-secondary/10 to-accent/10 border-b border-border/50">
               <CardTitle className="text-xl font-semibold text-foreground flex items-center space-x-2">
                 <Users className="h-5 w-5 text-secondary" />
-                <span>Franchise Certificates ({filteredCertificates.length})</span>
+                <span>Search Results ({filteredCertificates.length})</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6">
@@ -480,241 +349,29 @@ const GenerateFranchiseCertificateContent = () => {
                 {filteredCertificates.map((certificate) => (
                   <div
                     key={certificate.id}
-                    className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-accent/10 transition-colors"
+                    className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-accent/10 transition-colors cursor-pointer"
+                    onClick={() => handleSelectFranchise(certificate)}
                   >
-                    <div className="space-y-1 flex-1">
+                    <div className="space-y-1">
                       <h3 className="font-semibold text-foreground">{certificate.franchise_name}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        ID: {certificate.franchise_id} | Head: {certificate.centre_head}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Certificate: {certificate.certificate_number} | Location: {certificate.location}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Valid: {certificate.valid_from} to {certificate.valid_to}
-                      </p>
+                      <p className="text-sm text-muted-foreground">ID: {certificate.franchise_id} | Head: {certificate.centre_head}</p>
+                      <p className="text-sm text-muted-foreground">Location: {certificate.location}</p>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Badge 
-                        variant={certificate.status === 'active' ? 'default' : 'secondary'}
-                        className={certificate.status === 'active' ? 'bg-green-100 text-green-800' : ''}
-                      >
-                        {certificate.status}
-                      </Badge>
+                      <Badge variant="secondary">{certificate.status}</Badge>
                       <Button
                         size="sm"
-                        variant="outline"
-                        onClick={() => handleEdit(certificate)}
-                        className="hover:bg-secondary/10"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSelectFranchise(certificate);
+                        }}
                       >
-                        <Edit className="h-4 w-4 mr-1" />
-                        Edit
-                      </Button>
-                      <Button
-                        size="sm"
-                        onClick={() => handleSelectFranchise(certificate)}
-                        className="bg-primary hover:bg-primary/90"
-                      >
-                        Select & Preview
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleDelete(certificate.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
+                        Select
                       </Button>
                     </div>
                   </div>
                 ))}
-                {filteredCertificates.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    No certificates found. {searchValue && "Try adjusting your search criteria or "}
-                    <Button variant="link" onClick={() => setShowAddForm(true)} className="p-0">
-                      create a new certificate
-                    </Button>
-                  </div>
-                )}
               </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Add/Edit Form */}
-        {showAddForm && (
-          <Card className="shadow-elegant border-border/50">
-            <CardHeader className="bg-gradient-to-r from-accent/10 to-primary/10 border-b border-border/50">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-xl font-semibold text-foreground flex items-center space-x-2">
-                  <Plus className="h-5 w-5 text-accent" />
-                  <span>{editingCertificate ? 'Edit' : 'Add'} Certificate</span>
-                </CardTitle>
-                <Button variant="outline" onClick={handleReset}>
-                  Cancel
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="p-6">
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Franchise ID *
-                  </label>
-                  <Input
-                    type="text"
-                    name="franchise_id"
-                    value={formData.franchise_id}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter franchise ID"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Franchise Name *
-                  </label>
-                  <Input
-                    type="text"
-                    name="franchise_name"
-                    value={formData.franchise_name}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter franchise name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Centre Head *
-                  </label>
-                  <Input
-                    type="text"
-                    name="centre_head"
-                    value={formData.centre_head}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter centre head name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Certificate Number
-                  </label>
-                  <Input
-                    type="text"
-                    name="certificate_number"
-                    value={formData.certificate_number}
-                    onChange={handleInputChange}
-                    placeholder="Auto-generated if empty"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Valid From
-                  </label>
-                  <Input
-                    type="date"
-                    name="valid_from"
-                    value={formData.valid_from}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Valid To
-                  </label>
-                  <Input
-                    type="date"
-                    name="valid_to"
-                    value={formData.valid_to}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Operating Area
-                  </label>
-                  <Input
-                    type="text"
-                    name="operating_area"
-                    value={formData.operating_area}
-                    onChange={handleInputChange}
-                    placeholder="Enter operating area"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Location
-                  </label>
-                  <Input
-                    type="text"
-                    name="location"
-                    value={formData.location}
-                    onChange={handleInputChange}
-                    placeholder="Enter location"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Registration Number
-                  </label>
-                  <Input
-                    type="text"
-                    name="registration_number"
-                    value={formData.registration_number}
-                    onChange={handleInputChange}
-                    placeholder="Enter registration number"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Certificate Type
-                  </label>
-                  <select
-                    name="certificate_type"
-                    value={formData.certificate_type}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background"
-                  >
-                    <option value="Franchise Authorization">Franchise Authorization</option>
-                    <option value="Renewal Certificate">Renewal Certificate</option>
-                    <option value="Temporary Certificate">Temporary Certificate</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Status
-                  </label>
-                  <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background"
-                  >
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                    <option value="expired">Expired</option>
-                    <option value="revoked">Revoked</option>
-                  </select>
-                </div>
-                <div className="md:col-span-2">
-                  <div className="flex gap-4">
-                    <Button
-                      type="submit"
-                      disabled={!!actionLoading}
-                      className="bg-primary hover:bg-primary/90"
-                    >
-                      {actionLoading ? "Processing..." : (editingCertificate ? "Update Certificate" : "Create Certificate")}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handleReset}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </div>
-              </form>
             </CardContent>
           </Card>
         )}
