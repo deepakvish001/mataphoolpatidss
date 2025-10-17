@@ -33,6 +33,21 @@ interface Course {
   status: 'active' | 'inactive';
 }
 
+interface StateData {
+  id: string;
+  city_id: number;
+  city_name: string;
+  created_date?: string;
+}
+
+interface DistrictData {
+  id: string;
+  site_id: number;
+  city_id: number;
+  site_name: string;
+  created_date?: string;
+}
+
 const StudentRegistrationContent = () => {
   const {
     data: studentProfiles,
@@ -49,12 +64,32 @@ const StudentRegistrationContent = () => {
     loading: coursesLoading
   } = useOptimisticCrud<Course>({ tableName: 'course_master' });
 
+  // Fetch state master data
+  const {
+    data: states,
+    loading: statesLoading
+  } = useOptimisticCrud<StateData>({ tableName: 'state_master' });
+
+  // Fetch district master data
+  const {
+    data: districts,
+    loading: districtsLoading
+  } = useOptimisticCrud<DistrictData>({ tableName: 'district_master' });
+
   useAdminRealTime({
     tableName: 'student_profiles'
   });
 
   useAdminRealTime({
     tableName: 'course_master'
+  });
+
+  useAdminRealTime({
+    tableName: 'state_master'
+  });
+
+  useAdminRealTime({
+    tableName: 'district_master'
   });
   
   // Form state
@@ -99,6 +134,14 @@ const StudentRegistrationContent = () => {
     return courses.filter(c => c.category === formData.courseCategory && c.status === 'active');
   }, [courses, formData.courseCategory]);
 
+  // Filter districts by selected state
+  const filteredDistricts = useMemo(() => {
+    if (!formData.state) return [];
+    const selectedState = states.find(s => s.id === formData.state);
+    if (!selectedState) return [];
+    return districts.filter(d => d.city_id === selectedState.city_id);
+  }, [districts, states, formData.state]);
+
   // Get selected course details
   const selectedCourse = useMemo(() => {
     return courses.find(c => c.course_name === formData.courseName);
@@ -142,6 +185,11 @@ const StudentRegistrationContent = () => {
         if (course) {
           newData.courseFees = course.fees;
         }
+      }
+
+      // If state changes, reset district
+      if (field === 'state') {
+        newData.district = "";
       }
       
       return newData;
@@ -207,7 +255,7 @@ const StudentRegistrationContent = () => {
     }
   };
 
-  if (loading || coursesLoading) {
+  if (loading || coursesLoading || statesLoading || districtsLoading) {
     return (
       <div className="w-full max-w-none bg-background flex items-center justify-center min-h-[400px]">
         <div className="flex flex-col items-center space-y-4">
@@ -627,10 +675,16 @@ const StudentRegistrationContent = () => {
                   <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="-------------Select State--------------" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="up">Uttar Pradesh</SelectItem>
-                    <SelectItem value="bihar">Bihar</SelectItem>
-                    <SelectItem value="mp">Madhya Pradesh</SelectItem>
+                  <SelectContent className="bg-popover z-50">
+                    {states.length > 0 ? (
+                      states.map((state) => (
+                        <SelectItem key={state.id} value={state.id}>
+                          {state.city_name}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="no-data" disabled>No states available</SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
@@ -643,14 +697,26 @@ const StudentRegistrationContent = () => {
                 District / जिला *
               </div>
               <div className="col-span-9 px-3 py-2 flex items-center bg-blue-50">
-                <Select value={formData.district} onValueChange={(value) => handleInputChange('district', value)}>
+                <Select 
+                  value={formData.district} 
+                  onValueChange={(value) => handleInputChange('district', value)}
+                  disabled={!formData.state || filteredDistricts.length === 0}
+                >
                   <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="-------------Select Distt--------------" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="azamgarh">Azamgarh</SelectItem>
-                    <SelectItem value="mau">Mau</SelectItem>
-                    <SelectItem value="baliya">Baliya</SelectItem>
+                  <SelectContent className="bg-popover z-50">
+                    {filteredDistricts.length > 0 ? (
+                      filteredDistricts.map((district) => (
+                        <SelectItem key={district.id} value={district.id}>
+                          {district.site_name}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="no-data" disabled>
+                        {formData.state ? "No districts in this state" : "Select state first"}
+                      </SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
