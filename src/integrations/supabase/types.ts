@@ -876,6 +876,60 @@ export type Database = {
         }
         Relationships: []
       }
+      franchise_certificates: {
+        Row: {
+          centre_head: string
+          certificate_number: string
+          certificate_type: string
+          created_at: string
+          franchise_id: string
+          franchise_name: string
+          id: string
+          issue_date: string
+          location: string
+          operating_area: string
+          registration_number: string
+          status: string
+          updated_at: string
+          valid_from: string
+          valid_to: string
+        }
+        Insert: {
+          centre_head: string
+          certificate_number: string
+          certificate_type?: string
+          created_at?: string
+          franchise_id: string
+          franchise_name: string
+          id?: string
+          issue_date?: string
+          location: string
+          operating_area: string
+          registration_number: string
+          status?: string
+          updated_at?: string
+          valid_from: string
+          valid_to: string
+        }
+        Update: {
+          centre_head?: string
+          certificate_number?: string
+          certificate_type?: string
+          created_at?: string
+          franchise_id?: string
+          franchise_name?: string
+          id?: string
+          issue_date?: string
+          location?: string
+          operating_area?: string
+          registration_number?: string
+          status?: string
+          updated_at?: string
+          valid_from?: string
+          valid_to?: string
+        }
+        Relationships: []
+      }
       franchise_registrations: {
         Row: {
           antivirus: string | null
