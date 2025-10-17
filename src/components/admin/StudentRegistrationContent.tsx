@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -23,6 +23,16 @@ interface StudentProfile {
   enrollment_date?: string;
 }
 
+interface Course {
+  id: string;
+  course_name: string;
+  course_sort_name: string;
+  duration: string;
+  fees: string;
+  category: string;
+  status: 'active' | 'inactive';
+}
+
 const StudentRegistrationContent = () => {
   const {
     data: studentProfiles,
@@ -33,14 +43,25 @@ const StudentRegistrationContent = () => {
     refresh
   } = useOptimisticCrud<StudentProfile>({ tableName: 'student_profiles' });
 
+  // Fetch course master data
+  const {
+    data: courses,
+    loading: coursesLoading
+  } = useOptimisticCrud<Course>({ tableName: 'course_master' });
+
   useAdminRealTime({
     tableName: 'student_profiles'
+  });
+
+  useAdminRealTime({
+    tableName: 'course_master'
   });
   
   // Form state
   const [formData, setFormData] = useState({
     courseCategory: "",
     courseName: "",
+    courseFees: "",
     studyCenter: "",
     applicantName: "",
     fatherName: "",
@@ -66,6 +87,23 @@ const StudentRegistrationContent = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Get unique course categories from course master
+  const courseCategories = useMemo(() => {
+    const uniqueCategories = [...new Set(courses.filter(c => c.status === 'active').map(c => c.category))];
+    return uniqueCategories.sort();
+  }, [courses]);
+
+  // Filter courses by selected category
+  const filteredCourses = useMemo(() => {
+    if (!formData.courseCategory) return [];
+    return courses.filter(c => c.category === formData.courseCategory && c.status === 'active');
+  }, [courses, formData.courseCategory]);
+
+  // Get selected course details
+  const selectedCourse = useMemo(() => {
+    return courses.find(c => c.course_name === formData.courseName);
+  }, [courses, formData.courseName]);
+
   // Filtered students based on search
   const filteredStudents = studentProfiles.filter(student =>
     student.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -89,7 +127,25 @@ const StudentRegistrationContent = () => {
   const uniqueCourses = [...new Set(studentProfiles.filter(s => s.course_name).map(s => s.course_name))].length;
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => {
+      const newData = { ...prev, [field]: value };
+      
+      // If course category changes, reset course name and fees
+      if (field === 'courseCategory') {
+        newData.courseName = "";
+        newData.courseFees = "";
+      }
+      
+      // If course name changes, auto-fill fees
+      if (field === 'courseName') {
+        const course = courses.find(c => c.course_name === value);
+        if (course) {
+          newData.courseFees = course.fees;
+        }
+      }
+      
+      return newData;
+    });
   };
 
   const handleSubmit = async () => {
@@ -121,6 +177,7 @@ const StudentRegistrationContent = () => {
       setFormData({
         courseCategory: "",
         courseName: "",
+        courseFees: "",
         studyCenter: "",
         applicantName: "",
         fatherName: "",
@@ -150,7 +207,7 @@ const StudentRegistrationContent = () => {
     }
   };
 
-  if (loading) {
+  if (loading || coursesLoading) {
     return (
       <div className="w-full max-w-none bg-background flex items-center justify-center min-h-[400px]">
         <div className="flex flex-col items-center space-y-4">
@@ -251,27 +308,47 @@ const StudentRegistrationContent = () => {
                   <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="--------Select Course Category--------" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="diploma">Diploma</SelectItem>
-                    <SelectItem value="certificate">Certificate</SelectItem>
-                    <SelectItem value="advanced">Advanced</SelectItem>
+                  <SelectContent className="bg-popover z-50">
+                    {courseCategories.length > 0 ? (
+                      courseCategories.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="no-data" disabled>No categories available</SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
               <div className="col-span-3 px-3 py-2 border-r-2 border-gray-600 flex items-center bg-white">
-                <Select value={formData.courseName} onValueChange={(value) => handleInputChange('courseName', value)}>
+                <Select 
+                  value={formData.courseName} 
+                  onValueChange={(value) => handleInputChange('courseName', value)}
+                  disabled={!formData.courseCategory || filteredCourses.length === 0}
+                >
                   <SelectTrigger className="h-8 text-xs border-2 border-gray-400">
                     <SelectValue placeholder="-------Select Course Name-------" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="dchn">DCHN</SelectItem>
-                    <SelectItem value="adca">ADCA</SelectItem>
-                    <SelectItem value="pgdca">PGDCA</SelectItem>
+                  <SelectContent className="bg-popover z-50">
+                    {filteredCourses.length > 0 ? (
+                      filteredCourses.map((course) => (
+                        <SelectItem key={course.id} value={course.course_name}>
+                          {course.course_name}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="no-data" disabled>
+                        {formData.courseCategory ? "No courses in this category" : "Select category first"}
+                      </SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
               <div className="col-span-3 px-3 py-2 flex items-center bg-blue-50">
-                <span className="text-xs text-gray-700 font-medium">Fee : Rs/</span>
+                <span className="text-xs text-gray-700 font-medium">
+                  Fee : Rs/ {formData.courseFees ? `₹${formData.courseFees}` : '---'}
+                </span>
               </div>
             </div>
           </div>
