@@ -57,7 +57,7 @@ const DonationPage = () => {
               Make a <span className="text-primary">Donation</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Your support helps us provide quality education and skill development to students across Rajasthan. 
+              Your support helps us provide quality education and skill development to students across Uttar Pradesh.
               Every contribution makes a difference in someone's life.
             </p>
             <div className="flex justify-center mt-8">
@@ -215,11 +215,10 @@ const DonationPage = () => {
                 {/* Address */}
                 <div className="text-center bg-gray-50 p-6 border border-gray-300 rounded">
                   <p className="font-bold text-gray-800 mb-2">To: SAMARTH SHAKTI FOUNDATION</p>
-                  <p className="text-gray-700">362-E RK Puram</p>
-                  <p className="text-gray-700">Kota Rajasthan - 324010 India.</p>
-                  <p className="text-gray-700 mt-3">Phone no:- 0744-2470400/6991400</p>
-                  <p className="text-gray-700">Contact No.:- +91-8957341912</p>
-                  <p className="text-gray-700">Email id: info.mpdss@gmail.com</p>
+                  <p className="text-gray-700">Shanti Nagar Mehmauni Gali</p>
+                  <p className="text-gray-700">Kaptanganj Azamgarh</p>
+                  <p className="text-gray-700">Uttar Pradesh Pin code 276141</p>
+                  <p className="text-gray-700 mt-3">Email id: samarthshakti.azm@gmail.com</p>
                 </div>
               </div>
             </div>

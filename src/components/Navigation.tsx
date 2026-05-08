@@ -384,7 +384,7 @@ const Navigation = () => {
                       <Mail className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <div className="font-semibold text-foreground">info.mpdss@gmail.com</div>
+                      <div className="font-semibold text-foreground">samarthshakti.azm@gmail.com</div>
                       <div className="text-sm text-muted-foreground">Email Support</div>
                     </div>
                   </div>
