@@ -212,7 +212,7 @@ const Donation = () => {
                   </p>
                   <p className="text-sm">
                     <strong className="text-foreground">Email:</strong> 
-                    <a href="mailto:info.mpdss@gmail.com" className="text-primary hover:underline ml-1">info.mpdss@gmail.com</a>
+                    <a href="mailto:samarthshakti.azm@gmail.com" className="text-primary hover:underline ml-1">samarthshakti.azm@gmail.com</a>
                   </p>
                 </div>
               </div>
