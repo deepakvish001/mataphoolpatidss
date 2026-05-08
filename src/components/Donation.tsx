@@ -9,12 +9,12 @@ const Donation = () => {
   const { toast } = useToast();
 
   const bankDetails = {
-    bankName: 'AXIS BANK LTD',
-    branch: 'MUSFIRABAD AZAM AZA UP, AZAMGARH',
-    pinCode: '276001',
-    ifscCode: 'UTIB0005099',
-    accountNumber: '925010006058141',
-    accountHolder: 'MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN'
+    bankName: 'STATE BANK OF INDIA',
+    branch: 'JIYANPUR',
+    branchAddress: 'STATE BANK OF INDIA JIYANPUR BAZAR, MAIN ROAD AZAMGARH',
+    ifscCode: 'SBIN0012995',
+    accountNumber: '44950376779',
+    accountHolder: 'SAMARTH SHAKTI FOUNDATION'
   };
 
   const copyToClipboard = (text: string, field: string) => {
@@ -82,7 +82,7 @@ const Donation = () => {
               </h4>
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p>
-                  <strong className="text-foreground">Organization:</strong> Mata Phoolpati Devi Shikshan Sansthan
+                  <strong className="text-foreground">Organization:</strong> Samarth Shakti Foundation
                 </p>
                 <p>
                   <strong className="text-foreground">Location:</strong> Shanti Nagar Mehmauni Gali Kaptanganj, Azamgarh, UP - 276141
@@ -114,11 +114,11 @@ const Donation = () => {
                 {/* Bank Details */}
                 <div className="space-y-4">
                   {Object.entries({
-                    'Account Holder': bankDetails.accountHolder,
-                    'Bank Name': bankDetails.bankName,
-                    'Branch': bankDetails.branch,
-                    'Account Number': bankDetails.accountNumber,
-                    'IFSC Code': bankDetails.ifscCode
+                    'Name of the Account': bankDetails.accountHolder,
+                    'Account number': bankDetails.accountNumber,
+                    'Branch Name': bankDetails.branch,
+                    'Branch IFSC': bankDetails.ifscCode,
+                    'Branch Address': bankDetails.branchAddress
                   }).map(([label, value]) => (
                     <div key={label} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                       <div>

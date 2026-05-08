@@ -11,12 +11,12 @@ const DonationPage = () => {
   const { toast } = useToast();
 
   const bankDetails = {
-    bankName: 'AXIS BANK LTD',
-    branch: 'MUSFIRABAD AZAM AZA UP, AZAMGARH',
-    pinCode: '276001',
-    ifscCode: 'UTIB0005099',
-    accountNumber: '925010006058141',
-    accountHolder: 'MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN'
+    bankName: 'STATE BANK OF INDIA',
+    branch: 'JIYANPUR',
+    branchAddress: 'STATE BANK OF INDIA JIYANPUR BAZAR, MAIN ROAD AZAMGARH',
+    ifscCode: 'SBIN0012995',
+    accountNumber: '44950376779',
+    accountHolder: 'SAMARTH SHAKTI FOUNDATION'
   };
 
   const copyToClipboard = (text: string, field: string) => {
@@ -76,30 +76,30 @@ const DonationPage = () => {
             <div className="bg-white border-2 border-gray-800 mb-8 shadow-2xl">
               {/* Header */}
               <div className="bg-gray-100 border-b-2 border-gray-800 p-4 text-center">
-                <h2 className="text-2xl font-bold text-gray-800">Direct Deposit In AXIS BANK</h2>
+                <h2 className="text-2xl font-bold text-gray-800">Direct Deposit In STATE BANK OF INDIA</h2>
               </div>
-              
-              {/* AXIS Bank Logo Section */}
+
+              {/* SBI Logo Section */}
               <div className="bg-gray-50 border-b border-gray-300 p-8 text-center">
-                <div className="text-6xl font-bold text-[#97144D] mb-4">
-                  🏛️ AXIS BANK
+                <div className="text-6xl font-bold text-[#1B3A6B] mb-4">
+                  🏛️ STATE BANK OF INDIA
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <a 
-                    href="https://www.axisbank.com/corporate/branch-atm-locator" 
-                    target="_blank" 
+                  <a
+                    href="https://bank.sbi/web/home/locator/branch"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700 transition-all duration-300 hover:scale-105 text-center block"
                   >
-                    <span className="text-white font-medium">Open AXIS BANK Branch Locator</span>
+                    <span className="text-white font-medium">Open SBI Branch Locator</span>
                   </a>
-                  <a 
-                    href="https://www.axisbank.com/corporate/online-banking" 
-                    target="_blank" 
+                  <a
+                    href="https://retail.onlinesbi.sbi/"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700 transition-all duration-300 hover:scale-105 text-center block"
                   >
-                    <span className="text-white font-medium">Login to AXIS BANK Internet Banking</span>
+                    <span className="text-white font-medium">Login to SBI Internet Banking</span>
                   </a>
                 </div>
               </div>
@@ -107,84 +107,84 @@ const DonationPage = () => {
               {/* Bank Details Table */}
               <div className="grid grid-cols-2">
                 <div className="border-r border-gray-800">
-                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Bank Name</div>
-                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Account Name</div>
-                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Account No.</div>
-                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">IFSC Code</div>
-                  <div className="bg-gray-100 p-3 font-semibold">City Name</div>
+                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Name of the Account</div>
+                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Account number</div>
+                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Branch Name</div>
+                  <div className="bg-gray-100 border-b border-gray-800 p-3 font-semibold">Branch IFSC</div>
+                  <div className="bg-gray-100 p-3 font-semibold">Branch Address</div>
                 </div>
                 <div>
                   <div className="border-b border-gray-800 p-3 flex justify-between items-center">
-                    <span>AXIS BANK</span>
+                    <span className="text-sm">SAMARTH SHAKTI FOUNDATION</span>
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => copyToClipboard("AXIS BANK", "Bank Name")}
-                      className="h-6 w-6 p-0"
-                    >
-                      {copiedField === "Bank Name" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-                    </Button>
-                  </div>
-                  <div className="border-b border-gray-800 p-3 flex justify-between items-center">
-                    <span className="text-sm">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => copyToClipboard("MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN", "Account Name")}
+                      onClick={() => copyToClipboard("SAMARTH SHAKTI FOUNDATION", "Account Name")}
                       className="h-6 w-6 p-0"
                     >
                       {copiedField === "Account Name" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                     </Button>
                   </div>
                   <div className="border-b border-gray-800 p-3 flex justify-between items-center">
-                    <span className="font-mono">916020030503115</span>
+                    <span className="font-mono">44950376779</span>
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => copyToClipboard("916020030503115", "Account Number")}
+                      onClick={() => copyToClipboard("44950376779", "Account Number")}
                       className="h-6 w-6 p-0"
                     >
                       {copiedField === "Account Number" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                     </Button>
                   </div>
                   <div className="border-b border-gray-800 p-3 flex justify-between items-center">
-                    <span className="font-mono">UTIB0001955</span>
+                    <span>JIYANPUR</span>
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => copyToClipboard("UTIB0001955", "IFSC Code")}
+                      onClick={() => copyToClipboard("JIYANPUR", "Branch Name")}
+                      className="h-6 w-6 p-0"
+                    >
+                      {copiedField === "Branch Name" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                    </Button>
+                  </div>
+                  <div className="border-b border-gray-800 p-3 flex justify-between items-center">
+                    <span className="font-mono">SBIN0012995</span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => copyToClipboard("SBIN0012995", "IFSC Code")}
                       className="h-6 w-6 p-0"
                     >
                       {copiedField === "IFSC Code" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                     </Button>
                   </div>
                   <div className="p-3 flex justify-between items-center">
-                    <span>Kota, Rajasthan</span>
+                    <span className="text-sm">STATE BANK OF INDIA JIYANPUR BAZAR, MAIN ROAD AZAMGARH</span>
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => copyToClipboard("Kota, Rajasthan", "City")}
+                      onClick={() => copyToClipboard("STATE BANK OF INDIA JIYANPUR BAZAR, MAIN ROAD AZAMGARH", "Branch Address")}
                       className="h-6 w-6 p-0"
                     >
-                      {copiedField === "City" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                      {copiedField === "Branch Address" ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                     </Button>
                   </div>
                 </div>
               </div>
-              
+
               {/* Important Note */}
               <div className="bg-yellow-50 border-t border-gray-800 p-4">
-                <p className="font-semibold text-gray-800">IMPORTANT: PLEASE DEPOSIT CASH ONLY IN AXIS BANK</p>
+                <p className="font-semibold text-gray-800">IMPORTANT: PLEASE DEPOSIT CASH ONLY IN STATE BANK OF INDIA</p>
               </div>
-              
+
               {/* Payment Methods */}
               <div className="border-t border-gray-800 p-4">
-                <p className="font-semibold text-gray-800 mb-2">At All Your Nearest Branches of AXIS You Can Pay Us By</p>
+                <p className="font-semibold text-gray-800 mb-2">At All Your Nearest Branches of SBI You Can Pay Us By</p>
                 <ol className="text-gray-700 space-y-1">
-                  <li>1. Depositing Cash To Our AXIS Account</li>
-                  <li>2. Drop a Cheque for Collection in Our AXIS Account</li>
-                  <li>3. Online Transfer from Your AXIS to Our AXIS Account using EFT</li>
-                  <li>4. Online Transfer from Any Bank to Our AXIS Account using NEFT</li>
+                  <li>1. Depositing Cash To Our SBI Account</li>
+                  <li>2. Drop a Cheque for Collection in Our SBI Account</li>
+                  <li>3. Online Transfer from Your SBI to Our SBI Account using EFT</li>
+                  <li>4. Online Transfer from Any Bank to Our SBI Account using NEFT</li>
                 </ol>
               </div>
             </div>
@@ -205,7 +205,7 @@ const DonationPage = () => {
                 
                 <div className="text-center">
                   <p className="text-gray-700 mb-2">The Demand Draft/Cheque should be drawn in favour of</p>
-                  <p className="text-xl font-bold text-gray-800 mb-4">"Mata Phoolpati Devi Shikshan Sansthan"</p>
+                  <p className="text-xl font-bold text-gray-800 mb-4">"Samarth Shakti Foundation"</p>
                 </div>
                 
                 <p className="text-gray-700 text-center mb-6">
@@ -214,7 +214,7 @@ const DonationPage = () => {
                 
                 {/* Address */}
                 <div className="text-center bg-gray-50 p-6 border border-gray-300 rounded">
-                  <p className="font-bold text-gray-800 mb-2">To: MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</p>
+                  <p className="font-bold text-gray-800 mb-2">To: SAMARTH SHAKTI FOUNDATION</p>
                   <p className="text-gray-700">362-E RK Puram</p>
                   <p className="text-gray-700">Kota Rajasthan - 324010 India.</p>
                   <p className="text-gray-700 mt-3">Phone no:- 0744-2470400/6991400</p>
@@ -263,7 +263,7 @@ const DonationPage = () => {
               <Button
                 variant="outline"
                 onClick={() => {
-                  const allDetails = `Bank Name: AXIS BANK\nAccount Name: MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN\nAccount Number: 916020030503115\nIFSC Code: UTIB0001955\nCity: Kota, Rajasthan\n\nAddress: 362-E RK Puram, Kota Rajasthan - 324010 India\nPhone: 0744-2470400/6991400\nContact: +91-8957341912\nEmail: info.mpdss@gmail.com`;
+                  const allDetails = `Bank Name: STATE BANK OF INDIA\nAccount Name: SAMARTH SHAKTI FOUNDATION\nAccount Number: 44950376779\nIFSC Code: SBIN0012995\nBranch Name: JIYANPUR\nBranch Address: STATE BANK OF INDIA JIYANPUR BAZAR, MAIN ROAD AZAMGARH`;
                   copyToClipboard(allDetails, "All Details");
                 }}
                 className="flex items-center justify-center space-x-2 px-8 py-3"

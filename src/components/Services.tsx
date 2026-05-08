@@ -129,7 +129,7 @@ const Services = () => {
         {/* Certification Benefits */}
         <div className="mb-16">
           <h3 className="text-2xl font-semibold text-foreground mb-8 text-center">
-            MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN Certification Benefits
+            SAMARTH SHAKTI FOUNDATION Certification Benefits
           </h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {certificationBenefits.map((benefit, index) => (
@@ -164,7 +164,7 @@ const Services = () => {
               <span className="text-primary font-semibold tracking-wide">Career Journey</span>
             </div>
             <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground to-primary bg-clip-text">
-              MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+              SAMARTH SHAKTI FOUNDATION
             </h3>
             <h4 className="text-xl sm:text-2xl font-semibold text-primary mb-4">
               Placement Process
@@ -227,7 +227,7 @@ const Services = () => {
         {/* CTA Section */}
         <div className="text-center mt-16">
           <p className="text-lg text-muted-foreground mb-6">
-            Enhance your skills and take your career to the next level with MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+            Enhance your skills and take your career to the next level with SAMARTH SHAKTI FOUNDATION
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="btn-primary group">

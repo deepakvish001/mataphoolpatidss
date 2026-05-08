@@ -100,7 +100,7 @@ const Navigation = () => {
                 <div className="w-14 h-14 bg-background rounded-2xl p-1 group-hover:scale-110 transition-all duration-500 shadow-lg border border-primary/20">
                   <img 
                     src="/lovable-uploads/b43da45b-3faf-4247-a3f7-33e3821aae7b.png" 
-                    alt="Mata Phoolpati Devi Shikshan Sansthan Logo" 
+                    alt="Samarth Shakti Foundation Logo" 
                     className="w-full h-full object-contain rounded-xl"
                   />
                 </div>
@@ -110,9 +110,9 @@ const Navigation = () => {
               
               <div className="hidden md:block">
                 <h1 className="text-lg font-bold leading-tight tracking-tight">
-                  <span className="text-foreground">MATA PHOOLPATI DEVI</span>
+                  <span className="text-foreground">SAMARTH SHAKTI</span>
                   <br />
-                  <span className="text-primary">SHIKSHAN SANSTHAN</span>
+                  <span className="text-primary">FOUNDATION</span>
                 </h1>
               </div>
             </a>

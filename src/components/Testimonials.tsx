@@ -5,21 +5,21 @@ const Testimonials = () => {
   const testimonials = [
     {
       name: 'Gaurav Kumar',
-      quote: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN gave me the platform and opportunities to enhance my career and change my life.",
+      quote: "SAMARTH SHAKTI FOUNDATION gave me the platform and opportunities to enhance my career and change my life.",
       role: 'Software Developer',
       company: 'Tech Solutions Pvt Ltd',
       image: '/placeholder-avatar-1.jpg'
     },
     {
       name: 'Uttam Arya',
-      quote: "Taking admission at MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN gave a new turn to my life. I learned a lot of things including discipline and etiquette.",
+      quote: "Taking admission at SAMARTH SHAKTI FOUNDATION gave a new turn to my life. I learned a lot of things including discipline and etiquette.",
       role: 'Retail Manager',
       company: 'Fashion Hub',
       image: '/placeholder-avatar-2.jpg'
     },
     {
       name: 'Praveen Kumar',
-      quote: "I am thankful to MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN for helping me secure a placement at a reputed IT company.",
+      quote: "I am thankful to SAMARTH SHAKTI FOUNDATION for helping me secure a placement at a reputed IT company.",
       role: 'Systems Analyst',
       company: 'InfoTech Corp',
       image: '/placeholder-avatar-3.jpg'
@@ -39,7 +39,7 @@ const Testimonials = () => {
             What Our <span className="text-primary">Students Say</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            At MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN, we believe that every student has the potential to succeed. 
+            At SAMARTH SHAKTI FOUNDATION, we believe that every student has the potential to succeed. 
             Here are some inspiring stories from our graduates.
           </p>
         </div>
@@ -122,7 +122,7 @@ const Testimonials = () => {
             Ready to Write Your Success Story?
           </h3>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join thousands of students who have transformed their careers with MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN. 
+            Join thousands of students who have transformed their careers with SAMARTH SHAKTI FOUNDATION. 
             Start your journey toward professional success today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

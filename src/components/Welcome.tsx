@@ -33,10 +33,10 @@ const Welcome = () => {
                 Welcome to
               </span>
               <span className="block bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent animate-fade-in delay-200 font-black">
-                MATA PHOOLPATI DEVI
+                SAMARTH SHAKTI
               </span>
               <span className="block bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent animate-fade-in delay-400 font-black">
-                SHIKSHAN SANSTHAN
+                FOUNDATION
               </span>
             </h1>
             

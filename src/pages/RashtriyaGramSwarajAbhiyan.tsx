@@ -189,7 +189,7 @@ const RashtriyaGramSwarajAbhiyan = () => {
                   <div className="relative group">
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
                     <div className="relative text-xl md:text-2xl font-black text-foreground bg-gradient-to-r from-muted to-muted/80 rounded-2xl px-8 py-4 inline-block shadow-xl border border-border group-hover:scale-105 transition-all duration-300">
-                      MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+                      SAMARTH SHAKTI FOUNDATION
                     </div>
                   </div>
                 </div>

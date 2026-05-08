@@ -25,8 +25,8 @@ const About = () => {
               </div>
               
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight text-foreground">
-                Welcome to <br /><span className="text-gradient-enhanced bg-clip-text">MATA PHOOLPATI DEVI</span><br />
-                <span className="text-primary">SHIKSHAN SANSTHAN</span>
+                Welcome to <br /><span className="text-gradient-enhanced bg-clip-text">SAMARTH SHAKTI</span><br />
+                <span className="text-primary">FOUNDATION</span>
               </h2>
               
               <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl font-light">
