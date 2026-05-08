@@ -155,11 +155,32 @@ const Donation = () => {
                         <DialogTitle>Bank Account Details</DialogTitle>
                       </DialogHeader>
                       <div className="space-y-4">
-                        <img 
-                          src="/lovable-uploads/d6f8d578-d3ad-4ed6-a475-b15bdaee0d0e.png" 
-                          alt="Bank Cheque with Account Details" 
-                          className="w-full h-auto rounded-lg shadow-lg"
-                        />
+                        <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg bg-white">
+                          <table className="w-full text-left">
+                            <tbody>
+                              <tr className="border-b border-gray-200">
+                                <td className="bg-gray-50 px-4 py-3 font-medium text-gray-700 w-1/3">Name of the Account:</td>
+                                <td className="px-4 py-3 text-gray-900">SAMARTH SHAKTI FOUNDATION</td>
+                              </tr>
+                              <tr className="border-b border-gray-200">
+                                <td className="bg-gray-50 px-4 py-3 font-medium text-gray-700">Account number:</td>
+                                <td className="px-4 py-3 text-gray-900 font-mono">44950376779</td>
+                              </tr>
+                              <tr className="border-b border-gray-200">
+                                <td className="bg-gray-50 px-4 py-3 font-medium text-gray-700">Branch Name:</td>
+                                <td className="px-4 py-3 text-gray-900">JIYANPUR</td>
+                              </tr>
+                              <tr className="border-b border-gray-200">
+                                <td className="bg-gray-50 px-4 py-3 font-medium text-gray-700">Branch IFSC:</td>
+                                <td className="px-4 py-3 text-gray-900 font-mono">SBIN0012995</td>
+                              </tr>
+                              <tr>
+                                <td className="bg-gray-50 px-4 py-3 font-medium text-gray-700">Branch Address:</td>
+                                <td className="px-4 py-3 text-gray-900">STATE BANK OF INDIA JIYANPUR BAZAR, MAIN ROAD AZAMGARH</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                         <p className="text-sm text-muted-foreground text-center">
                           Use the above bank details to make your donation via bank transfer
                         </p>
