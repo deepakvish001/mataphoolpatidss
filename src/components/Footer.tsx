@@ -45,7 +45,7 @@ const Footer = () => {
                   </div>
                 </a>
                  <p className="text-muted-foreground leading-relaxed mb-6">
-                   SAMARTH SHAKTI FOUNDATION is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner with 5+ years of experience, empowering 25,000+ students across India with 100+ expert faculties and 100% placement assistance.
+                   SAMARTH SHAKTI FOUNDATION is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2020. We are NSDC Training Partner with 5+ years of experience, empowering 25,000+ students across India with 100+ expert faculties and 100% placement assistance.
                  </p>
               </div>
 

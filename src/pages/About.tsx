@@ -69,7 +69,7 @@ const About = () => {
                   Pioneering Excellence in <span className="text-primary font-bold">Skill Development</span>
                 </p>
                  <p className="text-xl text-muted-foreground/80 leading-relaxed">
-                   <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc.
+                   <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2020. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc.
                  </p>
               </div>
             </div>
@@ -153,7 +153,7 @@ const About = () => {
                     </div>
                   </div>
                    <p className="text-lg text-muted-foreground leading-relaxed">
-                     <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc. We have successfully conducted various projects of Skill Training including DDUGKY, PMKVY  UPSDM,NIESBUD, NULM Uttar Pradesh CSR etc.
+                     <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2020. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc. We have successfully conducted various projects of Skill Training including DDUGKY, PMKVY  UPSDM,NIESBUD, NULM Uttar Pradesh CSR etc.
                    </p>
                 </div>
 

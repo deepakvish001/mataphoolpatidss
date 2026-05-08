@@ -15,9 +15,9 @@ const MissionCourses = () => {
           <div className="bg-gradient-to-r from-white/90 via-white/95 to-white/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-border/20 mb-12 text-center">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
               <span className="text-foreground">WELCOME TO </span>
-              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">YUVA </span>
-              <span className="bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">VIKAS </span>
-              <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">SOCIETY</span>
+              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">SAMARTH </span>
+              <span className="bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">SHAKTI </span>
+              <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">FOUNDATION</span>
             </h1>
             
             {/* Mission Card */}

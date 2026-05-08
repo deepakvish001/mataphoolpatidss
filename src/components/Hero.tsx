@@ -62,7 +62,7 @@ const Hero = () => {
                   <div key={index} className="min-w-full h-full relative">
                     <img 
                       src={image} 
-                      alt={`Yuva Vikas Society Slide ${index + 1}`}
+                      alt={`Samarth Shakti Foundation Slide ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
                     {/* Gradient overlay for better text visibility */}
