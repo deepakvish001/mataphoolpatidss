@@ -47,54 +47,71 @@ const Hero = () => {
         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-background/90 to-transparent"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+      <div className="container mx-auto px-3 sm:px-4 relative z-10 min-h-screen flex items-center py-6 sm:py-10">
         {/* Hero Image Slider - Full Width */}
         <div className="w-full">
           <div className="relative mx-auto max-w-7xl">
             {/* Image Slider Container */}
-            <div className="relative aspect-[16/9] md:aspect-[21/9] lg:aspect-[24/9] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-secondary/10">
+            <div className="relative aspect-[4/5] sm:aspect-[16/9] md:aspect-[21/9] lg:aspect-[24/9] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-secondary/10">
               {/* Slider Images */}
-              <div 
+              <div
                 className="flex transition-transform duration-700 ease-in-out h-full"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {heroImages.map((image, index) => (
                   <div key={index} className="min-w-full h-full relative">
-                    <img 
-                      src={image} 
+                    <img
+                      src={image}
                       alt={`Samarth Shakti Foundation Slide ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
-                    {/* Gradient overlay for better text visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
+                    {/* Gradient overlay for better text visibility and to mask any baked-in text */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70 sm:bg-gradient-to-r sm:from-black/50 sm:via-black/20 sm:to-black/50"></div>
                   </div>
                 ))}
+              </div>
+
+              {/* Brand Heading Overlay */}
+              <div className="absolute inset-x-0 top-0 z-20 px-4 sm:px-6 pt-5 sm:pt-8 pointer-events-none">
+                <div className="text-center">
+                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+                    <span className="bg-gradient-to-r from-orange-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent">SAMARTH</span>{' '}
+                    <span className="text-white">SHAKTI</span>{' '}
+                    <span className="bg-gradient-to-r from-emerald-300 via-green-400 to-emerald-500 bg-clip-text text-transparent">FOUNDATION</span>
+                  </h1>
+                  <p className="mt-2 sm:mt-3 text-xs sm:text-sm md:text-base font-semibold text-white/90 tracking-wider uppercase drop-shadow">
+                    Empowering India Through Skill Development
+                  </p>
+                </div>
               </div>
 
               {/* Navigation Arrows */}
               <button
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 group"
+                aria-label="Previous slide"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 group z-20"
               >
-                <ChevronLeft className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
+                <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-white group-hover:scale-110 transition-transform" />
               </button>
-              
+
               <button
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 group"
+                aria-label="Next slide"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 group z-20"
               >
-                <ChevronRight className="h-6 w-6 text-white group-hover:scale-110 transition-transform" />
+                <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-white group-hover:scale-110 transition-transform" />
               </button>
 
               {/* Slide Indicators */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+              <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
                 {heroImages.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentSlide 
-                        ? 'bg-white scale-125' 
+                    aria-label={`Go to slide ${index + 1}`}
+                    className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                      index === currentSlide
+                        ? 'bg-white scale-125'
                         : 'bg-white/50 hover:bg-white/70'
                     }`}
                   />
@@ -102,65 +119,65 @@ const Hero = () => {
               </div>
 
               {/* Call-to-Action Overlay */}
-              <div className="absolute bottom-8 right-8">
-                <Button 
-                  size="lg" 
-                  className="group bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              <div className="absolute bottom-12 sm:bottom-8 inset-x-0 sm:inset-x-auto sm:right-8 flex justify-center sm:justify-end px-4 sm:px-0 z-20">
+                <Button
+                  size="lg"
+                  className="group bg-primary hover:bg-primary/90 text-primary-foreground px-5 sm:px-8 py-3 sm:py-4 text-sm sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   onClick={() => window.location.href = '/donation'}
                 >
-                  <Target className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
+                  <Target className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
                   Join Our Mission
-                  <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
             </div>
 
             {/* Trust Indicators Below Slider */}
-            <div className="mt-8">
-              <div className="bg-gradient-to-r from-primary/10 via-secondary/5 to-primary/5 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/20">
-                <h3 className="text-sm font-semibold text-primary mb-4 text-center">TRUSTED BY THOUSANDS</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div className="mt-6 sm:mt-8">
+              <div className="bg-gradient-to-r from-primary/10 via-secondary/5 to-primary/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-lg border border-border/20">
+                <h3 className="text-xs sm:text-sm font-semibold text-primary mb-3 sm:mb-4 text-center tracking-wider">TRUSTED BY THOUSANDS</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                   <div className="flex flex-col items-center text-center space-y-2">
-                    <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                      <BookOpen className="h-6 w-6 text-blue-600" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                      <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
                     </div>
-                    <span className="text-xs font-medium text-foreground">NSDC Certified</span>
+                    <span className="text-[11px] sm:text-xs font-medium text-foreground leading-tight">NSDC Certified</span>
                   </div>
                   <div className="flex flex-col items-center text-center space-y-2">
-                    <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
-                      <Users className="h-6 w-6 text-green-600" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                      <Users className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
                     </div>
-                    <span className="text-xs font-medium text-foreground">Pan India Network</span>
+                    <span className="text-[11px] sm:text-xs font-medium text-foreground leading-tight">Pan India Network</span>
                   </div>
                   <div className="flex flex-col items-center text-center space-y-2">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                      <Award className="h-6 w-6 text-purple-600" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                      <Award className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
                     </div>
-                    <span className="text-xs font-medium text-foreground">Government Approved</span>
+                    <span className="text-[11px] sm:text-xs font-medium text-foreground leading-tight">Government Approved</span>
                   </div>
                   <div className="flex flex-col items-center text-center space-y-2">
-                    <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center">
-                      <Star className="h-6 w-6 text-orange-600" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-500/20 rounded-xl flex items-center justify-center">
+                      <Star className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600" />
                     </div>
-                    <span className="text-xs font-medium text-foreground">Top Rated Partner</span>
+                    <span className="text-[11px] sm:text-xs font-medium text-foreground leading-tight">Top Rated Partner</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-6 mt-8 text-center">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 mt-6 sm:mt-8 text-center">
               <div>
-                <div className="text-3xl md:text-4xl font-black text-primary mb-1">25K+</div>
-                <div className="text-sm text-muted-foreground font-medium">Students Empowered</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black text-primary mb-1">25K+</div>
+                <div className="text-[11px] sm:text-sm text-muted-foreground font-medium leading-tight">Students Empowered</div>
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-black text-primary mb-1">100%</div>
-                <div className="text-sm text-muted-foreground font-medium">Placement Rate</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black text-primary mb-1">100%</div>
+                <div className="text-[11px] sm:text-sm text-muted-foreground font-medium leading-tight">Placement Rate</div>
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-black text-primary mb-1">5+</div>
-                <div className="text-sm text-muted-foreground font-medium">Years Excellence</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black text-primary mb-1">5+</div>
+                <div className="text-[11px] sm:text-sm text-muted-foreground font-medium leading-tight">Years Excellence</div>
               </div>
             </div>
           </div>
