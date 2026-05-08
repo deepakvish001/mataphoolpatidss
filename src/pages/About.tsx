@@ -659,7 +659,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold text-foreground mb-4">Email Us</h3>
                 <div className="bg-green-500/10 border border-green-500/20 rounded-lg px-4 py-3">
                   <span className="text-primary font-semibold text-lg break-all">
-                    mataphoolpatideviorg@gmail.com
+                    samarthshakti.azm@gmail.com
                   </span>
                 </div>
               </div>

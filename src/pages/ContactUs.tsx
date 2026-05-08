@@ -59,7 +59,7 @@ const ContactUs = () => {
       title: "Email Us",
       description: "Send us your queries",
       icon: Mail,
-      details: ["info.mpdss@gmail.com"],
+      details: ["samarthshakti.azm@gmail.com"],
       color: "text-blue-600",
       bg: "bg-blue-50",
       action: "Send Email"

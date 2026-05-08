@@ -66,7 +66,7 @@ const Footer = () => {
                 <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
                   <Mail className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-muted-foreground">
-                    info.mpdss@gmail.com
+                    samarthshakti.azm@gmail.com
                   </span>
                 </div>
               </div>
