@@ -99,7 +99,7 @@ const Navigation = () => {
                 {/* Logo container */}
                 <div className="w-14 h-14 bg-background rounded-2xl p-1 group-hover:scale-110 transition-all duration-500 shadow-lg border border-primary/20">
                   <img 
-                    src="/lovable-uploads/b43da45b-3faf-4247-a3f7-33e3821aae7b.png" 
+                    src="/lovable-uploads/samarth-shakti-logo.jpeg"
                     alt="Samarth Shakti Foundation Logo" 
                     className="w-full h-full object-contain rounded-xl"
                   />
