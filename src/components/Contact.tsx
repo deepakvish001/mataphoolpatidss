@@ -77,11 +77,6 @@ const Contact = () => {
                     <h4 className="font-semibold text-foreground mb-2">Email Us</h4>
                     <div className="space-y-1">
                       <p className="text-muted-foreground">
-                        <a href="mailto:jitmskillspvtltd@gmail.com" className="hover:text-primary transition-colors">
-                          jitmskillspvtltd@gmail.com
-                        </a>
-                      </p>
-                      <p className="text-muted-foreground">
                         <a href="mailto:samarthshakti.azm@gmail.com" className="hover:text-primary transition-colors">
                           samarthshakti.azm@gmail.com
                         </a>
