@@ -7,7 +7,6 @@ const Hero = () => {
   const heroImages = [
     '/lovable-uploads/628467af-7c3c-422a-bca3-db6d45fdc8df.png',
     '/lovable-uploads/b5574b24-63e2-45cc-93a6-da83d22ca0e5.png',
-    '/lovable-uploads/60184028-b491-4b63-88e5-0249f7aae2b7.png',
     '/lovable-uploads/ad203805-3287-4c05-8844-7c2d1f2bb45b.png'
   ];
 
@@ -65,24 +64,10 @@ const Hero = () => {
                       alt={`Samarth Shakti Foundation Slide ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
-                    {/* Gradient overlay for better text visibility and to mask any baked-in text */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70 sm:bg-gradient-to-r sm:from-black/50 sm:via-black/20 sm:to-black/50"></div>
+                    {/* Subtle gradient overlay for text visibility */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
                   </div>
                 ))}
-              </div>
-
-              {/* Brand Heading Overlay */}
-              <div className="absolute inset-x-0 top-0 z-20 px-4 sm:px-6 pt-5 sm:pt-8 pointer-events-none">
-                <div className="text-center">
-                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-                    <span className="bg-gradient-to-r from-orange-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent">SAMARTH</span>{' '}
-                    <span className="text-white">SHAKTI</span>{' '}
-                    <span className="bg-gradient-to-r from-emerald-300 via-green-400 to-emerald-500 bg-clip-text text-transparent">FOUNDATION</span>
-                  </h1>
-                  <p className="mt-2 sm:mt-3 text-xs sm:text-sm md:text-base font-semibold text-white/90 tracking-wider uppercase drop-shadow">
-                    Empowering India Through Skill Development
-                  </p>
-                </div>
               </div>
 
               {/* Navigation Arrows */}

@@ -53,11 +53,35 @@ const GovernmentSchemes = () => {
       borderColor: "border-emerald-200",
       textColor: "text-emerald-700",
       titleColor: "text-red-600"
+    },
+    {
+      title: "PMKVY",
+      fullName: "Pradhan Mantri Kaushal Vikas Yojana",
+      ministry: "Ministry of Skill Development and Entrepreneurship",
+      government: "Government of India",
+      description: "Flagship scheme of the Ministry of Skill Development & Entrepreneurship (MSDE) implemented by the National Skill Development Corporation. The objective is to enable a large number of Indian youth to take up industry-relevant skill training that will help them in securing a better livelihood. Samarth Shakti Foundation is an empanelled training partner delivering short-term training and recognition of prior learning across multiple sectors.",
+      logoUrl: indiaEmblem,
+      color: "from-orange-50 to-orange-100",
+      borderColor: "border-orange-200",
+      textColor: "text-orange-700",
+      titleColor: "text-red-600"
+    },
+    {
+      title: "CSR TRAINING",
+      fullName: "Corporate Social Responsibility Skill Training",
+      ministry: "In partnership with Corporate CSR Initiatives",
+      government: "Pan India",
+      description: "Customized skill development and livelihood programs delivered in partnership with corporate CSR partners. Focused on empowering underprivileged youth, women and rural communities through industry-aligned training and 100% placement assistance. Programs cover Apparel, Retail, Electronics, Healthcare, Food Processing, Agriculture and IT-ITES sectors.",
+      logoUrl: indiaEmblem,
+      color: "from-rose-50 to-rose-100",
+      borderColor: "border-rose-200",
+      textColor: "text-rose-700",
+      titleColor: "text-red-600"
     }
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-background via-background/98 to-primary/3 relative overflow-hidden">
+    <section id="schemes" className="py-20 bg-gradient-to-br from-background via-background/98 to-primary/3 relative overflow-hidden scroll-mt-24">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/3 right-1/5 w-80 h-80 bg-gradient-to-br from-primary/4 to-blue-500/2 rotate-45 rounded-3xl animate-float-slow"></div>

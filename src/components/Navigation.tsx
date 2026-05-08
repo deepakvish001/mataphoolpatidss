@@ -27,6 +27,9 @@ const Navigation = () => {
     { name: 'NSQF', href: '/nsqf' },
     { name: 'AAIOE', href: '/aaioe' },
     { name: 'Entrepreneurship', href: '/entrepreneurship-development' },
+    { name: 'UPSDM', href: '/#schemes' },
+    { name: 'PMKVY', href: '/#schemes' },
+    { name: 'CSR Training', href: '/#schemes' },
   ];
 
   // Handle dropdown hover with delay
