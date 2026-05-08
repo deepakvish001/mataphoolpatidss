@@ -75,7 +75,7 @@ const GovernmentSchemes = () => {
             </h2>
             <div className="bg-gradient-to-r from-white/90 via-white/95 to-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-border/20 inline-block">
               <p className="text-lg md:text-xl text-foreground font-semibold">
-                <span className="text-red-600 font-bold">Yuva Vikas Society</span> - Implementing Government Initiatives for Nation Building
+                <span className="text-red-600 font-bold">Samarth Shakti Foundation</span> - Implementing Government Initiatives for Nation Building
               </p>
             </div>
           </div>

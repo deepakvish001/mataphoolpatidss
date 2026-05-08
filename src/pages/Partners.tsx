@@ -126,7 +126,7 @@ const Partners = () => {
                   Building Excellence Through <span className="text-primary font-bold">Strategic Collaborations</span>
                 </p>
                  <p className="text-xl text-muted-foreground/80 leading-relaxed">
-                   <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> has tie-ups with various organizations for providing free courses job training & Placement assistance to Trained Candidates. Since 2023, under the leadership of Director <span className="font-semibold">Sanjay Rajbhar</span>, Manager <span className="font-semibold">Surendra Prajapati</span>, and Managing Director <span className="font-semibold">Neha Bhardwaj</span>, we've empowered 25,000+ students with 100+ expert faculties.
+                   <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> has tie-ups with various organizations for providing free courses job training & Placement assistance to Trained Candidates. Since 2020, under the leadership of Director <span className="font-semibold">Sanjay Rajbhar</span>, Manager <span className="font-semibold">Surendra Prajapati</span>, and Managing Director <span className="font-semibold">Neha Bhardwaj</span>, we've empowered 25,000+ students with 100+ expert faculties.
                  </p>
               </div>
             </div>

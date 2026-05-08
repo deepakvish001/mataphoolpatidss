@@ -148,7 +148,7 @@ const ContactUs = () => {
                   Ready to Transform Your <span className="text-primary font-bold">Career Journey?</span>
                 </p>
                  <p className="text-xl text-muted-foreground/80 leading-relaxed">
-                   Connect with <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> - A pioneer in the field of Education, Skill Training running skill development programs on PAN India Basis Since 2023. Under the leadership of Director <span className="font-semibold">Sanjay Rajbhar</span>, Manager <span className="font-semibold">Surendra Prajapati</span>, and Managing Director <span className="font-semibold">Neha Bhardwaj</span>, we've empowered 25,000+ students with 100+ expert faculties.
+                   Connect with <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> - A pioneer in the field of Education, Skill Training running skill development programs on PAN India Basis Since 2020. Under the leadership of Director <span className="font-semibold">Sanjay Rajbhar</span>, Manager <span className="font-semibold">Surendra Prajapati</span>, and Managing Director <span className="font-semibold">Neha Bhardwaj</span>, we've empowered 25,000+ students with 100+ expert faculties.
                  </p>
               </div>
             </div>
