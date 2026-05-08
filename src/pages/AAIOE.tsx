@@ -71,19 +71,19 @@ const AAIOE = () => {
     {
       title: "Pioneering Knowledge and Innovation",
       subtitle: "Thought Leaders in AI",
-      description: "With 21 published books on AI and ML, authored by an inhouse team of experts, MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is setting the benchmark for thought leadership in these transformative fields. Furthermore, the institution is actively writing additional books to empower students, working professionals, and organizations by providing cutting-edge insights and practical knowledge.",
+      description: "With 21 published books on AI and ML, authored by an inhouse team of experts, SAMARTH SHAKTI FOUNDATION is setting the benchmark for thought leadership in these transformative fields. Furthermore, the institution is actively writing additional books to empower students, working professionals, and organizations by providing cutting-edge insights and practical knowledge.",
       icon: BookOpen
     },
     {
       title: "Unparalleled Expertise",
       subtitle: "Industry Veterans",
-      description: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is powered by a team of 100+ expert faculties with vast real-world experience across diverse fields. Since 2023, under the leadership of Director Sanjay Rajbhar, Manager Surendra Prajapati, and Managing Director Neha Bhardwaj, our 5+ years of excellence has empowered 25,000+ students nationwide through comprehensive skill development programs.",
+      description: "SAMARTH SHAKTI FOUNDATION is powered by a team of 100+ expert faculties with vast real-world experience across diverse fields. Since 2023, under the leadership of Director Sanjay Rajbhar, Manager Surendra Prajapati, and Managing Director Neha Bhardwaj, our 5+ years of excellence has empowered 25,000+ students nationwide through comprehensive skill development programs.",
       icon: Users
     },
     {
       title: "Innovative Learning Programs",
       subtitle: "Future-Ready Skills",
-      description: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN offers robust online courses designed to equip individuals with the tools and skills necessary to excel in today's AI-driven industries.",
+      description: "SAMARTH SHAKTI FOUNDATION offers robust online courses designed to equip individuals with the tools and skills necessary to excel in today's AI-driven industries.",
       icon: Cpu
     }
   ];
@@ -129,7 +129,7 @@ const AAIOE = () => {
                 {/* Enhanced Subtitle */}
                 <div className="space-y-6">
                   <h2 className="text-2xl md:text-3xl font-bold text-muted-foreground animate-slide-in-left">
-                    MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN
+                    SAMARTH SHAKTI FOUNDATION
                   </h2>
                   <div className="relative group">
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
@@ -361,7 +361,7 @@ const AAIOE = () => {
                     
                     <div className="space-y-6">
                       <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
-                        <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> in collaboration with various Start-ups and Industry Experts has established the Association of Artificial Intelligence for Organizations and Experts (AAIOE).
+                        <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> in collaboration with various Start-ups and Industry Experts has established the Association of Artificial Intelligence for Organizations and Experts (AAIOE).
                       </p>
                       
                       <p className="text-lg text-muted-foreground leading-relaxed">
@@ -458,7 +458,7 @@ const AAIOE = () => {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_70%)]"></div>
                     <div className="relative space-y-6">
                       <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
-                        <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> has become synonymous with excellence, innovation, and expertise in Artificial Intelligence and Machine Learning.
+                        <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> has become synonymous with excellence, innovation, and expertise in Artificial Intelligence and Machine Learning.
                       </p>
                       <p className="text-lg text-muted-foreground leading-relaxed">
                         Through relentless commitment to advancing education and research, we inspire professionals, organizations, and academic institutions to join forces in creating a smarter, AI-driven future.

@@ -68,7 +68,7 @@ const EntrepreneurshipDevelopment = () => {
   const features = [
     {
       title: "Mudra Facilitation Cell",
-      description: "Dedicated cell with personal monitoring and mentoring by Director Sanjay Rajbhar, Manager Surendra Prajapati, and Managing Director Neha Bhardwaj at MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN",
+      description: "Dedicated cell with personal monitoring and mentoring by Director Sanjay Rajbhar, Manager Surendra Prajapati, and Managing Director Neha Bhardwaj at SAMARTH SHAKTI FOUNDATION",
       icon: Building2
     },
     {
@@ -144,7 +144,7 @@ const EntrepreneurshipDevelopment = () => {
                     Comprehensive <span className="text-primary font-black bg-primary/10 px-3 py-1 rounded-lg">entrepreneurship ecosystem</span> with dedicated mentoring and support
                   </p>
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    <span className="text-primary font-black">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> with 5+ years of excellence and 25,000+ students empowered, has established a dedicated Mudra Facilitation cell with personal monitoring by Prof. Yogesh Kumar, Director
+                    <span className="text-primary font-black">SAMARTH SHAKTI FOUNDATION</span> with 5+ years of excellence and 25,000+ students empowered, has established a dedicated Mudra Facilitation cell with personal monitoring by Prof. Yogesh Kumar, Director
                   </p>
                 </div>
                 
@@ -505,7 +505,7 @@ const EntrepreneurshipDevelopment = () => {
                     
                     <div className="space-y-6">
                       <p className="text-xl text-muted-foreground leading-relaxed font-medium">
-                        <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> has developed small project reports of viable projects. For each PMKK Centre, we are developing dedicated incubation spaces.
+                        <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> has developed small project reports of viable projects. For each PMKK Centre, we are developing dedicated incubation spaces.
                       </p>
                       
                       <p className="text-lg text-muted-foreground leading-relaxed">

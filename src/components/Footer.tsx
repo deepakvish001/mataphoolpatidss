@@ -39,13 +39,13 @@ const Footer = () => {
                     <span className="text-primary-foreground font-bold text-xl">M</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">MATA PHOOLPATI DEVI</h3>
-                    <h3 className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">SHIKSHAN SANSTHAN</h3>
+                    <h3 className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">SAMARTH SHAKTI</h3>
+                    <h3 className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">FOUNDATION</h3>
                     <p className="text-sm text-primary font-medium">Skill Development Programs</p>
                   </div>
                 </a>
                  <p className="text-muted-foreground leading-relaxed mb-6">
-                   MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner with 5+ years of experience, empowering 25,000+ students across India with 100+ expert faculties and 100% placement assistance.
+                   SAMARTH SHAKTI FOUNDATION is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner with 5+ years of experience, empowering 25,000+ students across India with 100+ expert faculties and 100% placement assistance.
                  </p>
               </div>
 
@@ -180,7 +180,7 @@ const Footer = () => {
         <div className="border-t border-border py-6">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground space-y-4 md:space-y-0">
             <p className="text-center md:text-left">
-              © 2025 <span className="font-semibold text-foreground">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span>. All rights reserved.
+              © 2025 <span className="font-semibold text-foreground">SAMARTH SHAKTI FOUNDATION</span>. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>

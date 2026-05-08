@@ -146,7 +146,7 @@ const NSQF = () => {
               {/* Description */}
               <div className="max-w-4xl mx-auto space-y-4">
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  <span className="text-primary font-semibold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> with 5+ years of excellence and 25,000+ students empowered, partners with JEPC and state governments to transform <span className="text-primary font-semibold">vocational education</span> nationwide
+                  <span className="text-primary font-semibold">SAMARTH SHAKTI FOUNDATION</span> with 5+ years of excellence and 25,000+ students empowered, partners with JEPC and state governments to transform <span className="text-primary font-semibold">vocational education</span> nationwide
                 </p>
                 <p className="text-base text-muted-foreground leading-relaxed">
                   Aligning education with modern workforce demands through hands-on training and industry-ready skill development programs
@@ -312,7 +312,7 @@ const NSQF = () => {
               Our <span className="text-gradient bg-gradient-to-r from-primary via-blue-500 to-green-500 bg-clip-text text-transparent">Commitments</span>
             </h2>
             <p className="text-2xl text-muted-foreground max-w-4xl mx-auto font-medium leading-relaxed">
-              <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> ensures seamless project implementation through comprehensive support and expert services
+              <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> ensures seamless project implementation through comprehensive support and expert services
             </p>
           </div>
           

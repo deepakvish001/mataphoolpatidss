@@ -21,10 +21,10 @@ const About = () => {
   ];
 
   const centers = [
-    { state: "UTTAR PRADESH", district: "AZAMGARH", name: "MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN HEAD OFFICE", address: "Shanti Nagar Mehmauni Gali Kaptanganj Azamgarh Uttar Pradesh Pin 276141" },
-    { state: "UTTAR PRADESH", district: "AMBEDKAR NAGAR", name: "MATA PHOOLPATI DEVI TRAINING CENTRE", address: "Training Centre Ambedkar Nagar, Uttar Pradesh" },
-    { state: "UTTAR PRADESH", district: "JAUNPUR", name: "MATA PHOOLPATI DEVI TRAINING CENTRE", address: "Training Centre Jaunpur, Uttar Pradesh" },
-    { state: "UTTAR PRADESH", district: "MAU", name: "MATA PHOOLPATI DEVI TRAINING CENTRE", address: "Training Centre MAU, Uttar Pradesh" }
+    { state: "UTTAR PRADESH", district: "AZAMGARH", name: "SAMARTH SHAKTI FOUNDATION HEAD OFFICE", address: "Shanti Nagar Mehmauni Gali Kaptanganj Azamgarh Uttar Pradesh Pin 276141" },
+    { state: "UTTAR PRADESH", district: "AMBEDKAR NAGAR", name: "SAMARTH SHAKTI FOUNDATION TRAINING CENTRE", address: "Training Centre Ambedkar Nagar, Uttar Pradesh" },
+    { state: "UTTAR PRADESH", district: "JAUNPUR", name: "SAMARTH SHAKTI FOUNDATION TRAINING CENTRE", address: "Training Centre Jaunpur, Uttar Pradesh" },
+    { state: "UTTAR PRADESH", district: "MAU", name: "SAMARTH SHAKTI FOUNDATION TRAINING CENTRE", address: "Training Centre MAU, Uttar Pradesh" }
   ];
 
   return (
@@ -58,9 +58,9 @@ const About = () => {
             {/* Enhanced Title Design */}
             <div className="space-y-8">
               <h1 className="text-6xl md:text-7xl lg:text-8xl font-black leading-tight">
-                <span className="block text-foreground">MATA PHOOLPATI DEVI</span>
+                <span className="block text-foreground">SAMARTH SHAKTI</span>
                 <span className="block bg-gradient-to-r from-primary via-blue-600 to-primary bg-clip-text text-transparent animate-gradient-x">
-                  SHIKSHAN SANSTHAN
+                  FOUNDATION
                 </span>
               </h1>
               
@@ -69,7 +69,7 @@ const About = () => {
                   Pioneering Excellence in <span className="text-primary font-bold">Skill Development</span>
                 </p>
                  <p className="text-xl text-muted-foreground/80 leading-relaxed">
-                   <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc.
+                   <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc.
                  </p>
               </div>
             </div>
@@ -153,7 +153,7 @@ const About = () => {
                     </div>
                   </div>
                    <p className="text-lg text-muted-foreground leading-relaxed">
-                     <span className="text-primary font-bold">MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc. We have successfully conducted various projects of Skill Training including DDUGKY, PMKVY  UPSDM,NIESBUD, NULM Uttar Pradesh CSR etc.
+                     <span className="text-primary font-bold">SAMARTH SHAKTI FOUNDATION</span> is a pioneer in the field of Education, Skill Training and has been successfully running the skill development programs on PAN India Basis Since 2023. We are NSDC Training Partner and having Pan India Presence with Expertise of providing free courses and Placement Skill Training in the Fields of Apparel, Organized Retail, Electronics, Healthcare, Food Processing, Agriculture etc. We have successfully conducted various projects of Skill Training including DDUGKY, PMKVY  UPSDM,NIESBUD, NULM Uttar Pradesh CSR etc.
                    </p>
                 </div>
 
@@ -338,7 +338,7 @@ const About = () => {
                     </h3>
                     <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mx-auto mb-6" />
                      <p className="text-lg text-muted-foreground leading-relaxed">
-                       MATA PHOOLPATI DEVI SHIKSHAN SANSTHAN has tie-ups with various organizations for providing <span className="text-green-500 font-bold">free courses job training & Placement assistance</span> to Trained Candidates. To be world's premium institute in skill training & entrepreneurship development, committed to providing the best possible professional, skill oriented education that empowers students to become leaders with values, vision & versatility.
+                       SAMARTH SHAKTI FOUNDATION has tie-ups with various organizations for providing <span className="text-green-500 font-bold">free courses job training & Placement assistance</span> to Trained Candidates. To be world's premium institute in skill training & entrepreneurship development, committed to providing the best possible professional, skill oriented education that empowers students to become leaders with values, vision & versatility.
                      </p>
                   </div>
                 </div>
