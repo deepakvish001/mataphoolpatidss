@@ -750,11 +750,21 @@ const StudentVerificationContent = () => {
                     <Clock className="h-3 w-3 mr-1" />
                     Recent
                   </Button>
-                  <Button variant="outline" size="sm" className="border-2 hover-scale">
+                  <Button
+                    variant={statusFilter === 'verified' ? 'default' : 'outline'}
+                    size="sm"
+                    className="border-2 hover-scale"
+                    onClick={() => setStatusFilter(statusFilter === 'verified' ? 'all' : 'verified')}
+                  >
                     <CheckCircle className="h-3 w-3 mr-1" />
                     Verified
                   </Button>
-                  <Button variant="outline" size="sm" className="border-2 hover-scale">
+                  <Button
+                    variant={statusFilter === 'pending' ? 'default' : 'outline'}
+                    size="sm"
+                    className="border-2 hover-scale"
+                    onClick={() => setStatusFilter(statusFilter === 'pending' ? 'all' : 'pending')}
+                  >
                     <AlertCircle className="h-3 w-3 mr-1" />
                     Pending
                   </Button>
