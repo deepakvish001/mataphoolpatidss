@@ -82,9 +82,23 @@ const DayBookContent = () => {
     }
   };
 
-  const totalAmount = filteredEntries.reduce((sum, entry) => sum + entry.amount, 0);
+  // day_book_entries stores amount as an always-positive figure and uses
+  // transaction_type ('income' / 'expense') to say which direction it goes
+  // (see the seed data in supabase/migrations — 'income' and 'expense',
+  // not 'credit'/'debit'). Summing every row's amount regardless of type
+  // mixes money in with money out into one meaningless total, so the net
+  // balance has to net income against expense explicitly.
+  const totalIncome = filteredEntries
+    .filter(entry => entry.transaction_type === 'income')
+    .reduce((sum, entry) => sum + entry.amount, 0);
+  const totalExpense = filteredEntries
+    .filter(entry => entry.transaction_type === 'expense')
+    .reduce((sum, entry) => sum + entry.amount, 0);
+  const netAmount = totalIncome - totalExpense;
   const totalEntries = filteredEntries.length;
-  const avgAmount = totalEntries > 0 ? totalAmount / totalEntries : 0;
+  const avgAmount = totalEntries > 0
+    ? filteredEntries.reduce((sum, entry) => sum + entry.amount, 0) / totalEntries
+    : 0;
   const todayEntries = filteredEntries.filter(entry => {
     const today = new Date().toDateString();
     const entryDate = new Date(entry.entry_date).toDateString();
@@ -125,12 +139,12 @@ const DayBookContent = () => {
 
           {/* Statistics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-emerald-500 to-emerald-600 text-white">
+            <Card className={`border-0 shadow-lg text-white bg-gradient-to-br ${netAmount >= 0 ? "from-emerald-500 to-emerald-600" : "from-red-500 to-red-600"}`}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-emerald-100 text-sm font-medium">Total Amount</p>
-                    <p className="text-2xl font-bold">₹{totalAmount.toFixed(2)}</p>
+                    <p className="text-white/80 text-sm font-medium">Net Balance</p>
+                    <p className="text-2xl font-bold">₹{netAmount.toFixed(2)}</p>
                   </div>
                   <div className="p-3 bg-white/20 rounded-full">
                     <DollarSign className="h-6 w-6" />
@@ -253,7 +267,7 @@ const DayBookContent = () => {
             </div>
             {(startDate || endDate || serviceName !== "all") && (
               <div className="mt-4 text-sm text-muted-foreground">
-                Showing {filteredEntries.length} entries | Total: ₹{totalAmount.toFixed(2)}
+                Showing {filteredEntries.length} entries | Income: ₹{totalIncome.toFixed(2)} | Expense: ₹{totalExpense.toFixed(2)} | Net: ₹{netAmount.toFixed(2)}
               </div>
             )}
           </CardContent>
@@ -315,8 +329,8 @@ const DayBookContent = () => {
                         </td>
                         <td className="border border-border/20 px-4 py-3 text-foreground">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            entry.transaction_type === 'credit' 
-                              ? 'bg-emerald-100 text-emerald-800' 
+                            entry.transaction_type === 'income'
+                              ? 'bg-emerald-100 text-emerald-800'
                               : 'bg-red-100 text-red-800'
                           }`}>
                             {entry.transaction_type}
