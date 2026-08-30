@@ -1,0 +1,11 @@
+{
+  "scenario": "scheme",
+  "scheme": {
+    "id": "SCHEME-001",
+    "code": "EXAMPLE-SKILL",
+    "title": "Example Skill Programme",
+    "minimumAge": 18,
+    "maximumAge": 35,
+    "status": "active"
+  }
+}
