@@ -1,0 +1,13 @@
+{
+  "scenario": "validation-errors",
+  "input": {
+    "email": "invalid",
+    "phone": "123",
+    "amount": -10
+  },
+  "expectedErrors": [
+    "email is invalid",
+    "phone is invalid",
+    "amount must be positive"
+  ]
+}
