@@ -1,0 +1,9 @@
+{
+  "scenario": "certificate",
+  "certificate": {
+    "number": "DS-2026-000001",
+    "learnerId": "LEARNER-EXAMPLE",
+    "courseId": "COURSE-001",
+    "issuedAt": "2026-01-10T00:00:00Z"
+  }
+}
