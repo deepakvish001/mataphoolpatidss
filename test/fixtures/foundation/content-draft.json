@@ -1,0 +1,10 @@
+{
+  "scenario": "content-draft",
+  "content": {
+    "id": "CONTENT-001",
+    "title": "Example announcement",
+    "status": "draft",
+    "body": "Draft information for review.",
+    "updatedBy": "USER-EXAMPLE"
+  }
+}
