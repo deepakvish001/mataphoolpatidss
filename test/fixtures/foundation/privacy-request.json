@@ -1,0 +1,13 @@
+{
+  "scenario": "privacy-request",
+  "request": {
+    "id": "PRIV-001",
+    "type": "access",
+    "requesterEmail": "person@example.com",
+    "status": "received",
+    "receivedAt": "2026-01-10T08:00:00Z"
+  },
+  "expected": {
+    "publicIssueAllowed": false
+  }
+}
