@@ -1,0 +1,12 @@
+{
+  "scenario": "published-content",
+  "content": {
+    "id": "CONTENT-002",
+    "title": "Published programme update",
+    "status": "published",
+    "publishedAt": "2026-01-10T08:00:00Z"
+  },
+  "expected": {
+    "publiclyVisible": true
+  }
+}
