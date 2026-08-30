@@ -1,0 +1,12 @@
+{
+  "scenario": "contact",
+  "submission": {
+    "name": "Example Visitor",
+    "email": "visitor@example.com",
+    "message": "I would like information about the programme.",
+    "consent": true
+  },
+  "expected": {
+    "valid": true
+  }
+}
