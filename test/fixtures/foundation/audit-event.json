@@ -1,0 +1,10 @@
+{
+  "scenario": "audit-event",
+  "event": {
+    "id": "AUD-001",
+    "actorId": "USER-EXAMPLE",
+    "action": "content_published",
+    "recordId": "CONTENT-002",
+    "occurredAt": "2026-01-10T08:00:00Z"
+  }
+}
