@@ -1,0 +1,9 @@
+{
+  "scenario": "partner",
+  "partner": {
+    "id": "PARTNER-001",
+    "name": "Example Training Partner",
+    "website": "https://partner.example.com",
+    "status": "approved"
+  }
+}
