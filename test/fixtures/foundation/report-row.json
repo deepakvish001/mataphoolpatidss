@@ -1,0 +1,12 @@
+{
+  "scenario": "report-row",
+  "row": {
+    "courseCode": "DS",
+    "enrolled": 25,
+    "completed": 20,
+    "attendancePercent": 82
+  },
+  "expected": {
+    "spreadsheetSafe": true
+  }
+}
