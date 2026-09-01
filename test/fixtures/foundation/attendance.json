@@ -1,0 +1,12 @@
+{
+  "scenario": "attendance",
+  "record": {
+    "learnerId": "LEARNER-EXAMPLE",
+    "sessionsDelivered": 20,
+    "sessionsAttended": 17
+  },
+  "expected": {
+    "attendancePercent": 85,
+    "eligible": true
+  }
+}
