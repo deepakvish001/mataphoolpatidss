@@ -1,0 +1,12 @@
+{
+  "scenario": "admin-user",
+  "user": {
+    "id": "USER-EXAMPLE",
+    "email": "admin@example.com",
+    "role": "editor",
+    "active": true
+  },
+  "expected": {
+    "canManageUsers": false
+  }
+}
