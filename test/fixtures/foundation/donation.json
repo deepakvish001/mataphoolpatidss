@@ -1,0 +1,12 @@
+{
+  "scenario": "donation",
+  "donation": {
+    "reference": "DON-000001",
+    "amountInr": 500,
+    "donorEmail": "donor@example.com",
+    "status": "pending"
+  },
+  "expected": {
+    "validAmount": true
+  }
+}
