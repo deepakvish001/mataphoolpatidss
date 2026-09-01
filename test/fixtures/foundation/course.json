@@ -1,0 +1,11 @@
+{
+  "scenario": "course",
+  "course": {
+    "id": "COURSE-001",
+    "title": "Example Digital Skills Course",
+    "status": "published",
+    "durationHours": 120,
+    "eligibility": "Adults 18+",
+    "contactEmail": "courses@example.com"
+  }
+}
