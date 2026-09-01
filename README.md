@@ -1,73 +1,146 @@
-# Welcome to your Lovable project
+# Samarth Shakti Foundation Platform
 
-## Project info
+> Digital platform for skill development programmes, vocational education, government schemes, partnerships, donations and administrative operations.
 
-**URL**: https://lovable.dev/projects/b1a1570d-b7fd-4e0e-a4b7-149c0cff88fe
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-3FCF8E?logo=supabase&logoColor=white)
 
-## How can I edit this code?
+This application supports the public website and protected administrative workflows of Samarth Shakti Foundation. Public users can explore programmes, schemes, partners and donation information, while authorised administrators manage content and operational records.
 
-There are several ways of editing your application.
+## Main capabilities
 
-**Use Lovable**
+- Skill-development and vocational programme information
+- Government-scheme and mission pages
+- Partner and contact information
+- Donation workflow
+- Authentication and password recovery
+- Role-protected administration area
+- Course, news, attendance and organisational content management
+- Printable and downloadable reports
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b1a1570d-b7fd-4e0e-a4b7-149c0cff88fe) and start prompting.
+## Technology
 
-Changes made via Lovable will be committed automatically to this repo.
+- React 18 and TypeScript
+- Vite and SWC
+- Tailwind CSS and shadcn/ui
+- React Router
+- TanStack Query
+- Supabase authentication and database
+- React Hook Form and Zod
+- jsPDF, html2canvas and Recharts
 
-**Use your preferred IDE**
+## Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js 18 or newer
+- npm 9 or newer
+- A Supabase project with the required schema
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Local setup
 
-Follow these steps:
+1. Clone the repository.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+   ```bash
+   git clone https://github.com/deepakvish001/mataphoolpatidss.git
+   cd mataphoolpatidss
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install exact dependencies.
 
-# Step 3: Install the necessary dependencies.
-npm i
+   ```bash
+   npm ci
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+3. Create a local environment file.
+
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Configure the browser-safe Supabase variables.
+
+   ```env
+   VITE_SUPABASE_URL=https://your-project.supabase.co
+   VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+   ```
+
+5. Start the development server.
+
+   ```bash
+   npm run dev
+   ```
+
+6. Open [http://localhost:8080](http://localhost:8080).
+
+## Commands
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start local development |
+| `npm run build` | Create the production bundle |
+| `npm run lint` | Run static analysis |
+| `npm run test` | Run Vitest once |
+| `npm run test:watch` | Run tests during development |
+| `npm run preview` | Preview the production bundle |
+
+## Routes
+
+| Route | Access | Purpose |
+| --- | --- | --- |
+| `/` | Public | Foundation landing page |
+| `/about` | Public | Organisation information |
+| `/contact` | Public | Contact details and enquiry flow |
+| `/donation` | Public | Donation information |
+| `/partners` | Public | Partner organisations |
+| `/login` | Public | Administrator sign-in |
+| `/reset-password` | Public | Account recovery |
+| `/admin/*` | Admin | Protected management workflows |
+
+## Structure
+
+```text
+src/
+├── components/       public, administrative and shared UI
+├── contexts/         authentication and shared CRUD state
+├── hooks/            reusable React behaviour
+├── integrations/     Supabase client and generated types
+├── pages/            routed pages
+├── services/         data access and business workflows
+└── test/             automated test setup and cases
+supabase/
+├── functions/        server-side edge functions
+└── migrations/       schema and security-policy history
 ```
 
-**Edit a file directly in GitHub**
+## Security and privacy
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- Never expose a Supabase service-role key in Vite variables.
+- Apply row-level security to all client-accessible tables.
+- Check administrative roles on the server and in database policies.
+- Do not commit donor, student, staff or payment production data.
+- Avoid logging personal information and authentication tokens.
+- Validate file uploads and generated reports before distribution.
 
-**Use GitHub Codespaces**
+## Validation
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Run the standard checks before submitting changes:
 
-## What technologies are used for this project?
+```bash
+npm ci
+npm run lint
+npm run test
+npm run build
+```
 
-This project is built with:
+## Deployment
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Provide production environment variables through the hosting platform, build with `npm run build`, and deploy `dist/` behind HTTPS. Configure SPA fallback, security headers and restricted access to administrative paths.
 
-## How can I deploy this project?
+## Contributing
 
-Simply open [Lovable](https://lovable.dev/projects/b1a1570d-b7fd-4e0e-a4b7-149c0cff88fe) and click on Share -> Publish.
+Use focused branches and pull requests. Include tests for business logic, screenshots for visible changes, migration notes for database updates and a rollback plan for operational changes.
 
-## Can I connect a custom domain to my Lovable project?
+## License
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+No public reuse licence is currently declared. Obtain permission from the repository owner before redistribution.
